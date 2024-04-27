@@ -1,0 +1,15 @@
+{
+	"core": "./vendor/roots/wordpress-no-content",
+	"plugins": ["."],
+	"env": {
+		"development": {
+			"phpVersion": "8.1",
+			"mappings": {
+				"wp-content/plugins/konomi": "."
+			}
+		}
+	},
+	"config": {
+		"WP_ENVIRONMENT_TYPE": "local"
+	}
+}
