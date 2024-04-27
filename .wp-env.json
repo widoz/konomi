@@ -1,11 +1,15 @@
 {
 	"core": "./vendor/roots/wordpress-no-content",
-	"plugins": ["."],
+	"plugins": [
+		"."
+	],
 	"env": {
 		"development": {
 			"phpVersion": "8.1",
 			"mappings": {
-				"wp-content/plugins/konomi": "."
+				"wp-content/plugins/konomi": ".",
+				"wp-content/plugins/wordpress-importer": "https://downloads.wordpress.org/plugin/wordpress-importer.0.7.zip",
+				"wp-content/themes/twentytwentyfour": "https://downloads.wordpress.org/theme/twentytwentyfour.1.0.zip"
 			}
 		}
 	},
