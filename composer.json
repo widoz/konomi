@@ -16,7 +16,8 @@
 	},
 	"require-dev": {
 		"inpsyde/php-coding-standards": "^1.0",
-		"roots/wordpress-no-content": "^6.5"
+		"roots/wordpress-no-content": "^6.5",
+		"vimeo/psalm": "^5.23"
 	},
 	"autoload": {
 		"psr-4": {
@@ -33,6 +34,7 @@
 	},
 	"scripts": {
 		"cs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
-		"cs:fix": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf"
+		"cs:fix": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
+		"psalm": "@php ./vendor/bin/psalm"
 	}
 }
