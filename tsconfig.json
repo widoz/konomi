@@ -9,6 +9,8 @@
 		"noImplicitReturns": true,
 		"noImplicitThis": true,
 		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictPropertyInitialization": true,
 		"noPropertyAccessFromIndexSignature": true,
 		"noUncheckedIndexedAccess": true,
 		"noUnusedLocals": true,
@@ -17,16 +19,16 @@
 		"useUnknownInCatchVariables": true,
 		"resolveJsonModule": true,
 		"sourceMap": true,
-		"jsx": "react",
 		"skipLibCheck": true,
 		"esModuleInterop": true,
-		"baseUrl": ".",
-		"module": "ESNext",
-		"moduleResolution": "Node10",
+		"baseUrl": "./",
+		"module": "nodeNext",
+		"moduleResolution": "NodeNext",
+		"typeRoots": ["./node_modules/@types"],
 		"paths": {
-			"@types": ["./@types/index.d.ts"]
-		}
+			"*": ["node_modules/*", "types/*"]
+		},
+		"rootDir": "./"
 	},
-	"include": ["@types", "sources/client/**/*", "tests/client/**/*"],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules", "tests"]
 }
