@@ -9,9 +9,11 @@
     findUnusedCode="true"
 >
     <projectFiles>
+        <file name="konomi.php" />
         <directory name="sources/server/src" />
         <ignoreFiles>
             <directory name="vendor" />
+            <directory name="tests" />
         </ignoreFiles>
     </projectFiles>
 </psalm>
