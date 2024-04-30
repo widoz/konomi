@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <ruleset>
+    <file>./konomi.php</file>
     <file>./sources/server/</file>
+    <file>./tests/</file>
 
     <arg value="sp"/>
     <arg name="colors"/>
@@ -11,6 +13,9 @@
     <config name="ignore_warnings_on_exit" value="1"/>
 
     <rule ref="Inpsyde" />
+    <rule ref="Inpsyde.CodeQuality.StaticClosure.PossiblyStaticClosure">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
 
     <exclude-pattern>*/vendor/*</exclude-pattern>
 </ruleset>
