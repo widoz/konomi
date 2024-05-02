@@ -19,11 +19,12 @@
 		"useUnknownInCatchVariables": true,
 		"resolveJsonModule": true,
 		"sourceMap": true,
+		"jsx": "react",
 		"skipLibCheck": true,
 		"esModuleInterop": true,
-		"baseUrl": "./",
-		"module": "nodeNext",
-		"moduleResolution": "NodeNext",
+		"baseUrl": ".",
+		"module": "ESNext",
+		"moduleResolution": "nodenext",
 		"typeRoots": ["./node_modules/@types"],
 		"paths": {
 			"*": ["node_modules/*", "types/*"]
