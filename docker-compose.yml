@@ -1,0 +1,14 @@
+name: konomi
+
+services:
+
+  php:
+    container_name: konomi-php
+    build:
+      context: ./.docker
+      dockerfile: php-cli.Dockerfile
+    volumes:
+      - type: bind
+        source: .
+        target: /konomi
+    working_dir: /konomi
