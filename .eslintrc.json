@@ -13,6 +13,17 @@
 		"sourceType": "module",
 		"project": "./tsconfig.json"
 	},
+	"overrides": [
+		{
+			"files": ["webpack.config.js"],
+			"env": {
+				"node": true
+			},
+			"rules": {
+				"@typescript-eslint/no-var-requires": "off"
+			}
+		}
+	],
 	"plugins": [
 		"@typescript-eslint"
 	],
