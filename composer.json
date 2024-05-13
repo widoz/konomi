@@ -24,12 +24,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Widoz\\WP\\Konomi\\": "sources/server/src/"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Widoz\\WP\\Konomi\\Tests\\": "tests/php/"
+			"Widoz\\Wp\\Konomi\\": "sources/server/src/"
 		}
 	},
 	"config": {
