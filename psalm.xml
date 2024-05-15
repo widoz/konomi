@@ -11,7 +11,7 @@
 >
     <projectFiles>
         <file name="konomi.php" />
-        <directory name="sources/server/src" />
+        <directory name="sources" />
         <ignoreFiles>
             <directory name="vendor" />
             <directory name="tests" />

@@ -1,0 +1,19 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "konomi/like",
+	"version": "0.1.0",
+	"title": "Like",
+	"category": "design",
+	"icon": "smiley",
+	"description": "Like",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "konomi",
+	"editorScript": "file:./dist/like.js",
+	"editorStyle": "file:./dist/like.css",
+	"style": "file:./dist/style-like.css",
+	"render": "file:./render.php"
+}

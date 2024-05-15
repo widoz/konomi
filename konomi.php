@@ -39,6 +39,7 @@ function package(): Modularity\Package
         autoload($projectRoot);
         $properties = Modularity\Properties\PluginProperties::new(__FILE__);
         $package = Modularity\Package::new($properties);
+        $package->addModule(Blocks\Module::new($properties));
     }
 
     return $package;

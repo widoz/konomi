@@ -8,6 +8,7 @@
 		"node": "20"
 	},
 	"devDependencies": {
+		"@types/react": "~18.2.0",
 		"@faker-js/faker": "^8",
 		"@jest/globals": "^29.4.3",
 		"@testing-library/dom": "^9.3.1",
@@ -15,6 +16,7 @@
 		"@testing-library/react": "^14.0.0",
 		"@testing-library/user-event": "^14.5.1",
 		"@total-typescript/shoehorn": "^0.1.0",
+		"@wordpress/create-block": "^4.41.0",
 		"@wordpress/dependency-extraction-webpack-plugin": "^4.8.0",
 		"@wordpress/env": "^5.9.0",
 		"@wordpress/scripts": "^26.0.0",
@@ -28,12 +30,15 @@
 		"yarn": "^1.22.19"
 	},
 	"dependencies": {
+		"@wordpress/block-editor": "^12.25.0",
+		"@wordpress/blocks": "^12.34.0",
+		"@wordpress/i18n": "^4.57.0",
 		"react": "~18.2.0"
 	},
 	"scripts": {
 		"wp-env": "wp-env",
-		"build": "wp-scripts build --webpack-src-dir=./sources/client/src",
-		"build:dev": "wp-scripts start --webpack--devtool=inline-source-map --webpack-src-dir=./sources/client/src",
+		"build": "wp-scripts build --webpack-src-dir=./sources/Blocks/like",
+		"build:dev": "wp-scripts start --webpack--devtool=inline-source-map --webpack-src-dir=./sources/Blocks/like",
 		"cs:fix": "wp-scripts format ./sources/client",
 		"lint:js": "wp-scripts lint-js ./sources/client",
 		"lint:js:fix": "wp-scripts lint-js --fix ./sources/client",

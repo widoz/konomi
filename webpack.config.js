@@ -8,32 +8,36 @@ const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extrac
  */
 const path = require( 'path' );
 
-module.exports = {
+const configuration = {
 	...baseConfiguration,
-	entry: {
-	},
 	plugins: [
-		...baseConfiguration.plugins.filter(
-			( plugin ) =>
-				plugin.constructor.name !== 'DependencyExtractionWebpackPlugin'
-		),
-		new DependencyExtractionWebpackPlugin( {
+		...baseConfiguration.plugins.filter((plugin) => {
+			return plugin.constructor.name !== 'DependencyExtractionWebpackPlugin' && plugin.constructor.name !== 'CopyPlugin'
+		}),
+		new DependencyExtractionWebpackPlugin({
 			outputFormat: 'php',
-		} ),
+		}),
 	],
 	resolve: {
 		...baseConfiguration.resolve,
 		alias: {
 			...baseConfiguration.resolve.alias,
-			'@types': path.resolve( __dirname, './@types/index.d.ts' ),
+			'@types': path.resolve(__dirname, './@types/index.d.ts'),
 		},
 	},
-	output: {
-		...baseConfiguration.output,
-		filename: '[name].js',
-		library: {
-			name: 'wp-konomi',
-			type: 'window',
+	output: {},
+}
+
+module.exports = [
+	{
+		...configuration,
+		entry: {
+			'like': './sources/Blocks/like/index.ts',
+		},
+		output: {
+			filename: '[name].js',
+			path: path.resolve('./sources/Blocks/like/dist'),
+			clean: true,
 		},
 	},
-};
+]
