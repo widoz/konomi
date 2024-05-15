@@ -15,10 +15,6 @@ class Module implements ServiceModule, ExecutableModule
 {
     use ModuleClassNameIdTrait;
 
-    private const BLOCKS_NAMES = [
-        'like',
-    ];
-
     public static function new(Properties $appProperties): self
     {
         return new self($appProperties);
