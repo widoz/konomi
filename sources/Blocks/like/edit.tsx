@@ -1,15 +1,13 @@
-import React from 'react';
-
-import { __ } from '@wordpress/i18n';
+import React, {JSX} from 'react'
 
 import { useBlockProps } from '@wordpress/block-editor';
 
 import './editor.scss';
 
-export default function Edit(): JSX.Element {
+export default function Edit(props): JSX.Element {
 	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Like – hello from the editor!', 'like' ) }
-		</p>
+	  <div {...useBlockProps()}>
+		  <img src={`${props.configuration?.iconsPathUrl}/suit-heart.svg`} alt="Like" />
+	  </div>
 	);
 }

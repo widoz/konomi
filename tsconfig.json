@@ -24,11 +24,8 @@
 		"esModuleInterop": true,
 		"baseUrl": ".",
 		"module": "ESNext",
-		"moduleResolution": "nodenext",
+		"moduleResolution": "NodeNext",
 		"typeRoots": ["./node_modules/@types"],
-		"paths": {
-			"*": ["node_modules/*", "types/*"]
-		},
 		"rootDir": "./"
 	},
 	"exclude": ["node_modules", "tests"]

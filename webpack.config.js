@@ -38,6 +38,6 @@ module.exports = [
 			filename: '[name].js',
 			path: path.resolve('./sources/Blocks/like/dist'),
 			clean: true,
-		},
+		}
 	},
 ]
