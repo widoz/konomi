@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Widoz\Wp\Konomi\Configuration;
 
 use Psr\Container\ContainerInterface;
-use Inpsyde\Modularity\{Module\ServiceModule,
+use Inpsyde\Modularity\{
+    Module\ServiceModule,
     Module\ExecutableModule,
     Module\ModuleClassNameIdTrait,
     Properties\Properties

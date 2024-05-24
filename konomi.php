@@ -39,10 +39,6 @@ function package(): Modularity\Package
         autoload($projectRoot);
         $properties = Modularity\Properties\PluginProperties::new(__FILE__);
         $package = Modularity\Package::new($properties);
-        $package->boot(
-            Configuration\Module::new($properties),
-            Blocks\Module::new($properties)
-        );
     }
 
     return $package;
@@ -50,5 +46,13 @@ function package(): Modularity\Package
 
 \add_action(
     'plugins_loaded',
-    fn() => package()->boot()
+    static function () {
+        $package = package();
+        $properties = $package->properties();
+
+        $package->boot(
+            Configuration\Module::new($properties),
+            Blocks\Module::new($properties)
+        );
+    }
 );

@@ -5,10 +5,18 @@ declare(strict_types=1);
 use Brain\Monkey\Functions;
 
 it('bootstrap the package during plugins_loaded action', function () {
-    $properties =  Mockery::mock('alias:Inpsyde\Modularity\Properties\PluginProperties');
+    $properties = Mockery::mock(
+        'alias:Inpsyde\Modularity\Properties\PluginProperties',
+        'Inpsyde\Modularity\Properties\Properties',
+    );
     $properties->shouldReceive('new')->andReturnSelf();
 
-    $package = Mockery::mock('alias:Inpsyde\Modularity\Package');
+    $package = Mockery::mock(
+        'alias:Inpsyde\Modularity\Package',
+        [
+            'properties' => $properties,
+        ]
+    );
     $package->shouldReceive('new')->with($properties)->andReturn($package);
 
     $package->expects('boot');
