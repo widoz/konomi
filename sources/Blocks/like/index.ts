@@ -1,13 +1,16 @@
-import {registerBlockType} from '@wordpress/blocks'
+/**
+ * WordPress dependencies
+ */
+import { registerBlockType } from '@wordpress/blocks';
 
-import './style.scss'
+/**
+ * Internal dependencies
+ */
+import './style.scss';
 
-import Edit from './edit'
-import metadata from './block.json'
-import {withConfiguration} from '../components/with-configuration'
+import Edit from './edit';
+import metadata from './block.json';
 
-const ComposedEdit = withConfiguration(Edit)
-
-registerBlockType(metadata.name, {
-	edit: ComposedEdit,
-})
+registerBlockType( metadata.name, {
+	edit: Edit,
+} );

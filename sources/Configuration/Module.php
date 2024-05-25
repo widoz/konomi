@@ -31,6 +31,7 @@ class Module implements ServiceModule, ExecutableModule
         ];
     }
 
+    // TODO Encapsulate the Settings Schema.
     public function run(ContainerInterface $container): bool
     {
         register_setting('konomi', 'konomi', [

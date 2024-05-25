@@ -26,7 +26,8 @@
 		"ts-jest": "^29.0.5",
 		"ts-loader": "^9.4.2",
 		"ts-node": "^10.9.1",
-		"typescript": "~5.1.0",
+		"typescript": "~5.3.0",
+		"typescript-eslint": "^7.10.0",
 		"yarn": "^1.22.19"
 	},
 	"dependencies": {
@@ -41,9 +42,9 @@
 		"wp-env": "wp-env",
 		"build": "wp-scripts build --webpack-src-dir=./sources/Blocks/like",
 		"build:dev": "wp-scripts start --webpack--devtool=inline-source-map --webpack-src-dir=./sources/Blocks/like",
-		"cs:fix": "wp-scripts format ./sources",
-		"lint:js": "wp-scripts lint-js ./sources",
-		"lint:js:fix": "wp-scripts lint-js --fix ./sources",
+		"cs:fix": "wp-scripts format ./sources ./@types",
+		"lint:js": "wp-scripts lint-js ./sources ./@types",
+		"lint:js:fix": "wp-scripts lint-js --fix ./sources ./@types",
 		"test": "jest",
 		"test:update-snapshots": "yarn test -u"
 	}

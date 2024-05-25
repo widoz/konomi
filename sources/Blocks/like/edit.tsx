@@ -1,13 +1,26 @@
-import React, {JSX} from 'react'
-
+/**
+ * External dependencies
+ */
+import type { JSX } from 'react';
+import React from 'react';
+/**
+ * WordPress dependencies
+ */
 import { useBlockProps } from '@wordpress/block-editor';
+/**
+ * External dependencies
+ */
+import { useConfiguration } from '@konomi/configuration';
 
-import './editor.scss';
+export default function Edit(): JSX.Element {
+	const { iconsPathUrl } = useConfiguration();
 
-export default function Edit(props): JSX.Element {
 	return (
-	  <div {...useBlockProps()}>
-		  <img src={`${props.configuration?.iconsPathUrl}/suit-heart.svg`} alt="Like" />
-	  </div>
+		<div { ...useBlockProps() }>
+			<img
+				src={ `${ iconsPathUrl.toString() }/suit-heart.svg` }
+				alt="Like"
+			/>
+		</div>
 	);
 }
