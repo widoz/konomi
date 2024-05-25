@@ -7,19 +7,13 @@ import { useSelect } from '@wordpress/data';
  */
 import type Konomi from '@konomi/types';
 
-// TODO Add a parse args.
-// TODO Introduce Zod Lib.
+// TODO Introduce Zod Lib?
 export function useConfiguration(): Konomi.Configuration {
-	const defaults = {
-		iconsPathUrl: new URL( '' ),
-	};
-
 	const configuration: Partial< Konomi.Configuration > = useSelect(
-		( select ) => select( 'core' ).getSite().konomi ?? defaults
+		( select ) => select( 'core' ).getSite().konomi ?? {}
 	);
 
 	return {
-		...defaults,
 		...configuration,
 		iconsPathUrl: new URL( configuration.iconsPathUrl ?? '' ),
 	};
