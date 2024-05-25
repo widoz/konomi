@@ -1,6 +1,8 @@
 {
 	"compilerOptions": {
 		"target": "ES2022",
+		"checkJs": true,
+		"allowJs": true,
 		"alwaysStrict": true,
 		"exactOptionalPropertyTypes": true,
 		"noFallthroughCasesInSwitch": true,
@@ -24,12 +26,34 @@
 		"esModuleInterop": true,
 		"baseUrl": ".",
 		"module": "ESNext",
-		"moduleResolution": "nodenext",
-		"typeRoots": ["./node_modules/@types"],
+		"moduleResolution": "NodeNext",
+		"typeRoots": [
+			"./node_modules/@types",
+			"./@types"
+		],
+		"rootDir": "./",
 		"paths": {
-			"*": ["node_modules/*", "types/*"]
-		},
-		"rootDir": "./"
+			"@konomi/wp-types": [
+				"./@types/wp"
+			],
+			"@konomi/types": [
+				"./@types"
+			],
+			"@konomi/configuration": [
+				"./sources/Configuration/client"
+			],
+			"@wordpress/block-editor": [
+				"./node_modules/@wordpress/block-editor/src"
+			]
+		}
 	},
-	"exclude": ["node_modules", "tests"]
+	"include": [
+		"./sources",
+		"./@types"
+	],
+	"exclude": [
+		"dist",
+		"node_modules",
+		"tests"
+	]
 }

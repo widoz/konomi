@@ -1,6 +1,6 @@
 /.psalm
 /.idea
-/build/
+/sources/**/dist/
 /coverage
 /vendor/
 /node_modules/

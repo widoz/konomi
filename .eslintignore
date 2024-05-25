@@ -1,9 +1,10 @@
-vendor
-node_modules
 build
+dist
+
+./vendor
+./node_modules
 
 .psalm
 .github
 
 ./coverage
-./sources/server

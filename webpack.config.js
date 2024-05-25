@@ -1,39 +1,45 @@
 /**
- * WordPress dependencies
- */
-const baseConfiguration = require( '@wordpress/scripts/config/webpack.config' );
-const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
-/**
  * External dependencies
  */
-const path = require( 'path' );
+const path = require('path')
+/**
+ * WordPress dependencies
+ */
+const baseConfiguration = require('@wordpress/scripts/config/webpack.config')
+const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin')
+/**
+ * Internal dependencies
+ */
+const tsConfig = require('./tsconfig.json')
+const makeAliases = require('./.scripts/make-aliases')
 
-module.exports = {
+const configuration = {
 	...baseConfiguration,
-	entry: {
-	},
 	plugins: [
-		...baseConfiguration.plugins.filter(
-			( plugin ) =>
-				plugin.constructor.name !== 'DependencyExtractionWebpackPlugin'
-		),
-		new DependencyExtractionWebpackPlugin( {
+		...baseConfiguration.plugins.filter((plugin) => {
+			return (
+			  plugin.constructor.name !==
+			  'DependencyExtractionWebpackPlugin' &&
+			  plugin.constructor.name !== 'CopyPlugin'
+			)
+		}),
+		new DependencyExtractionWebpackPlugin({
 			outputFormat: 'php',
-		} ),
+		}),
 	],
 	resolve: {
 		...baseConfiguration.resolve,
-		alias: {
-			...baseConfiguration.resolve.alias,
-			'@types': path.resolve( __dirname, './@types/index.d.ts' ),
+		alias: makeAliases(baseConfiguration.resolve.alias, tsConfig, __dirname),
+	},
+	output: {},
+}
+
+module.exports = [
+	{
+		...configuration,
+		entry: {
+		},
+		output: {
 		},
 	},
-	output: {
-		...baseConfiguration.output,
-		filename: '[name].js',
-		library: {
-			name: 'wp-konomi',
-			type: 'window',
-		},
-	},
-};
+]

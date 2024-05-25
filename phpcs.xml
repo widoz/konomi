@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ruleset>
     <file>./konomi.php</file>
-    <file>./sources/server/</file>
-    <file>./tests/</file>
+    <file>./sources</file>
+    <file>./tests</file>
 
     <arg value="sp"/>
     <arg name="colors"/>

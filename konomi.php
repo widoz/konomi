@@ -46,5 +46,10 @@ function package(): Modularity\Package
 
 \add_action(
     'plugins_loaded',
-    fn() => package()->boot()
+    static function () {
+        $package = package();
+        $properties = $package->properties();
+
+        $package->boot();
+    }
 );
