@@ -45,10 +45,10 @@ class Module implements ServiceModule, ExecutableModule
                             'type' => 'string',
                         ],
                     ],
-                    'default' => [
-                        'iconsPathUrl' => $this->appProperties->baseUrl() . 'resources/icons',
-                    ],
                 ],
+            ],
+            'default' => [
+                'iconsPathUrl' => $this->appProperties->baseUrl() . 'resources/icons',
             ],
             'description' => 'Konomi Settings',
         ]);
