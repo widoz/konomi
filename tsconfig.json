@@ -44,12 +44,16 @@
 			],
 			"@wordpress/block-editor": [
 				"./node_modules/@wordpress/block-editor/src"
+			],
+			"@wordpress/blocks": [
+				"./node_modules/@wordpress/blocks/src"
 			]
 		}
 	},
 	"include": [
 		"./sources",
-		"./@types"
+		"./@types",
+		"./node_modules/@wordpress"
 	],
 	"exclude": [
 		"dist",

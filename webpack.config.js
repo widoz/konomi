@@ -38,12 +38,12 @@ module.exports = [
 	{
 		...configuration,
 		entry: {
-			like: './sources/Blocks/like/index.ts',
+			'like-block': './sources/Blocks/like/index.ts',
 		},
 		output: {
 			filename: '[name].js',
 			path: path.resolve('./sources/Blocks/like/dist'),
 			clean: true,
 		},
-	},
+	}
 ]

@@ -27,8 +27,7 @@ class Module implements ServiceModule, ExecutableModule
 
     public function services(): array
     {
-        return [
-        ];
+        return [];
     }
 
     // TODO Encapsulate the Settings Schema.

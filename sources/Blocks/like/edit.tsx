@@ -16,11 +16,11 @@ export default function Edit(): JSX.Element {
 	const { iconsPathUrl } = useConfiguration();
 
 	return (
-		<div { ...useBlockProps() }>
+		<button { ...useBlockProps() }>
 			<img
 				src={ `${ iconsPathUrl.toString() }/suit-heart.svg` }
 				alt="Like"
 			/>
-		</div>
+		</button>
 	);
 }

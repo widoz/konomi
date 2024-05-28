@@ -1,13 +1,11 @@
 <?php
 
-//$arguments = sanitize_block_arguments($arguments);
-$arguments = wp_parse_args($args, [
-    'title' => '',
-]);
+declare(strict_types=1);
+
+$konomi = get_option('konomi');
+$imgUrl = (string)($konomi['iconsPathUrl'] ?? '');
 ?>
 
-<div <?= get_block_wrapper_attributes(); ?>>
-    <?php if (!empty($arguments['title'])) : ?>
-        <p><?= $arguments['title']; ?></p>
-    <?php endif; ?>
-</div>
+<button <?= get_block_wrapper_attributes() ?>>
+    <img src="<?= esc_url("{$imgUrl}/suit-heart.svg") ?>" alt="Konomi Icon" />
+</button>

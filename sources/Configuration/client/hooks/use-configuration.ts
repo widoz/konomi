@@ -8,6 +8,7 @@ import { useSelect } from '@wordpress/data';
 import type Konomi from '@konomi/types';
 
 // TODO Introduce Zod Lib?
+// TODO Add Immutable Map?
 export function useConfiguration(): Konomi.Configuration {
 	const configuration: Partial< Konomi.Configuration > = useSelect(
 		( select ) => select( 'core' ).getSite().konomi ?? {}

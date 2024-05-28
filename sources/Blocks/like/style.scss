@@ -1,2 +1,8 @@
+@use '@konomi/functions';
+
 .wp-block-konomi-like {
+  img {
+    min-width: #{functions.em(24)};
+    height: auto;
+  }
 }

@@ -12,8 +12,8 @@
 		"html": false
 	},
 	"textdomain": "konomi",
-	"editorScript": "file:./dist/like.js",
+	"editorScript": "file:./dist/like-block.js",
 	"editorStyle": "file:./dist/like.css",
-	"style": "file:./dist/style-like.css",
+	"style": "file:./dist/style-like-block.css",
 	"render": "file:./render.php"
 }

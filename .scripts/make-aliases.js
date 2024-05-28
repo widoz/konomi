@@ -22,6 +22,7 @@ function makeAliases (externalAliases, tsConfig, basePath) {
 	return {
 		...externalAliases,
 		...aliases,
+		'@konomi/functions': path.resolve(basePath, 'resources/scss/functions/index.scss'),
 	}
 }
 
