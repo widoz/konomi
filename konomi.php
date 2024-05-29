@@ -50,9 +50,9 @@ function package(): Modularity\Package
         $package = package();
         $properties = $package->properties();
 
-        $package->boot(
-            Configuration\Module::new($properties),
-            Blocks\Module::new($properties)
-        );
+        $package
+            ->addModule(Configuration\Module::new($properties))
+            ->addModule(Blocks\Module::new($properties))
+            ->boot();
     }
 );
