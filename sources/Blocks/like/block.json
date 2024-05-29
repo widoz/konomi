@@ -15,8 +15,5 @@
 	"editorScript": "file:./dist/like-block.js",
 	"editorStyle": "file:./dist/like.css",
 	"style": "file:./dist/style-like-block.css",
-	"render": "file:./render.php",
-	"blockHooks": {
-		"core/post-title": "after"
-	}
+	"render": "file:./render.php"
 }
