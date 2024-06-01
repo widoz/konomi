@@ -13,18 +13,33 @@ const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extract
 const tsConfig = require('./tsconfig.json')
 const makeAliases = require('./.scripts/make-aliases')
 
+const EXTRACTION_CONFIGURATION = {
+	'@konomi/configuration': ['konomiConfiguration', 'konomi-configuration']
+}
+
 const configuration = {
 	...baseConfiguration,
 	plugins: [
-		...baseConfiguration.plugins.filter((plugin) => {
-			return (
-			  plugin.constructor.name !==
-			  'DependencyExtractionWebpackPlugin' &&
-			  plugin.constructor.name !== 'CopyPlugin'
-			)
-		}),
+		...baseConfiguration.plugins.filter((plugin) => ![
+			'DependencyExtractionWebpackPlugin',
+			'CopyPlugin',
+		].includes(plugin.constructor.name)),
 		new DependencyExtractionWebpackPlugin({
 			outputFormat: 'php',
+			requestToExternal: ( request ) => {
+				if ( EXTRACTION_CONFIGURATION[ request ] ) {
+					return EXTRACTION_CONFIGURATION[ request ]?.[ 0 ];
+				}
+
+				return undefined;
+			},
+			requestToHandle: ( request ) => {
+				if ( EXTRACTION_CONFIGURATION[ request ] ) {
+					return EXTRACTION_CONFIGURATION[ request ]?.[ 1 ];
+				}
+
+				return undefined;
+			},
 		}),
 	],
 	resolve: {
@@ -38,7 +53,23 @@ module.exports = [
 	{
 		...configuration,
 		entry: {
-			'like-block': './sources/Blocks/like/index.ts',
+			'konomi-configuration': './sources/Configuration/client/index.ts',
+		},
+		output: {
+			filename: '[name].js',
+			path: path.resolve('./sources/Configuration/client/dist'),
+			clean: true,
+			library: {
+				name: 'konomiConfiguration',
+				type: 'window',
+			},
+		},
+		name: 'konomi-configuration'
+	},
+	{
+		...configuration,
+		entry: {
+			'konomi-like-block': './sources/Blocks/like/index.ts',
 		},
 		output: {
 			filename: '[name].js',

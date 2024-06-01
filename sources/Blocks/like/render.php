@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-$konomi = get_option('konomi');
-$imgUrl = (string)($konomi['iconsPathUrl'] ?? '');
+use Widoz\Wp\Konomi;
+
+$configuration = Konomi\Functions\package()->container()->get(Konomi\Configuration\Configuration::class);
+$imgUrl = $configuration->iconsPathUrl();
 ?>
 
 <button <?= get_block_wrapper_attributes() ?>>

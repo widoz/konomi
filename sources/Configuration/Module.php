@@ -27,31 +27,33 @@ class Module implements ServiceModule, ExecutableModule
 
     public function services(): array
     {
-        return [];
+        return [
+            Configuration::class => fn() => Configuration::new($this->appProperties),
+        ];
     }
 
-    // TODO Encapsulate the Settings Schema.
     public function run(ContainerInterface $container): bool
     {
-        register_setting('konomi', 'konomi', [
-            'type' => 'object',
-            'show_in_rest' => [
-                'name' => 'konomi',
-                'schema' => [
-                    'type' => 'object',
-                    'properties' => [
-                        'iconsPathUrl' => [
-                            'type' => 'string',
-                        ],
-                    ],
-                ],
-            ],
-            'default' => [
-                'iconsPathUrl' => $this->appProperties->baseUrl() . 'resources/icons',
-            ],
-            'description' => 'Konomi Settings',
-        ]);
+        add_action('enqueue_block_editor_assets', function () use ($container): void {
+            $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
+            $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
 
+            $configuration = (array)(include "{$baseDir}/sources/Configuration/client/dist/konomi-configuration.asset.php");
+
+            wp_register_script(
+                'konomi-configuration',
+                "{$baseUrl}/sources/Configuration/client/dist/konomi-configuration.js",
+                $configuration['dependencies'] ?? [],
+                $configuration['version'],
+                true
+            );
+
+            wp_add_inline_script(
+                'konomi-configuration',
+                $container->get(Configuration::class)->inlineScript(),
+                'before'
+            );
+        });
         return true;
     }
 }

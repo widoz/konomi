@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi;
 
-\add_action(
+add_action(
     'plugins_loaded',
     static function () {
         // phpcs:disable Squiz.PHP.InnerFunctions.NotAllowed
