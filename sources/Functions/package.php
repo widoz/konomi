@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi;
+namespace Widoz\Wp\Konomi\Functions;
 
 use Inpsyde\Modularity;
 

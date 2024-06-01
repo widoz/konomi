@@ -30,7 +30,7 @@ namespace Widoz\Wp\Konomi;
         }
 
         autoload(__DIR__);
-        $package = package();
+        $package = Functions\package();
         $properties = $package->properties();
 
         $package
