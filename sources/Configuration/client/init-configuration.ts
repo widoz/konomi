@@ -8,10 +8,11 @@ let configuration: Konomi.Configuration | null = null;
 export function initConfiguration(
 	serializedConfiguration: string
 ): Konomi.Configuration {
-	if ( ! configuration ) {
-		configuration = parseConfiguration( serializedConfiguration );
+	if ( configuration !== null ) {
+		return configuration;
 	}
 
+	configuration = parseConfiguration( serializedConfiguration );
 	assertConfiguration( configuration );
 	return configuration;
 }
