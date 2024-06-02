@@ -1,2 +1,2 @@
 export * from './hooks';
-export * from './init-configuration'
+export * from './init-configuration';
