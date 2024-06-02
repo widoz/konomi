@@ -23,14 +23,9 @@ class Configuration
         return "{$baseUrl}/resources/icons";
     }
 
-    public function inlineScript(): string
+    public function serialize(): string
     {
-        return "window.konomi = " . $this->serialize() . ";";
-    }
-
-    private function serialize(): string
-    {
-        return wp_json_encode(
+        return (string)wp_json_encode(
             [
                 'iconsPathUrl' => $this->iconsPathUrl(),
             ]

@@ -34,15 +34,18 @@ class Module implements ServiceModule, ExecutableModule
 
     public function run(ContainerInterface $container): bool
     {
+        // TODO Improve assets loading, creating a custom module or reuse Syde\Assets.
         add_action('enqueue_block_editor_assets', function () use ($container): void {
+            $service = $container->get(Configuration::class);
+            $distLocationPath = 'sources/Configuration/client/dist';
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
 
-            $configuration = (array)(include "{$baseDir}/sources/Configuration/client/dist/konomi-configuration.asset.php");
+            $configuration = (array)(include "{$baseDir}/{$distLocationPath}/konomi-configuration.asset.php");
 
             wp_register_script(
                 'konomi-configuration',
-                "{$baseUrl}/sources/Configuration/client/dist/konomi-configuration.js",
+                "{$baseUrl}/{$distLocationPath}/konomi-configuration.js",
                 $configuration['dependencies'] ?? [],
                 $configuration['version'],
                 true
@@ -50,8 +53,7 @@ class Module implements ServiceModule, ExecutableModule
 
             wp_add_inline_script(
                 'konomi-configuration',
-                $container->get(Configuration::class)->inlineScript(),
-                'before'
+                "window.konomiConfiguration.initConfiguration('{$service->serialize()}');"
             );
         });
         return true;

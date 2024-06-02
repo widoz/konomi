@@ -2,15 +2,14 @@
  * External dependencies
  */
 import type Konomi from '@konomi/types';
+import {initConfiguration} from '../init-configuration'
 
 // TODO Introduce Zod Lib?
 // TODO Add Immutable Map?
 export function useConfiguration(): Konomi.Configuration {
-	// @ts-ignore
-	const configuration: Partial< Konomi.Configuration > = window['konomi'] ?? {}
-
+	const configuration = initConfiguration();
 	return {
 		...configuration,
-		iconsPathUrl: new URL( configuration.iconsPathUrl ?? '' ),
+		iconsPathUrl: new URL(configuration.iconsPathUrl ?? ''),
 	};
 }

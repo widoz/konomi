@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Widoz\Wp\Konomi;
 
-$configuration = Konomi\Functions\package()->container()->get(Konomi\Configuration\Configuration::class);
+$configuration = Konomi\Functions\configuration();
 $imgUrl = $configuration->iconsPathUrl();
 ?>
 
