@@ -1,11 +1,14 @@
+/**
+ * External dependencies
+ */
 import type Konomi from '@konomi/types';
 
-let configuration: Konomi.Configuration | undefined = undefined;
+let configuration: Konomi.Configuration | null = null;
 
 export function initConfiguration(
-	serializedConfiguration: string | undefined = undefined
+	serializedConfiguration: string
 ): Konomi.Configuration {
-	if ( ! configuration && serializedConfiguration ) {
+	if ( ! configuration ) {
 		configuration = parseConfiguration( serializedConfiguration );
 	}
 
@@ -14,24 +17,31 @@ export function initConfiguration(
 }
 
 function assertConfiguration(
-	parsedConfiguration: typeof configuration
+	parsedConfiguration: unknown
 ): asserts parsedConfiguration is Konomi.Configuration {
-	if ( ! parsedConfiguration ) {
+	if ( ! Boolean( parsedConfiguration ) ) {
 		throw new Error( 'Configuration not initialized' );
 	}
 }
 
-function parseConfiguration( configuration: string ): Konomi.Configuration {
+function parseConfiguration(
+	serializedConfiguration: string
+): Konomi.Configuration {
 	try {
-		return JSON.parse( configuration );
+		return JSON.parse( serializedConfiguration );
 	} catch ( error ) {
-		if ( error instanceof SyntaxError ) {
-			throw new Error(
-				`Konomi invalid configuration: ${
-					error.message ?? 'unknown error'
-				}`
-			);
-		}
-		throw error;
+		throw new Error(
+			`Konomi invalid configuration: ${ extractErrorMessageFromError(
+				error
+			) }`
+		);
 	}
+}
+
+// eslint-disable-next-line complexity
+function extractErrorMessageFromError( error: unknown ): string {
+	let errorMessage = typeof error === 'string' ? error : undefined;
+	errorMessage = error instanceof Error ? error.message : errorMessage;
+
+	return errorMessage ?? 'unknown error';
 }
