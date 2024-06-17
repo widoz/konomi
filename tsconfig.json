@@ -59,7 +59,7 @@
 		"./node_modules/@wordpress"
 	],
 	"exclude": [
-		"dist",
+		"**/dist/",
 		"node_modules",
 		"tests"
 	]
