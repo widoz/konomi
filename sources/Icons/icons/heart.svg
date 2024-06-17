@@ -1,0 +1,13 @@
+<svg
+   width="64"
+   height="64"
+   fill="currentColor"
+   class="konomi-icon konomi-icon--heart"
+   viewBox="0 0 17 14.704494"
+   version="1.1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <path
+     d="m 4.5,0.5 c 2.21,0 4,1.755 4,3.92 0,-2.165 1.79,-3.92 4,-3.92 2.21,0 4,1.755 4,3.92 0,3.263 -3.234,4.414 -7.608,9.608 a 0.513,0.513 0 0 1 -0.784,0 C 3.734,8.834 0.5,7.683 0.5,4.42 0.5,2.255 2.29,0.5 4.5,0.5"
+  />
+</svg>

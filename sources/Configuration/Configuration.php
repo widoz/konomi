@@ -13,14 +13,20 @@ class Configuration
         return new self($properties);
     }
 
-    final private function __construct(private Modularity\Properties\Properties $properties)
+    final private function __construct(readonly private Modularity\Properties\Properties $properties)
     {
     }
 
     public function iconsPathUrl(): string
     {
         $baseUrl = untrailingslashit($this->properties->baseUrl() ?? '');
-        return "{$baseUrl}/resources/icons";
+        return "{$baseUrl}/sources/Icons/icons";
+    }
+
+    public function iconsPath(): string
+    {
+        $basePath = untrailingslashit($this->properties->basePath() ?? '');
+        return "{$basePath}/sources/Icons/icons";
     }
 
     public function serialize(): string
@@ -28,6 +34,7 @@ class Configuration
         return (string)wp_json_encode(
             [
                 'iconsPathUrl' => $this->iconsPathUrl(),
+                'iconsPath' => $this->iconsPath(),
             ]
         );
     }

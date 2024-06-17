@@ -14,7 +14,8 @@ const tsConfig = require('./tsconfig.json')
 const makeAliases = require('./.scripts/make-aliases')
 
 const EXTRACTION_CONFIGURATION = {
-	'@konomi/configuration': ['konomiConfiguration', 'konomi-configuration']
+	'@konomi/configuration': ['konomiConfiguration', 'konomi-configuration'],
+	'@konomi/icons': ['konomiIcons', 'konomi-icons']
 }
 
 const configuration = {
@@ -65,6 +66,22 @@ module.exports = [
 			},
 		},
 		name: 'konomi-configuration'
+	},
+	{
+		...configuration,
+		entry: {
+			'konomi-icons': './sources/Icons/client/index.ts',
+		},
+		output: {
+			filename: '[name].js',
+			path: path.resolve('./sources/Icons/client/dist'),
+			clean: true,
+			library: {
+				name: 'konomiIcons',
+				type: 'window',
+			},
+		},
+		name: 'konomi-icons'
 	},
 	{
 		...configuration,

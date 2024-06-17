@@ -21,7 +21,7 @@ class Module implements ServiceModule, ExecutableModule
         return new self($appProperties);
     }
 
-    final private function __construct(private Properties $appProperties)
+    final private function __construct(readonly private Properties $appProperties)
     {
     }
 

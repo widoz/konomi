@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Configuration;
+namespace Widoz\Wp\Konomi\Icons;
 
 use Psr\Container\ContainerInterface;
 use Inpsyde\Modularity\{
-    Module\ServiceModule,
     Module\ExecutableModule,
+    Module\ServiceModule,
     Module\ModuleClassNameIdTrait,
     Properties\Properties
 };
+use Widoz\Wp\Konomi\Configuration;
 
 class Module implements ServiceModule, ExecutableModule
 {
@@ -28,34 +29,30 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            Configuration::class => fn() => Configuration::new($this->appProperties),
+            Render::class => fn(ContainerInterface $container) => Render::new(
+                $container->get(Configuration\Configuration::class)
+            ),
         ];
     }
 
     public function run(ContainerInterface $container): bool
     {
-        // TODO Improve assets loading, creating a custom module or reuse Syde\Assets.
-        add_action('enqueue_block_editor_assets', function () use ($container): void {
-            $service = $container->get(Configuration::class);
-            $distLocationPath = 'sources/Configuration/client/dist';
+        add_action('init', function () {
+            $distLocationPath = 'sources/Icons/client/dist';
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
 
-            $configuration = (array)(include "{$baseDir}/{$distLocationPath}/konomi-configuration.asset.php");
+            $configuration = (array)(include "{$baseDir}/{$distLocationPath}/konomi-icons.asset.php");
 
             wp_register_script(
-                'konomi-configuration',
-                "{$baseUrl}/{$distLocationPath}/konomi-configuration.js",
+                'konomi-icons',
+                "{$baseUrl}/{$distLocationPath}/konomi-icons.js",
                 $configuration['dependencies'] ?? [],
                 $configuration['version'],
                 true
             );
-
-            wp_add_inline_script(
-                'konomi-configuration',
-                "window.konomiConfiguration.initConfiguration('{$service->serialize()}');"
-            );
         });
+
         return true;
     }
 }

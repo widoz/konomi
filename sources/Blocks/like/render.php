@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-use Widoz\Wp\Konomi;
+use Widoz\Wp\Konomi\Icons;
 
-$configuration = Konomi\Functions\configuration();
-$imgUrl = $configuration->iconsPathUrl();
 ?>
 
 <button <?= get_block_wrapper_attributes() ?>>
-    <img src="<?= esc_url("{$imgUrl}/suit-heart.svg") ?>" alt="Konomi Icon" />
+    <?= Icons\renderIcon('heart') ?>
 </button>

@@ -2,7 +2,7 @@
 charset = utf-8
 end_of_line = crlf
 indent_size = 4
-indent_style = space
+indent_style = tab
 insert_final_newline = true
 max_line_length = 100
 tab_width = 4
@@ -16,7 +16,7 @@ ij_visual_guides = 80
 ij_wrap_on_typing = true
 
 [*.css]
-ij_visual_guides = 
+ij_visual_guides =
 ij_css_align_closing_brace_with_properties = false
 ij_css_blank_lines_around_nested_selector = 1
 ij_css_blank_lines_between_blocks = 1
@@ -38,7 +38,7 @@ ij_css_value_alignment = do_not_align
 
 [*.sass]
 indent_size = 2
-ij_visual_guides = 
+ij_visual_guides =
 ij_sass_align_closing_brace_with_properties = false
 ij_sass_blank_lines_around_nested_selector = 1
 ij_sass_blank_lines_between_blocks = 1
@@ -61,7 +61,7 @@ ij_sass_value_alignment = 0
 
 [*.scss]
 indent_size = 2
-ij_visual_guides = 
+ij_visual_guides =
 ij_scss_align_closing_brace_with_properties = false
 ij_scss_blank_lines_around_nested_selector = 1
 ij_scss_blank_lines_between_blocks = 1
@@ -84,7 +84,7 @@ ij_scss_use_double_quotes = true
 ij_scss_value_alignment = 0
 
 [.editorconfig]
-ij_visual_guides = 
+ij_visual_guides =
 ij_editorconfig_align_group_field_declarations = false
 ij_editorconfig_space_after_colon = false
 ij_editorconfig_space_after_comma = true
@@ -93,7 +93,7 @@ ij_editorconfig_space_before_comma = false
 ij_editorconfig_spaces_around_assignment_operators = true
 
 [{*.ant,*.dist,*.fxml,*.jhm,*.jnlp,*.jrxml,*.rng,*.tld,*.wsdl,*.xml,*.xsd,*.xsl,*.xslt,*.xul,phpunit.xml.dist}]
-ij_visual_guides = 
+ij_visual_guides =
 ij_xml_align_attributes = true
 ij_xml_align_text = false
 ij_xml_attribute_wrap = normal
@@ -202,7 +202,7 @@ ij_typescript_prefer_explicit_types_function_expression_returns = false
 ij_typescript_prefer_explicit_types_function_returns = false
 ij_typescript_prefer_explicit_types_vars_fields = false
 ij_typescript_prefer_parameters_wrap = false
-ij_typescript_property_prefix = 
+ij_typescript_property_prefix =
 ij_typescript_reformat_c_style_comments = false
 ij_typescript_space_after_colon = true
 ij_typescript_space_after_comma = true
@@ -290,7 +290,7 @@ ij_typescript_wrap_comments = false
 [{*.bash,*.sh,*.zsh}]
 indent_size = 2
 tab_width = 2
-ij_visual_guides = 
+ij_visual_guides =
 ij_shell_binary_ops_start_line = false
 ij_shell_keep_column_alignment_padding = false
 ij_shell_minify_program = false
@@ -385,7 +385,7 @@ ij_javascript_prefer_explicit_types_function_expression_returns = false
 ij_javascript_prefer_explicit_types_function_returns = false
 ij_javascript_prefer_explicit_types_vars_fields = false
 ij_javascript_prefer_parameters_wrap = false
-ij_javascript_property_prefix = 
+ij_javascript_property_prefix =
 ij_javascript_reformat_c_style_comments = false
 ij_javascript_space_after_colon = true
 ij_javascript_space_after_comma = true
@@ -471,8 +471,9 @@ ij_javascript_while_on_new_line = false
 ij_javascript_wrap_comments = false
 
 [{*.ctp,*.hphp,*.inc,*.module,*.php,*.php4,*.php5,*.phtml}]
+indent_style = space
 ij_continuation_indent_size = 4
-ij_visual_guides = 
+ij_visual_guides =
 ij_php_align_assignments = false
 ij_php_align_class_constants = false
 ij_php_align_enum_cases = false
@@ -700,7 +701,7 @@ ij_php_while_on_new_line = false
 
 [{*.har,*.jsb2,*.jsb3,*.json,*.jsonc,.babelrc,.eslintrc,.prettierrc,.stylelintrc,.ws-context,bowerrc,composer.lock,jest.config}]
 indent_size = 2
-ij_visual_guides = 
+ij_visual_guides =
 ij_json_array_wrapping = split_into_lines
 ij_json_keep_blank_lines_in_code = 0
 ij_json_keep_indents_on_empty_lines = false
@@ -747,7 +748,7 @@ ij_html_space_inside_empty_tag = true
 ij_html_text_wrap = normal
 
 [{*.markdown,*.md}]
-ij_visual_guides = 
+ij_visual_guides =
 ij_markdown_force_one_space_after_blockquote_symbol = true
 ij_markdown_force_one_space_after_header_symbol = true
 ij_markdown_force_one_space_after_list_bullet = true
@@ -767,7 +768,7 @@ ij_markdown_wrap_text_inside_blockquotes = true
 
 [{*.yaml,*.yml}]
 indent_size = 2
-ij_visual_guides = 
+ij_visual_guides =
 ij_yaml_align_values_properties = do_not_align
 ij_yaml_autoinsert_sequence_marker = true
 ij_yaml_block_mapping_on_new_line = false

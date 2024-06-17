@@ -30,11 +30,12 @@ add_action(
         }
 
         autoload(__DIR__);
-        $package = Functions\package();
+        $package = package();
         $properties = $package->properties();
 
         $package
             ->addModule(Configuration\Module::new($properties))
+            ->addModule(Icons\Module::new($properties))
             ->addModule(Blocks\Module::new($properties))
             ->boot();
     }

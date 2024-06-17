@@ -115,7 +115,6 @@
 			"error",
 			"property"
 		],
-		"@wordpress/dependency-group": "error",
 		"@wordpress/i18n-text-domain": [
 			"error",
 			{
