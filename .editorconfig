@@ -37,7 +37,6 @@ ij_css_use_double_quotes = true
 ij_css_value_alignment = do_not_align
 
 [*.sass]
-indent_size = 2
 ij_visual_guides =
 ij_sass_align_closing_brace_with_properties = false
 ij_sass_blank_lines_around_nested_selector = 1
@@ -60,7 +59,6 @@ ij_sass_use_double_quotes = true
 ij_sass_value_alignment = 0
 
 [*.scss]
-indent_size = 2
 ij_visual_guides =
 ij_scss_align_closing_brace_with_properties = false
 ij_scss_blank_lines_around_nested_selector = 1
@@ -113,8 +111,6 @@ ij_xml_space_inside_empty_tag = false
 ij_xml_text_wrap = normal
 
 [{*.ats,*.cts,*.mts,*.ts}]
-indent_style = tab
-ij_continuation_indent_size = 4
 ij_typescript_align_imports = false
 ij_typescript_align_multiline_array_initializer_expression = false
 ij_typescript_align_multiline_binary_operation = false
@@ -299,8 +295,6 @@ ij_shell_switch_cases_indented = false
 ij_shell_use_unix_line_separator = true
 
 [{*.cjs,*.js}]
-indent_style = tab
-ij_continuation_indent_size = 4
 ij_smart_tabs = true
 ij_javascript_align_imports = false
 ij_javascript_align_multiline_array_initializer_expression = false
@@ -700,7 +694,6 @@ ij_php_while_brace_force = never
 ij_php_while_on_new_line = false
 
 [{*.har,*.jsb2,*.jsb3,*.json,*.jsonc,.babelrc,.eslintrc,.prettierrc,.stylelintrc,.ws-context,bowerrc,composer.lock,jest.config}]
-indent_size = 2
 ij_visual_guides =
 ij_json_array_wrapping = split_into_lines
 ij_json_keep_blank_lines_in_code = 0
@@ -718,8 +711,6 @@ ij_json_spaces_within_brackets = false
 ij_json_wrap_long_lines = false
 
 [{*.htm,*.html,*.sht,*.shtm,*.shtml}]
-indent_style = tab
-ij_continuation_indent_size = 4
 ij_html_add_new_line_before_tags = body,div,p,form,h1,h2,h3
 ij_html_align_attributes = true
 ij_html_align_text = false
@@ -767,7 +758,6 @@ ij_markdown_wrap_text_if_long = true
 ij_markdown_wrap_text_inside_blockquotes = true
 
 [{*.yaml,*.yml}]
-indent_size = 2
 ij_visual_guides =
 ij_yaml_align_values_properties = do_not_align
 ij_yaml_autoinsert_sequence_marker = true
