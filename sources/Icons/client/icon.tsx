@@ -7,7 +7,7 @@ import { useConfiguration } from '@konomi/configuration';
 
 type Properties = Readonly< { icon: string } >;
 
-export function Render( props: Properties ): JSX.Element {
+export function Icon( props: Properties ): JSX.Element {
 	const { iconsPathUrl } = useConfiguration();
 	return (
 		<img
