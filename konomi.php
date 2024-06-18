@@ -36,6 +36,7 @@ add_action(
         $package
             ->addModule(Configuration\Module::new($properties))
             ->addModule(Icons\Module::new($properties))
+            ->addModule(User\Module::new())
             ->addModule(Blocks\Module::new($properties))
             ->boot();
     }
