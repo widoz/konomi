@@ -6,30 +6,38 @@ namespace Widoz\Wp\Konomi\User;
 
 class Collection
 {
-    public static function new(User $user, Meta\Read $read, ItemFactory $itemFactory): Collection
+    private static array|null $cache = null;
+
+    public static function new(User $user, Meta\Read $data, ItemFactory $itemFactory): Collection
     {
-        return new self($user, $read, $itemFactory);
+        return new self($user, $data, $itemFactory);
     }
 
     final private function __construct(
         readonly private User $user,
-        readonly private Meta\Read $read,
+        readonly private Meta\Read $data,
         readonly private ItemFactory $itemFactory
     ) {}
 
-    public function items(): \Generator
+    public function items(): ?array
     {
         if (!$this->user->isLoggedIn()) {
-            return;
+            return [];
+        }
+        if (self::$cache !== null) {
+            return self::$cache;
         }
 
-        foreach ($this->collectRawItems() as [$id, $type]) {
-            yield $this->itemFactory->create($id, $type);
+        foreach ($this->data->read() as [$id, $type]) {
+            self::$cache[$id] = $this->itemFactory->create($id, $type);
         }
+
+        return self::$cache;
     }
 
-    private function collectRawItems(): array
+    public function find(int $id): ?Item
     {
-        return $this->read->read();
+        self::$cache === null and self::$cache = $this->items();
+        return self::$cache[$id] ?? NullItem::new();
     }
 }

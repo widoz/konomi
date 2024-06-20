@@ -27,8 +27,9 @@
 			"Widoz\\Wp\\Konomi\\": "sources/"
 		},
 		"files": [
+			"sources/package.php",
 			"sources/Icons/api.php",
-			"sources/package.php"
+			"sources/User/api.php"
 		]
 	},
 	"config": {

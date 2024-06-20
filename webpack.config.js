@@ -18,12 +18,15 @@ const EXTRACTION_CONFIGURATION = {
 	'@konomi/icons': ['konomiIcons', 'konomi-icons']
 }
 
+const [baseScriptConfig, baseModuleConfig] = baseConfiguration
+
 const configuration = {
-	...baseConfiguration,
+	...baseScriptConfig,
 	plugins: [
-		...baseConfiguration.plugins.filter((plugin) => ![
+		...baseScriptConfig.plugins.filter((plugin) => ![
 			'DependencyExtractionWebpackPlugin',
 			'CopyPlugin',
+			'RtlCssPlugin'
 		].includes(plugin.constructor.name)),
 		new DependencyExtractionWebpackPlugin({
 			outputFormat: 'php',
@@ -44,13 +47,16 @@ const configuration = {
 		}),
 	],
 	resolve: {
-		...baseConfiguration.resolve,
-		alias: makeAliases(baseConfiguration.resolve.alias, tsConfig, __dirname),
+		...baseScriptConfig.resolve,
+		alias: makeAliases(baseScriptConfig.resolve.alias, tsConfig, __dirname),
 	},
 	output: {},
 }
 
 module.exports = [
+	/*
+	 * The Configuration build
+	 */
 	{
 		...configuration,
 		entry: {
@@ -67,6 +73,10 @@ module.exports = [
 		},
 		name: 'konomi-configuration'
 	},
+
+	/*
+	 * The Icons build
+	 */
 	{
 		...configuration,
 		entry: {
@@ -83,6 +93,10 @@ module.exports = [
 		},
 		name: 'konomi-icons'
 	},
+
+	/*
+	 * The Like block build
+	 */
 	{
 		...configuration,
 		entry: {
@@ -91,6 +105,18 @@ module.exports = [
 		output: {
 			filename: '[name].js',
 			path: path.resolve('./sources/Blocks/like/dist'),
+			clean: true,
+		},
+	},
+	{
+		...baseModuleConfig,
+		entry: {
+			'konomi-like-block-view': './sources/Blocks/like/view.ts',
+		},
+		output: {
+			...baseModuleConfig.output,
+			filename: '[name].js',
+			path: path.resolve('./sources/Blocks/like/module'),
 			clean: true,
 		},
 	}

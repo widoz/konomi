@@ -13,6 +13,7 @@
 	},
 	"textdomain": "konomi",
 	"editorScript": "file:./dist/konomi-like-block.js",
+	"viewScriptModule": "file:./module/konomi-like-block-view.js",
 	"style": "file:./dist/style-konomi-like-block.css",
 	"render": "file:./render.php"
 }

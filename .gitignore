@@ -1,6 +1,7 @@
 /.psalm
 /.idea
 /sources/**/dist/
+/sources/**/module/
 /coverage
 /vendor/
 /node_modules/
