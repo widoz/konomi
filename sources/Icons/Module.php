@@ -11,7 +11,6 @@ use Inpsyde\Modularity\{
     Module\ModuleClassNameIdTrait,
     Properties\Properties
 };
-use Widoz\Wp\Konomi\Configuration;
 
 class Module implements ServiceModule, ExecutableModule
 {
@@ -29,8 +28,8 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            Render::class => fn(ContainerInterface $container) => Render::new(
-                $container->get(Configuration\Configuration::class)
+            'konomi.icons.render' => fn(ContainerInterface $container) => Render::new(
+                $container->get('konomi.configuration')
             ),
         ];
     }

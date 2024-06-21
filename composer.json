@@ -28,6 +28,7 @@
 		},
 		"files": [
 			"sources/package.php",
+			"sources/Blocks/api.php",
 			"sources/Icons/api.php",
 			"sources/User/api.php"
 		]

@@ -6,7 +6,7 @@ namespace Widoz\Wp\Konomi\Icons;
 
 use function Widoz\Wp\Konomi\package;
 
-function renderIcon(string $name): string
+function icon(): Render
 {
-    return package()->container()->get(Render::class)->render($name);
+    return package()->container()->get('konomi.icons.render');
 }

@@ -6,7 +6,7 @@ namespace Widoz\Wp\Konomi\User;
 
 use function Widoz\Wp\Konomi\package;
 
-function findItem(int $id): ?Item
+function user(): User
 {
-    return package()->container()->get('konomi.likes.like-collection')->find($id);
+    return package()->container()->get('konomi.user');
 }

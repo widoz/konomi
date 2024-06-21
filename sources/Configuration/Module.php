@@ -28,7 +28,7 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            Configuration::class => fn() => Configuration::new($this->appProperties),
+            'konomi.configuration' => fn() => Configuration::new($this->appProperties),
         ];
     }
 
@@ -36,7 +36,7 @@ class Module implements ServiceModule, ExecutableModule
     {
         // TODO Improve assets loading, creating a custom module or reuse Syde\Assets.
         add_action('enqueue_block_editor_assets', function () use ($container): void {
-            $service = $container->get(Configuration::class);
+            $service = $container->get('konomi.configuration');
             $distLocationPath = 'sources/Configuration/client/dist';
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');

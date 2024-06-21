@@ -4,26 +4,25 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\User;
 
+/**
+ * @internal
+ */
 class Collection
 {
     private static array|null $cache = null;
 
-    public static function new(User $user, Meta\Read $data, ItemFactory $itemFactory): Collection
+    public static function new(Meta\Read $data, ItemFactory $itemFactory): Collection
     {
-        return new self($user, $data, $itemFactory);
+        return new self($data, $itemFactory);
     }
 
     final private function __construct(
-        readonly private User $user,
         readonly private Meta\Read $data,
         readonly private ItemFactory $itemFactory
     ) {}
 
     public function items(): ?array
     {
-        if (!$this->user->isLoggedIn()) {
-            return [];
-        }
         if (self::$cache !== null) {
             return self::$cache;
         }

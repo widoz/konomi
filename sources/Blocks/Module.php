@@ -28,15 +28,18 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            BlockRegistrar::class => fn() => BlockRegistrar::new(
+            'konomi.blocks.registrar' => fn() => BlockRegistrar::new(
                 "{$this->appProperties->basePath()}/sources/Blocks"
             ),
+            'konomi.blocks.like-context' => fn(ContainerInterface $container) => LikeContext::new(
+                $container->get('konomi.user')
+            )
         ];
     }
 
     public function run(ContainerInterface $container): bool
     {
-        add_action('init', [$container->get(BlockRegistrar::class), 'registerBlockTypes']);
+        add_action('init', [$container->get('konomi.blocks.registrar'), 'registerBlockTypes']);
 
         return true;
     }

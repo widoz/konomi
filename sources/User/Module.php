@@ -27,17 +27,17 @@ class Module implements ServiceModule, ExecutableModule
     {
         // TODO Refactor all other container services names for consistency
         return [
-            'konomi.user' => static fn() => User::new(),
+            'konomi.user' => static fn(ContainerInterface $container) => User::new(
+                $container->get('konomi.likes.collection')
+            ),
+            'konomi.user.meta.read' => static fn() => Likes\Meta\Read::new(),
 
-            'konomi.meta.read' => static fn() => Likes\Meta\Read::new(),
-            'konomi.likes.like-factory' => static fn() => Likes\LikeFactory::new(),
-
-            'konomi.likes.like-collection' => static fn(
+            'konomi.likes.factory' => static fn() => Likes\LikeFactory::new(),
+            'konomi.likes.collection' => static fn(
                 ContainerInterface $container
             ) => Collection::new(
-                $container->get('konomi.user'),
-                $container->get('konomi.meta.read'),
-                $container->get('konomi.likes.like-factory')
+                $container->get('konomi.user.meta.read'),
+                $container->get('konomi.likes.factory')
             ),
         ];
     }
