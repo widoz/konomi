@@ -23,7 +23,7 @@ class LikeContext
         return wp_json_encode([
             'entityId' => $id,
             'entityType' => $type,
-            'isActive' => !!$this->user->findLike($id),
+            'isActive' => !!$this->user->findLike($id)->id(),
             'userId' => $this->user->id(),
         ]) ?: '';
     }

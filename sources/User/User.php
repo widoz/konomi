@@ -9,31 +9,34 @@ namespace Widoz\Wp\Konomi\User;
  */
 class User
 {
-    public static function new(Collection $collection): User
+    public static function new(int $id, Collection $collection): User
     {
-        return new self($collection);
+        return new self($id, $collection);
     }
 
-    final private function __construct(readonly private Collection $collection)
+    final private function __construct(
+        readonly private int $id,
+        readonly private Collection $collection
+    )
     {
     }
 
     public function isLoggedIn(): bool
     {
-        return is_user_logged_in();
+        return get_current_user_id() === $this->id();
     }
 
     public function id(): ?int
     {
-       return get_current_user_id() ?: null;
+        return $this->id;
     }
 
-    public function findLike(int $id): ?Item
+    public function findLike(int $id): Item
     {
         if (!$this->isLoggedIn()) {
-            return null;
+            return NullItem::new();
         }
 
-        return $this->collection->find($id);
+        return $this->collection->find($this, $id);
     }
 }

@@ -17,14 +17,9 @@ class Read implements User\Meta\Read
     {
     }
 
-    public function read(): array
+    public function read(User\User $user): array
     {
-        return [
-            [1, 'post'],
-            [12, 'page']
-        ];
-
-        $likes = get_user_meta(get_current_user_id(), Meta::NAME, true);
+        $likes = get_user_meta($user->id(), '_likes', true);
         return is_array($likes) ? $likes : [];
     }
 }

@@ -32,7 +32,7 @@ class Module implements ServiceModule, ExecutableModule
                 "{$this->appProperties->basePath()}/sources/Blocks"
             ),
             'konomi.blocks.like-context' => fn(ContainerInterface $container) => LikeContext::new(
-                $container->get('konomi.user')
+                $container->get('konomi.user.current')
             )
         ];
     }

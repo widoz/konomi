@@ -8,5 +8,5 @@ use function Widoz\Wp\Konomi\package;
 
 function icon(): Render
 {
-    return package()->container()->get('konomi.icons.render');
+    return package()->container()->get('konomi.icon');
 }

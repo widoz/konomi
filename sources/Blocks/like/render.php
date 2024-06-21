@@ -6,7 +6,7 @@ use Widoz\Wp\Konomi\Blocks;
 use Widoz\Wp\Konomi\Icons;
 use Widoz\Wp\Konomi\User;
 
-if (!User\user()->isLoggedIn()) {
+if (!User\currentUser()->isLoggedIn()) {
     return;
 }
 ?>

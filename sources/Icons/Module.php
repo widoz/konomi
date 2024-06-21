@@ -28,7 +28,7 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            'konomi.icons.render' => fn(ContainerInterface $container) => Render::new(
+            'konomi.icon' => fn(ContainerInterface $container) => Render::new(
                 $container->get('konomi.configuration')
             ),
         ];

@@ -25,9 +25,9 @@ class Module implements ServiceModule, ExecutableModule
 
     public function services(): array
     {
-        // TODO Refactor all other container services names for consistency
         return [
-            'konomi.user' => static fn(ContainerInterface $container) => User::new(
+            'konomi.user.current' => static fn(ContainerInterface $container) => User::new(
+                get_current_user_id(),
                 $container->get('konomi.likes.collection')
             ),
             'konomi.user.meta.read' => static fn() => Likes\Meta\Read::new(),
