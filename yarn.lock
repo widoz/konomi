@@ -3399,18 +3399,17 @@
     moment "^2.29.4"
     moment-timezone "^0.5.40"
 
-"@wordpress/dependency-extraction-webpack-plugin@^4.8.0":
-  version "4.31.0"
-  resolved "https://registry.yarnpkg.com/@wordpress/dependency-extraction-webpack-plugin/-/dependency-extraction-webpack-plugin-4.31.0.tgz#16e066323285a13f61077f72d2b67e3bea575cf7"
-  integrity sha512-Xpm8EEhi6e8GL1juYh/70AFbcE/ZVXJ3p47KMkkEsn5t+hG9QHjKe2lTj98v2r3rB+ampoK+whdV1w6gItXYpw==
-  dependencies:
-    json2php "^0.0.7"
-    webpack-sources "^3.2.2"
-
 "@wordpress/dependency-extraction-webpack-plugin@^6.1.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@wordpress/dependency-extraction-webpack-plugin/-/dependency-extraction-webpack-plugin-6.1.0.tgz#3f29774319ea455a2569cbca9dc5647a58356d62"
   integrity sha512-Dodnc0yn6Q7jZW2S5hUFa/3Ls6/OVUp6mXsPr6HvaTZsy9IzrNJJdTiIbk5nNRXDFt7Yv+f8CB/QIdwV0tweag==
+  dependencies:
+    json2php "^0.0.7"
+
+"@wordpress/dependency-extraction-webpack-plugin@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/dependency-extraction-webpack-plugin/-/dependency-extraction-webpack-plugin-6.2.0.tgz#379270cc42d9af01534810aa39b8e9dbe71ba49d"
+  integrity sha512-zHVfv9hPuWxBoGi7ZMmNPaDX0cn3RMQyu0t2pp/WaNIPLDUjHf4H/gLDeA0G8CiiQCDuiOvtPctqIC8UvmF7vw==
   dependencies:
     json2php "^0.0.7"
 
@@ -12352,7 +12351,7 @@ webpack-merge@^5.7.3:
     flat "^5.0.2"
     wildcard "^2.0.0"
 
-webpack-sources@^3.2.2, webpack-sources@^3.2.3:
+webpack-sources@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-3.2.3.tgz#2d4daab8451fd4b240cc27055ff6a0c2ccea0cde"
   integrity sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==

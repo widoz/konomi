@@ -24,9 +24,4 @@ class Like implements User\Item
     {
         return $this->type;
     }
-
-    public function render(): string
-    {
-        return '<p>like</p>';
-    }
 }

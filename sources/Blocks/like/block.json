@@ -9,7 +9,8 @@
 	"description": "Like",
 	"example": {},
 	"supports": {
-		"html": false
+		"html": false,
+		"interactivity": true
 	},
 	"textdomain": "konomi",
 	"editorScript": "file:./dist/konomi-like-block.js",

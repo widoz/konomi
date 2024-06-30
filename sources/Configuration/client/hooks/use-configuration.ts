@@ -10,6 +10,14 @@ import { initConfiguration } from '../init-configuration';
 // TODO Introduce Zod Lib?
 // TODO Add Immutable Map?
 export function useConfiguration(): Konomi.Configuration {
+	document.dispatchEvent(
+		new CustomEvent( 'konomi/configuration', {
+			detail: {
+				initConfiguration,
+			},
+		} )
+	);
+
 	const configuration = initConfiguration( '' );
 	return {
 		...configuration,

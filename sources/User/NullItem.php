@@ -21,9 +21,4 @@ class NullItem implements Item
     {
         return '';
     }
-
-    public function render(): string
-    {
-        return '';
-    }
 }

@@ -56,6 +56,38 @@ class Module implements ServiceModule, ExecutableModule
                 "window.konomiConfiguration.initConfiguration('{$service->serialize()}');"
             );
         });
+
+        add_action('wp_enqueue_scripts', function () use ($container): void {
+            $service = $container->get('konomi.configuration');
+            $moduleLocationPath = 'sources/Configuration/client/module';
+            $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
+            $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
+
+            $configuration = (array)(include "{$baseDir}/{$moduleLocationPath}/konomi-configuration.asset.php");
+
+            // TODO Enqueue this script only when is necessary.
+            wp_enqueue_script('wp-api-fetch');
+            wp_register_script_module(
+                '@konomi/configuration',
+                "{$baseUrl}/{$moduleLocationPath}/konomi-configuration.js",
+                [],
+                $configuration['version']
+            );
+        });
+
+        add_action('wp_head', function () use ($container): void {
+            $service = $container->get('konomi.configuration');
+            echo wp_get_inline_script_tag(
+                "document.addEventListener(
+                'konomi/configuration',
+                function (event) {
+                    event.detail.initConfiguration('{$service->serialize()}');
+                }, {
+                    once: true
+                });"
+            );
+        });
+
         return true;
     }
 }

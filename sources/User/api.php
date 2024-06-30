@@ -6,7 +6,7 @@ namespace Widoz\Wp\Konomi\User;
 
 use function Widoz\Wp\Konomi\package;
 
-function currentUser(): User
+function user(): User
 {
-    return package()->container()->get('konomi.user.current');
+    return package()->container()->get('konomi.user');
 }

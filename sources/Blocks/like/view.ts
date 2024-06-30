@@ -1,11 +1,21 @@
 import { getContext, store } from '@wordpress/interactivity';
+import { useConfiguration } from '@konomi/configuration';
+
+declare global {
+	interface Window {
+		wp: {
+			apiFetch: ( options: any ) => Promise< any >;
+		};
+	}
+}
 
 type Context = {
 	entityId: number;
 	entityType: string;
-	userId: number;
 	isActive: boolean;
 };
+
+const { apiFetch } = window.wp;
 
 store( 'konomi', {
 	state: {},
@@ -18,20 +28,17 @@ store( 'konomi', {
 
 	callbacks: {
 		updateUserPreferences: () => {
-			const {
-				entityId,
-				entityType,
-				isActive,
-				userId: id,
-			} = getContext< Context >( 'konomi' );
+			const config = useConfiguration();
 
-			fetch( {
-				path: '/wp/v2/users',
+			const { entityId, entityType, isActive } =
+				getContext< Context >( 'konomi' );
+
+			apiFetch( {
+				path: `${ config.restUrl }konomi/v1/user-like/`,
 				method: 'POST',
 				data: {
-					id,
 					meta: {
-						_likes: { entityId, entityType },
+						_likes: { entityId, entityType, isActive },
 					},
 				},
 			} )

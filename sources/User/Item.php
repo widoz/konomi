@@ -9,6 +9,4 @@ interface Item
     public function id(): int;
 
     public function type(): string;
-
-    public function render(): string;
 }

@@ -24,7 +24,6 @@ class LikeContext
             'entityId' => $id,
             'entityType' => $type,
             'isActive' => !!$this->user->findLike($id)->id(),
-            'userId' => $this->user->id(),
         ]) ?: '';
     }
 }
