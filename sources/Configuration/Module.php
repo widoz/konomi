@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Configuration;
 
+use PHP_CodeSniffer\Tokenizers\JS;
 use Psr\Container\ContainerInterface;
 use Inpsyde\Modularity\{
     Module\ServiceModule,
@@ -74,16 +75,13 @@ class Module implements ServiceModule, ExecutableModule
             );
         });
 
-        add_action('wp_head', function () use ($container): void {
+        add_action('wp_footer', function () use ($container): void {
             $service = $container->get('konomi.configuration');
-            echo wp_get_inline_script_tag(
-                "document.addEventListener(
-                'konomi/configuration',
-                function (event) {
-                    event.detail.initConfiguration('{$service->serialize()}');
-                }, {
-                    once: true
-                });"
+            echo sprintf('<script type="module">%s</script>',
+                <<<JS
+    import { initConfiguration } from '@konomi/configuration';
+    initConfiguration('{$service->serialize()}');
+JS
             );
         });
 
