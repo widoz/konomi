@@ -35,7 +35,6 @@ class Configuration
             [
                 'iconsPathUrl' => $this->iconsPathUrl(),
                 'iconsPath' => $this->iconsPath(),
-                'restUrl' => rest_url(),
             ]
         );
     }

@@ -34,7 +34,7 @@ store( 'konomi', {
 				getContext< Context >( 'konomi' );
 
 			apiFetch( {
-				path: `${ config.restUrl }konomi/v1/user-like/`,
+				path: '/konomi/v1/user-like/',
 				method: 'POST',
 				data: {
 					meta: {
