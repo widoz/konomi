@@ -27,7 +27,28 @@ class BlockRegistrar
             if ($blockName->isDot() || $blockName->isFile()) {
                 continue;
             }
+
+            $this->enqueueBlockDependenciesScripts($blockName);
             register_block_type_from_metadata($blockName->getPathname());
         }
+    }
+
+    private function enqueueBlockDependenciesScripts(\DirectoryIterator $blockName): void
+    {
+        $dependencies = [];
+        $file = "{$blockName->getPathname()}/scripts-dependencies.php";
+        is_readable($file) and $dependencies = include_once "{$blockName->getPathname()}/scripts-dependencies.php";
+
+        if (!$dependencies) {
+            return;
+        }
+
+        add_filter(
+            'pre_render_block',
+            function ($nullish) use ($dependencies): mixed {
+                array_walk($dependencies, 'wp_enqueue_script');
+                return $nullish;
+            },
+        );
     }
 }
