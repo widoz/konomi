@@ -65,7 +65,6 @@ class Module implements ServiceModule, ExecutableModule
 
             $configuration = (array)(include "{$baseDir}/{$moduleLocationPath}/konomi-configuration.asset.php");
 
-            // TODO Enqueue this script only when is necessary.
             wp_enqueue_script('wp-api-fetch');
             wp_register_script_module(
                 '@konomi/configuration',

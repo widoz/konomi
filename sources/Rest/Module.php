@@ -31,6 +31,7 @@ class Module implements ServiceModule, ExecutableModule
 
     public function run(ContainerInterface $container) : bool
     {
+        // TODO Switch to GraphQL or stay with Rest API?
         add_action(
             'rest_api_init',
             static function () {

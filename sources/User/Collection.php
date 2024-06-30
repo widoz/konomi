@@ -21,6 +21,9 @@ class Collection
         readonly private ItemFactory $itemFactory
     ) {}
 
+    /**
+     * @return array<int, Item>
+     */
     public function items(User $user): array
     {
         if (self::$cache !== null) {
