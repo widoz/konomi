@@ -61,7 +61,7 @@ module.exports = [
 		output: {
 			...configuration.output,
 			filename: '[name].js',
-			path: path.resolve('./sources/Configuration/client/module'),
+			path: path.resolve('./sources/Configuration/client/build-module'),
 			clean: true,
 		},
 	},
@@ -74,7 +74,7 @@ module.exports = [
 		output: {
 			...configuration.output,
 			filename: '[name].js',
-			path: path.resolve('./sources/Blocks/like/module'),
+			path: path.resolve('./sources/Blocks/like/build-module'),
 			clean: true,
 		},
 	}

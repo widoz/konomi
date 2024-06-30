@@ -59,7 +59,7 @@ class Module implements ServiceModule, ExecutableModule
 
         add_action('wp_enqueue_scripts', function () use ($container): void {
             $service = $container->get('konomi.configuration');
-            $moduleLocationPath = 'sources/Configuration/client/module';
+            $moduleLocationPath = 'sources/Configuration/client/build-module';
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
 
