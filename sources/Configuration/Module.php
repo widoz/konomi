@@ -35,6 +35,8 @@ class Module implements ServiceModule, ExecutableModule
 
     public function run(ContainerInterface $container): bool
     {
+        $this->addBlockRenderedAction($container);
+
         // TODO Improve assets loading, creating a custom module or reuse Syde\Assets.
         add_action('enqueue_block_editor_assets', function () use ($container): void {
             $service = $container->get('konomi.configuration');
@@ -66,7 +68,6 @@ class Module implements ServiceModule, ExecutableModule
 
             $configuration = (array)(include "{$baseDir}/{$moduleLocationPath}/konomi-configuration.asset.php");
 
-            wp_enqueue_script('wp-api-fetch');
             wp_register_script_module(
                 '@konomi/configuration',
                 "{$baseUrl}/{$moduleLocationPath}/konomi-configuration.js",
@@ -75,16 +76,34 @@ class Module implements ServiceModule, ExecutableModule
             );
         });
 
-        add_action('wp_footer', function () use ($container): void {
+        return true;
+    }
+
+    private function addBlockRenderedAction(ContainerInterface $container): void
+    {
+        $callback = static function () use ($container): void {
             $service = $container->get('konomi.configuration');
             echo sprintf('<script type="module">%s</script>',
                 <<<JS
-    import { initConfiguration } from '@konomi/configuration';
-    initConfiguration('{$service->serialize()}');
+import { initConfiguration } from '@konomi/configuration';
+initConfiguration('{$service->serialize()}');
 JS
             );
-        });
+        };
 
-        return true;
+        add_filter(
+            'pre_render_block',
+            function (mixed $nullish, array $block) use ($callback): mixed {
+                // TODO Execute it once for all blocks.
+                str_contains('konomi/', $block['blockName'] ?? '') and add_action(
+                    'wp_footer',
+                    static fn() => $callback(),
+                    20
+                );
+                return $nullish;
+            },
+            20,
+            2
+        );
     }
 }
