@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Configuration;
 
-use PHP_CodeSniffer\Tokenizers\JS;
 use Psr\Container\ContainerInterface;
 use Inpsyde\Modularity\{
     Module\ServiceModule,
@@ -12,6 +11,7 @@ use Inpsyde\Modularity\{
     Module\ModuleClassNameIdTrait,
     Properties\Properties
 };
+use Widoz\Wp\Konomi\Utils;
 
 class Module implements ServiceModule, ExecutableModule
 {
@@ -91,19 +91,12 @@ JS
             );
         };
 
-        add_filter(
-            'pre_render_block',
-            function (mixed $nullish, array $block) use ($callback): mixed {
-                // TODO Execute it once for all blocks.
-                str_contains('konomi/', $block['blockName'] ?? '') and add_action(
-                    'wp_footer',
-                    static fn() => $callback(),
-                    20
-                );
-                return $nullish;
-            },
-            20,
-            2
+        Utils\DeferTaskAtBlockRendering::do(
+            static fn() => Utils\SingleRunningHook::action(
+                'wp_footer',
+                $callback,
+                20
+            )
         );
     }
 }

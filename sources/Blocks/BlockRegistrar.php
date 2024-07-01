@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Blocks;
 
+use Widoz\Wp\Konomi\Utils;
+
 class BlockRegistrar
 {
     public static function new(string $blocksDirectory): self
@@ -33,22 +35,20 @@ class BlockRegistrar
         }
     }
 
-    private function enqueueBlockDependenciesScripts(\DirectoryIterator $blockName): void
+    private function enqueueBlockDependenciesScripts(\DirectoryIterator $blockDirectory): void
     {
         $dependencies = [];
-        $file = "{$blockName->getPathname()}/scripts-dependencies.php";
-        is_readable($file) and $dependencies = include_once "{$blockName->getPathname()}/scripts-dependencies.php";
+        $file = "{$blockDirectory->getPathname()}/scripts-dependencies.php";
+        is_readable($file) and $dependencies = include_once "{$blockDirectory->getPathname()}/scripts-dependencies.php";
 
         if (!$dependencies) {
             return;
         }
 
-        add_filter(
-            'pre_render_block',
-            function ($nullish) use ($dependencies): mixed {
+        Utils\DeferTaskAtBlockRendering::do(
+            function () use ($dependencies): void {
                 array_walk($dependencies, 'wp_enqueue_script');
-                return $nullish;
-            },
+            }
         );
     }
 }
