@@ -13,9 +13,8 @@ if (!User\user()->isLoggedIn()) {
 
 <button
     <?= get_block_wrapper_attributes() ?>
+    <?= wp_interactivity_data_wp_context(Blocks\context()->generate()) ?>
     data-wp-interactive="konomi"
-    data-wp-watch="callbacks.updateUserPreferences"
-    data-wp-context="<?= esc_attr(Blocks\context()->serialize()) ?>"
     data-wp-on--click="actions.toggleStatus"
     data-wp-class--is-active="context.isActive"
 >

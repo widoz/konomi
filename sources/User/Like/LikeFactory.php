@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\User\Likes;
+namespace Widoz\Wp\Konomi\User\Like;
 
 use Widoz\Wp\Konomi\User;
 
@@ -15,8 +15,8 @@ class LikeFactory implements User\ItemFactory
 
     final private function __construct() {}
 
-    public function create(int $id, string $type): Like
+    public function create(int $id, string $type, bool $isActive): Like
     {
-        return Like::new($id, $type);
+        return Like::new($id, $type, $isActive);
     }
 }

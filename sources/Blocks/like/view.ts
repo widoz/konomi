@@ -1,5 +1,4 @@
 import { getContext, store } from '@wordpress/interactivity';
-import { useConfiguration } from '@konomi/configuration';
 
 declare global {
 	interface Window {
@@ -10,45 +9,41 @@ declare global {
 }
 
 type Context = {
-	entityId: number;
-	entityType: string;
+	id: number;
+	type: string;
 	isActive: boolean;
 };
 
 const { apiFetch } = window.wp;
 
-store( 'konomi', {
+const { callbacks } = store( 'konomi', {
 	state: {},
+
 	actions: {
 		toggleStatus: () => {
 			const context = getContext< Context >( 'konomi' );
 			context.isActive = ! context.isActive;
+			callbacks.updateUserPreferences();
 		},
 	},
 
 	callbacks: {
 		updateUserPreferences: () => {
-			const config = useConfiguration();
-
-			const { entityId, entityType, isActive } =
-				getContext< Context >( 'konomi' );
+			const { isActive, id, type } = getContext< Context >( 'konomi' );
 
 			apiFetch( {
 				path: '/konomi/v1/user-like/',
 				method: 'POST',
 				data: {
 					meta: {
-						_likes: { entityId, entityType, isActive },
+						_likes: { id, type, isActive },
 					},
 				},
-			} )
-				.then( ( response ) => {
-					console.log( response );
-				} )
-				.catch( ( error ) => {
-					console.error( error );
-					isActive = false;
-				} );
+			} ).catch( ( error ) => {
+				// TODO Here we want to render a popover with the error message.
+				console.error( error );
+				isActive = false;
+			} );
 		},
 	},
 } );

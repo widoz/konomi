@@ -9,4 +9,6 @@ interface Item
     public function id(): int;
 
     public function type(): string;
+
+    public function isActive(): bool;
 }

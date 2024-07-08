@@ -13,11 +13,11 @@ namespace PHPSTORM_META {
 
                 'konomi.icons.render' => \Widoz\Wp\Konomi\Icons\Render::class,
 
-                'konomi.likes.factory' => \Widoz\Wp\Konomi\User\Likes\LikeFactory::class,
+                'konomi.likes.factory' => \Widoz\Wp\Konomi\User\Like\LikeFactory::class,
                 'konomi.likes.collection' => \Widoz\Wp\Konomi\User\Collection::class,
 
                 'konomi.user' => \Widoz\Wp\Konomi\User\User::class,
-                'konomi.user.meta.read' => \Widoz\Wp\Konomi\User\Meta\Read::class,
+                'konomi.user.meta' => \Widoz\Wp\Konomi\User\Meta::class,
             ]
         )
     );

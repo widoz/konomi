@@ -34,19 +34,42 @@ class Module implements ServiceModule, ExecutableModule
         // TODO Switch to GraphQL or stay with Rest API?
         add_action(
             'rest_api_init',
-            static function () {
+            static function () use ($container) {
                 register_rest_route(
                     'konomi/v1',
                     '/user-like',
                     [
                         'methods' => \WP_REST_Server::CREATABLE,
-                        'callback' => static function($request) {
-                            return rest_ensure_response(
-                                new \WP_REST_Response(
-                                    ['message' => $request->get_params()],
-                                    200
+                        'callback' => static function ($request) use ($container): \WP_REST_Response|\WP_Error {
+                            $meta = $request->get_param('meta')['_likes'] ?? [];
+                            if (!$meta) {
+                                return new \WP_Error(
+                                    'no_likes',
+                                    'No likes provided',
+                                    ['status' => 400]
+                                );
+                            }
+
+                            $result = $container->get('konomi.user')->saveLike(
+                                $container->get('konomi.likes.factory')->create(
+                                    (int) $meta['id'],
+                                    $meta['type'],
+                                    $meta['isActive']
                                 )
                             );
+
+                            if ($result === false) {
+                                return new \WP_Error(
+                                    'failed_to_save_like',
+                                    'Failed to save like',
+                                    ['status' => 500]
+                                );
+                            }
+
+                            return new \WP_REST_Response([
+                                'success' => true,
+                                'message' => 'Like saved',
+                            ], 201);
                         },
                         'permission_callback' => '__return_true',
                     ]

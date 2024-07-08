@@ -37,6 +37,15 @@ class User
             return NullItem::new();
         }
 
-        return $this->collection->find($this, $id);
+        return $this->collection->find($this, '_likes', $id);
+    }
+
+    public function saveLike(Item $item): bool
+    {
+        if (!$this->isLoggedIn()) {
+            return false;
+        }
+
+        return $this->collection->save($this, '_likes', $item);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\User;
@@ -30,13 +31,13 @@ class Module implements ServiceModule, ExecutableModule
                 get_current_user_id(),
                 $container->get('konomi.likes.collection')
             ),
-            'konomi.user.meta.read' => static fn() => Likes\Meta\Read::new(),
+            'konomi.user.meta' => static fn() => Meta::new(),
 
-            'konomi.likes.factory' => static fn() => Likes\LikeFactory::new(),
+            'konomi.likes.factory' => static fn() => Like\LikeFactory::new(),
             'konomi.likes.collection' => static fn(
                 ContainerInterface $container
             ) => Collection::new(
-                $container->get('konomi.user.meta.read'),
+                $container->get('konomi.user.meta'),
                 $container->get('konomi.likes.factory')
             ),
         ];

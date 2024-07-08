@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\User;
@@ -20,5 +21,10 @@ class NullItem implements Item
     public function type(): string
     {
         return '';
+    }
+
+    public function isActive(): bool
+    {
+        return false;
     }
 }

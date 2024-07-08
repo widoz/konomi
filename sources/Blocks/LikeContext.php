@@ -13,17 +13,21 @@ class LikeContext
         return new self($user);
     }
 
-    final private function __construct(readonly private User\User $user) {}
-
-    public function serialize(): string
+    final private function __construct(readonly private User\User $user)
     {
-        $id = get_the_ID();
-        $type = get_post_type($id);
+    }
 
-        return wp_json_encode([
-            'entityId' => $id,
-            'entityType' => $type,
-            'isActive' => !!$this->user->findLike($id)->id(),
-        ]) ?: '';
+    public function generate(): array
+    {
+        $id = (int)get_the_ID();
+        $type = (string)get_post_type($id);
+        $like = $this->user->findLike($id);
+
+        return [
+            'id' => $id,
+            // There might be a mismatch for some reason, e.g. someone changed the value in the database.
+            'type' => $like->type() ?: $type,
+            'isActive' => $like->isActive(),
+        ];
     }
 }

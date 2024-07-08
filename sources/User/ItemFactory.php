@@ -8,5 +8,5 @@ interface ItemFactory
     /**
      * @param non-negative-int $id
      */
-    public function create(int $id, string $type): Item;
+    public function create(int $id, string $type, bool $isActive): Item;
 }
