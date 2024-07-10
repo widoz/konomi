@@ -1,5 +1,6 @@
 <?php
 
+// TODO Revert the services to use class names as keys.
 namespace PHPSTORM_META {
     override(
         \Psr\Container\ContainerInterface::get(0),
@@ -13,11 +14,13 @@ namespace PHPSTORM_META {
 
                 'konomi.icons.render' => \Widoz\Wp\Konomi\Icons\Render::class,
 
-                'konomi.likes.factory' => \Widoz\Wp\Konomi\User\Like\LikeFactory::class,
-                'konomi.likes.collection' => \Widoz\Wp\Konomi\User\Collection::class,
-
+                'konomi.user.like.factory' => \Widoz\Wp\Konomi\User\Like\Factory::class,
+                'konomi.user.collection' => \Widoz\Wp\Konomi\User\Collection::class,
                 'konomi.user' => \Widoz\Wp\Konomi\User\User::class,
                 'konomi.user.meta' => \Widoz\Wp\Konomi\User\Meta::class,
+
+                'konomi.rest.controller.add-like' => \Widoz\Wp\Konomi\Rest\Controller::class,
+                'konomi.rest.middleware.authentication' => \Widoz\Wp\Konomi\Rest\Middleware::class,
             ]
         )
     );

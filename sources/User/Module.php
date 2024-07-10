@@ -29,21 +29,21 @@ class Module implements ServiceModule, ExecutableModule
         return [
             'konomi.user' => static fn(ContainerInterface $container) => User::new(
                 get_current_user_id(),
-                $container->get('konomi.likes.collection')
+                $container->get('konomi.user.collection')
             ),
             'konomi.user.meta' => static fn() => Meta::new(),
 
-            'konomi.likes.factory' => static fn() => Like\LikeFactory::new(),
-            'konomi.likes.collection' => static fn(
+            'konomi.user.like.factory' => static fn() => Like\Factory::new(),
+            'konomi.user.collection' => static fn(
                 ContainerInterface $container
             ) => Collection::new(
                 $container->get('konomi.user.meta'),
-                $container->get('konomi.likes.factory')
+                $container->get('konomi.user.like.factory')
             ),
         ];
     }
 
-    public function run(ContainerInterface $container) : bool
+    public function run(ContainerInterface $container): bool
     {
         return true;
     }

@@ -20,7 +20,7 @@ class Meta
     }
 
     /**
-     * @param array{id: int, type: string} $data
+     * @param array{0: int, 1: string} $data
      */
     public function write(int $id, string $key, array $data): bool
     {

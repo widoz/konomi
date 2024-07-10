@@ -36,7 +36,7 @@ const { callbacks } = store( 'konomi', {
 				method: 'POST',
 				data: {
 					meta: {
-						_likes: { id, type, isActive },
+						_like: { id, type, isActive },
 					},
 				},
 			} ).catch( ( error ) => {

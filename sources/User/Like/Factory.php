@@ -6,14 +6,16 @@ namespace Widoz\Wp\Konomi\User\Like;
 
 use Widoz\Wp\Konomi\User;
 
-class LikeFactory implements User\ItemFactory
+class Factory implements User\ItemFactory
 {
-    public static function new(): LikeFactory
+    public static function new(): Factory
     {
         return new self();
     }
 
-    final private function __construct() {}
+    final private function __construct()
+    {
+    }
 
     public function create(int $id, string $type, bool $isActive): Like
     {
