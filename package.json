@@ -17,7 +17,7 @@
 		"@total-typescript/shoehorn": "^0.1.0",
 		"@types/react": "~18.2.0",
 		"@wordpress/create-block": "^4.41.0",
-		"@wordpress/dependency-extraction-webpack-plugin": "^6.2.0",
+		"@wordpress/dependency-extraction-webpack-plugin": "^5.0.0",
 		"@wordpress/env": "^5.9.0",
 		"@wordpress/scripts": "^28.0.0",
 		"eslint-import-resolver-typescript": "^3.5.5",
@@ -42,7 +42,6 @@
 	},
 	"scripts": {
 		"wp-env": "wp-env",
-		"build": "wp-scripts build --webpack-src-dir=./sources/Blocks/like",
 		"build:dev:back-office": "wp-scripts start --config webpack.backoffice.config.js --webpack--devtool=inline-source-map",
 		"build:dev:modules": "wp-scripts start --experimental-modules --config webpack.modules.config.js --webpack--devtool=inline-source-map",
 		"cs:fix": "wp-scripts format ./sources ./@types",
