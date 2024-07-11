@@ -42,7 +42,7 @@
 	},
 	"scripts": {
 		"wp-env": "wp-env",
-		"build:dev:back-office": "wp-scripts start --config webpack.backoffice.config.js --webpack--devtool=inline-source-map",
+		"build:dev:scripts": "wp-scripts start --config webpack.scripts.config.js --webpack--devtool=inline-source-map",
 		"build:dev:modules": "wp-scripts start --experimental-modules --config webpack.modules.config.js --webpack--devtool=inline-source-map",
 		"cs:fix": "wp-scripts format ./sources ./@types",
 		"lint:js": "wp-scripts lint-js ./sources ./@types",
