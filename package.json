@@ -47,6 +47,8 @@
 		"cs:fix": "wp-scripts format ./sources ./@types",
 		"lint:js": "wp-scripts lint-js ./sources ./@types",
 		"lint:js:fix": "wp-scripts lint-js --fix ./sources ./@types",
+		"lint:css": "wp-scripts lint-style ./sources/**/*.scss --ignore-path .stylelintignore --config .stylelintrc.json",
+		"lint:css:fix": "wp-scripts lint-style ./sources/**/*.scss --fix",
 		"test": "jest",
 		"test:update-snapshots": "yarn test -u"
 	}

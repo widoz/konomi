@@ -1,3 +1,6 @@
+$color--white: #fff;
+$color--crimson: #dc143cff;
+
 .wp-block-konomi-like {
 	appearance: none;
 	background: none;
@@ -9,25 +12,27 @@
 		width: 1.5em;
 
 		&--heart {
-			fill: white;
-			stroke: crimson;
+			fill: $color--white;
+			stroke: $color--crimson;
 			stroke-width: 0.5;
 			transition: all 0.3s;
 
 			&:hover {
-				fill: crimson;
+				fill: $color--crimson;
 				fill-opacity: 0.6;
 			}
 		}
 	}
 
 	&.is-active {
+
 		.konomi-icon {
+
 			&--heart {
-				fill: crimson;
+				fill: $color--crimson;
 
 				&:hover {
-					fill: crimson;
+					fill: $color--crimson;
 					fill-opacity: 1;
 				}
 			}
