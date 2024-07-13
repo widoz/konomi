@@ -49,10 +49,17 @@ class Module implements ServiceModule, ExecutableModule
             );
         });
 
-        Utils\DeferTaskAtBlockRendering::do(
-            function (): void {
-                wp_enqueue_script('wp-api-fetch');
-            }
+        add_filter(
+            'wp_inline_script_attributes',
+            static function(array $attributes, string $data) {
+               if (str_contains($data, '"@konomi\/api-fetch"')) {
+                   wp_enqueue_script('wp-api-fetch');
+               }
+
+               return $attributes;
+            },
+            10,
+            2
         );
 
         return true;
