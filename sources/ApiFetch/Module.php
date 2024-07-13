@@ -49,14 +49,19 @@ class Module implements ServiceModule, ExecutableModule
             );
         });
 
-        add_filter(
-            'wp_inline_script_attributes',
-            static function(array $attributes, string $data) {
-               if (str_contains($data, '"@konomi\/api-fetch"')) {
-                   wp_enqueue_script('wp-api-fetch');
-               }
+            Utils\ConditionalRemovableHook::filter(
+                'wp_inline_script_attributes',
+                static function(
+                    Utils\ConditionalRemovableHook $that,
+                    array $attributes,
+                    string $data
+                ) {
+                   if (str_contains($data, '"@konomi\/api-fetch"')) {
+                       wp_enqueue_script('wp-api-fetch');
+                        $that->remove();
+                   }
 
-               return $attributes;
+                   return $attributes;
             },
             10,
             2
