@@ -11,7 +11,9 @@ class MiddlewareProcess
         return new self();
     }
 
-    final private function __construct() {}
+    final private function __construct()
+    {
+    }
 
     /**
      * @param array<Middleware> $middlewares
@@ -26,11 +28,12 @@ class MiddlewareProcess
 
         $runner = array_reduce(
             array_reverse($middlewares),
-            static fn ($next, $middleware) => static fn ($request) => $middleware(
-                $request,
-                $next
-            ),
+            // phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable
+            static fn (callable $next, callable $middleware) => static fn (
+                \WP_REST_Request $request
+            ) => $middleware($request, $next),
             $controller
+            // phpcs:enable VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable
         );
 
         return $runner($request);

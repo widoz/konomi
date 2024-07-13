@@ -17,8 +17,7 @@ class User
     final private function __construct(
         readonly private int $id,
         readonly private Collection $collection
-    )
-    {
+    ) {
     }
 
     public function isLoggedIn(): bool

@@ -19,7 +19,8 @@ class Collection
     final private function __construct(
         readonly private Meta $meta,
         readonly private ItemFactory $itemFactory
-    ) {}
+    ) {
+    }
 
     public function find(User $user, string $key, int $id): Item
     {
@@ -32,10 +33,9 @@ class Collection
         $originalMeta = $this->meta->read($user->id(), $key) ?: [];
         $toStoreMeta = $originalMeta;
 
+        unset($toStoreMeta[$item->id()]);
         if ($item->isActive()) {
             $toStoreMeta[$item->id()] = [$item->id(), $item->type()];
-        } else {
-            unset($toStoreMeta[$item->id()]);
         }
 
         if ($originalMeta === $toStoreMeta) {

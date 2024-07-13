@@ -15,7 +15,9 @@ class Render
         return new self($configuration);
     }
 
-    final private function __construct(readonly private Configuration\Configuration $configuration) {}
+    final private function __construct(readonly private Configuration\Configuration $configuration)
+    {
+    }
 
     public function render(string $name): string
     {
@@ -23,10 +25,8 @@ class Render
             return self::$cache[$name];
         }
 
-        ob_start();
-        include "{$this->configuration->iconsPath()}/{$name}.svg";
-        self::$cache[$name] = (string)ob_get_clean();
+        self::$cache[$name] = (string) file_get_contents("{$this->configuration->iconsPath()}/{$name}.svg");
 
         return self::$cache[$name];
-     }
+    }
 }

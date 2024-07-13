@@ -11,7 +11,9 @@ class NullItem implements Item
         return new self();
     }
 
-    final private function __construct() {}
+    final private function __construct()
+    {
+    }
 
     public function id(): int
     {

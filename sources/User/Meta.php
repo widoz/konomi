@@ -11,7 +11,9 @@ class Meta
         return new self();
     }
 
-    final private function __construct() {}
+    final private function __construct()
+    {
+    }
 
     public function read(int $id, string $key): array
     {
@@ -24,6 +26,6 @@ class Meta
      */
     public function write(int $id, string $key, array $data): bool
     {
-        return (bool)update_user_meta($id, $key, $data);
+        return (bool) update_user_meta($id, $key, $data);
     }
 }

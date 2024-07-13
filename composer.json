@@ -15,7 +15,7 @@
 		"inpsyde/modularity": "^1.5"
 	},
 	"require-dev": {
-		"inpsyde/php-coding-standards": "^1.0",
+		"inpsyde/php-coding-standards": "^2.0.0-beta",
 		"roots/wordpress-no-content": "^6.5",
 		"vimeo/psalm": "^5.23",
 		"pestphp/pest": "^2.34",
@@ -43,8 +43,8 @@
 		}
 	},
 	"scripts": {
-		"cs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
-		"cs:fix": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
+		"cs": "@php ./vendor/bin/phpcs",
+		"cs:fix": "@php ./vendor/bin/phpcbf",
 		"psalm": "@php ./vendor/bin/psalm",
 		"test": "@php ./vendor/bin/pest"
 	}

@@ -12,24 +12,29 @@ if (!User\user()->isLoggedIn()) {
 
 $context = Blocks\context();
 $uuid = $context->instanceId();
+$anchor = "--konomi-like-{$uuid}";
 ?>
 
 <div class="konomi-like">
     <span
         popover="manual"
         class="konomi-like-response-message"
-        style="position-anchor: --konomi-like-<?= $uuid ?>;"
+        style="position-anchor: <?= esc_attr($anchor) ?>"
     >
-        <?= __('Unknown error, please try again later!', 'konomi') ?>
+        <?= esc_html__('Unknown error, please try again later!', 'konomi') ?>
     </span>
     <button
-        <?= get_block_wrapper_attributes() ?>
-        <?= wp_interactivity_data_wp_context($context->generate()) ?>
+        <?php
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo get_block_wrapper_attributes() ?>
+        <?php
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo wp_interactivity_data_wp_context($context->generate()) ?>
         data-wp-interactive="konomi"
         data-wp-run="callbacks.maybeShowErrorPopup"
         data-wp-on--click="actions.toggleStatus"
         data-wp-class--is-active="context.isActive"
-        style="anchor-name: --konomi-like-<?= $uuid ?>;"
+        style="anchor-name: <?= esc_attr($anchor) ?>"
     >
         <?= Icons\icon()->render('heart') ?>
     </button>

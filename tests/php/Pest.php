@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-beforeAll(function () {
+beforeAll(static function (): void {
     Brain\Monkey\setUp();
 });
 
-afterAll(function () {
+afterAll(static function (): void {
     Brain\Monkey\tearDown();
 });

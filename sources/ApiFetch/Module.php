@@ -31,15 +31,14 @@ class Module implements ServiceModule, ExecutableModule
         return [];
     }
 
-    public function run(ContainerInterface $container) : bool
+    public function run(ContainerInterface $container): bool
     {
         add_action('wp_enqueue_scripts', function () use ($container): void {
-            $service = $container->get('konomi.configuration');
             $moduleLocationPath = 'sources/ApiFetch/client/build-module';
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
 
-            $configuration = (array)(include "{$baseDir}/{$moduleLocationPath}/konomi-api-fetch.asset.php");
+            $configuration = (array) (include "{$baseDir}/{$moduleLocationPath}/konomi-api-fetch.asset.php");
 
             wp_register_script_module(
                 '@konomi/api-fetch',
@@ -51,21 +50,21 @@ class Module implements ServiceModule, ExecutableModule
 
             Utils\ConditionalRemovableHook::filter(
                 'wp_inline_script_attributes',
-                static function(
+                static function (
                     Utils\ConditionalRemovableHook $that,
                     array $attributes,
                     string $data
-                ) {
-                   if (str_contains($data, '"@konomi\/api-fetch"')) {
-                       wp_enqueue_script('wp-api-fetch');
+                ): array {
+                    if (str_contains($data, '"@konomi\/api-fetch"')) {
+                        wp_enqueue_script('wp-api-fetch');
                         $that->remove();
-                   }
+                    }
 
-                   return $attributes;
-            },
-            10,
-            2
-        );
+                    return $attributes;
+                },
+                10,
+                2
+            );
 
         return true;
     }

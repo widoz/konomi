@@ -21,8 +21,8 @@ class LikeContext
 
     public function generate(): array
     {
-        $id = (int)get_the_ID();
-        $type = (string)get_post_type($id);
+        $id = (int) get_the_ID();
+        $type = (string) get_post_type($id);
         $like = $this->user->findLike($id);
 
         return [

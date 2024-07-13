@@ -27,16 +27,16 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            'konomi.rest.like.add-schema' => fn() => Like\AddSchema::new(),
-            'konomi.rest.like.add-controller' => fn(
+            'konomi.rest.like.add-schema' => static fn () => Like\AddSchema::new(),
+            'konomi.rest.like.add-controller' => static fn (
                 ContainerInterface $container
             ) => Like\AddController::new(
                 $container->get('konomi.user'),
                 $container->get('konomi.user.like.factory')
             ),
 
-            'konomi.rest.middleware.error-catch' => fn() => Middlewares\ErrorCatch::new(),
-            'konomi.rest.middleware.authentication' => fn(
+            'konomi.rest.middleware.error-catch' => static fn () => Middlewares\ErrorCatch::new(),
+            'konomi.rest.middleware.authentication' => static fn (
                 ContainerInterface $container
             ) => Middlewares\Authentication::new(
                 $container->get('konomi.user')

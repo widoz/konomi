@@ -28,7 +28,7 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            'konomi.icon' => fn(ContainerInterface $container) => Render::new(
+            'konomi.icon' => static fn (ContainerInterface $container) => Render::new(
                 $container->get('konomi.configuration')
             ),
         ];
@@ -41,7 +41,7 @@ class Module implements ServiceModule, ExecutableModule
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
 
-            $configuration = (array)(include "{$baseDir}/{$distLocationPath}/konomi-icons.asset.php");
+            $configuration = (array) (include "{$baseDir}/{$distLocationPath}/konomi-icons.asset.php");
 
             wp_register_script(
                 'konomi-icons',

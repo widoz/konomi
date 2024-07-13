@@ -6,7 +6,9 @@ namespace Widoz\Wp\Konomi\Utils;
 
 class SingleRunningHook
 {
-    final private function __construct() {}
+    final private function __construct()
+    {
+    }
 
     public static function action(
         string $name,

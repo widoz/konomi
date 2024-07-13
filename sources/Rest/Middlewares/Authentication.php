@@ -16,7 +16,8 @@ class Authentication implements Rest\Middleware
 
     final private function __construct(
         private readonly User\User $user
-    ) {}
+    ) {
+    }
 
     public function __invoke(
         \WP_REST_Request $request,

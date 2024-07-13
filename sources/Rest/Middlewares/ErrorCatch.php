@@ -21,7 +21,7 @@ class ErrorCatch implements Middleware
     {
         try {
             return $next($request);
-        } catch (\Throwable $e) {
+        } catch (\Throwable $exception) {
             return new \WP_Error(
                 'internal_error',
                 __(
@@ -29,11 +29,11 @@ class ErrorCatch implements Middleware
                     'konomi'
                 ),
                 [
-                    'status' => $e->getCode(),
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine(),
-                    'originalError' => $e->getMessage(),
-                    'stackTrace' => $e->getTraceAsString(),
+                    'status' => $exception->getCode(),
+                    'file' => $exception->getFile(),
+                    'line' => $exception->getLine(),
+                    'originalError' => $exception->getMessage(),
+                    'stackTrace' => $exception->getTraceAsString(),
                 ]
             );
         }

@@ -31,7 +31,7 @@ class Configuration
 
     public function serialize(): string
     {
-        return (string)wp_json_encode(
+        return (string) wp_json_encode(
             [
                 'iconsPathUrl' => $this->iconsPathUrl(),
                 'iconsPath' => $this->iconsPath(),

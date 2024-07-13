@@ -463,7 +463,6 @@ ij_javascript_wrap_comments = false
 
 [{*.ctp,*.hphp,*.inc,*.module,*.php,*.php4,*.php5,*.phtml}]
 indent_style = space
-ij_continuation_indent_size = 4
 ij_visual_guides =
 ij_php_align_assignments = false
 ij_php_align_class_constants = false
@@ -639,7 +638,7 @@ ij_php_space_before_method_call_parentheses = false
 ij_php_space_before_method_left_brace = true
 ij_php_space_before_method_parentheses = false
 ij_php_space_before_quest = true
-ij_php_space_before_short_closure_left_parenthesis = false
+ij_php_space_before_short_closure_left_parenthesis = true
 ij_php_space_before_switch_left_brace = true
 ij_php_space_before_switch_parentheses = true
 ij_php_space_before_try_left_brace = true

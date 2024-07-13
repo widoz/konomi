@@ -29,7 +29,7 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            'konomi.configuration' => fn() => Configuration::new($this->appProperties),
+            'konomi.configuration' => fn () => Configuration::new($this->appProperties),
         ];
     }
 
@@ -41,7 +41,7 @@ class Module implements ServiceModule, ExecutableModule
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
 
-            $configuration = (array)(include "{$baseDir}/{$distLocationPath}/konomi-configuration.asset.php");
+            $configuration = (array) (include "{$baseDir}/{$distLocationPath}/konomi-configuration.asset.php");
 
             wp_register_script(
                 'konomi-configuration',
@@ -63,7 +63,7 @@ class Module implements ServiceModule, ExecutableModule
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
 
-            $configuration = (array)(include "{$baseDir}/{$moduleLocationPath}/konomi-configuration.asset.php");
+            $configuration = (array) (include "{$baseDir}/{$moduleLocationPath}/konomi-configuration.asset.php");
 
             wp_register_script_module(
                 '@konomi/configuration',

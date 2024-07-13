@@ -27,14 +27,14 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            'konomi.user' => static fn(ContainerInterface $container) => User::new(
+            'konomi.user' => static fn (ContainerInterface $container) => User::new(
                 get_current_user_id(),
                 $container->get('konomi.user.collection')
             ),
-            'konomi.user.meta' => static fn() => Meta::new(),
+            'konomi.user.meta' => static fn () => Meta::new(),
 
-            'konomi.user.like.factory' => static fn() => Like\Factory::new(),
-            'konomi.user.collection' => static fn(
+            'konomi.user.like.factory' => static fn () => Like\Factory::new(),
+            'konomi.user.collection' => static fn (
                 ContainerInterface $container
             ) => Collection::new(
                 $container->get('konomi.user.meta'),

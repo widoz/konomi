@@ -13,7 +13,9 @@ class AddSchema implements Rest\Schema
         return new self();
     }
 
-    final private function __construct() {}
+    final private function __construct()
+    {
+    }
 
     public function toArray(): array
     {
@@ -33,7 +35,7 @@ class AddSchema implements Rest\Schema
                     'required' => true,
                     'type' => 'boolean',
                 ],
-            ]
+            ],
         ];
     }
 }

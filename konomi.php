@@ -9,6 +9,7 @@
 
 // phpcs:disable PSR1.Files.SideEffects
 
+
 declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi;
