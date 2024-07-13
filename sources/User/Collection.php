@@ -21,10 +21,34 @@ class Collection
         readonly private ItemFactory $itemFactory
     ) {}
 
+    public function find(User $user, string $key, int $id): Item
+    {
+        self::$cache === null and self::$cache = $this->items($user, $key);
+        return self::$cache[$id] ?? NullItem::new();
+    }
+
+    public function save(User $user, string $key, Item $item): bool
+    {
+        $originalMeta = $this->meta->read($user->id(), $key) ?: [];
+        $toStoreMeta = $originalMeta;
+
+        if ($item->isActive()) {
+            $toStoreMeta[$item->id()] = [$item->id(), $item->type()];
+        } else {
+            unset($toStoreMeta[$item->id()]);
+        }
+
+        if ($originalMeta === $toStoreMeta) {
+            return true;
+        }
+
+        return $this->meta->write($user->id(), $key, $toStoreMeta);
+    }
+
     /**
      * @return array<int, Item>
      */
-    public function items(User $user, string $key): array
+    private function items(User $user, string $key): array
     {
         if (self::$cache !== null) {
             return self::$cache;
@@ -40,32 +64,5 @@ class Collection
         }
 
         return self::$cache ?? [];
-    }
-
-    public function find(User $user, string $key, int $id): Item
-    {
-        self::$cache === null and self::$cache = $this->items($user, $key);
-        return self::$cache[$id] ?? NullItem::new();
-    }
-
-    // TODO Validate data to write by using a schema.
-    public function save(User $user, string $key, Item $item): bool
-    {
-        $originalMeta = $this->meta->read($user->id(), $key) ?: [];
-        $toStoreMeta = $originalMeta;
-
-        if ($item->isActive()) {
-            $toStoreMeta[$item->id()] = [$item->id(), $item->type()];
-        } else {
-            unset($toStoreMeta[$item->id()]);
-        }
-
-        // TODO We probably want to compare the arrays in a more sophisticated way.
-        //      e.g. $item->isEqualToRaw($originalMeta[$item->id()])
-        if ($originalMeta === $toStoreMeta) {
-            return true;
-        }
-
-        return $this->meta->write($user->id(), $key, $toStoreMeta);
     }
 }
