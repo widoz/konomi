@@ -27,9 +27,10 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            'konomi.rest.controller.add-like' => fn(
+            'konomi.rest.like.add-schema' => fn() => Like\AddSchema::new(),
+            'konomi.rest.like.add-controller' => fn(
                 ContainerInterface $container
-            ) => Controllers\AddLikeController::new(
+            ) => Like\AddController::new(
                 $container->get('konomi.user'),
                 $container->get('konomi.user.like.factory')
             ),
@@ -45,34 +46,14 @@ class Module implements ServiceModule, ExecutableModule
 
     public function run(ContainerInterface $container): bool
     {
-        // TODO Switch to GraphQL or stay with Rest API?
-        // TODO Allow to edit the route configuration.
         add_action(
             'rest_api_init',
             static function () use ($container) {
                 Route::post('konomi/v1', '/user-like')
-                    // TODO Make the schema a Service to allow extending it?
-                    ->withSchema([
-                        'title' => '_like',
-                        'type' => 'object',
-                        'properties' => [
-                            'id' => [
-                                'required' => true,
-                                'type' => 'integer',
-                            ],
-                            'type' => [
-                                'required' => true,
-                                'type' => 'string',
-                            ],
-                            'isActive' => [
-                                'required' => true,
-                                'type' => 'boolean',
-                            ],
-                        ]
-                    ])
+                    ->withSchema($container->get('konomi.rest.like.add-schema'))
                     ->withMiddleware($container->get('konomi.rest.middleware.error-catch'))
                     ->withMiddleware($container->get('konomi.rest.middleware.authentication'))
-                    ->withHandle($container->get('konomi.rest.controller.add-like'))
+                    ->withHandle($container->get('konomi.rest.like.add-controller'))
                     ->register();
             }
         );

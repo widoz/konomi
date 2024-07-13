@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Rest\Controllers;
+namespace Widoz\Wp\Konomi\Rest\Like;
 
 use Widoz\Wp\Konomi\Rest;
 use Widoz\Wp\Konomi\User;
 
-class AddLikeController implements Rest\Controller
+class AddController implements Rest\Controller
 {
     public static function new(
         User\User $user,
         User\Like\Factory $likeFactory
-    ): AddLikeController {
+    ): AddController {
 
         return new self($user, $likeFactory);
     }

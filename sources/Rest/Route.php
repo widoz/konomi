@@ -39,10 +39,10 @@ class Route
     ) {
     }
 
-    public function withSchema(array $schema): self
+    public function withSchema(Schema $schema): self
     {
         $this->schema = [
-            'schema' => $schema,
+            'schema' => $schema->toArray(),
             '$schema' => 'http://json-schema.org/draft-04/schema#',
         ];
         return $this;
