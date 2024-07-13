@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Blocks;
 
-use Widoz\Wp\Konomi\Utils;
-
 class BlockRegistrar
 {
     public static function new(string $blocksDirectory): self
@@ -30,25 +28,7 @@ class BlockRegistrar
                 continue;
             }
 
-            $this->enqueueBlockDependenciesScripts($blockPath);
             register_block_type_from_metadata($blockPath->getPathname());
         }
-    }
-
-    private function enqueueBlockDependenciesScripts(\DirectoryIterator $blockDirectory): void
-    {
-        $dependencies = [];
-        $file = "{$blockDirectory->getPathname()}/scripts-dependencies.php";
-        is_readable($file) and $dependencies = include_once "{$blockDirectory->getPathname()}/scripts-dependencies.php";
-
-        if (count($dependencies) === 0) {
-            return;
-        }
-
-        Utils\DeferTaskAtBlockRendering::do(
-            function () use ($dependencies): void {
-                array_walk($dependencies, 'wp_enqueue_script');
-            }
-        );
     }
 }

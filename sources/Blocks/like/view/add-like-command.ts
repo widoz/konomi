@@ -1,4 +1,4 @@
-const { apiFetch } = window.wp;
+import { apiFetch } from '@konomi/api-fetch';
 
 type Payload = Readonly< {
 	meta: Readonly< {

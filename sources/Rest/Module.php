@@ -34,7 +34,7 @@ class Module implements ServiceModule, ExecutableModule
                 $container->get('konomi.user.like.factory')
             ),
 
-            // TODO Need a error catch middleware.
+            'konomi.rest.middleware.error-catch' => fn() => Middlewares\ErrorCatch::new(),
             'konomi.rest.middleware.authentication' => fn(
                 ContainerInterface $container
             ) => Middlewares\Authentication::new(
@@ -51,6 +51,7 @@ class Module implements ServiceModule, ExecutableModule
             'rest_api_init',
             static function () use ($container) {
                 Route::post('konomi/v1', '/user-like')
+                    // TODO Make the schema a Service to allow extending it?
                     ->withSchema([
                         'title' => '_like',
                         'type' => 'object',
@@ -69,6 +70,7 @@ class Module implements ServiceModule, ExecutableModule
                             ],
                         ]
                     ])
+                    ->withMiddleware($container->get('konomi.rest.middleware.error-catch'))
                     ->withMiddleware($container->get('konomi.rest.middleware.authentication'))
                     ->withHandle($container->get('konomi.rest.controller.add-like'))
                     ->register();

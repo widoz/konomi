@@ -39,6 +39,9 @@
 			"@konomi/types": [
 				"./@types"
 			],
+			"@konomi/api-fetch": [
+				"./resources/js/api-fetch"
+			],
 			"@konomi/configuration": [
 				"./sources/Configuration/client"
 			],

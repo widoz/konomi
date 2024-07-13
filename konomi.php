@@ -35,6 +35,7 @@ add_action(
 
         $package
             ->addModule(Configuration\Module::new($properties))
+            ->addModule(ApiFetch\Module::new($properties))
             ->addModule(Icons\Module::new($properties))
             ->addModule(User\Module::new())
             ->addModule(Rest\Module::new())

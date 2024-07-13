@@ -15,6 +15,7 @@ const makeAliases = require('./.scripts/make-aliases');
 
 const EXTRACTION_CONFIGURATION = [
 	'@konomi/configuration',
+	'@konomi/api-fetch',
 	'@konomi/icons',
 ];
 
@@ -62,6 +63,19 @@ module.exports = [
 			...configuration.output,
 			filename: '[name].js',
 			path: path.resolve('./sources/Configuration/client/build-module'),
+			clean: true,
+		},
+	},
+
+	{
+		...configuration,
+		entry: {
+			'konomi-api-fetch': './sources/ApiFetch/client/index.ts',
+		},
+		output: {
+			...configuration.output,
+			filename: '[name].js',
+			path: path.resolve('./sources/ApiFetch/client/build-module'),
 			clean: true,
 		},
 	},

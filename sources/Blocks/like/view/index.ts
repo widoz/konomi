@@ -40,7 +40,7 @@ const { callbacks } = store( 'konomi', {
 					},
 				},
 			} ).catch( ( error: Readonly< Error > ) => {
-				context.isActive = false;
+				context.isActive = ! context.isActive;
 				if ( element.ref ) {
 					element.ref.dataset[ 'error' ] = error.message;
 				}

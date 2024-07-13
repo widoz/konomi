@@ -37,7 +37,6 @@ class Module implements ServiceModule, ExecutableModule
     {
         $this->addBlockRenderedAction($container);
 
-        // TODO Improve assets loading, creating a custom module or reuse Syde\Assets.
         add_action('enqueue_block_editor_assets', function () use ($container): void {
             $service = $container->get('konomi.configuration');
             $distLocationPath = 'sources/Configuration/client/dist';
@@ -81,6 +80,7 @@ class Module implements ServiceModule, ExecutableModule
 
     private function addBlockRenderedAction(ContainerInterface $container): void
     {
+        // TODO This must be removed probably.
         $callback = static function () use ($container): void {
             $service = $container->get('konomi.configuration');
             echo sprintf('<script type="module">%s</script>',
