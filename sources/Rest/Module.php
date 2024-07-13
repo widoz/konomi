@@ -51,9 +51,26 @@ class Module implements ServiceModule, ExecutableModule
             'rest_api_init',
             static function () use ($container) {
                 Route::post('konomi/v1', '/user-like')
-                    ->withParams(['_like'])
+                    ->withSchema([
+                        'title' => '_like',
+                        'type' => 'object',
+                        'properties' => [
+                            'id' => [
+                                'required' => true,
+                                'type' => 'integer',
+                            ],
+                            'type' => [
+                                'required' => true,
+                                'type' => 'string',
+                            ],
+                            'isActive' => [
+                                'required' => true,
+                                'type' => 'boolean',
+                            ],
+                        ]
+                    ])
                     ->withMiddleware($container->get('konomi.rest.middleware.authentication'))
-                    ->handle($container->get('konomi.rest.controller.add-like'))
+                    ->withHandle($container->get('konomi.rest.controller.add-like'))
                     ->register();
             }
         );

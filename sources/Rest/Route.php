@@ -6,9 +6,11 @@ namespace Widoz\Wp\Konomi\Rest;
 
 class Route
 {
+    use RestRegistTrait;
+
     private Method $method;
 
-    private array $params = [];
+    private array $schema = [];
 
     private Controller $controller;
 
@@ -37,14 +39,16 @@ class Route
     ) {
     }
 
-    // TODO This include the Rest Schema arguments.
-    public function withParams(array $params): self
+    public function withSchema(array $schema): self
     {
-        $this->params = $params;
+        $this->schema = [
+            'schema' => $schema,
+            '$schema' => 'http://json-schema.org/draft-04/schema#',
+        ];
         return $this;
     }
 
-    public function handle(Controller $controller): self
+    public function withHandle(Controller $controller): self
     {
         $this->controller = $controller;
         return $this;
@@ -54,23 +58,5 @@ class Route
     {
         $this->middlewares[] = $middleware;
         return $this;
-    }
-
-    public function register(): void
-    {
-        $handler = function (\WP_Rest_Request $request): \WP_REST_Response|\WP_Error {
-            return MiddlewareProcess::run(
-                $this->middlewares,
-                $this->controller,
-                $request
-            );
-        };
-
-        register_rest_route($this->namespace, $this->route, [
-            'methods' => $this->method->value,
-            'callback' => $handler,
-            'args' => $this->params,
-            'permission_callback' => '__return_true',
-        ]);
     }
 }
