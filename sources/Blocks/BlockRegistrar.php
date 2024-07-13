@@ -25,13 +25,13 @@ class BlockRegistrar
         $blocksDirectory = untrailingslashit($this->blocksDirectory);
         $blockPaths = new \DirectoryIterator($blocksDirectory);
 
-        foreach ($blockPaths as $blockName) {
-            if ($blockName->isDot() || $blockName->isFile()) {
+        foreach ($blockPaths as $blockPath) {
+            if ($blockPath->isDot() || $blockPath->isFile()) {
                 continue;
             }
 
-            $this->enqueueBlockDependenciesScripts($blockName);
-            register_block_type_from_metadata($blockName->getPathname());
+            $this->enqueueBlockDependenciesScripts($blockPath);
+            register_block_type_from_metadata($blockPath->getPathname());
         }
     }
 
@@ -41,7 +41,7 @@ class BlockRegistrar
         $file = "{$blockDirectory->getPathname()}/scripts-dependencies.php";
         is_readable($file) and $dependencies = include_once "{$blockDirectory->getPathname()}/scripts-dependencies.php";
 
-        if (!$dependencies) {
+        if (count($dependencies) === 0) {
             return;
         }
 
