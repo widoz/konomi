@@ -58,7 +58,6 @@ class Collection
          * @var $id int
          * @var $type string
          */
-        // TODO Validate data to read by using a schema.
         foreach ($this->meta->read($user->id(), $key) as [$id, $type]) {
             self::$cache[$id] = $this->itemFactory->create($id, $type, true);
         }

@@ -6,9 +6,6 @@ namespace Widoz\Wp\Konomi\User;
 
 /**
  * @api
- *
- * TODO Think about the possibility that we might want to allow other users e.g. Admins to save
- *      likes for other users. Or to importers, etc.
  */
 class User
 {

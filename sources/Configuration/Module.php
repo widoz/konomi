@@ -35,8 +35,6 @@ class Module implements ServiceModule, ExecutableModule
 
     public function run(ContainerInterface $container): bool
     {
-        $this->addBlockRenderedAction($container);
-
         add_action('enqueue_block_editor_assets', function () use ($container): void {
             $service = $container->get('konomi.configuration');
             $distLocationPath = 'sources/Configuration/client/dist';
@@ -76,27 +74,5 @@ class Module implements ServiceModule, ExecutableModule
         });
 
         return true;
-    }
-
-    private function addBlockRenderedAction(ContainerInterface $container): void
-    {
-        // TODO This must be removed probably.
-        $callback = static function () use ($container): void {
-            $service = $container->get('konomi.configuration');
-            echo sprintf('<script type="module">%s</script>',
-                <<<JS
-import { initConfiguration } from '@konomi/configuration';
-initConfiguration('{$service->serialize()}');
-JS
-            );
-        };
-
-        Utils\DeferTaskAtBlockRendering::do(
-            static fn() => Utils\SingleRunningHook::action(
-                'wp_footer',
-                $callback,
-                20
-            )
-        );
     }
 }
