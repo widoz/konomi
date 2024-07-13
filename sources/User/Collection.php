@@ -49,7 +49,6 @@ class Collection
     }
 
     // TODO Validate data to write by using a schema.
-    // TODO Do not write unnecessary data again. E.g. when nothing change.
     public function save(User $user, string $key, Item $item): bool
     {
         $originalMeta = $this->meta->read($user->id(), $key) ?: [];
@@ -61,6 +60,8 @@ class Collection
             unset($toStoreMeta[$item->id()]);
         }
 
+        // TODO We probably want to compare the arrays in a more sophisticated way.
+        //      e.g. $item->isEqualToRaw($originalMeta[$item->id()])
         if ($originalMeta === $toStoreMeta) {
             return true;
         }
