@@ -9,6 +9,7 @@ import React from 'react';
  */
 import { useBlockProps } from '@wordpress/block-editor';
 
+// TODO Switch to a server side rendered block?
 export default function Edit(): JSX.Element {
 	return (
 		<button { ...useBlockProps() }>

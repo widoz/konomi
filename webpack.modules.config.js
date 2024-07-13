@@ -69,7 +69,7 @@ module.exports = [
 	{
 		...configuration,
 		entry: {
-			'konomi-like-block-view': './sources/Blocks/like/view.ts',
+			'konomi-like-block-view': './sources/Blocks/like/view/index.ts',
 		},
 		output: {
 			...configuration.output,

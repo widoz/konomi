@@ -6,3 +6,11 @@ declare namespace Konomi {
 		iconsPathUrl: URL;
 	} >;
 }
+
+declare global {
+	interface Window {
+		wp: {
+			apiFetch: ( options: any ) => Promise< any >;
+		};
+	}
+}

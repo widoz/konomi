@@ -16,10 +16,12 @@ $uuid = $context->instanceId();
 
 <div class="konomi-like">
     <span
-        style="position-anchor: --konomi-like-<?= $uuid ?>;"
         popover="manual"
         class="konomi-like-response-message"
-    ></span>
+        style="position-anchor: --konomi-like-<?= $uuid ?>;"
+    >
+        <?= __('Unknown error, please try again later!', 'konomi') ?>
+    </span>
     <button
         <?= get_block_wrapper_attributes() ?>
         <?= wp_interactivity_data_wp_context($context->generate()) ?>

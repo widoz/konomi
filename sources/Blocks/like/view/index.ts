@@ -1,20 +1,12 @@
 import { getContext, getElement, store } from '@wordpress/interactivity';
-
-declare global {
-	interface Window {
-		wp: {
-			apiFetch: ( options: any ) => Promise< any >;
-		};
-	}
-}
+import { addLike } from './add-like-command';
+import { showResponseWithPopover } from './popover';
 
 type Context = {
 	id: number;
 	type: string;
 	isActive: boolean;
 };
-
-const { apiFetch } = window.wp;
 
 const { callbacks } = store( 'konomi', {
 	state: {},
@@ -33,17 +25,8 @@ const { callbacks } = store( 'konomi', {
 			const popover = element.ref?.previousElementSibling;
 			const message = element.ref?.dataset[ 'error' ] ?? '';
 
-			if (
-				message &&
-				popover instanceof HTMLElement &&
-				popover.classList.contains( 'konomi-like-response-message' )
-			) {
-				popover.innerHTML = message;
-				popover.showPopover();
-
-				setTimeout( () => {
-					popover.hidePopover();
-				}, 3000 );
+			if ( popover instanceof HTMLElement ) {
+				showResponseWithPopover( popover, message );
 			}
 		},
 
@@ -51,21 +34,16 @@ const { callbacks } = store( 'konomi', {
 			const element = getElement();
 			const context = getContext< Context >( 'konomi' );
 
-			apiFetch( {
-				path: '/konomi/v1/user-like/',
-				method: 'POST',
-				data: {
-					meta: {
-						_like: {
-							id: context.id,
-							type: context.type,
-							isActive: context.isActive,
-						},
+			addLike( {
+				meta: {
+					_like: {
+						id: context.id,
+						type: context.type,
+						isActive: context.isActive,
 					},
 				},
-			} ).catch( ( error ) => {
+			} ).catch( ( error: Readonly< Error > ) => {
 				context.isActive = false;
-
 				if ( element.ref ) {
 					element.ref.dataset[ 'error' ] = error.message;
 				}
