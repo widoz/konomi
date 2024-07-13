@@ -16,7 +16,7 @@ type Context = {
 
 const { apiFetch } = window.wp;
 
-const { state, callbacks } = store( 'konomi', {
+const { callbacks } = store( 'konomi', {
 	state: {},
 
 	actions: {
@@ -31,8 +31,7 @@ const { state, callbacks } = store( 'konomi', {
 		maybeShowErrorPopup: () => {
 			const element = getElement();
 			const popover = element.ref?.previousElementSibling;
-			// @ts-expect-error
-			const message = element.ref?.dataset.error ?? '';
+			const message = element.ref?.dataset[ 'error' ] ?? '';
 
 			if (
 				message &&
@@ -65,10 +64,11 @@ const { state, callbacks } = store( 'konomi', {
 					},
 				},
 			} ).catch( ( error ) => {
-				console.error( error );
 				context.isActive = false;
-				// @ts-expect-error
-				element.ref.dataset.error = error.message;
+
+				if ( element.ref ) {
+					element.ref.dataset[ 'error' ] = error.message;
+				}
 			} );
 		},
 	},
