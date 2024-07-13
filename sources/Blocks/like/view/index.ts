@@ -1,6 +1,6 @@
 import { getContext, getElement, store } from '@wordpress/interactivity';
 import { addLike } from './add-like-command';
-import { showResponseWithPopover } from './popover';
+import { showResponseErrorWithPopoverForElement } from './popover';
 
 type Context = {
 	id: number;
@@ -22,11 +22,8 @@ const { callbacks } = store( 'konomi', {
 	callbacks: {
 		maybeShowErrorPopup: () => {
 			const element = getElement();
-			const popover = element.ref?.previousElementSibling;
-			const message = element.ref?.dataset[ 'error' ] ?? '';
-
-			if ( popover instanceof HTMLElement ) {
-				showResponseWithPopover( popover, message );
+			if ( element.ref instanceof HTMLElement ) {
+				showResponseErrorWithPopoverForElement( element.ref );
 			}
 		},
 

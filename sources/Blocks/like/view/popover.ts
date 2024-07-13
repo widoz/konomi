@@ -1,13 +1,19 @@
 // eslint-disable-next-line complexity
-export function showResponseWithPopover(
+export function showResponseErrorWithPopoverForElement(
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-	popover: HTMLElement,
-	message: string
+	toggler: Readonly< HTMLElement >
 ): void {
-	if ( ! message ) {
+	const popover = toggler.previousElementSibling;
+	const message = toggler.dataset[ 'error' ] ?? '';
+
+	if (
+		! ( popover instanceof HTMLElement ) ||
+		! popover.classList.contains( 'konomi-like-response-message' )
+	) {
 		return;
 	}
-	if ( ! popover.classList.contains( 'konomi-like-response-message' ) ) {
+
+	if ( ! message ) {
 		return;
 	}
 
@@ -16,5 +22,6 @@ export function showResponseWithPopover(
 
 	setTimeout( () => {
 		popover.hidePopover();
+		toggler.dataset[ 'error' ] = '';
 	}, 3000 );
 }
