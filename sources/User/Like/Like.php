@@ -34,4 +34,9 @@ class Like implements User\Item
     {
         return $this->isActive;
     }
+
+    public function isValid(): bool
+    {
+        return $this->id > 0 && $this->type !== '';
+    }
 }

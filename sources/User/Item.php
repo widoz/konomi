@@ -11,4 +11,6 @@ interface Item
     public function type(): string;
 
     public function isActive(): bool;
+
+    public function isValid(): bool;
 }

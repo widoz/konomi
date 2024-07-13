@@ -1,6 +1,15 @@
 $color--white: #fff;
 $color--crimson: #dc143cff;
 
+.konomi-like-response-message {
+	inset-area: block-start;
+	inset-block-end: anchor(top);
+	inset-inline-start: anchor(right);
+	margin: 0;
+	min-width: 10vw;
+	position: absolute;
+}
+
 .wp-block-konomi-like {
 	appearance: none;
 	background: none;
@@ -37,5 +46,23 @@ $color--crimson: #dc143cff;
 				}
 			}
 		}
+	}
+
+	&:hover {
+		animation: pulse ease-in-out .5s 1;
+	}
+}
+
+@keyframes pulse {
+	from {
+		transform: scale3d(1, 1, 1);
+	}
+
+	50% {
+		transform: scale3d(1.05, 1.05, 1.05);
+	}
+
+	to {
+		transform: scale3d(1, 1, 1);
 	}
 }

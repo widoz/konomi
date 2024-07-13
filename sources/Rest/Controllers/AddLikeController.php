@@ -25,34 +25,65 @@ class AddLikeController implements Rest\Controller
 
     public function __invoke(\WP_REST_Request $request): \WP_REST_Response|\WP_Error
     {
-        $meta = $request->get_param('meta')['_like'] ?? [];
-        if (!$meta) {
-            return new \WP_Error(
-                'no_likes',
-                'No likes provided',
-                ['status' => 400]
-            );
+        $like = $this->likeByRequest($request);
+
+        if (!$like->isValid()) {
+            return $this->failedBecauseInvalidData();
         }
 
-        $result = $this->user->saveLike(
-            $this->likeFactory->create(
-                (int) $meta['id'],
-                $meta['type'],
-                $meta['isActive']
-            )
-        );
+        return $this->user->saveLike($like)
+            ? $this->successResponse()
+            : $this->failedToSaveError();
+    }
 
-        if ($result === false) {
-            return new \WP_Error(
-                'failed_to_save_like',
-                'Failed to save like',
-                ['status' => 500]
-            );
-        }
-
+    private function successResponse(): \WP_REST_Response
+    {
         return new \WP_REST_Response([
             'success' => true,
             'message' => 'Like saved',
         ], 201);
+    }
+
+    private function failedBecauseInvalidData(): \WP_Error
+    {
+        return new \WP_Error(
+            'invalid_like_data',
+            'Invalid Like Data, please contact the support or try again later.',
+            ['status' => 400]
+        );
+    }
+
+    private function failedToSaveError(): \WP_Error
+    {
+        return new \WP_Error(
+            'failed_to_save_like',
+            'Failed to save like',
+            ['status' => 500]
+        );
+    }
+
+    private function likeByRequest(\WP_REST_Request $request): User\Like\Like
+    {
+        $rawLike = $this->ensureMeta($request->get_param('meta'));
+        return $this->likeFactory->create(
+            (int) $rawLike['id'],
+            $rawLike['type'],
+            $rawLike['isActive']
+        );
+    }
+
+    private function ensureMeta(array $meta): array
+    {
+        $default = [
+            'id' => 0,
+            'type' => '',
+            'isActive' => '',
+        ];
+
+        if (!array_key_exists('_like', $meta)) {
+            return $default;
+        }
+
+        return wp_parse_args($meta['_like'], $default);
     }
 }

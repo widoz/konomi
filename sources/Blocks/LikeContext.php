@@ -8,6 +8,8 @@ use Widoz\Wp\Konomi\User;
 
 class LikeContext
 {
+    private int $instanceId = 0;
+
     public static function new(User\User $user): LikeContext
     {
         return new self($user);
@@ -29,5 +31,10 @@ class LikeContext
             'type' => $like->type() ?: $type,
             'isActive' => $like->isActive(),
         ];
+    }
+
+    public function instanceId(): int
+    {
+        return ++$this->instanceId;
     }
 }

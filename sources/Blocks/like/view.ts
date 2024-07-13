@@ -1,4 +1,4 @@
-import { getContext, store } from '@wordpress/interactivity';
+import { getContext, getElement, store } from '@wordpress/interactivity';
 
 declare global {
 	interface Window {
@@ -16,7 +16,7 @@ type Context = {
 
 const { apiFetch } = window.wp;
 
-const { callbacks } = store( 'konomi', {
+const { state, callbacks } = store( 'konomi', {
 	state: {},
 
 	actions: {
@@ -28,21 +28,47 @@ const { callbacks } = store( 'konomi', {
 	},
 
 	callbacks: {
+		maybeShowErrorPopup: () => {
+			const element = getElement();
+			const popover = element.ref?.previousElementSibling;
+			// @ts-expect-error
+			const message = element.ref?.dataset.error ?? '';
+
+			if (
+				message &&
+				popover instanceof HTMLElement &&
+				popover.classList.contains( 'konomi-like-response-message' )
+			) {
+				popover.innerHTML = message;
+				popover.showPopover();
+
+				setTimeout( () => {
+					popover.hidePopover();
+				}, 3000 );
+			}
+		},
+
 		updateUserPreferences: () => {
-			const { isActive, id, type } = getContext< Context >( 'konomi' );
+			const element = getElement();
+			const context = getContext< Context >( 'konomi' );
 
 			apiFetch( {
 				path: '/konomi/v1/user-like/',
 				method: 'POST',
 				data: {
 					meta: {
-						_like: { id, type, isActive },
+						_like: {
+							id: context.id,
+							type: context.type,
+							isActive: context.isActive,
+						},
 					},
 				},
 			} ).catch( ( error ) => {
-				// TODO Here we want to render a popover with the error message.
 				console.error( error );
-				isActive = false;
+				context.isActive = false;
+				// @ts-expect-error
+				element.ref.dataset.error = error.message;
 			} );
 		},
 	},

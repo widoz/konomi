@@ -27,4 +27,9 @@ class NullItem implements Item
     {
         return false;
     }
+
+    public function isValid(): bool
+    {
+        return false;
+    }
 }
