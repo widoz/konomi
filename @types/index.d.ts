@@ -6,6 +6,7 @@ export as namespace Konomi;
 declare namespace Konomi {
 	type Configuration = Readonly< {
 		iconsPathUrl: URL;
+		isDebugMode: boolean;
 	} >;
 }
 

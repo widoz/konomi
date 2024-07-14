@@ -35,6 +35,7 @@ class Configuration
             [
                 'iconsPathUrl' => $this->iconsPathUrl(),
                 'iconsPath' => $this->iconsPath(),
+                'isDebugMode' => $this->properties->isDebug(),
             ]
         );
     }

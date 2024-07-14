@@ -40,7 +40,7 @@
 				"./@types"
 			],
 			"@konomi/api-fetch": [
-				"./resources/js/api-fetch"
+				"./sources/ApiFetch/client"
 			],
 			"@konomi/configuration": [
 				"./sources/Configuration/client"

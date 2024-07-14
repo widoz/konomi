@@ -29,10 +29,11 @@ class ErrorCatch implements Middleware
                     'konomi'
                 ),
                 [
-                    'status' => $exception->getCode(),
+                    'status' => 500,
+                    'code' => $exception->getCode(),
                     'file' => $exception->getFile(),
                     'line' => $exception->getLine(),
-                    'originalError' => $exception->getMessage(),
+                    'message' => $exception->getMessage(),
                     'stackTrace' => $exception->getTraceAsString(),
                 ]
             );

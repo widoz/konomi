@@ -11,7 +11,6 @@ use Inpsyde\Modularity\{
     Module\ModuleClassNameIdTrait,
     Properties\Properties
 };
-use Widoz\Wp\Konomi\Utils;
 
 class Module implements ServiceModule, ExecutableModule
 {
@@ -28,7 +27,9 @@ class Module implements ServiceModule, ExecutableModule
 
     public function services(): array
     {
-        return [];
+        return [
+            'konomi.api-fetch.script-enqueue-filter' => static fn () => ScriptEnqueueFilter::new(),
+        ];
     }
 
     public function run(ContainerInterface $container): bool
@@ -40,31 +41,18 @@ class Module implements ServiceModule, ExecutableModule
 
             $configuration = (array) (include "{$baseDir}/{$moduleLocationPath}/konomi-api-fetch.asset.php");
 
+            $dependencies = $configuration['dependencies'] ?? [];
+            $version = $configuration['version'] ?? $this->appProperties->version();
+
             wp_register_script_module(
                 '@konomi/api-fetch',
                 "{$baseUrl}/{$moduleLocationPath}/konomi-api-fetch.js",
-                [],
-                $configuration['version']
+                $dependencies,
+                $version
             );
         });
 
-            Utils\ConditionalRemovableHook::filter(
-                'wp_inline_script_attributes',
-                static function (
-                    Utils\ConditionalRemovableHook $that,
-                    array $attributes,
-                    string $data
-                ): array {
-                    if (str_contains($data, '"@konomi\/api-fetch"')) {
-                        wp_enqueue_script('wp-api-fetch');
-                        $that->remove();
-                    }
-
-                    return $attributes;
-                },
-                10,
-                2
-            );
+        $container->get('konomi.api-fetch.script-enqueue-filter')->addFilter();
 
         return true;
     }

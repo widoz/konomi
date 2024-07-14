@@ -30,6 +30,11 @@ class Module implements ServiceModule, ExecutableModule
     {
         return [
             'konomi.configuration' => fn () => Configuration::new($this->appProperties),
+            'konomi.configuration.init-script-render' => static fn (
+                ContainerInterface $container
+            ) => ConfigurationInitScriptFilter::new(
+                $container->get('konomi.configuration')
+            ),
         ];
     }
 
@@ -65,13 +70,18 @@ class Module implements ServiceModule, ExecutableModule
 
             $configuration = (array) (include "{$baseDir}/{$moduleLocationPath}/konomi-configuration.asset.php");
 
+            $dependencies = $configuration['dependencies'] ?? [];
+            $version = $configuration['version'] ?? $this->appProperties->version();
+
             wp_register_script_module(
                 '@konomi/configuration',
                 "{$baseUrl}/{$moduleLocationPath}/konomi-configuration.js",
-                [],
-                $configuration['version']
+                $dependencies,
+                $version
             );
         });
+
+        $container->get('konomi.configuration.init-script-render')->addFilter();
 
         return true;
     }
