@@ -39,5 +39,8 @@ $anchor = "--konomi-like-{$uuid}";
         <?=
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         Icons\ksesIcon(Icons\icon()->render('heart')) ?>
+        <span class="screen-reader-text">
+            <?= esc_html__('Save this post', 'konomi') ?>
+        </span>
     </button>
 </div>

@@ -1,69 +1,52 @@
 $color--white: #fff;
 $color--crimson: #dc143cff;
 
-.konomi-like-response-message {
-	inset-area: block-start;
-	inset-block-end: anchor(top);
-	inset-inline-start: anchor(right);
+.konomi-like {
 	margin: 0;
-	min-width: 10vw;
-	position: absolute;
-	text-align: center;
-}
-
-.wp-block-konomi-like {
-	appearance: none;
-	background: none;
-	border: none;
-	cursor: pointer;
 	padding: 0;
 
-	.konomi-icon {
-		width: 1.5em;
-
-		&--heart {
-			fill: $color--white;
-			stroke: $color--crimson;
-			stroke-width: 0.5;
-			transition: all 0.3s;
-
-			&:hover {
-				fill: $color--crimson;
-				fill-opacity: 0.6;
-			}
-		}
+	.konomi-like-response-message {
+		inset-area: block-start;
+		inset-block-end: anchor(top);
+		inset-inline-start: anchor(right);
+		margin: 0;
+		min-width: 6vw;
+		position: absolute;
+		text-align: center;
 	}
 
-	&.is-active {
+	.wp-block-konomi-like {
+		appearance: none;
+		background: none;
+		border: none;
+		cursor: pointer;
+		line-height: 0;
+		padding: 0.5rem;
 
 		.konomi-icon {
 
 			&--heart {
-				fill: $color--crimson;
+				fill: $color--white;
+				stroke: $color--crimson;
+				stroke-width: 2;
+				transition: all 0.3s;
 
 				&:hover {
 					fill: $color--crimson;
-					fill-opacity: 1;
+					fill-opacity: 0.6;
+				}
+			}
+		}
+
+		&.is-active {
+
+			.konomi-icon {
+
+				&--heart {
+					fill: $color--crimson;
 				}
 			}
 		}
 	}
 
-	&:hover {
-		animation: pulse ease-in-out .6s 2;
-	}
-}
-
-@keyframes pulse {
-	from {
-		transform: scale3d(1, 1, 1);
-	}
-
-	50% {
-		transform: scale3d(1.05, 1.05, 1.05);
-	}
-
-	to {
-		transform: scale3d(1, 1, 1);
-	}
 }
