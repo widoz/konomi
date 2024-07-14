@@ -24,18 +24,23 @@ class ConfigurationInitScriptFilter
                 return str_contains($data, '"@konomi\/configuration"');
             },
             function (): void {
-                add_action('wp_footer', function () {
-                    wp_print_inline_script_tag(
-                        <<<JS
+                $this->addFooterAction();
+            }
+        );
+    }
+
+    private function addFooterAction(): void
+    {
+        add_action('wp_footer', function () {
+            wp_print_inline_script_tag(
+                <<<JS
                     import { initConfiguration } from '@konomi/configuration';
                     initConfiguration('{$this->configuration->serialize()}');
                     JS,
-                        [
-                            'type' => 'module',
-                        ]
-                    );
-                });
-            }
-        );
+                [
+                    'type' => 'module',
+                ]
+            );
+        });
     }
 }

@@ -36,6 +36,8 @@ $anchor = "--konomi-like-{$uuid}";
         data-wp-class--is-active="context.isActive"
         style="anchor-name: <?= esc_attr($anchor) ?>"
     >
-        <?= Icons\icon()->render('heart') ?>
+        <?=
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        Icons\ksesIcon(Icons\icon()->render('heart')) ?>
     </button>
 </div>
