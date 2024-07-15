@@ -39,6 +39,7 @@ add_action(
             ->addModule(ApiFetch\Module::new($properties))
             ->addModule(Icons\Module::new($properties))
             ->addModule(User\Module::new())
+            ->addModule(Post\Module::new())
             ->addModule(Rest\Module::new())
             ->addModule(Blocks\Module::new($properties))
             ->boot();

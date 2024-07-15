@@ -11,6 +11,7 @@ if (!User\user()->isLoggedIn()) {
 }
 
 $context = Blocks\context();
+$generatedContext = $context->generate();
 $uuid = $context->instanceId();
 $anchor = "--konomi-like-{$uuid}";
 ?>
@@ -29,7 +30,7 @@ $anchor = "--konomi-like-{$uuid}";
         echo get_block_wrapper_attributes() ?>
         <?php
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        echo wp_interactivity_data_wp_context($context->generate()) ?>
+        echo wp_interactivity_data_wp_context($generatedContext) ?>
         data-wp-interactive="konomi"
         data-wp-run="callbacks.maybeShowErrorPopup"
         data-wp-on--click="actions.toggleStatus"
@@ -43,4 +44,7 @@ $anchor = "--konomi-like-{$uuid}";
             <?= esc_html__('Save this post', 'konomi') ?>
         </span>
     </button>
+    <span class="konomi-like-count">
+        <?= esc_html($generatedContext['count']) ?>
+    </span>
 </div>

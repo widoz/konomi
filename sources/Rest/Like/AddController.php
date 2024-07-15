@@ -26,7 +26,7 @@ class AddController implements Rest\Controller
     public function __invoke(\WP_REST_Request $request): \WP_REST_Response|\WP_Error
     {
         $like = $this->likeByRequest($request);
-
+return $this->failedToSaveError();
         if (!$like->isValid()) {
             return $this->failedBecauseInvalidData();
         }

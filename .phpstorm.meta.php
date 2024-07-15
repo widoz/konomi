@@ -20,7 +20,11 @@ namespace PHPSTORM_META {
                 'konomi.user' => \Widoz\Wp\Konomi\User\User::class,
                 'konomi.user.like.factory' => \Widoz\Wp\Konomi\User\Like\Factory::class,
                 'konomi.user.collection' => \Widoz\Wp\Konomi\User\Collection::class,
-                'konomi.user.meta' => \Widoz\Wp\Konomi\User\Meta::class,
+                'konomi.user.storage' => \Widoz\Wp\Konomi\User\Storage::class,
+
+                'konomi.post' => \Widoz\Wp\Konomi\Post\Post::class,
+                'konomi.post.collection' => \Widoz\Wp\Konomi\Post\Collection::class,
+                'konomi.post.storage' => \Widoz\Wp\Konomi\Post\Storage::class,
 
                 'konomi.rest.controller.add-like' => \Widoz\Wp\Konomi\Rest\Controller::class,
                 'konomi.rest.middleware.authentication' => \Widoz\Wp\Konomi\Rest\Middleware::class,

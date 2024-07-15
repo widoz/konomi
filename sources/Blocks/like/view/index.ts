@@ -6,6 +6,7 @@ type Context = {
 	id: number;
 	type: string;
 	isActive: boolean;
+	count: number;
 };
 
 const { callbacks } = store( 'konomi', {
@@ -16,18 +17,38 @@ const { callbacks } = store( 'konomi', {
 			const context = getContext< Context >( 'konomi' );
 			context.isActive = ! context.isActive;
 			callbacks.updateUserPreferences();
+			callbacks.toggleLikeCount();
 		},
 	},
 
 	callbacks: {
-		maybeShowErrorPopup: () => {
+		toggleLikeCount: (): void => {
+			const element = getElement();
+			if ( ! ( element.ref instanceof HTMLElement ) ) {
+				return;
+			}
+
+			const likeCountElement = element.ref.nextElementSibling;
+			if ( ! ( likeCountElement instanceof HTMLElement ) ) {
+				return;
+			}
+
+			const context = getContext< Context >( 'konomi' );
+			// TODO Change `count`  to something else, also in HTML, I don't like this term.
+			const count = Number( likeCountElement.textContent );
+			likeCountElement.textContent = String(
+				context.isActive ? count + 1 : count - 1
+			);
+		},
+
+		maybeShowErrorPopup: (): void => {
 			const element = getElement();
 			if ( element.ref instanceof HTMLElement ) {
 				showResponseErrorWithPopoverForElement( element.ref );
 			}
 		},
 
-		updateUserPreferences: () => {
+		updateUserPreferences: (): void => {
 			const element = getElement();
 			const context = getContext< Context >( 'konomi' );
 
@@ -40,6 +61,7 @@ const { callbacks } = store( 'konomi', {
 					},
 				},
 			} ).catch( ( error: Readonly< Error > ) => {
+				// TODO Move this context change into the action. Check the handbook.
 				context.isActive = ! context.isActive;
 				if ( element.ref ) {
 					element.ref.dataset[ 'error' ] = error.message;

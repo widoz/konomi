@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\User;
+namespace Widoz\Wp\Konomi\Post;
 
 use Psr\Container\ContainerInterface;
 use Inpsyde\Modularity\{
@@ -10,6 +10,7 @@ use Inpsyde\Modularity\{
     Module\ExecutableModule,
     Module\ModuleClassNameIdTrait
 };
+use Widoz\Wp\Konomi\User;
 
 class Module implements ServiceModule, ExecutableModule
 {
@@ -27,17 +28,14 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            'konomi.user' => static fn (ContainerInterface $container) => User::new(
-                get_current_user_id(),
-                $container->get('konomi.user.collection')
+            'konomi.post' => static fn (ContainerInterface $container) => Post::new(
+                $container->get('konomi.post.collection')
             ),
-            'konomi.user.storage' => static fn () => Storage::new(),
-
-            'konomi.user.like.factory' => static fn () => Like\Factory::new(),
-            'konomi.user.collection' => static fn (
+            'konomi.post.storage' => static fn () => Storage::new(),
+            'konomi.post.collection' => static fn (
                 ContainerInterface $container
             ) => Collection::new(
-                $container->get('konomi.user.storage'),
+                $container->get('konomi.post.storage'),
                 $container->get('konomi.user.like.factory')
             ),
         ];
@@ -45,6 +43,16 @@ class Module implements ServiceModule, ExecutableModule
 
     public function run(ContainerInterface $container): bool
     {
+        $collection = $container->get('konomi.post.collection');
+        add_action(
+            'konomi.user.collection.save',
+            static function (User\Item $item, User\User $user) use ($collection): void {
+                $collection->save($item, $user);
+            },
+            10,
+            2
+        );
+
         return true;
     }
 }

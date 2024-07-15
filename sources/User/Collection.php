@@ -11,13 +11,13 @@ class Collection
 {
     private static array|null $cache = null;
 
-    public static function new(Meta $meta, ItemFactory $itemFactory): Collection
+    public static function new(Storage $storage, ItemFactory $itemFactory): Collection
     {
-        return new self($meta, $itemFactory);
+        return new self($storage, $itemFactory);
     }
 
     final private function __construct(
-        readonly private Meta $meta,
+        readonly private Storage $storage,
         readonly private ItemFactory $itemFactory
     ) {
     }
@@ -25,12 +25,16 @@ class Collection
     public function find(User $user, string $key, int $id): Item
     {
         self::$cache === null and self::$cache = $this->items($user, $key);
-        return self::$cache[$id] ?? NullItem::new();
+        $item = self::$cache[$id] ?? NullItem::new();
+
+        do_action('konomi.user.collection.find', $item, $user, $key, $id);
+
+        return $item;
     }
 
     public function save(User $user, string $key, Item $item): bool
     {
-        $originalMeta = $this->meta->read($user->id(), $key) ?: [];
+        $originalMeta = $this->storage->read($user->id(), $key) ?: [];
         $toStoreMeta = $originalMeta;
 
         unset($toStoreMeta[$item->id()]);
@@ -42,7 +46,9 @@ class Collection
             return true;
         }
 
-        return $this->meta->write($user->id(), $key, $toStoreMeta);
+        do_action('konomi.user.collection.save', $item, $user, $key);
+
+        return $this->storage->write($user->id(), $key, $toStoreMeta);
     }
 
     /**
@@ -58,7 +64,7 @@ class Collection
          * @var $id int
          * @var $type string
          */
-        foreach ($this->meta->read($user->id(), $key) as [$id, $type]) {
+        foreach ($this->storage->read($user->id(), $key) as [$id, $type]) {
             self::$cache[$id] = $this->itemFactory->create($id, $type, true);
         }
 

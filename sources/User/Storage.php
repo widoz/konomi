@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\User;
 
-class Meta
+/**
+ * @internal
+ *
+ * @psalm-type RawItem = array{0: int<1, max>, 1: string}
+ * @psalm-type RawData = array<array-key, RawItem>
+ */
+class Storage
 {
-    public static function new(): Meta
+    public static function new(): Storage
     {
         return new self();
     }
@@ -15,14 +21,17 @@ class Meta
     {
     }
 
+    /**
+     * @return RawData
+     */
     public function read(int $id, string $key): array
     {
         $data = get_user_meta($id, $key, true);
-        return is_array($data) ? $data : [];
+        return  is_array($data) ? $data : [];
     }
 
     /**
-     * @param array{0: int, 1: string} $data
+     * @param RawData $data
      */
     public function write(int $id, string $key, array $data): bool
     {
