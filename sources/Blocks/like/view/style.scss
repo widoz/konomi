@@ -1,5 +1,6 @@
 $color--white: #fff;
 $color--crimson: #dc143cff;
+$color--gray: #696969ff;
 
 .konomi-like {
 	margin: 0;
@@ -27,12 +28,12 @@ $color--crimson: #dc143cff;
 
 			&--heart {
 				fill: $color--white;
-				stroke: $color--crimson;
+				stroke: $color--gray;
 				stroke-width: 2;
 				transition: all 0.3s;
 
 				&:hover {
-					fill: $color--crimson;
+					fill: $color--gray;
 					fill-opacity: 0.6;
 				}
 			}
@@ -44,6 +45,12 @@ $color--crimson: #dc143cff;
 
 				&--heart {
 					fill: $color--crimson;
+					stroke: $color--crimson;
+
+					&:hover {
+						fill: $color--crimson;
+						fill-opacity: 0.6;
+					}
 				}
 			}
 		}
