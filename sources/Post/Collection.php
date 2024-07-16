@@ -45,15 +45,6 @@ class Collection
         return $collector;
     }
 
-    /**
-     * @return array<array-key, User\Item>
-     */
-    public function findForUser(int $id, User\User $user): array
-    {
-        $data = $this->find($id);
-        return $data[$user->id()] ?? [];
-    }
-
     public function save(User\Item $item, User\User $user): bool
     {
         $postId = $item->id();
