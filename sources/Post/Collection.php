@@ -52,7 +52,7 @@ class Collection
         $userData = $storedData[$user->id()] ?? [];
 
         if (self::has($item, $userData)) {
-            $storedData = $this->removeItem($item, $userData);
+            $storedData[$user->id()] = $this->removeItem($item, $userData);
             return $this->storage->write($postId, $storedData);
         }
 
