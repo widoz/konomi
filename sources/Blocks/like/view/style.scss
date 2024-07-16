@@ -1,29 +1,24 @@
 @use "~@konomi/functions";
 
+@mixin reset-button-style() {
+	appearance: none;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
 .konomi-like {
-	--konomi-color--white: #fff;
 	--konomi-color--crimson: #dc143cff;
 	--konomi-color--gray: #696969ff;
+	--konomi-color--white: #fff;
 
 	margin: 0;
 	padding: 0;
 
-	.konomi-like-response-message {
-		inset-area: block-start;
-		inset-block-end: anchor(top);
-		inset-inline-start: anchor(right);
-		margin: 0;
-		min-width: 6vw;
-		position: absolute;
-		text-align: center;
-	}
-
 	.wp-block-konomi-like {
+
+		@include reset-button-style();
 		align-items: center;
-		appearance: none;
-		background: none;
-		border: none;
-		cursor: pointer;
 		display: flex;
 		font-size: #{functions.rem(18)};
 		gap: #{functions.rem(10)};
@@ -71,4 +66,24 @@
 		}
 	}
 
+	.konomi-like-response-message {
+		inset-area: block-start;
+		inset-block-end: anchor(top);
+		inset-inline-start: anchor(right);
+		margin: 0;
+		min-width: 6vw;
+		position: absolute;
+		text-align: center;
+	}
+
+	.konomi-login-modal {
+
+		.konomi-login-modal-closer {
+
+			@include reset-button-style();
+			position: absolute;
+			right: #{functions.em(16)};
+			top: #{functions.em(16)};
+		}
+	}
 }
