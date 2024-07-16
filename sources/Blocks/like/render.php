@@ -32,11 +32,11 @@ $anchor = "--konomi-like-{$uuid}";
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo wp_interactivity_data_wp_context($generatedContext) ?>
         data-wp-interactive="konomi"
-        data-wp-run--maybe-show-errors="callbacks.maybeShowErrorPopup"
-        data-wp-run--update-like-count="callbacks.updateLikeCount"
+        data-wp-class--is-active="context.isActive"
         data-wp-on--click="actions.toggleStatus"
         data-wp-on--click--persist="actions.updateUserPreferences"
-        data-wp-class--is-active="context.isActive"
+        data-wp-run--maybe-show-errors="callbacks.maybeShowErrorPopup"
+        data-wp-run--update-like-count="callbacks.updateLikeCount"
         style="anchor-name: <?= esc_attr($anchor) ?>"
     >
         <?=

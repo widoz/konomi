@@ -1,10 +1,10 @@
 @use "~@konomi/functions";
 
-$color--white: #fff;
-$color--crimson: #dc143cff;
-$color--gray: #696969ff;
-
 .konomi-like {
+	--konomi-color--white: #fff;
+	--konomi-color--crimson: #dc143cff;
+	--konomi-color--gray: #696969ff;
+
 	margin: 0;
 	padding: 0;
 
@@ -33,20 +33,20 @@ $color--gray: #696969ff;
 		.konomi-icon {
 
 			&--heart {
-				fill: $color--white;
-				stroke: $color--gray;
+				fill: var(--konomi-color--white);
+				stroke: var(--konomi-color--gray);
 				stroke-width: 2;
 				transition: all 0.3s;
 
 				&:hover {
-					fill: $color--gray;
+					fill: var(--konomi-color--gray);
 					fill-opacity: 0.6;
 				}
 			}
 		}
 
 		.konomi-like-count {
-			color: $color--gray;
+			color: var(--konomi-color--gray);
 			font-weight: 700;
 		}
 
@@ -55,18 +55,18 @@ $color--gray: #696969ff;
 			.konomi-icon {
 
 				&--heart {
-					fill: $color--crimson;
-					stroke: $color--crimson;
+					fill: var(--konomi-color--crimson);
+					stroke: var(--konomi-color--crimson);
 
 					&:hover {
-						fill: $color--crimson;
+						fill: var(--konomi-color--crimson);
 						fill-opacity: 0.6;
 					}
 				}
 			}
 
 			.konomi-like-count {
-				color: $color--crimson;
+				color: var(--konomi-color--crimson);
 			}
 		}
 	}
