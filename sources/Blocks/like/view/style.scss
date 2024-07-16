@@ -1,3 +1,5 @@
+@use "~@konomi/functions";
+
 $color--white: #fff;
 $color--crimson: #dc143cff;
 $color--gray: #696969ff;
@@ -17,10 +19,14 @@ $color--gray: #696969ff;
 	}
 
 	.wp-block-konomi-like {
+		align-items: center;
 		appearance: none;
 		background: none;
 		border: none;
 		cursor: pointer;
+		display: flex;
+		font-size: #{functions.rem(18)};
+		gap: #{functions.rem(10)};
 		line-height: 0;
 		padding: 0.5rem;
 
@@ -39,6 +45,11 @@ $color--gray: #696969ff;
 			}
 		}
 
+		.konomi-like-count {
+			color: $color--gray;
+			font-weight: 700;
+		}
+
 		&.is-active {
 
 			.konomi-icon {
@@ -52,6 +63,10 @@ $color--gray: #696969ff;
 						fill-opacity: 0.6;
 					}
 				}
+			}
+
+			.konomi-like-count {
+				color: $color--crimson;
 			}
 		}
 	}

@@ -32,19 +32,23 @@ $anchor = "--konomi-like-{$uuid}";
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo wp_interactivity_data_wp_context($generatedContext) ?>
         data-wp-interactive="konomi"
-        data-wp-run="callbacks.maybeShowErrorPopup"
+        data-wp-run--maybe-show-errors="callbacks.maybeShowErrorPopup"
+        data-wp-run--update-like-count="callbacks.updateLikeCount"
         data-wp-on--click="actions.toggleStatus"
+        data-wp-on--click--persist="actions.updateUserPreferences"
         data-wp-class--is-active="context.isActive"
         style="anchor-name: <?= esc_attr($anchor) ?>"
     >
         <?=
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         Icons\ksesIcon(Icons\icon()->render('heart')) ?>
+
         <span class="screen-reader-text">
             <?= esc_html__('Save this post', 'konomi') ?>
         </span>
+
+        <span class="konomi-like-count">
+            <?= esc_html($generatedContext['count']) ?>
+        </span>
     </button>
-    <span class="konomi-like-count">
-        <?= esc_html($generatedContext['count']) ?>
-    </span>
 </div>
