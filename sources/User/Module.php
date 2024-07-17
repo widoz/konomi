@@ -27,7 +27,7 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            'konomi.user' => static fn (ContainerInterface $container) => User::new(
+            'konomi.user.current' => static fn (ContainerInterface $container) => CurrentUser::new(
                 get_current_user_id(),
                 $container->get('konomi.user.collection')
             ),

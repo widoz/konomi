@@ -31,7 +31,7 @@ class Module implements ServiceModule, ExecutableModule
             'konomi.rest.like.add-controller' => static fn (
                 ContainerInterface $container
             ) => Like\AddController::new(
-                $container->get('konomi.user'),
+                $container->get('konomi.user.current'),
                 $container->get('konomi.user.like.factory')
             ),
 
@@ -39,7 +39,7 @@ class Module implements ServiceModule, ExecutableModule
             'konomi.rest.middleware.authentication' => static fn (
                 ContainerInterface $container
             ) => Middlewares\Authentication::new(
-                $container->get('konomi.user')
+                $container->get('konomi.user.current')
             ),
         ];
     }

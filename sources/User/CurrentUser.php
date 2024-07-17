@@ -1,0 +1,42 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Widoz\Wp\Konomi\User;
+
+/**
+ * @api
+ */
+class CurrentUser implements User
+{
+    public static function new(int $id, Collection $collection): CurrentUser
+    {
+        return new self($id, $collection);
+    }
+
+    final private function __construct(
+        readonly private int $id,
+        readonly private Collection $collection
+    ) {
+    }
+
+    public function isLoggedIn(): bool
+    {
+        return $this->id() && get_current_user_id() === $this->id();
+    }
+
+    public function id(): ?int
+    {
+        return $this->id;
+    }
+
+    public function findLike(int $id): Item
+    {
+        return $this->collection->find($this, '_likes', $id);
+    }
+
+    public function saveLike(Item $item): bool
+    {
+        return $this->collection->save($this, '_likes', $item);
+    }
+}

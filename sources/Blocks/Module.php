@@ -34,7 +34,7 @@ class Module implements ServiceModule, ExecutableModule
             'konomi.blocks.like-context' => static fn (
                 ContainerInterface $container
             ) => LikeContext::new(
-                $container->get('konomi.user'),
+                $container->get('konomi.user.current'),
                 $container->get('konomi.post')
             ),
         ];

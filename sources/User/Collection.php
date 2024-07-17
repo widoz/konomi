@@ -22,7 +22,7 @@ class Collection
     ) {
     }
 
-    public function find(User $user, string $key, int $id): Item
+    public function find(CurrentUser $user, string $key, int $id): Item
     {
         self::$cache === null and self::$cache = $this->items($user, $key);
         $item = self::$cache[$id] ?? NullItem::new();
@@ -32,7 +32,7 @@ class Collection
         return $item;
     }
 
-    public function save(User $user, string $key, Item $item): bool
+    public function save(CurrentUser $user, string $key, Item $item): bool
     {
         $originalMeta = $this->storage->read($user->id(), $key) ?: [];
         $toStoreMeta = $originalMeta;
@@ -54,7 +54,7 @@ class Collection
     /**
      * @return array<int, Item>
      */
-    private function items(User $user, string $key): array
+    private function items(CurrentUser $user, string $key): array
     {
         if (self::$cache !== null) {
             return self::$cache;

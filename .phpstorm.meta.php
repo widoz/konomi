@@ -17,7 +17,7 @@ namespace PHPSTORM_META {
 
                 'konomi.icons.render' => \Widoz\Wp\Konomi\Icons\Render::class,
 
-                'konomi.user' => \Widoz\Wp\Konomi\User\User::class,
+                'konomi.user.current' => \Widoz\Wp\Konomi\User\CurrentUser::class,
                 'konomi.user.like.factory' => \Widoz\Wp\Konomi\User\Like\Factory::class,
                 'konomi.user.collection' => \Widoz\Wp\Konomi\User\Collection::class,
                 'konomi.user.storage' => \Widoz\Wp\Konomi\User\Storage::class,
