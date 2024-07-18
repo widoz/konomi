@@ -10,3 +10,8 @@ function context(): LikeContext
 {
     return package()->container()->get('konomi.blocks.like-context');
 }
+
+function renderer(): TemplateRender
+{
+    return package()->container()->get('konomi.blocks.template-render');
+}

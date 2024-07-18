@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
-use Widoz\Wp\Konomi\Blocks;
-use Widoz\Wp\Konomi\Icons;
+namespace Widoz\Wp\Konomi\Blocks\Like;
 
+use Widoz\Wp\Konomi\Blocks;
+
+$renderer = Blocks\renderer();
 $context = Blocks\context();
-$generatedContext = $context->generate();
+$generatedContext = $context->toArray();
 $uuid = $context->instanceId();
+$id = $context->postId();
 $anchor = "--konomi-like-{$uuid}";
 ?>
 
@@ -18,53 +21,23 @@ $anchor = "--konomi-like-{$uuid}";
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo wp_interactivity_data_wp_context($generatedContext) ?>
 >
-    <button
-        <?php
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        echo get_block_wrapper_attributes() ?>
-        data-wp-class--is-active="context.isActive"
-        data-wp-on--click="actions.toggleStatus"
-        data-wp-run--maybe-show-errors="callbacks.maybeShowErrorPopup"
-        data-wp-run--maybe-show-login-modal="callbacks.toggleLoginModal"
-        style="anchor-name: <?= esc_attr($anchor) ?>"
-    >
-        <?=
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        Icons\ksesIcon(Icons\icon()->render('heart')) ?>
+    <?= $renderer->render('like/partials/button', [
+        'anchor' => $anchor,
+        'count' => $context->count(),
+        'label' => __('Save this post', 'konomi')
+    ]) ?>
 
-        <span class="screen-reader-text">
-            <?= esc_html__('Save this post', 'konomi') ?>
-        </span>
+    <?= $renderer->render('like/partials/popover', [
+        'anchor' => $anchor,
+        'defaultMessage' => __('Unknown error, please try again later!', 'konomi')
+    ]) ?>
 
-        <span class="konomi-like-count" data-wp-text="context.count">
-            <?= esc_html($generatedContext['count']) ?>
-        </span>
-    </button>
-
-    <span
-        popover="manual"
-        class="konomi-like-response-message"
-        style="position-anchor: <?= esc_attr($anchor) ?>"
-    >
-        <?= esc_html__('Unknown error, please try again later!', 'konomi') ?>
-    </span>
-
-    <dialog class="konomi-login-modal">
-        <h2><?= esc_html__('Sign in to like', 'konomi') ?></h2>
-        <p><?= esc_html__('You need to be signed in to save your likes.', 'konomi') ?></p>
-        <a href="<?= esc_url(wp_login_url(add_query_arg(['page_id' => 6]))) ?>">
-            <?= esc_html__('Login', 'konomi') ?>
-        </a>
-        <button
-            class="konomi-login-modal-closer"
-            data-wp-on--click="actions.closeLoginModal"
-        >
-            <?=
-            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-            Icons\ksesIcon(Icons\icon()->render('close')) ?>
-            <span class="screen-reader-text">
-                <?= esc_html__('Close', 'konomi') ?>
-            </span>
-        </button>
-    </dialog>
+    <?= $renderer->render('like/partials/dialog', [
+        'postId' => $id,
+        'loginPageUrl' => wp_login_url(add_query_arg([])),
+        'loginPageLabel' => __('Login', 'konomi'),
+        'title' => __('Sign in to like', 'konomi'),
+        'message' => __('You need to be signed in to save your likes.', 'konomi'),
+        'closeLabel' => __('Close', 'konomi')
+    ]) ?>
 </div>

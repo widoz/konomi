@@ -1,0 +1,59 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Widoz\Wp\Konomi\Blocks;
+
+class TemplateRender
+{
+    public static function new(string $templateRootDir, bool $isDebugMode): TemplateRender
+    {
+        return new self($templateRootDir, $isDebugMode);
+    }
+
+    final private function __construct(
+        readonly private string $templateRootDir,
+        readonly private bool $isDebugMode
+    ) {
+    }
+
+    public function render(string $path, array $data): string
+    {
+        $isDebugMode = $this->isDebugMode;
+
+        $path = wp_normalize_path($this->templateRootDir . '/' . $path);
+        $path = untrailingslashit($path);
+        $path = self::ensureExtension($path);
+
+        if (!file_exists($path) && $this->isDebugMode) {
+            throw new \RuntimeException("Konomi, template file not found: $path");
+        }
+
+        $renderer = static function (string $path, array $data): string {
+            ob_start();
+            include realpath($path);
+            return (string) ob_get_clean();
+        };
+
+        try {
+            $output = $renderer($path, $data);
+        } catch (\Throwable $error) {
+            ob_end_clean();
+            if ($isDebugMode) {
+                throw $error;
+            }
+            $output = '';
+        }
+
+        return $output;
+    }
+
+    private static function ensureExtension(string $path): string
+    {
+        if (pathinfo($path, PATHINFO_EXTENSION) === '') {
+            return $path . '.php';
+        }
+
+        return $path;
+    }
+}

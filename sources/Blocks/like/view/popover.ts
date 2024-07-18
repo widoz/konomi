@@ -1,27 +1,21 @@
-// eslint-disable-next-line complexity
-export function showResponseErrorWithPopoverForElement(
-	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-	toggler: Readonly< HTMLElement >
-): void {
-	const popover = toggler.previousElementSibling;
-	const message = toggler.dataset[ 'error' ] ?? '';
+import { popoverElement } from './elements';
 
-	if (
-		! ( popover instanceof HTMLElement ) ||
-		! popover.classList.contains( 'konomi-like-response-message' )
-	) {
-		return;
-	}
+export function renderResponseError( toggler: HTMLElement ): void {
+	renderResponse( toggler, 'error' );
+}
 
+function renderResponse( toggler: HTMLElement, key: string ): void {
+	const message = toggler.dataset[ key ] ?? '';
 	if ( ! message ) {
 		return;
 	}
 
+	const popover = popoverElement( toggler );
 	popover.innerHTML = message;
 	popover.showPopover();
 
 	setTimeout( () => {
 		popover.hidePopover();
-		toggler.dataset[ 'error' ] = '';
+		toggler.dataset[ key ] = '';
 	}, 3000 );
 }

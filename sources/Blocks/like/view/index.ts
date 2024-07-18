@@ -1,6 +1,15 @@
 import { getContext, getElement, store } from '@wordpress/interactivity';
 import { addLike } from './add-like-command';
-import { showResponseErrorWithPopoverForElement } from './popover';
+import { loginModalElement } from './elements';
+import { renderResponseError } from './popover';
+
+type ResponseError = Readonly< {
+	code: string;
+	message: string;
+	data: {
+		status: number;
+	};
+} >;
 
 type Context = {
 	id: number;
@@ -10,10 +19,6 @@ type Context = {
 	isUserLoggedIn: boolean;
 	loginRequired: boolean;
 };
-
-interface KonomiRestError extends Error {
-	data: { status: number };
-}
 
 const { actions } = store( 'konomi', {
 	state: {},
@@ -30,7 +35,7 @@ const { actions } = store( 'konomi', {
 			actions.updateUserPreferences();
 		},
 
-		updateUserPreferences: (): void => {
+		*updateUserPreferences(): Generator< Promise< void > > {
 			const context = getContext< Context >( 'konomi' );
 
 			if ( ! context.isUserLoggedIn ) {
@@ -40,20 +45,25 @@ const { actions } = store( 'konomi', {
 			}
 
 			const element = getElement();
-			addLike( {
-				meta: {
-					_like: {
-						id: context.id,
-						type: context.type,
-						isActive: context.isActive,
+
+			try {
+				yield addLike( {
+					meta: {
+						_like: {
+							id: context.id,
+							type: context.type,
+							isActive: context.isActive,
+						},
 					},
-				},
-			} ).catch( ( error: Readonly< KonomiRestError > ) => {
+				} );
+			} catch ( error: any ) {
+				const responseError = error as ResponseError;
+
 				actions.revertStatus();
 				if ( element.ref ) {
-					element.ref.dataset[ 'error' ] = error.message;
+					element.ref.dataset[ 'error' ] = responseError.message;
 				}
-			} );
+			}
 		},
 
 		closeLoginModal: () => {
@@ -77,7 +87,7 @@ const { actions } = store( 'konomi', {
 				return;
 			}
 
-			showResponseErrorWithPopoverForElement( element.ref );
+			renderResponseError( element.ref );
 		},
 
 		toggleLoginModal: (): void => {
@@ -94,19 +104,3 @@ const { actions } = store( 'konomi', {
 		},
 	},
 } );
-
-function assertDialogHTMLElement(
-	element: unknown
-): asserts element is HTMLDialogElement {
-	if ( element === null ) {
-		throw new Error( 'Element is null' );
-	}
-}
-
-function loginModalElement(
-	element: Readonly< HTMLElement >
-): Readonly< HTMLDialogElement > {
-	const modal = element.parentElement?.querySelector( '.konomi-login-modal' );
-	assertDialogHTMLElement( modal );
-	return modal;
-}

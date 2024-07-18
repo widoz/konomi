@@ -28,6 +28,10 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
+            'konomi.blocks.template-render' => fn () => TemplateRender::new(
+                "{$this->appProperties->basePath()}/sources/Blocks/",
+                $this->appProperties->isDebug()
+            ),
             'konomi.blocks.registrar' => fn () => BlockRegistrar::new(
                 "{$this->appProperties->basePath()}/sources/Blocks"
             ),

@@ -22,21 +22,37 @@ class LikeContext
     ) {
     }
 
-    public function generate(): array
+    public function toArray(): array
     {
-        $id = $this->postId();
-        $type = (string) get_post_type($id);
-        $like = $this->user->findLike($id);
+        $like = $this->like();
 
         return [
-            'count' => $this->post->countForPost($id),
-            'id' => $id,
-            'loginRequired' => false,
-            'isUserLoggedIn' => $this->user->isLoggedIn(),
-            // There might be a mismatch for some reason, e.g. someone changed the value in the database.
-            'type' => $like->type() ?: $type,
+            'count' => $this->count(),
+            'id' => $this->postId(),
+            'isUserLoggedIn' => $this->isUserLoggedIn(),
+            'type' =>  $this->type(),
             'isActive' => $like->isActive(),
         ];
+    }
+
+    public function isUserLoggedIn(): bool
+    {
+        return $this->user->isLoggedIn();
+    }
+
+    public function isActive(): bool
+    {
+        return $this->user->findLike($this->postId())->isActive();
+    }
+
+    public function type(): string
+    {
+        return $this->like()->type() ?: (string) get_post_type($this->postId());
+    }
+
+    public function count(): int
+    {
+        return $this->post->countForPost($this->postId());
     }
 
     public function postId(): int
@@ -47,5 +63,10 @@ class LikeContext
     public function instanceId(): int
     {
         return ++$this->instanceId;
+    }
+
+    private function like(): User\Item
+    {
+        return $this->user->findLike($this->postId());
     }
 }
