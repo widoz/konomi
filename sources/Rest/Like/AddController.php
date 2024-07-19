@@ -72,8 +72,10 @@ class AddController implements Rest\Controller
         );
     }
 
-    private function ensureMeta(array $meta): array
+    private function ensureMeta(?array $meta): array
     {
+        $meta = (array) $meta;
+
         $default = [
             'id' => 0,
             'type' => '',
