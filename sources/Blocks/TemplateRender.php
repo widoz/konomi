@@ -31,6 +31,8 @@ class TemplateRender
 
         $renderer = static function (string $path, array $data): string {
             ob_start();
+            $data = (array)apply_filters('konomi.template.render.data', $data, $path);
+            $path = (string)apply_filters('konomi.template.render.path', $path, $data);
             include realpath($path);
             return (string) ob_get_clean();
         };
