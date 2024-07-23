@@ -16,7 +16,7 @@
 	},
 	"overrides": [
 		{
-			"files": ["webpack.config.js"],
+			"files": ["webpack.modules.config.js", "webpack.scripts.config.js"],
 			"env": {
 				"node": true
 			},

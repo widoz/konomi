@@ -1,4 +1,4 @@
-build
+build-module
 dist
 
 ./vendor
