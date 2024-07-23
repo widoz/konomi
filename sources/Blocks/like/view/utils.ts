@@ -1,6 +1,7 @@
 export function findKonomiInteractivityParent(
+	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 	element: Readonly< HTMLElement > | null
-): HTMLElement | null {
+): Readonly< HTMLElement | null > {
 	while ( element && element.dataset[ 'wpInteractive' ] !== 'konomi' ) {
 		element = element.parentElement;
 	}

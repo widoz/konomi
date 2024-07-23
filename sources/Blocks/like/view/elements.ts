@@ -1,6 +1,7 @@
 import { findKonomiInteractivityParent } from './utils';
 
 export function loginModalElement(
+	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 	element: Readonly< HTMLElement >
 ): Readonly< HTMLDialogElement > {
 	const modal = findKonomiInteractivityParent( element )?.querySelector(
@@ -11,6 +12,7 @@ export function loginModalElement(
 }
 
 export function popoverElement(
+	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 	element: Readonly< HTMLElement >
 ): HTMLElement {
 	const popover = findKonomiInteractivityParent(

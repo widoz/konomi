@@ -98,9 +98,12 @@ const { actions } = store( 'konomi', {
 
 			const context = getContext< Context >( 'konomi' );
 			const _loginModalElement = loginModalElement( element.ref );
-			context.loginRequired
-				? _loginModalElement.showModal()
-				: _loginModalElement.close();
+
+			if ( context.loginRequired ) {
+				_loginModalElement.showModal();
+			} else {
+				_loginModalElement.close();
+			}
 		},
 	},
 } );

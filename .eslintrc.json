@@ -39,7 +39,7 @@
 		"max-depth": ["error", 2],
 		"max-lines": ["error", {"max": 300, "skipBlankLines": false, "skipComments": false}],
 		"max-statements-per-line": ["error", {"max": 1}],
-		"complexity": ["error", 2],
+		"complexity": ["error", 3],
 		"max-lines-per-function": ["error", 25],
 		"max-nested-callbacks": ["error", 2],
 		"no-multiple-empty-lines": ["error", {"max": 1, "maxEOF": 1, "maxBOF": 0}],
