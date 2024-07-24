@@ -25,6 +25,7 @@
 		line-height: 0;
 		padding: 0.5rem;
 
+		.heart_svg__konomi-icon,
 		.konomi-icon {
 
 			&--heart {
@@ -47,6 +48,7 @@
 
 		&.is-active {
 
+			.heart_svg__konomi-icon,
 			.konomi-icon {
 
 				&--heart {

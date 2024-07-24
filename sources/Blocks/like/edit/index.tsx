@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { Icon } from '@konomi/icons';
+import { SvgHeart } from '@konomi/icons';
 import type { JSX } from 'react';
 import React from 'react';
 /**
@@ -13,7 +13,7 @@ export function Edit(): JSX.Element {
 	return (
 		<div className="konomi-like">
 			<button { ...useBlockProps() }>
-				<Icon icon="heart" />
+				<SvgHeart />
 			</button>
 		</div>
 	);

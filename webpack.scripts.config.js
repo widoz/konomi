@@ -80,6 +80,17 @@ module.exports = [
 		entry: {
 			'konomi-icons': './sources/Icons/client/index.ts',
 		},
+		module: {
+			...configuration.module,
+			rules: [
+				...configuration.module.rules,
+				{
+					test: /\.svg$/i,
+					issuer: /\.[jt]sx?$/,
+					use: [{ loader: '@svgr/webpack', options: { icon: true } }],
+				},
+			],
+		},
 		output: {
 			filename: '[name].js',
 			path: path.resolve('./sources/Icons/client/dist'),
