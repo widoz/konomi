@@ -19,7 +19,7 @@ export namespace LikeEdit {
 
 	// TODO Rename to a --konomi-color--(inactive|active)
 	export interface CustomCSSProperties extends React.CSSProperties {
-		'--konomi-color--gray': Attributes[ 'inactiveColor' ];
-		'--konomi-color--crimson': Attributes[ 'activeColor' ];
+		'--konomi-color--inactive': Attributes[ 'inactiveColor' ];
+		'--konomi-color--active': Attributes[ 'activeColor' ];
 	}
 }

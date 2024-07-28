@@ -12,6 +12,9 @@
 	--konomi-color--gray: #696969ff;
 	--konomi-color--white: #fff;
 
+	--konomi-icon--inactive: var(--konomi-color--inactive, var(--konomi-color--gray));
+	--konomi-icon--active: var(--konomi-color--active, var(--konomi-color--crimson));
+
 	margin: 0;
 	padding: 0;
 
@@ -30,19 +33,19 @@
 
 			&--heart {
 				fill: var(--konomi-color--white);
-				stroke: var(--konomi-color--gray);
+				stroke: var(--konomi-icon--inactive);
 				stroke-width: 2;
 				transition: all 0.3s;
 
 				&:hover {
-					fill: var(--konomi-color--gray);
+					fill: var(--konomi-icon--inactive);
 					fill-opacity: 0.6;
 				}
 			}
 		}
 
 		.konomi-like-count {
-			color: var(--konomi-color--gray);
+			color: var(--konomi-icon--inactive);
 			font-weight: 700;
 		}
 
@@ -52,18 +55,18 @@
 			.konomi-icon {
 
 				&--heart {
-					fill: var(--konomi-color--crimson);
-					stroke: var(--konomi-color--crimson);
+					fill: var(--konomi-icon--active);
+					stroke: var(--konomi-icon--active);
 
 					&:hover {
-						fill: var(--konomi-color--crimson);
+						fill: var(--konomi-icon--active);
 						fill-opacity: 0.6;
 					}
 				}
 			}
 
 			.konomi-like-count {
-				color: var(--konomi-color--crimson);
+				color: var(--konomi-icon--active);
 			}
 		}
 	}

@@ -17,8 +17,8 @@ $id = $context->postId();
 $anchor = "--konomi-like-{$uuid}";
 
 $style = <<<CSS
---konomi-color--gray: $inactiveColor;
---konomi-color--crimson: $activeColor;
+--konomi-color--inactive: $inactiveColor;
+--konomi-color--active: $activeColor;
 CSS;
 ?>
 

@@ -21,8 +21,8 @@ export function BlockComponent(
 	const { inactiveColor, activeColor } = props.attributes;
 
 	const style: LikeEdit.CustomCSSProperties = {
-		'--konomi-color--gray': inactiveColor,
-		'--konomi-color--crimson': activeColor,
+		'--konomi-color--inactive': inactiveColor,
+		'--konomi-color--active': activeColor,
 	};
 
 	return (
