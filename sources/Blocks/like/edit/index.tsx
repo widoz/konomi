@@ -1,20 +1,21 @@
 /**
  * External dependencies
  */
-import { SvgHeart } from '@konomi/icons';
 import type { JSX } from 'react';
 import React from 'react';
-/**
- * WordPress dependencies
- */
-import { useBlockProps } from '@wordpress/block-editor';
 
-export function Edit(): JSX.Element {
+/**
+ * Internal dependencies
+ */
+import type { LikeEdit } from './types';
+import { BlockComponent } from './block-component';
+import { InspectorControls } from './inspector-controls';
+
+export function Edit( props: Readonly< LikeEdit.EditProps > ): JSX.Element {
 	return (
-		<div className="konomi-like">
-			<button { ...useBlockProps() }>
-				<SvgHeart />
-			</button>
-		</div>
+		<>
+			<BlockComponent { ...props } />
+			<InspectorControls { ...props } />
+		</>
 	);
 }

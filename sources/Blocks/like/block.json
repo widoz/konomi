@@ -2,12 +2,20 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "konomi/like",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"title": "Like",
 	"category": "design",
 	"icon": "smiley",
 	"description": "Like",
 	"example": {},
+	"attributes": {
+		"inactiveColor": {
+			"type": "string"
+		},
+		"activeColor": {
+			"type": "string"
+		}
+	},
 	"supports": {
 		"html": false,
 		"interactivity": true

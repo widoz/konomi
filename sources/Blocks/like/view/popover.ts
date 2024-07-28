@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 import { popoverElement } from './elements';
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types

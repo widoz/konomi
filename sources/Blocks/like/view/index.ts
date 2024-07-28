@@ -1,4 +1,11 @@
+/**
+ * WordPress dependencies
+ */
 import { getContext, getElement, store } from '@wordpress/interactivity';
+
+/**
+ * Internal dependencies
+ */
 import { addLike } from './add-like-command';
 import { loginModalElement } from './elements';
 import { renderResponseError } from './popover';
