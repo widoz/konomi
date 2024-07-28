@@ -58,8 +58,7 @@
 	},
 	"include": [
 		"./sources",
-		"./@types",
-		"./node_modules/@wordpress/**/src/**/*"
+		"./@types"
 	],
 	"exclude": [
 		"**/dist/",
