@@ -1,10 +1,14 @@
 /**
  * External dependencies
  */
-import type Konomi from '@konomi/types';
 import { initConfiguration } from './init-configuration';
 
-export function configuration(): Konomi.Configuration {
+/**
+ * Internal dependencies
+ */
+import type { KonomiConfiguration } from './types';
+
+export function configuration(): KonomiConfiguration.Configuration {
 	const _configuration = initConfiguration( '' );
 	return {
 		..._configuration,

@@ -1,13 +1,13 @@
 /**
- * External dependencies
+ * Internal dependencies
  */
-import type Konomi from '@konomi/types';
+import type { KonomiConfiguration } from './types';
 
-let configuration: Konomi.Configuration | null = null;
+let configuration: KonomiConfiguration.Configuration | null = null;
 
 export function initConfiguration(
 	serializedConfiguration: string
-): Konomi.Configuration {
+): KonomiConfiguration.Configuration {
 	if ( configuration !== null ) {
 		return configuration;
 	}
@@ -19,7 +19,7 @@ export function initConfiguration(
 
 function assertConfiguration(
 	parsedConfiguration: unknown
-): asserts parsedConfiguration is Konomi.Configuration {
+): asserts parsedConfiguration is KonomiConfiguration.Configuration {
 	if ( ! Boolean( parsedConfiguration ) ) {
 		throw new Error( 'Configuration not initialized' );
 	}
@@ -27,7 +27,7 @@ function assertConfiguration(
 
 function parseConfiguration(
 	serializedConfiguration: string
-): Konomi.Configuration {
+): KonomiConfiguration.Configuration {
 	try {
 		return JSON.parse( serializedConfiguration );
 	} catch ( error ) {
