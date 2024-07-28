@@ -16,10 +16,10 @@ $uuid = $context->instanceId();
 $id = $context->postId();
 $anchor = "--konomi-like-{$uuid}";
 
-$style = <<<CSS
---konomi-color--inactive: $inactiveColor;
---konomi-color--active: $activeColor;
-CSS;
+$style = Blocks\Style::new()->add(
+    Blocks\CustomProperty::new('--konomi-color--inactive', $inactiveColor),
+    Blocks\CustomProperty::new('--konomi-color--active', $activeColor),
+);
 ?>
 
 <div

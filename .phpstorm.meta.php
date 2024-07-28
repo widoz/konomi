@@ -2,6 +2,7 @@
 
 // TODO Revert the services to use class names as keys.
 namespace PHPSTORM_META {
+
     override(
         \Psr\Container\ContainerInterface::get(0),
         map(
