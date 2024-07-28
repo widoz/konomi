@@ -1,21 +1,6 @@
 /**
  * External dependencies
  */
-/**
- * External dependencies
- */
-/**
- * External dependencies
- */
-/**
- * External dependencies
- */
-/**
- * External dependencies
- */
-/**
- * External dependencies
- */
 import { SvgHeart } from '@konomi/icons';
 import type { JSX } from 'react';
 import React from 'react';
@@ -23,34 +8,8 @@ import React from 'react';
 /**
  * WordPress dependencies
  */
-/**
- * WordPress dependencies
- */
-/**
- * WordPress dependencies
- */
-/**
- * WordPress dependencies
- */
-/**
- * WordPress dependencies
- */
-/**
- * WordPress dependencies
- */
 import { useBlockProps } from '@wordpress/block-editor';
-/**
- * Internal dependencies
- */
-/**
- * Internal dependencies
- */
-/**
- * Internal dependencies
- */
-/**
- * Internal dependencies
- */
+
 /**
  * Internal dependencies
  */

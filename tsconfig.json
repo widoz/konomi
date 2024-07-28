@@ -59,7 +59,7 @@
 	"include": [
 		"./sources",
 		"./@types",
-		"./node_modules/@wordpress"
+		"./node_modules/@wordpress/**/src/**/*"
 	],
 	"exclude": [
 		"**/dist/",

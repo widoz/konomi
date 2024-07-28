@@ -1,18 +1,6 @@
 /**
  * External dependencies
  */
-/**
- * External dependencies
- */
-/**
- * External dependencies
- */
-/**
- * External dependencies
- */
-/**
- * External dependencies
- */
 import type React from 'react';
 
 export namespace LikeEdit {
