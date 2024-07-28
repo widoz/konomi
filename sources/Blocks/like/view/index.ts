@@ -42,6 +42,7 @@ const { actions } = store( 'konomi', {
 			actions.updateUserPreferences();
 		},
 
+		// eslint-disable-next-line max-lines-per-function,complexity
 		*updateUserPreferences(): Generator< Promise< void > > {
 			const context = getContext< Context >( 'konomi' );
 
