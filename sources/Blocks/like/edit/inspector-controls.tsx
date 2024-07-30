@@ -1,3 +1,4 @@
+// @ts-expect-error
 import { InspectorControls as _InspectControls } from '@wordpress/block-editor';
 import type { JSX } from 'react';
 import React from 'react';

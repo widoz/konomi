@@ -2,6 +2,7 @@ import {
 	InspectorControls as _InspectControls,
 	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalPanelColorGradientSettings as PanelColorGradientSettings,
+	// @ts-expect-error
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import type { JSX } from 'react';

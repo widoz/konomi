@@ -1,6 +1,7 @@
 /**
  * WordPress dependencies
  */
+// @ts-expect-error
 import { registerBlockType } from '@wordpress/blocks';
 
 /**

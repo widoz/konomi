@@ -8,6 +8,7 @@ import React from 'react';
 /**
  * WordPress dependencies
  */
+// @ts-expect-error
 import { useBlockProps } from '@wordpress/block-editor';
 
 /**
