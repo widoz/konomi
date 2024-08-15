@@ -18,6 +18,7 @@ it('bootstrap the package during plugins_loaded action', function (): void {
         ]
     );
     $package->shouldReceive('new')->with($properties)->andReturn($package);
+    $package->shouldReceive('addModule')->andReturnSelf();
 
     $package->expects('boot');
 
