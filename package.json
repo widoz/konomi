@@ -1,5 +1,5 @@
 {
-	"name": "wp-entities-search",
+	"name": "konomi",
 	"description": "A WordPress plugin to save posts as favorite using the new Interactive API",
 	"author": "guido scialfa <dev@guidoscialfa.com>",
 	"main": "./build/index.js",
