@@ -10,9 +10,10 @@
 		"import/resolver": "typescript"
 	},
 	"parserOptions": {
+		"project": true,
 		"ecmaVersion": "latest",
 		"sourceType": "module",
-		"project": "./tsconfig.json"
+		"tsconfigRootDir": "./"
 	},
 	"overrides": [
 		{
