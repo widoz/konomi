@@ -6,7 +6,6 @@
 /vendor/
 /node_modules/
 
-/composer.lock
 /.pnp.*
 /.yarn/*
 !/.yarn/patches
