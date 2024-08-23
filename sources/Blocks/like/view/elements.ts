@@ -1,12 +1,12 @@
-import { findKonomiInteractivityParent } from './utils';
+import { findInteractivityParent } from './utils';
 
 export function loginModalElement(
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 	element: Readonly< HTMLElement >
 ): Readonly< HTMLDialogElement > {
-	const modal = findKonomiInteractivityParent( element )?.querySelector(
-		'.konomi-login-modal'
-	);
+	const modal = findInteractivityParent(
+		element
+	)?.querySelector< HTMLDialogElement >( '.konomi-login-modal' );
 	assertDialogHTMLElement( modal );
 	return modal;
 }
@@ -15,7 +15,7 @@ export function popoverElement(
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 	element: Readonly< HTMLElement >
 ): HTMLElement {
-	const popover = findKonomiInteractivityParent(
+	const popover = findInteractivityParent(
 		element
 	)?.querySelector< HTMLElement >( '.konomi-like-response-message' );
 	assertHTMLElement( popover );
