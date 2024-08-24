@@ -8,3 +8,5 @@ dist
 .github
 
 ./coverage
+
+jest.config.ts
