@@ -15,17 +15,6 @@
 		"sourceType": "module",
 		"tsconfigRootDir": "./"
 	},
-	"overrides": [
-		{
-			"files": ["webpack.modules.config.js", "webpack.scripts.config.js"],
-			"env": {
-				"node": true
-			},
-			"rules": {
-				"@typescript-eslint/no-var-requires": "off"
-			}
-		}
-	],
 	"rules": {
 		"consistent-return": "off",
 		"dot-notation": "off",
