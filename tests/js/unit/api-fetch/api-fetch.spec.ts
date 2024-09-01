@@ -1,5 +1,4 @@
 import { jest, describe, it, expect } from '@jest/globals';
-import { catchErrors } from '../../../../sources/ApiFetch/client/middlewares/catch-errors';
 
 describe( 'Api Fetch', () => {
 	it( 'should set the catchErrors middleware', async () => {

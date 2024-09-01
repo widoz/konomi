@@ -3,7 +3,7 @@ import { mapModulesFromTsConfig } from './tests/js/modules-mapper';
 import tsConfig from './tsconfig.json';
 
 module.exports = {
-	automock: true,
+	automock: false,
 	bail: 5,
 	clearMocks: true,
 	coverageDirectory: 'coverage',
