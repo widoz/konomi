@@ -1,5 +1,5 @@
 import type { Config } from 'jest';
-import { mapModulesFromTsConfig } from './tests/js/modules-mapper';
+import { mapModulesFromTsConfig } from './tests/modules-mapper';
 import tsConfig from './tsconfig.json';
 
 module.exports = {
@@ -27,7 +27,7 @@ module.exports = {
 	rootDir: './',
 	roots: [ '<rootDir>/sources', '<rootDir>/tests' ],
 	testEnvironment: 'jsdom',
-	testMatch: [ '<rootDir>/tests/js/**/?(*.)+(spec).ts?(x)' ],
+	testMatch: [ '<rootDir>/tests/unit/js/**/?(*.)+(spec).ts?(x)' ],
 	moduleNameMapper: mapModulesFromTsConfig(tsConfig),
-	setupFiles: [ '<rootDir>/tests/js/setup.ts' ],
+	setupFiles: [ '<rootDir>/tests/setup.ts' ],
 } as Config;
