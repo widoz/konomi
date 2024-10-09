@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
+namespace Pest;
+
 uses()
     ->beforeAll(static function (): void {
-        Brain\Monkey\setUp();
+        \Brain\Monkey\setUp();
     })
     ->afterAll(static function (): void {
-        Brain\Monkey\tearDown();
+        \Brain\Monkey\tearDown();
     })
     ->in('unit');
