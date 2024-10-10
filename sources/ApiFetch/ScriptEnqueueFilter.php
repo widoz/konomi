@@ -6,6 +6,9 @@ namespace Widoz\Wp\Konomi\ApiFetch;
 
 use Widoz\Wp\Konomi\Utils;
 
+/**
+ * @internal
+ */
 class ScriptEnqueueFilter
 {
     public static function new(): ScriptEnqueueFilter
