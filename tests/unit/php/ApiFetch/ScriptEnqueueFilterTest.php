@@ -6,7 +6,7 @@ use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Utils;
 use Widoz\Wp\Konomi\ApiFetch;
 
-describe('Script Enqueue Filter', function () {
+describe('Script Enqueue Filter', function (): void {
     it(
         'enqueue the wp api fetch when konomi api-fetch module is part of the module map',
         function (): void {

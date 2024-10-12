@@ -7,6 +7,7 @@ namespace Widoz\Wp\Konomi\Blocks\Like;
 use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
 
+// TODO Think about a way to encapsulate the Array
 class LikeContext
 {
     private int $instanceId = 0;
@@ -27,10 +28,10 @@ class LikeContext
         $like = $this->like();
 
         return [
-            'count' => $this->count(),
             'id' => $this->postId(),
+            'type' => $this->postType(),
+            'count' => $this->count(),
             'isUserLoggedIn' => $this->isUserLoggedIn(),
-            'type' => $this->type(),
             'isActive' => $like->isActive(),
         ];
     }
@@ -40,24 +41,19 @@ class LikeContext
         return $this->user->isLoggedIn();
     }
 
-    public function isActive(): bool
+    public function postType(): string
     {
-        return $this->user->findLike($this->postId())->isActive();
-    }
-
-    public function type(): string
-    {
-        return $this->like()->type() ?: (string) get_post_type($this->postId());
-    }
-
-    public function count(): int
-    {
-        return $this->post->countForPost($this->postId());
+        return (string) get_post_type($this->postId());
     }
 
     public function postId(): int
     {
         return (int) get_the_ID();
+    }
+
+    public function count(): int
+    {
+        return $this->post->countForPost($this->postId());
     }
 
     public function instanceId(): int

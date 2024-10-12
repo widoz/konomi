@@ -6,6 +6,8 @@ namespace Widoz\Wp\Konomi\Blocks\Like;
 
 use Widoz\Wp\Konomi\Blocks;
 
+// TODO Introduce a Block API to simplify the data management?
+
 $inactiveColor = (string) ($attributes['inactiveColor'] ?? null);
 $activeColor = (string) ($attributes['activeColor'] ?? null);
 
