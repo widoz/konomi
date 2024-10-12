@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Blocks;
 
-use Psr\Container\ContainerInterface;
-use Inpsyde\Modularity\{
-    Module\ServiceModule,
-    Module\ExecutableModule,
+use Inpsyde\Modularity\{Module\ExecutableModule,
     Module\ModuleClassNameIdTrait,
+    Module\ServiceModule,
     Properties\Properties
 };
+use Psr\Container\ContainerInterface;
+use Widoz\Wp\Konomi\Blocks\Like\LikeContext;
 
 class Module implements ServiceModule, ExecutableModule
 {
@@ -27,13 +27,16 @@ class Module implements ServiceModule, ExecutableModule
 
     public function services(): array
     {
+        $basePath = untrailingslashit($this->appProperties->basePath());
+        $isDebug = $this->appProperties->isDebug();
+
         return [
-            'konomi.blocks.template-render' => fn () => TemplateRender::new(
-                "{$this->appProperties->basePath()}/sources/Blocks/",
-                $this->appProperties->isDebug()
+            'konomi.blocks.template-render' => static fn () => TemplateRender::new(
+                "{$basePath}/sources/Blocks/",
+                $isDebug
             ),
-            'konomi.blocks.registrar' => fn () => BlockRegistrar::new(
-                "{$this->appProperties->basePath()}/sources/Blocks"
+            'konomi.blocks.registrar' => static fn () => BlockRegistrar::new(
+                "{$basePath}/sources/Blocks"
             ),
             'konomi.blocks.like-context' => static fn (
                 ContainerInterface $container

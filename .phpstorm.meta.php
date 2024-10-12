@@ -11,7 +11,7 @@ namespace PHPSTORM_META {
                 'konomi.api-fetch.script-enqueue-filter' => \Widoz\Wp\Konomi\ApiFetch\ScriptEnqueueFilter::class,
 
                 'konomi.blocks.registrar' => \Widoz\Wp\Konomi\Blocks\BlockRegistrar::class,
-                'konomi.blocks.like-context' => \Widoz\Wp\Konomi\Blocks\LikeContext::class,
+                'konomi.blocks.like-context' => \Widoz\Wp\Konomi\Blocks\Like\LikeContext::class,
 
                 'konomi.configuration' => \Widoz\Wp\Konomi\Configuration\Configuration::class,
                 'konomi.configuration.init-script-render' => \Widoz\Wp\Konomi\Configuration\ConfigurationInitScriptFilter::class,

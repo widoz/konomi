@@ -4,13 +4,22 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Blocks;
 
+/**
+ * @internal
+ */
 class BlockRegistrar
 {
+    /**
+     * @throws \InvalidArgumentException
+     */
     public static function new(string $blocksDirectory): self
     {
         return new self($blocksDirectory);
     }
 
+    /**
+     * @throws \InvalidArgumentException
+     */
     final private function __construct(private readonly string $blocksDirectory)
     {
         $this->blocksDirectory or throw new \InvalidArgumentException(

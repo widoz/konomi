@@ -30,18 +30,18 @@ $style = Blocks\Style::new()->add(
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo wp_interactivity_data_wp_context($generatedContext) ?>
 >
-    <?= $renderer->render('like/partials/button', [
+    <?= $renderer->render('Like/partials/button', [
         'anchor' => $anchor,
         'count' => $context->count(),
         'label' => __('Save this post', 'konomi'),
     ]) ?>
 
-    <?= $renderer->render('like/partials/popover', [
+    <?= $renderer->render('Like/partials/popover', [
         'anchor' => $anchor,
         'defaultMessage' => __('Unknown error, please try again later!', 'konomi'),
     ]) ?>
 
-    <?= $renderer->render('like/partials/dialog', [
+    <?= $renderer->render('Like/partials/dialog', [
         'postId' => $id,
         'loginPageUrl' => wp_login_url(add_query_arg([])),
         'loginPageLabel' => __('Login', 'konomi'),

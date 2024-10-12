@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks;
+namespace Widoz\Wp\Konomi\Blocks\Like;
 
 use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
@@ -30,7 +30,7 @@ class LikeContext
             'count' => $this->count(),
             'id' => $this->postId(),
             'isUserLoggedIn' => $this->isUserLoggedIn(),
-            'type' =>  $this->type(),
+            'type' => $this->type(),
             'isActive' => $like->isActive(),
         ];
     }
