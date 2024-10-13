@@ -23,8 +23,8 @@ describe('Like Context', function (): void {
         $likeContext = LikeContext::new($user, $post);
         $likeContextAsArray = $likeContext->toArray();
 
-        expect($likeContext->instanceId())->toEqual(1);
-        expect($likeContextAsArray['id'])->toEqual(10)
+        expect($likeContext->instanceId())->toEqual(1)
+            ->and($likeContextAsArray['id'])->toEqual(10)
             ->and($likeContextAsArray['type'])->toEqual('post-type')
             ->and($likeContextAsArray['count'])->toEqual(1)
             ->and($likeContextAsArray['isUserLoggedIn'])->toEqual(true)
