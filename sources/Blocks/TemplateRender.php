@@ -25,14 +25,15 @@ class TemplateRender
         $path = untrailingslashit($path);
         $path = self::ensureExtension($path);
 
-        if (!file_exists($path) && $this->isDebugMode) {
+        if (!is_readable($path) && $this->isDebugMode) {
+            // @phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
             throw new \RuntimeException("Konomi, template file not found: $path");
         }
 
         $renderer = static function (string $path, array $data): string {
             ob_start();
-            $data = (array)apply_filters('konomi.template.render.data', $data, $path);
-            $path = (string)apply_filters('konomi.template.render.path', $path, $data);
+            $data = (array) apply_filters('konomi.template.render.data', $data, $path);
+            $path = (string) apply_filters('konomi.template.render.path', $path, $data);
             include realpath($path);
             return (string) ob_get_clean();
         };
