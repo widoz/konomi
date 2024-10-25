@@ -11,25 +11,29 @@ use Inpsyde\Modularity\{
     Module\ModuleClassNameIdTrait,
     Properties\Properties
 };
-use Widoz\Wp\Konomi\Utils;
 
 class Module implements ServiceModule, ExecutableModule
 {
     use ModuleClassNameIdTrait;
 
-    public static function new(Properties $appProperties): self
+    public static function new(Properties $appProperties, string $relativeIconsPath): self
     {
-        return new self($appProperties);
+        return new self($appProperties, $relativeIconsPath);
     }
 
-    final private function __construct(readonly private Properties $appProperties)
-    {
+    final private function __construct(
+        readonly private Properties $appProperties,
+        readonly private string $relativeIconsPath
+    ) {
     }
 
     public function services(): array
     {
         return [
-            'konomi.configuration' => fn () => Configuration::new($this->appProperties),
+            'konomi.configuration' => fn () => Configuration::new(
+                $this->appProperties,
+                $this->relativeIconsPath
+            ),
             'konomi.configuration.init-script-render' => static fn (
                 ContainerInterface $container
             ) => ConfigurationInitScriptFilter::new(

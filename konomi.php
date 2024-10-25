@@ -35,7 +35,7 @@ add_action(
         $properties = $package->properties();
 
         $package
-            ->addModule(Configuration\Module::new($properties))
+            ->addModule(Configuration\Module::new($properties, '/sources/Icons/icons'))
             ->addModule(ApiFetch\Module::new($properties))
             ->addModule(Icons\Module::new($properties))
             ->addModule(User\Module::new())

@@ -8,25 +8,30 @@ use Inpsyde\Modularity;
 
 class Configuration
 {
-    public static function new(Modularity\Properties\Properties $properties): Configuration
-    {
-        return new self($properties);
+    public static function new(
+        Modularity\Properties\Properties $properties,
+        string $relativeIconsPath
+    ): Configuration {
+
+        return new self($properties, $relativeIconsPath);
     }
 
-    final private function __construct(readonly private Modularity\Properties\Properties $properties)
-    {
+    final private function __construct(
+        readonly private Modularity\Properties\Properties $properties,
+        readonly private string $relativeIconsPath
+    ) {
     }
 
     public function iconsPathUrl(): string
     {
         $baseUrl = untrailingslashit($this->properties->baseUrl() ?? '');
-        return "{$baseUrl}/sources/Icons/icons";
+        return $this->buildIconsPath($baseUrl);
     }
 
     public function iconsPath(): string
     {
         $basePath = untrailingslashit($this->properties->basePath() ?? '');
-        return "{$basePath}/sources/Icons/icons";
+        return $this->buildIconsPath($basePath);
     }
 
     public function serialize(): string
@@ -38,5 +43,11 @@ class Configuration
                 'isDebugMode' => $this->properties->isDebug(),
             ]
         );
+    }
+
+    private function buildIconsPath(string $base): string
+    {
+        $relativeIconsPath = untrailingslashit($this->relativeIconsPath);
+        return "{$base}/{$relativeIconsPath}";
     }
 }

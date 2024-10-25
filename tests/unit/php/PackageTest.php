@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Brain\Monkey\Functions;
 
-describe('Package', function() {
+describe('Package', function (): void {
     it('bootstrap the package during plugins_loaded action', function (): void {
         $properties = Mockery::mock(
             'alias:Inpsyde\Modularity\Properties\PluginProperties',
