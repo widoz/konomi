@@ -11,6 +11,7 @@ import type { KonomiConfiguration } from './types';
 export function configuration(): KonomiConfiguration.Configuration {
 	const _configuration = initConfiguration( '' );
 	return {
+		// @ts-expect-error
 		isDebugMode: false,
 		..._configuration,
 		iconsPathUrl: new URL( _configuration.iconsPathUrl ),
