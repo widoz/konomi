@@ -6,12 +6,7 @@ namespace Widoz\Wp\Konomi\Utils;
 
 class ConditionalRemovableHook
 {
-    public const TYPE_ACTION = 'action';
-    public const TYPE_FILTER = 'filter';
-
     private string $name = '';
-
-    private ?string $type = null;
 
     /**
      * @var callable|null
@@ -20,29 +15,18 @@ class ConditionalRemovableHook
 
     private int $priority = 10;
 
-    public static function action(
+    public static function add(
         string $name,
         callable $callback,
         int $priority = 10,
         int $arguments = 1
     ): ConditionalRemovableHook {
 
-        return self::makeHook($name, self::TYPE_ACTION, $callback, $priority, $arguments);
-    }
-
-    public static function filter(
-        string $name,
-        callable $callback,
-        int $priority = 10,
-        int $arguments = 1
-    ): ConditionalRemovableHook {
-
-        return self::makeHook($name, self::TYPE_FILTER, $callback, $priority, $arguments);
+        return self::makeHook($name, $callback, $priority, $arguments);
     }
 
     private static function makeHook(
         string $name,
-        string $type,
         callable $callback,
         int $priority = 10,
         int $arguments = 1
@@ -51,14 +35,10 @@ class ConditionalRemovableHook
         $instance = new self();
 
         $instance->name = $name;
-        $instance->type = $type;
         $instance->priority = $priority;
-        $instance->callback = static fn (mixed ...$args) => $callback($instance, ...$args);
-        $hook = $instance->type === self::TYPE_ACTION
-            ? 'add_action'
-            : 'add_filter';
+        $instance->callback = static fn (mixed ...$args): mixed => $callback($instance, ...$args);
 
-        $hook(
+        add_filter(
             $instance->name,
             $instance->callback,
             $instance->priority,
@@ -74,15 +54,6 @@ class ConditionalRemovableHook
 
     public function remove(): void
     {
-        if (!$this->callback || !$this->priority) {
-            return;
-        }
-
-        if ($this->type === self::TYPE_ACTION) {
-            \remove_action($this->name, $this->callback, $this->priority);
-        }
-        if ($this->type === self::TYPE_FILTER) {
-            \remove_filter($this->name, $this->callback, $this->priority);
-        }
+        remove_filter($this->name, $this->callback, $this->priority);
     }
 }
