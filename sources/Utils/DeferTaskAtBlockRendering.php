@@ -16,7 +16,7 @@ class DeferTaskAtBlockRendering
     {
         self::$priority += 20;
 
-        ConditionalRemovableHook::filter(
+        ConditionalRemovableHook::add(
             'pre_render_block',
             static function (
                 ConditionalRemovableHook $that,
