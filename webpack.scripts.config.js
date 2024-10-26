@@ -109,11 +109,11 @@ module.exports = [
 	{
 		...configuration,
 		entry: {
-			'konomi-like-block': './sources/Blocks/like/index.ts',
+			'konomi-like-block': './sources/Blocks/Like/index.ts',
 		},
 		output: {
 			filename: '[name].js',
-			path: path.resolve('./sources/Blocks/like/dist'),
+			path: path.resolve('./sources/Blocks/Like/dist'),
 			clean: true,
 		},
 	}

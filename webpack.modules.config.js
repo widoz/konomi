@@ -83,12 +83,12 @@ module.exports = [
 	{
 		...configuration,
 		entry: {
-			'konomi-like-block-view': './sources/Blocks/like/view/index.ts',
+			'konomi-like-block-view': './sources/Blocks/Like/view/index.ts',
 		},
 		output: {
 			...configuration.output,
 			filename: '[name].js',
-			path: path.resolve('./sources/Blocks/like/build-module'),
+			path: path.resolve('./sources/Blocks/Like/build-module'),
 			clean: true,
 		},
 	}
