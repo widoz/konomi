@@ -24,14 +24,12 @@ class Configuration
 
     public function iconsPathUrl(): string
     {
-        $baseUrl = untrailingslashit($this->properties->baseUrl() ?? '');
-        return $this->buildIconsPath($baseUrl);
+        return $this->buildIconsPath($this->properties->baseUrl() ?? '');
     }
 
     public function iconsPath(): string
     {
-        $basePath = untrailingslashit($this->properties->basePath() ?? '');
-        return $this->buildIconsPath($basePath);
+        return $this->buildIconsPath($this->properties->basePath() ?? '');
     }
 
     public function serialize(): string
@@ -48,6 +46,7 @@ class Configuration
     private function buildIconsPath(string $base): string
     {
         $relativeIconsPath = untrailingslashit($this->relativeIconsPath);
-        return "{$base}/{$relativeIconsPath}";
+        $basePath = untrailingslashit($base);
+        return "{$basePath}/{$relativeIconsPath}";
     }
 }
