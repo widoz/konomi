@@ -12,6 +12,8 @@ use Inpsyde\Modularity\{
     Properties\Properties
 };
 
+use function Widoz\Wp\Konomi\Functions\add_action_on_module_import;
+
 class Module implements ServiceModule, ExecutableModule
 {
     use ModuleClassNameIdTrait;
@@ -52,7 +54,12 @@ class Module implements ServiceModule, ExecutableModule
             );
         });
 
-        $container->get('konomi.api-fetch.script-enqueue-filter')->addFilter();
+        add_action_on_module_import(
+            '"@konomi\/api-fetch"',
+            static function (): void {
+                wp_enqueue_script('wp-api-fetch');
+            }
+        );
 
         return true;
     }

@@ -14,7 +14,7 @@ namespace PHPSTORM_META {
                 'konomi.blocks.like-context' => \Widoz\Wp\Konomi\Blocks\Like\LikeContext::class,
 
                 'konomi.configuration' => \Widoz\Wp\Konomi\Configuration\Configuration::class,
-                'konomi.configuration.init-script-render' => \Widoz\Wp\Konomi\Configuration\ConfigurationInitScriptFilter::class,
+                'konomi.configuration.init-script-render' => \Widoz\Wp\Konomi\Configuration\ConfigurationInitScript::class,
 
                 'konomi.icons.render' => \Widoz\Wp\Konomi\Icons\Render::class,
 

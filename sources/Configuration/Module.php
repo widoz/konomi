@@ -12,6 +12,8 @@ use Inpsyde\Modularity\{
     Properties\Properties
 };
 
+use function Widoz\Wp\Konomi\Functions\add_action_on_module_import;
+
 class Module implements ServiceModule, ExecutableModule
 {
     use ModuleClassNameIdTrait;
@@ -36,7 +38,7 @@ class Module implements ServiceModule, ExecutableModule
             ),
             'konomi.configuration.init-script-render' => static fn (
                 ContainerInterface $container
-            ) => ConfigurationInitScriptFilter::new(
+            ) => ConfigurationInitScript::new(
                 $container->get('konomi.configuration')
             ),
         ];
@@ -66,7 +68,7 @@ class Module implements ServiceModule, ExecutableModule
             );
         });
 
-        add_action('wp_enqueue_scripts', function () use ($container): void {
+        add_action('wp_enqueue_scripts', function (): void {
             $moduleLocationPath = 'sources/Configuration/client/build-module';
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
@@ -84,7 +86,17 @@ class Module implements ServiceModule, ExecutableModule
             );
         });
 
-        $container->get('konomi.configuration.init-script-render')->addFilter();
+        add_action_on_module_import(
+            '"@konomi\/configuration"',
+            static fn (): bool => add_action(
+                'wp_footer',
+                static function () use ($container): void {
+                    $container
+                        ->get('konomi.configuration.init-script-render')
+                        ->printConfigurationInitializer();
+                }
+            )
+        );
 
         return true;
     }
