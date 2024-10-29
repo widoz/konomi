@@ -6,9 +6,9 @@ namespace Widoz\Wp\Konomi\Blocks\Like;
 
 use Widoz\Wp\Konomi\Icons;
 
-$anchor = (string)($data['anchor'] ?? null);
-$count = (int)($data['count'] ?? null);
-$label = (string)($data['label'] ?? null);
+$anchor = (string) ($data['anchor'] ?? null);
+$count = (int) ($data['count'] ?? null);
+$label = (string) ($data['label'] ?? null);
 ?>
 
 <button
@@ -23,7 +23,7 @@ $label = (string)($data['label'] ?? null);
 >
     <?=
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    Icons\ksesIcon(Icons\icon()->render('heart')) ?>
+    Icons\icon()->render('heart') ?>
 
     <?php if ($label) : ?>
         <span class="konomi-like-label" data-wp-text="context.label">

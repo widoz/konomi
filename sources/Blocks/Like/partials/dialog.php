@@ -28,7 +28,7 @@ $closeLabel = (string) ($data['closerLabel'] ?? null);
     >
         <?=
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        Icons\ksesIcon(Icons\icon()->render('close')) ?>
+        Icons\icon()->render('close') ?>
         <span class="screen-reader-text">
             <?= esc_html($closeLabel) ?>
         </span>
