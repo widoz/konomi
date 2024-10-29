@@ -1,3 +1,3 @@
-declare export namespace Wp {
-	export type Stores = Readonly<{}>
+declare namespace Wp {
+	export type Stores = Readonly< {} >;
 }
