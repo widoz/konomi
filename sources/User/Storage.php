@@ -27,7 +27,7 @@ class Storage
     public function read(int $id, string $key): array
     {
         $data = get_user_meta($id, $key, true);
-        return  is_array($data) ? $data : [];
+        return is_array($data) ? $data : [];
     }
 
     /**

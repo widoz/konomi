@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Widoz\Wp\Konomi\Blocks;
 
 use Widoz\Wp\Konomi\Blocks\Like\LikeContext;
+
 use function Widoz\Wp\Konomi\package;
 
 /**

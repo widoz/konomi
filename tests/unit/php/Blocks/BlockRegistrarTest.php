@@ -26,4 +26,3 @@ describe('Block Registrar', function (): void {
         })->toThrow('InvalidArgumentException');
     });
 });
-

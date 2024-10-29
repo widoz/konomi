@@ -12,7 +12,9 @@ function wordPressDirPath(): string
     return dirname(__DIR__) . '/vendor/roots/wordpress-no-content';
 }
 
-function setUpHooks(): void {
+function setUpHooks(): void
+{
+
     require_once wordPressDirPath() . '/wp-includes/plugin.php';
     if (!class_exists(WP_Hook::class)) {
         throw new \RuntimeException('Cannot locate WP_Hook class');

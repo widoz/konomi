@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Blocks\Like;
 
-$anchor = (string)($data['anchor'] ?? null);
-$defaultMessage = (string)($data['defaultMessage'] ?? null);
+$anchor = (string) ($data['anchor'] ?? null);
+$defaultMessage = (string) ($data['defaultMessage'] ?? null);
 ?>
 
 <span
