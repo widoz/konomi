@@ -9,7 +9,7 @@ describe('Configuration', function (): void {
         $properties->shouldReceive('basePath')->andReturn('/var/www/html');
         $properties->shouldReceive('isDebug')->andReturn(true);
 
-        $expected = '{"iconsPathUrl":"http:\/\/example.com\/\/path\/to\/icons","iconsPath":"\/var\/www\/html\/\/path\/to\/icons","isDebugMode":true}';
+        $expected = '{"iconsUrl":"http:\/\/example.com\/\/path\/to\/icons","iconsPath":"\/var\/www\/html\/\/path\/to\/icons","isDebugMode":true}';
         $configuration = \Widoz\Wp\Konomi\Configuration\Configuration::new($properties, '/path/to/icons');
         expect($configuration->serialize())->toBe($expected);
     });

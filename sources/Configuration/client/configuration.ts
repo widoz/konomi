@@ -14,6 +14,6 @@ export function configuration(): KonomiConfiguration.Configuration {
 		// @ts-expect-error
 		isDebugMode: false,
 		..._configuration,
-		iconsPathUrl: new URL( _configuration.iconsPathUrl ),
+		iconsUrl: new URL( _configuration.iconsUrl ),
 	};
 }

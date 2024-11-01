@@ -22,7 +22,7 @@ class Configuration
     ) {
     }
 
-    public function iconsPathUrl(): string
+    public function iconsUrl(): string
     {
         return $this->buildIconsPath($this->properties->baseUrl() ?? '');
     }
@@ -36,7 +36,7 @@ class Configuration
     {
         return (string) wp_json_encode(
             [
-                'iconsPathUrl' => $this->iconsPathUrl(),
+                'iconsUrl' => $this->iconsUrl(),
                 'iconsPath' => $this->iconsPath(),
                 'isDebugMode' => $this->properties->isDebug(),
             ]

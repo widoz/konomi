@@ -1,6 +1,6 @@
 export namespace KonomiConfiguration {
 	export type Configuration = Readonly< {
-		iconsPathUrl: URL;
+		iconsUrl: URL;
 		isDebugMode: boolean;
 	} >;
 }
