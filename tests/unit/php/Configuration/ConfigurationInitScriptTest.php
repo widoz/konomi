@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+use Brain\Monkey\Functions;
+use Widoz\Wp\Konomi\Configuration\Configuration;
+use Widoz\Wp\Konomi\Configuration\ConfigurationInitScript;
+
+describe('Initialize the Configuration in Frontend', function (): void {
+    it('render a js module calling the client initConfiguration function', function (): void {
+        $expectedConfiguration = '{"key":"value"}';
+
+        $configuration = \Mockery::mock(Configuration::class);
+        $configurationInitScript = ConfigurationInitScript::new($configuration);
+
+        $configuration->expects('serialize')
+            ->once()
+            ->andReturn($expectedConfiguration);
+
+        Functions\expect('wp_print_inline_script_tag')
+            ->once()
+            ->with(
+                <<<JS
+                    import { initConfiguration } from '@konomi/configuration';
+                    initConfiguration('{$expectedConfiguration}');
+                    JS,
+                [
+                    'type' => 'module',
+                ]
+            );
+
+        $configurationInitScript->printConfigurationInitializer();
+    });
+});
