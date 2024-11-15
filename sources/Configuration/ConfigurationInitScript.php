@@ -17,9 +17,6 @@ class ConfigurationInitScript
 
     public function printConfigurationInitializer(): void
     {
-        // TODO Use the filter `script_module_data_@konomi/configuration` to
-        //      add the configuration to pass the data to the module
-        //      and let the module initialize it self once the page has finished parsing.
         wp_print_inline_script_tag(
             <<<JS
                     import { initConfiguration } from '@konomi/configuration';
