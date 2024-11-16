@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Widoz\Wp\Konomi\Tests;
+
 function fixturesDirectory(): string
 {
     return __DIR__ . '/fixtures/php';
@@ -14,9 +16,8 @@ function wordPressDirPath(): string
 
 function setUpHooks(): void
 {
-
     require_once wordPressDirPath() . '/wp-includes/plugin.php';
-    if (!class_exists(WP_Hook::class)) {
+    if (!class_exists(\WP_Hook::class)) {
         throw new \RuntimeException('Cannot locate WP_Hook class');
     }
 }

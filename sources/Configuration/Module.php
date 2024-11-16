@@ -49,16 +49,21 @@ class Module implements ServiceModule, ExecutableModule
         add_action('enqueue_block_editor_assets', function () use ($container): void {
             $service = $container->get('konomi.configuration');
             $distLocationPath = 'sources/Configuration/client/dist';
-            $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
-            $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
+            $baseUrl = (string) untrailingslashit($this->appProperties->baseUrl() ?? '');
+            $baseDir = (string) untrailingslashit($this->appProperties->basePath());
 
+            /** @psalm-suppress UnresolvableInclude */
             $configuration = (array) (include "{$baseDir}/{$distLocationPath}/konomi-configuration.asset.php");
+
+            /** @var array<string> $dependencies */
+            $dependencies = (array) ($configuration['dependencies'] ?? null);
+            $version = (string) ($configuration['version'] ?? $this->appProperties->version());
 
             wp_register_script(
                 'konomi-configuration',
                 "{$baseUrl}/{$distLocationPath}/konomi-configuration.js",
-                $configuration['dependencies'] ?? [],
-                $configuration['version'],
+                $dependencies,
+                $version,
                 true
             );
 
@@ -70,13 +75,14 @@ class Module implements ServiceModule, ExecutableModule
 
         add_action('wp_enqueue_scripts', function (): void {
             $moduleLocationPath = 'sources/Configuration/client/build-module';
-            $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
-            $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
+            $baseUrl = (string) untrailingslashit($this->appProperties->baseUrl() ?? '');
+            $baseDir = (string) untrailingslashit($this->appProperties->basePath());
 
+            /** @psalm-suppress UnresolvableInclude */
             $configuration = (array) (include "{$baseDir}/{$moduleLocationPath}/konomi-configuration.asset.php");
 
-            $dependencies = $configuration['dependencies'] ?? [];
-            $version = $configuration['version'] ?? $this->appProperties->version();
+            $dependencies = (array) ($configuration['dependencies'] ?? null);
+            $version = (string) ($configuration['version'] ?? $this->appProperties->version());
 
             wp_register_script_module(
                 '@konomi/configuration',
@@ -88,14 +94,16 @@ class Module implements ServiceModule, ExecutableModule
 
         add_action_on_module_import(
             '"@konomi\/configuration"',
-            static fn (): bool => add_action(
-                'wp_footer',
-                static function () use ($container): void {
-                    $container
-                        ->get('konomi.configuration.init-script-render')
-                        ->printConfigurationInitializer();
-                }
-            )
+            static function () use ($container): void {
+                add_action(
+                    'wp_footer',
+                    static function () use ($container): void {
+                        $container
+                            ->get('konomi.configuration.init-script-render')
+                            ->printConfigurationInitializer();
+                    }
+                );
+            }
         );
 
         return true;

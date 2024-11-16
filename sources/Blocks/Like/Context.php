@@ -8,11 +8,11 @@ use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
 
 // TODO Think about a way to encapsulate the Array
-class LikeContext
+class Context
 {
     private int $instanceId = 0;
 
-    public static function new(User\User $user, Post\Post $post): LikeContext
+    public static function new(User\User $user, Post\Post $post): Context
     {
         return new self($user, $post);
     }

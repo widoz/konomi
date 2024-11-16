@@ -17,4 +17,8 @@
             <directory name="tests" />
         </ignoreFiles>
     </projectFiles>
+
+    <stubs>
+        <directory name="vendor/roots/wordpress-no-content" />
+    </stubs>
 </psalm>

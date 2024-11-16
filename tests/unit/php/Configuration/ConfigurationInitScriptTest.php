@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Widoz\Wp\Konomi\Tests\Unit\Configuration;
+
 use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Configuration\Configuration;
 use Widoz\Wp\Konomi\Configuration\ConfigurationInitScript;

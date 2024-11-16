@@ -22,4 +22,5 @@
 
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/dist/*</exclude-pattern>
+	<exclude-pattern>*/tests/fixtures/*</exclude-pattern>
 </ruleset>

@@ -6,6 +6,8 @@ namespace Widoz\Wp\Konomi\Blocks\Like;
 
 use Widoz\Wp\Konomi\Icons;
 
+$data = (array) ($data ?? null);
+
 $loginPageUrl = (string) ($data['loginPageUrl'] ?? null);
 $loginPageLabel = (string) ($data['loginPageLabel'] ?? null);
 $title = (string) ($data['title'] ?? null);

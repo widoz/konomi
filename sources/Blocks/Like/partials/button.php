@@ -6,6 +6,8 @@ namespace Widoz\Wp\Konomi\Blocks\Like;
 
 use Widoz\Wp\Konomi\Icons;
 
+$data = (array) ($data ?? null);
+
 $anchor = (string) ($data['anchor'] ?? null);
 $count = (int) ($data['count'] ?? null);
 $label = (string) ($data['label'] ?? null);
@@ -32,6 +34,8 @@ $label = (string) ($data['label'] ?? null);
     <?php endif ?>
 
     <span class="konomi-like-count" data-wp-text="context.count">
-        <?= esc_html($count) ?>
+        <?=
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        $count ?>
     </span>
 </button>

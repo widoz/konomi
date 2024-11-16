@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Widoz\Wp\Konomi\Tests\Unit\Configuration;
+
 describe('Configuration', function (): void {
     it('Serialize the given configuration', function (): void {
         $properties = \Mockery::mock('\Inpsyde\Modularity\Properties\Properties');

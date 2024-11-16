@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
+namespace Widoz\Wp\Konomi\Tests\Unit\Blocks;
+
+use Widoz\Wp\Konomi\Tests;
 use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Blocks\BlockRegistrar;
 
 describe('Block Registrar', function (): void {
     it('register all blocks in the blocks directory', function (): void {
-        $blocksDirectory = fixturesDirectory() . '/blocks';
+        $blocksDirectory = Tests\fixturesDirectory() . '/blocks';
         $blockRegistrar = BlockRegistrar::new($blocksDirectory);
 
         Functions\expect('register_block_type_from_metadata')->twice();
@@ -21,7 +24,7 @@ describe('Block Registrar', function (): void {
     });
 
     it('throws an exception when the blocks directory is empty', function (): void {
-        expect(function () {
+        expect(function (): void {
             BlockRegistrar::new('');
         })->toThrow('InvalidArgumentException');
     });

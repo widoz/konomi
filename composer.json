@@ -33,6 +33,13 @@
 			"sources/Icons/api.php"
 		]
 	},
+	"autoload-dev": {
+		"psr-4": {
+			"Widoz\\Wp\\Konomi\\Tests\\": "tests/",
+			"Widoz\\Wp\\Konomi\\Tests\\Unit\\": "tests/unit/php",
+			"Widoz\\Wp\\Konomi\\Tests\\Integration\\": "tests/unit/integration"
+		}
+	},
 	"config": {
 		"platform": {
 			"php": "8.1"

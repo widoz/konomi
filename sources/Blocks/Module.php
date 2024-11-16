@@ -10,7 +10,7 @@ use Inpsyde\Modularity\{Module\ExecutableModule,
     Properties\Properties
 };
 use Psr\Container\ContainerInterface;
-use Widoz\Wp\Konomi\Blocks\Like\LikeContext;
+use Widoz\Wp\Konomi\Blocks\Like\Context;
 
 class Module implements ServiceModule, ExecutableModule
 {
@@ -40,7 +40,7 @@ class Module implements ServiceModule, ExecutableModule
             ),
             'konomi.blocks.like-context' => static fn (
                 ContainerInterface $container
-            ) => LikeContext::new(
+            ) => Context::new(
                 $container->get('konomi.user.current'),
                 $container->get('konomi.post')
             ),

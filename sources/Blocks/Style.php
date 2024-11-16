@@ -26,7 +26,7 @@ class Style implements \Stringable
         return array_reduce(
             $this->properties,
             static fn (string $output, CustomProperty $property) => $property->isValid()
-                    ? $output . "{$property->key}:$property->value;"
+                    ? "{$output}{$property}"
                     : $output,
             ''
         );

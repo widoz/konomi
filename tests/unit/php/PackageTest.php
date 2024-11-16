@@ -2,17 +2,19 @@
 
 declare(strict_types=1);
 
+namespace Widoz\Wp\Konomi\Tests\Unit;
+
 use Brain\Monkey\Functions;
 
 describe('Package', function (): void {
     it('bootstrap the package during plugins_loaded action', function (): void {
-        $properties = Mockery::mock(
+        $properties = \Mockery::mock(
             'alias:Inpsyde\Modularity\Properties\PluginProperties',
             'Inpsyde\Modularity\Properties\Properties',
         );
         $properties->shouldReceive('new')->andReturnSelf();
 
-        $package = Mockery::mock(
+        $package = \Mockery::mock(
             'alias:Inpsyde\Modularity\Package',
             [
                 'properties' => $properties,

@@ -11,24 +11,39 @@ namespace Widoz\Wp\Konomi\Blocks;
 class CustomProperty
 {
     /**
-     * @param V $value
+     * @var callable $sanitizer
      */
-    public static function new(string $key, mixed $value): self
-    {
-        return new self($key, $value);
-    }
+    private $sanitizer;
 
     /**
      * @param V $value
      */
+    public static function new(string $key, mixed $value, callable $sanitizer): self
+    {
+        return new self($key, $value, $sanitizer);
+    }
+
+    /**
+     * @param V $value
+     * @param callable $sanitizer
+     */
     final private function __construct(
         readonly public string $key,
-        readonly public mixed $value
+        readonly public mixed $value,
+        $sanitizer
     ) {
+
+        $this->sanitizer = $sanitizer;
     }
 
     public function isValid(): bool
     {
         return !!$this->value;
+    }
+
+    public function __toString(): string
+    {
+        $sanitizer = $this->sanitizer;
+        return "{$this->key}:{$sanitizer($this->value)};";
     }
 }

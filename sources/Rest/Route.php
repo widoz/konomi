@@ -10,6 +10,12 @@ class Route
 
     private Method $method;
 
+    /**
+     * @psalm-var array {
+     *   schema: array<array-key, mixed>,
+     *   $schema: string
+     * }
+     */
     private array $schema = [];
 
     private Controller $controller;

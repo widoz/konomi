@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+namespace Widoz\Wp\Konomi\Tests\Unit\Blocks;
+
 use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
-use Widoz\Wp\Konomi\Blocks\Like\LikeContext;
+use Widoz\Wp\Konomi\Blocks\Like\Context;
 
 describe('Like Context', function (): void {
     it('ensure valid serialization', function (): void {
@@ -20,7 +22,7 @@ describe('Like Context', function (): void {
         Functions\expect('get_the_ID')->andReturn(10);
         Functions\expect('get_post_type')->andReturn('post-type');
 
-        $likeContext = LikeContext::new($user, $post);
+        $likeContext = Context::new($user, $post);
         $likeContextAsArray = $likeContext->toArray();
 
         expect($likeContext->instanceId())->toEqual(1)
