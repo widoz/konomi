@@ -39,15 +39,20 @@ class Module implements ServiceModule, ExecutableModule
         add_action('init', function () {
             $distLocationPath = 'sources/Icons/client/dist';
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
-            $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
+            $baseDir = untrailingslashit($this->appProperties->basePath());
 
+            /** @psalm-suppress UnresolvableInclude */
             $configuration = (array) (include "{$baseDir}/{$distLocationPath}/konomi-icons.asset.php");
+
+            /** @var array<string> $dependencies */
+            $dependencies = (array) ($configuration['dependencies'] ?? null);
+            $version = (string) ($configuration['version'] ?? $this->appProperties->version());
 
             wp_register_script(
                 'konomi-icons',
                 "{$baseUrl}/{$distLocationPath}/konomi-icons.js",
-                $configuration['dependencies'] ?? [],
-                $configuration['version'],
+                $dependencies,
+                $version,
                 true
             );
         });

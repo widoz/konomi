@@ -8,7 +8,7 @@ trait RestRegistTrait
 {
     public function register(): void
     {
-        $handler = function (\WP_Rest_Request $request): \WP_REST_Response|\WP_Error {
+        $handler = function (\WP_REST_Request $request): \WP_REST_Response|\WP_Error {
             return MiddlewareProcess::run(
                 $this->middlewares,
                 $this->controller,
@@ -19,7 +19,10 @@ trait RestRegistTrait
         register_rest_route($this->namespace, $this->route, [
             'methods' => $this->method->value,
             'callback' => $handler,
-            'schema' => $this->schema,
+            'schema' => [
+                'schema' => $this->schema->toArray(),
+                '$schema' => 'http://json-schema.org/draft-04/schema#',
+            ],
             'permission_callback' => '__return_true',
         ]);
     }

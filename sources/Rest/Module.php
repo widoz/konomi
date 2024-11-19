@@ -32,7 +32,7 @@ class Module implements ServiceModule, ExecutableModule
                 ContainerInterface $container
             ) => Like\AddController::new(
                 $container->get('konomi.user.current'),
-                $container->get('konomi.user.like.factory')
+                $container->get('konomi.user.item.factory')
             ),
 
             'konomi.rest.middleware.error-catch' => static fn () => Middlewares\ErrorCatch::new(),
@@ -49,11 +49,14 @@ class Module implements ServiceModule, ExecutableModule
         add_action(
             'rest_api_init',
             static function () use ($container) {
-                Route::post('konomi/v1', '/user-like')
-                    ->withSchema($container->get('konomi.rest.like.add-schema'))
+                Route::post(
+                    'konomi/v1',
+                    '/user-like',
+                    $container->get('konomi.rest.like.add-schema'),
+                    $container->get('konomi.rest.like.add-controller')
+                )
                     ->withMiddleware($container->get('konomi.rest.middleware.error-catch'))
                     ->withMiddleware($container->get('konomi.rest.middleware.authentication'))
-                    ->withHandle($container->get('konomi.rest.like.add-controller'))
                     ->register();
             }
         );

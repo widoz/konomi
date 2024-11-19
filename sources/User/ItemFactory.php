@@ -4,10 +4,19 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\User;
 
-interface ItemFactory
+class ItemFactory
 {
-    /**
-     * @param non-negative-int $id
-     */
-    public function create(int $id, string $type, bool $isActive): Item;
+    public static function new(): ItemFactory
+    {
+        return new self();
+    }
+
+    final private function __construct()
+    {
+    }
+
+    public function create(int $id, string $type, bool $isActive): Item
+    {
+        return Like::new($id, $type, $isActive);
+    }
 }

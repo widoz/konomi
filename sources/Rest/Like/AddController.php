@@ -11,7 +11,7 @@ class AddController implements Rest\Controller
 {
     public static function new(
         User\User $user,
-        User\Like\Factory $likeFactory
+        User\ItemFactory $likeFactory
     ): AddController {
 
         return new self($user, $likeFactory);
@@ -19,7 +19,7 @@ class AddController implements Rest\Controller
 
     final private function __construct(
         private readonly User\User $user,
-        private readonly User\Like\Factory $likeFactory
+        private readonly User\ItemFactory $likeFactory
     ) {
     }
 
@@ -62,30 +62,28 @@ class AddController implements Rest\Controller
         );
     }
 
-    private function likeByRequest(\WP_REST_Request $request): User\Like\Like
+    private function likeByRequest(\WP_REST_Request $request): User\Item
     {
-        $rawLike = $this->ensureMeta($request->get_param('meta'));
+        $rawLike = $this->ensureMeta((array) $request->get_param('meta'));
         return $this->likeFactory->create(
-            (int) $rawLike['id'],
+            $rawLike['id'],
             $rawLike['type'],
             $rawLike['isActive']
         );
     }
 
+    /**
+     * @return array{id: int, type: string, isActive: bool}
+     */
     private function ensureMeta(?array $meta): array
     {
         $meta = (array) $meta;
+        $like = (array) ($meta['_like'] ?? null);
 
-        $default = [
-            'id' => 0,
-            'type' => '',
-            'isActive' => '',
+        return [
+            'id' => (int) ($like['id'] ?? null),
+            'type' => (string) ($like['type'] ?? null),
+            'isActive' => (bool) ($like['isActive'] ?? null),
         ];
-
-        if (!array_key_exists('_like', $meta)) {
-            return $default;
-        }
-
-        return wp_parse_args($meta['_like'], $default);
     }
 }

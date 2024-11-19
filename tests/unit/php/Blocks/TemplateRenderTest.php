@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Tests\Unit\Blocks;
 
-use Widoz\Wp\Konomi\Tests;
 use Brain\Monkey\Functions;
 use Brain\Monkey\Filters;
 use Widoz\Wp\Konomi\Blocks\TemplateRender;
@@ -13,7 +12,7 @@ describe('Template Render', function (): void {
     it('render a template with given arguments', function (): void {
         $data = ['name' => 'Konomi'];
         $path = 'hello-konomi';
-        $templateRenderer = TemplateRender::new(Tests\fixturesDirectory() . '/templates', true);
+        $templateRenderer = TemplateRender::new(fixturesDirectory() . '/templates', true);
         $output = $templateRenderer->render($path, $data);
         $cleanedOutput = preg_replace('/([\t\n\r]+|\s{2,})/', '', $output);
         expect($cleanedOutput)->toBe('<div class="fixture"><p>Hello Konomi</p></div>');
@@ -22,8 +21,8 @@ describe('Template Render', function (): void {
     it('Filter data and path before rendering', function (): void {
         $data = ['name' => 'Konomi'];
         $path = 'hello-konomi';
-        $fullPath = Tests\fixturesDirectory() . '/templates/hello-konomi.php';
-        $templateRenderer = TemplateRender::new(Tests\fixturesDirectory() . '/templates', true);
+        $fullPath = fixturesDirectory() . '/templates/hello-konomi.php';
+        $templateRenderer = TemplateRender::new(fixturesDirectory() . '/templates', true);
         Filters\expectApplied('konomi.template.render.data')->once()->with($data, $fullPath);
         Filters\expectApplied('konomi.template.render.path')->once()->with($fullPath, $data);
         $templateRenderer->render($path, $data);
@@ -32,8 +31,8 @@ describe('Template Render', function (): void {
     it('Do not append php extension if already provided', function (): void {
         $data = ['name' => 'Konomi'];
         $path = 'hello-konomi.php';
-        $fullPath = Tests\fixturesDirectory() . '/templates/hello-konomi.php';
-        $templateRenderer = TemplateRender::new(Tests\fixturesDirectory() . '/templates', true);
+        $fullPath = fixturesDirectory() . '/templates/hello-konomi.php';
+        $templateRenderer = TemplateRender::new(fixturesDirectory() . '/templates', true);
         Functions\expect('realpath')->with($fullPath)->andReturnFirstArg();
         $templateRenderer->render($path, $data);
     });
@@ -41,13 +40,13 @@ describe('Template Render', function (): void {
     it('Throw Exception if the template file does not exists', function (): void {
         $data = ['name' => 'Konomi'];
         $path = 'does-not-exists';
-        $templateRenderer = TemplateRender::new(Tests\fixturesDirectory() . '/templates', true);
+        $templateRenderer = TemplateRender::new(fixturesDirectory() . '/templates', true);
         $templateRenderer->render($path, $data);
     })->expectException(\RuntimeException::class);
 
     it('Re-throw exception if Debugging mode is active when rendering', function (): void {
         $path = 'throw-exception';
-        TemplateRender::new(Tests\fixturesDirectory() . '/templates', true)->render($path, []);
+        TemplateRender::new(fixturesDirectory() . '/templates', true)->render($path, []);
     })->expectException(\Exception::class);
 
     it(
@@ -55,7 +54,7 @@ describe('Template Render', function (): void {
         function (): void {
             $path = 'throw-exception';
             $templateRenderer = TemplateRender::new(
-                Tests\fixturesDirectory() . '/templates',
+                fixturesDirectory() . '/templates',
                 false
             );
             $output = $templateRenderer->render($path, []);

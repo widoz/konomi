@@ -4,21 +4,23 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Rest;
 
+use Widoz\Wp\Konomi\Types;
+
+/**
+ * @psalm-import-type MiddlewareCallable from Types
+ */
 class MiddlewareProcess
 {
-    public static function new(): MiddlewareProcess
-    {
-        return new self();
-    }
-
+    /**
+     * @psalm-suppress UnusedConstructor - This class should not be instantiated
+     */
     final private function __construct()
     {
     }
 
     /**
      * @param array<Middleware> $middlewares
-     * @param callable<Controller> $controller
-     * @return array<callable<Middleware|Controller>>
+     * @param MiddlewareCallable $controller
      */
     public static function run(
         array $middlewares,
@@ -26,14 +28,14 @@ class MiddlewareProcess
         \WP_REST_Request $request
     ): \WP_REST_Response|\WP_Error {
 
+        /** @var MiddlewareCallable $runner */
         $runner = array_reduce(
             array_reverse($middlewares),
-            // phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable
-            static fn (callable $next, callable $middleware) => static fn (
-                \WP_REST_Request $request
-            ) => $middleware($request, $next),
+            /** @param MiddlewareCallable $next */
+            static fn (callable $next, Middleware $middleware)
+                => static fn (\WP_REST_Request $request): \WP_REST_Response|\WP_Error
+                => $middleware($request, $next),
             $controller
-            // phpcs:enable VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable
         );
 
         return $runner($request);

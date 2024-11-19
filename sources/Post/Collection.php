@@ -9,9 +9,6 @@ use Widoz\Wp\Konomi\User;
 /**
  * @internal
  *
- * @psalm-type ItemsCollection = array<int<1, max>, array<User\Item>>
- * @psalm-import-type RawData from Storage
- *
  * TODO This Collection require caching the data from the Storage
  */
 class Collection
@@ -27,29 +24,55 @@ class Collection
     ) {
     }
 
-    /**
-     * @return ItemsCollection
-     */
     public function find(int $id): array
     {
         $data = $this->storage->read($id);
         $collector = [];
 
-        foreach ($data as $userId => $items) {
-            $collector[$userId] = array_map(
-                fn (array $item) => $this->itemFactory->create($item[0], $item[1], true),
-                $items
-            );
+        foreach ($data as $userId => $rawItems) {
+            if (!is_array($rawItems)) {
+                continue;
+            }
+
+            $collector[$userId] = $this->mapRawToItem($rawItems);
         }
 
         return $collector;
     }
 
+    private function mapRawToItem(array $rawItems): array
+    {
+        $items = [];
+        foreach ($rawItems as $rawItem) {
+            if (!is_array($rawItem)) {
+                continue;
+            }
+
+            $id = (int) ($rawItem[0] ?? null);
+            $type = (string) ($rawItem[1] ?? null);
+
+            // TODO If the item serialize it self, it also unserialize it self.
+            $items[] = $this->itemFactory->create($id, $type, true);
+        }
+        return $items;
+    }
+
+    /**
+     * @psalm-suppress PossiblyUnusedReturnValue Isn't up to use to decide that.
+     */
     public function save(User\Item $item, User\User $user): bool
     {
+        if (!$item->isValid()) {
+            return false;
+        }
+
         $postId = $item->id();
         $storedData = $this->storage->read($postId);
         $userData = $storedData[$user->id()] ?? [];
+
+        if (!is_array($userData)) {
+            return false;
+        }
 
         if (self::has($item, $userData)) {
             $storedData[$user->id()] = $this->removeItem($item, $userData);
@@ -58,6 +81,7 @@ class Collection
 
         $storedData[$user->id()] = [
             ...$userData,
+            // TODO Let the Item to serialize the data.
             [$item->id(), $item->type()],
         ];
 
@@ -72,17 +96,8 @@ class Collection
         );
     }
 
-    /**
-     * @param RawData $dbData
-     */
     private static function has(User\Item $item, array $dbData): bool
     {
-        foreach ($dbData as $entry) {
-            if ($entry[0] === $item->id() && $entry[1] === $item->type()) {
-                return true;
-            }
-        }
-
-        return false;
+        return in_array([$item->id(), $item->type()], $dbData, true);
     }
 }

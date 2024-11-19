@@ -16,7 +16,9 @@ class CustomProperty
     private $sanitizer;
 
     /**
-     * @param V $value
+     * @template T extends self::V
+     * @param T $value
+     * @return self<T>
      */
     public static function new(string $key, mixed $value, callable $sanitizer): self
     {
@@ -44,6 +46,9 @@ class CustomProperty
     public function __toString(): string
     {
         $sanitizer = $this->sanitizer;
-        return "{$this->key}:{$sanitizer($this->value)};";
+        $value = (string) $this->value;
+        $sanitizedValue = (string) $sanitizer($value);
+
+        return "{$this->key}:{$sanitizedValue};";
     }
 }

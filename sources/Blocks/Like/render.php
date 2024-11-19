@@ -18,7 +18,7 @@ $uuid = $context->instanceId();
 $id = $context->postId();
 $anchor = "--konomi-like-{$uuid}";
 
-$style = Blocks\Style::new()->add(
+$style = (string) Blocks\Style::new()->add(
     Blocks\CustomProperty::new('--konomi-color--inactive', $inactiveColor, 'sanitize_hex_color'),
     Blocks\CustomProperty::new('--konomi-color--active', $activeColor, 'sanitize_hex_color'),
 );

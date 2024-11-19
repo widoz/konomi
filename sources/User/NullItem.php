@@ -6,7 +6,7 @@ namespace Widoz\Wp\Konomi\User;
 
 class NullItem implements Item
 {
-    public static function new(): NullItem
+    public static function new(): self
     {
         return new self();
     }

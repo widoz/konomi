@@ -29,26 +29,25 @@ class Module implements ServiceModule, ExecutableModule
     {
         return [
             'konomi.post' => static fn (ContainerInterface $container) => Post::new(
-                $container->get('konomi.post.collection')
+                $container->get('konomi.post.like.collection')
             ),
             'konomi.post.storage' => static fn () => Storage::new(),
-            'konomi.post.collection' => static fn (
+            'konomi.post.like.collection' => static fn (
                 ContainerInterface $container
             ) => Collection::new(
                 $container->get('konomi.post.storage'),
-                $container->get('konomi.user.like.factory')
+                $container->get('konomi.user.item.factory')
             ),
         ];
     }
 
     public function run(ContainerInterface $container): bool
     {
-        $collection = $container->get('konomi.post.collection');
         add_action(
             'konomi.user.collection.save',
-            static function (User\Item $item, User\User $user) use ($collection): void {
-                $collection->save($item, $user);
-            },
+            static fn (User\Item $item, User\User $user) => $container
+                ->get('konomi.post.like.collection')
+                ->save($item, $user),
             10,
             2
         );

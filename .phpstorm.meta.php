@@ -8,27 +8,29 @@ namespace PHPSTORM_META {
         map(
             [
                 '' => '@',
-                'konomi.api-fetch.script-enqueue-filter' => \Widoz\Wp\Konomi\ApiFetch\ScriptEnqueueFilter::class,
 
                 'konomi.blocks.registrar' => \Widoz\Wp\Konomi\Blocks\BlockRegistrar::class,
                 'konomi.blocks.like-context' => \Widoz\Wp\Konomi\Blocks\Like\Context::class,
+                'konomi.blocks.template-render' => \Widoz\Wp\Konomi\Blocks\TemplateRender::class,
 
                 'konomi.configuration' => \Widoz\Wp\Konomi\Configuration\Configuration::class,
                 'konomi.configuration.init-script-render' => \Widoz\Wp\Konomi\Configuration\ConfigurationInitScript::class,
 
-                'konomi.icons.render' => \Widoz\Wp\Konomi\Icons\Render::class,
+                'konomi.icon' => \Widoz\Wp\Konomi\Icons\Render::class,
 
                 'konomi.user.current' => \Widoz\Wp\Konomi\User\CurrentUser::class,
-                'konomi.user.like.factory' => \Widoz\Wp\Konomi\User\Like\Factory::class,
-                'konomi.user.collection' => \Widoz\Wp\Konomi\User\Collection::class,
+                'konomi.user.item.factory' => \Widoz\Wp\Konomi\User\ItemFactory::class,
+                'konomi.user.like.collection' => \Widoz\Wp\Konomi\User\Collection::class,
                 'konomi.user.storage' => \Widoz\Wp\Konomi\User\Storage::class,
 
                 'konomi.post' => \Widoz\Wp\Konomi\Post\Post::class,
-                'konomi.post.collection' => \Widoz\Wp\Konomi\Post\Collection::class,
+                'konomi.post.like.collection' => \Widoz\Wp\Konomi\Post\Collection::class,
                 'konomi.post.storage' => \Widoz\Wp\Konomi\Post\Storage::class,
 
-                'konomi.rest.controller.add-like' => \Widoz\Wp\Konomi\Rest\Controller::class,
+                'konomi.rest.like.add-schema' => \Widoz\Wp\Konomi\Rest\Like\AddSchema::class,
+                'konomi.rest.like.add-controller' => \Widoz\Wp\Konomi\Rest\Controller::class,
                 'konomi.rest.middleware.authentication' => \Widoz\Wp\Konomi\Rest\Middleware::class,
+                'konomi.rest.middleware.error-catch' => \Widoz\Wp\Konomi\Rest\Middleware::class,
             ]
         )
     );

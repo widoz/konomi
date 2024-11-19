@@ -6,6 +6,7 @@ namespace Widoz\Wp\Konomi\Tests\Unit\Configuration;
 
 describe('Configuration', function (): void {
     it('Serialize the given configuration', function (): void {
+        /** @var \Inpsyde\Modularity\Properties\Properties&\Mockery\MockInterface */
         $properties = \Mockery::mock('\Inpsyde\Modularity\Properties\Properties');
         $properties->shouldReceive('baseUrl')->andReturn('http://example.com');
         $properties->shouldReceive('basePath')->andReturn('/var/www/html');

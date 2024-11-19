@@ -8,56 +8,24 @@ class Route
 {
     use RestRegistTrait;
 
-    private Method $method;
-
-    /**
-     * @psalm-var array {
-     *   schema: array<array-key, mixed>,
-     *   $schema: string
-     * }
-     */
-    private array $schema = [];
-
-    private Controller $controller;
-
     /**
      * @var array<Middleware>
      */
     private array $middlewares = [];
 
-    public static function post(string $namespace, string $route): self
+    public static function post(string $namespace, string $route, Schema $schema, Controller $controller): self
     {
-        $instance = new self($namespace, $route);
-        $instance->method = Method::POST;
-        return $instance;
-    }
-
-    public static function get(string $namespace, string $route): self
-    {
-        $instance = new self($namespace, $route);
-        $instance->method = Method::GET;
+        $instance = new self($namespace, $route, Method::POST, $schema, $controller);
         return $instance;
     }
 
     final private function __construct(
         private readonly string $namespace,
-        private readonly string $route
+        private readonly string $route,
+        private readonly Method $method,
+        private readonly Schema $schema,
+        private readonly Controller $controller
     ) {
-    }
-
-    public function withSchema(Schema $schema): self
-    {
-        $this->schema = [
-            'schema' => $schema->toArray(),
-            '$schema' => 'http://json-schema.org/draft-04/schema#',
-        ];
-        return $this;
-    }
-
-    public function withHandle(Controller $controller): self
-    {
-        $this->controller = $controller;
-        return $this;
     }
 
     public function withMiddleware(Middleware $middleware): self

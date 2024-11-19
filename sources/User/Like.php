@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\User\Like;
+namespace Widoz\Wp\Konomi\User;
 
-use Widoz\Wp\Konomi\User;
-
-class Like implements User\Item
+class Like implements Item
 {
-    public static function new(int $id, string $type, bool $isActive): ?Like
+    public static function new(int $id, string $type, bool $isActive): self
     {
         return new self($id, $type, $isActive);
     }

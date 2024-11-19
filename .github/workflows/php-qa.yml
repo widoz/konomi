@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '--skip ci') && !github.event.pull_request.draft"
+    if: '!contains(github.event.head_commit.message, "--skip ci") && !github.event.pull_request.draft'
     strategy:
       matrix:
         php-versions: [ '8.1', '8.2', '8.3' ]
@@ -34,7 +34,10 @@ jobs:
         run: composer cs
 
       - name: Check Static Analysis
-        run: composer psalm
+        run: composer analysis:ci
 
       - name: Unit Tests
-        run: composer test
+        run: composer test:init
+
+      - name: Integration Tests
+        run: composer test:integration

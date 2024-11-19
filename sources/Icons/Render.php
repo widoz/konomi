@@ -9,7 +9,7 @@ use Widoz\Wp\Konomi\Configuration;
 class Render
 {
     /**
-     * @var array<int<0,max>,string>
+     * @var array<string>
      */
     private static array $cache = [];
 
@@ -24,7 +24,7 @@ class Render
 
     public function render(string $name): string
     {
-        if (self::$cache[$name] ?? false) {
+        if (array_key_exists($name, self::$cache)) {
             return self::$cache[$name];
         }
 

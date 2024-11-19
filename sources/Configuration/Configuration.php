@@ -45,8 +45,8 @@ class Configuration
 
     private function buildIconsPath(string $base): string
     {
-        $relativeIconsPath = (string) untrailingslashit($this->relativeIconsPath);
-        $basePath = (string) untrailingslashit($base);
+        $relativeIconsPath = untrailingslashit($this->relativeIconsPath);
+        $basePath = untrailingslashit($base);
         return "{$basePath}/{$relativeIconsPath}";
     }
 }

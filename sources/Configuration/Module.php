@@ -49,8 +49,8 @@ class Module implements ServiceModule, ExecutableModule
         add_action('enqueue_block_editor_assets', function () use ($container): void {
             $service = $container->get('konomi.configuration');
             $distLocationPath = 'sources/Configuration/client/dist';
-            $baseUrl = (string) untrailingslashit($this->appProperties->baseUrl() ?? '');
-            $baseDir = (string) untrailingslashit($this->appProperties->basePath());
+            $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
+            $baseDir = untrailingslashit($this->appProperties->basePath());
 
             /** @psalm-suppress UnresolvableInclude */
             $configuration = (array) (include "{$baseDir}/{$distLocationPath}/konomi-configuration.asset.php");
@@ -75,8 +75,8 @@ class Module implements ServiceModule, ExecutableModule
 
         add_action('wp_enqueue_scripts', function (): void {
             $moduleLocationPath = 'sources/Configuration/client/build-module';
-            $baseUrl = (string) untrailingslashit($this->appProperties->baseUrl() ?? '');
-            $baseDir = (string) untrailingslashit($this->appProperties->basePath());
+            $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
+            $baseDir = untrailingslashit($this->appProperties->basePath());
 
             /** @psalm-suppress UnresolvableInclude */
             $configuration = (array) (include "{$baseDir}/{$moduleLocationPath}/konomi-configuration.asset.php");

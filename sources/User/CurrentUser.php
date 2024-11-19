@@ -9,34 +9,34 @@ namespace Widoz\Wp\Konomi\User;
  */
 class CurrentUser implements User
 {
-    public static function new(int $id, Collection $collection): CurrentUser
+    public static function new(Collection $likeCollection): CurrentUser
     {
-        return new self($id, $collection);
+        return new self(wp_get_current_user(), $likeCollection);
     }
 
     final private function __construct(
-        readonly private int $id,
-        readonly private Collection $collection
+        readonly private ?\WP_User $user,
+        readonly private Collection $likeCollection
     ) {
     }
 
     public function isLoggedIn(): bool
     {
-        return $this->id() && get_current_user_id() === $this->id();
+        return is_user_logged_in();
     }
 
-    public function id(): ?int
+    public function id(): int
     {
-        return $this->id;
+        return $this->user?->ID ?? 0;
     }
 
     public function findLike(int $id): Item
     {
-        return $this->collection->find($this, '_likes', $id);
+        return $this->likeCollection->find($this, $id);
     }
 
     public function saveLike(Item $item): bool
     {
-        return $this->collection->save($this, '_likes', $item);
+        return $this->likeCollection->save($this, $item);
     }
 }

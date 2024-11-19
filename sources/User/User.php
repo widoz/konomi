@@ -11,7 +11,7 @@ interface User
 {
     public function isLoggedIn(): bool;
 
-    public function id(): ?int;
+    public function id(): int;
 
     public function findLike(int $id): Item;
 

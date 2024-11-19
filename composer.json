@@ -20,7 +20,8 @@
 		"vimeo/psalm": "^5.23",
 		"pestphp/pest": "^2.34",
 		"brain/monkey": "^2.6",
-		"mockery/mockery": "^1.6"
+		"mockery/mockery": "^1.6",
+		"inpsyde/wp-stubs-versions": "6.7"
 	},
 	"autoload": {
 		"psr-4": {
@@ -49,10 +50,27 @@
 			"pestphp/pest-plugin": true
 		}
 	},
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://raw.githubusercontent.com/inpsyde/wp-stubs/main",
+			"only": [
+				"inpsyde/wp-stubs-versions"
+			]
+		}
+	],
 	"scripts": {
 		"cs": "@php ./vendor/bin/phpcs",
 		"cs:fix": "@php ./vendor/bin/phpcbf",
-		"psalm": "@php ./vendor/bin/psalm",
-		"test": "@php ./vendor/bin/pest"
+		"analysis": "@php ./vendor/bin/psalm --show-info=false --output-format=compact",
+		"analysis:ci": "@php ./vendor/bin/psalm --show-info=false --output-format=github",
+		"test:unit": "@php ./vendor/bin/pest --testsuite=unit",
+		"test:integration": "@php ./vendor/bin/pest --testsuite=integration",
+		"qa": [
+			"@cs",
+			"@analysis",
+			"@test:unit",
+			"@test:integration"
+		]
 	}
 }

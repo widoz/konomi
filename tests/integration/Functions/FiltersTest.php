@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Tests\Integration\Functions;
 
-use Widoz\Wp\Konomi\Tests;
-
 use function Widoz\Wp\Konomi\Functions\add_single_conditional_filter;
 use function Widoz\Wp\Konomi\Functions\add_action_on_module_import;
 
 beforeAll(function (): void {
-    Tests\setUpHooks();
+    setUpHooks();
 });
 
 describe('Add Single Conditional Filter', function (): void {

@@ -29,22 +29,21 @@ class Module implements ServiceModule, ExecutableModule
 
     public function services(): array
     {
-        return [
-            'konomi.api-fetch.script-enqueue-filter' => static fn () => ScriptEnqueueFilter::new(),
-        ];
+        return [];
     }
 
     public function run(ContainerInterface $container): bool
     {
-        add_action('wp_enqueue_scripts', function () use ($container): void {
+        add_action('wp_enqueue_scripts', function (): void {
             $moduleLocationPath = 'sources/ApiFetch/client/build-module';
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
-            $baseDir = untrailingslashit($this->appProperties->basePath() ?? '');
+            $baseDir = untrailingslashit($this->appProperties->basePath());
 
+            /** @psalm-suppress UnresolvableInclude */
             $configuration = (array) (include "{$baseDir}/{$moduleLocationPath}/konomi-api-fetch.asset.php");
 
-            $dependencies = $configuration['dependencies'] ?? [];
-            $version = $configuration['version'] ?? $this->appProperties->version();
+            $dependencies = (array) ($configuration['dependencies'] ?? null);
+            $version = (string) ($configuration['version'] ?? $this->appProperties->version());
 
             wp_register_script_module(
                 '@konomi/api-fetch',

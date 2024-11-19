@@ -9,65 +9,88 @@ namespace Widoz\Wp\Konomi\User;
  */
 class Collection
 {
+    /**
+     * @var array<Item>|null
+     */
     private static array|null $cache = null;
 
-    public static function new(Storage $storage, ItemFactory $itemFactory): Collection
+    public static function new(string $key, Storage $storage, ItemFactory $itemFactory): Collection
     {
-        return new self($storage, $itemFactory);
+        return new self($key, $storage, $itemFactory);
     }
 
     final private function __construct(
+        readonly private string $key,
         readonly private Storage $storage,
         readonly private ItemFactory $itemFactory
     ) {
     }
 
-    public function find(CurrentUser $user, string $key, int $id): Item
+    public function find(User $user, int $id): Item
     {
-        self::$cache === null and self::$cache = $this->items($user, $key);
+        self::$cache === null and self::$cache = $this->items($user);
         $item = self::$cache[$id] ?? NullItem::new();
 
-        do_action('konomi.user.collection.find', $item, $user, $key, $id);
+        do_action('konomi.user.collection.find', $item, $user, $this->key, $id);
 
         return $item;
     }
 
-    public function save(CurrentUser $user, string $key, Item $item): bool
+    public function save(User $user, Item $item): bool
     {
-        $originalMeta = $this->storage->read($user->id(), $key) ?: [];
+        $userId = $user->id();
+
+        if ($userId <= 0) {
+            return false;
+        }
+        if (!$item->isValid()) {
+            return false;
+        }
+
+        $originalMeta = $this->storage->read($userId, $this->key) ?: [];
         $toStoreMeta = $originalMeta;
 
         unset($toStoreMeta[$item->id()]);
         if ($item->isActive()) {
-            $toStoreMeta[$item->id()] = [$item->id(), $item->type()];
+            $item->id() > 0 and $toStoreMeta[$item->id()] = [$item->id(), $item->type()];
         }
 
         if ($originalMeta === $toStoreMeta) {
             return true;
         }
 
-        do_action('konomi.user.collection.save', $item, $user, $key);
+        do_action('konomi.user.collection.save', $item, $user, $this->key);
 
-        return $this->storage->write($user->id(), $key, $toStoreMeta);
+        return $this->storage->write($userId, $this->key, $toStoreMeta);
     }
 
     /**
-     * @return array<int, Item>
+     * @return array<Item>
      */
-    private function items(CurrentUser $user, string $key): array
+    private function items(User $user): array
     {
         if (self::$cache !== null) {
             return self::$cache;
         }
 
-        /**
-         * @var $id int
-         * @var $type string
-         */
-        foreach ($this->storage->read($user->id(), $key) as [$id, $type]) {
-            self::$cache[$id] = $this->itemFactory->create($id, $type, true);
+        foreach ($this->storage->read($user->id(), $this->key) as $rawItem) {
+            if (!is_array($rawItem)) {
+                continue;
+            }
+
+            $this->cacheItem($rawItem);
         }
 
+        /** @psalm-suppress TypeDoesNotContainType */
         return self::$cache ?? [];
+    }
+
+    private function cacheItem(array $rawItem): void
+    {
+        $id = (int) ($rawItem[0] ?? null);
+        $type = (string) ($rawItem[1] ?? null);
+
+        $item = $this->itemFactory->create($id, $type, true);
+        $item->isValid() and self::$cache[$id] = $item;
     }
 }

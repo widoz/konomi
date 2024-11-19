@@ -6,9 +6,6 @@ namespace Widoz\Wp\Konomi\User;
 
 /**
  * @internal
- *
- * @psalm-type RawItem = array{0: int<1, max>, 1: string}
- * @psalm-type RawData = array<array-key, RawItem>
  */
 class Storage
 {
@@ -21,20 +18,23 @@ class Storage
     {
     }
 
-    /**
-     * @return RawData
-     */
     public function read(int $id, string $key): array
     {
+        if ($id <= 0 || $key === '') {
+            return [];
+        }
+
+        /** @var array|false|string */
         $data = get_user_meta($id, $key, true);
         return is_array($data) ? $data : [];
     }
 
-    /**
-     * @param RawData $data
-     */
     public function write(int $id, string $key, array $data): bool
     {
+        if ($id <= 0 || $key === '') {
+            return false;
+        }
+
         return (bool) update_user_meta($id, $key, $data);
     }
 }

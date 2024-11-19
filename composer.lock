@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92d0a5924c3ab43e279ca1ebf12a0ffd",
+    "content-hash": "49d8a85c42da54bfd8af69a266bc4b29",
     "packages": [
         {
             "name": "inpsyde/modularity",
@@ -1220,16 +1220,16 @@
         },
         {
             "name": "inpsyde/php-coding-standards",
-            "version": "2.0.0-beta.6",
+            "version": "2.0.0-beta.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inpsyde/php-coding-standards.git",
-                "reference": "8704dd150f7473a1a7dd354bf7dbce4418993d67"
+                "reference": "ea91b8df54c91b1f043da7a93740f8dc79948f28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inpsyde/php-coding-standards/zipball/8704dd150f7473a1a7dd354bf7dbce4418993d67",
-                "reference": "8704dd150f7473a1a7dd354bf7dbce4418993d67",
+                "url": "https://api.github.com/repos/inpsyde/php-coding-standards/zipball/ea91b8df54c91b1f043da7a93740f8dc79948f28",
+                "reference": "ea91b8df54c91b1f043da7a93740f8dc79948f28",
                 "shasum": ""
             },
             "require": {
@@ -1289,9 +1289,19 @@
             ],
             "support": {
                 "issues": "https://github.com/inpsyde/php-coding-standards/issues",
-                "source": "https://github.com/inpsyde/php-coding-standards/tree/2.0.0-beta.6"
+                "source": "https://github.com/inpsyde/php-coding-standards/tree/2.0.0-beta.7"
             },
-            "time": "2024-09-09T13:54:08+00:00"
+            "time": "2024-11-15T09:44:52+00:00"
+        },
+        {
+            "name": "inpsyde/wp-stubs-versions",
+            "version": "6.7",
+            "dist": {
+                "type": "file",
+                "url": "https://raw.githubusercontent.com/inpsyde/wp-stubs/ae8d49924edc85c513fc6128c056f98ef42e0c89/stubs/6.7.php",
+                "reference": "ae8d49924edc85c513fc6128c056f98ef42e0c89"
+            },
+            "type": "library"
         },
         {
             "name": "jean85/pretty-package-versions",
