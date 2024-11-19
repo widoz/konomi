@@ -35,6 +35,7 @@ class Module implements ServiceModule, ExecutableModule
             'konomi.post.like.collection' => static fn (
                 ContainerInterface $container
             ) => Collection::new(
+                '_konomi_likes',
                 $container->get('konomi.post.storage'),
                 $container->get('konomi.user.item.factory')
             ),

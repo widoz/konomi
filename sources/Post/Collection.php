@@ -13,12 +13,17 @@ use Widoz\Wp\Konomi\User;
  */
 class Collection
 {
-    public static function new(Storage $storage, User\ItemFactory $itemFactory): Collection
-    {
-        return new self($storage, $itemFactory);
+    public static function new(
+        string $key,
+        Storage $storage,
+        User\ItemFactory $itemFactory
+    ): Collection {
+
+        return new self($key, $storage, $itemFactory);
     }
 
     final private function __construct(
+        readonly private string $key,
         readonly private Storage $storage,
         readonly private User\ItemFactory $itemFactory,
     ) {
@@ -26,7 +31,7 @@ class Collection
 
     public function find(int $id): array
     {
-        $data = $this->storage->read($id);
+        $data = $this->storage->read($id, $this->key);
         $collector = [];
 
         foreach ($data as $userId => $rawItems) {
@@ -67,7 +72,7 @@ class Collection
         }
 
         $postId = $item->id();
-        $storedData = $this->storage->read($postId);
+        $storedData = $this->storage->read($postId, $this->key);
         $userData = $storedData[$user->id()] ?? [];
 
         if (!is_array($userData)) {
@@ -76,7 +81,7 @@ class Collection
 
         if (self::has($item, $userData)) {
             $storedData[$user->id()] = $this->removeItem($item, $userData);
-            return $this->storage->write($postId, $storedData);
+            return $this->storage->write($postId, $this->key, $storedData);
         }
 
         $storedData[$user->id()] = [
@@ -85,7 +90,7 @@ class Collection
             [$item->id(), $item->type()],
         ];
 
-        return $this->storage->write($postId, $storedData);
+        return $this->storage->write($postId, $this->key, $storedData);
     }
 
     private function removeItem(User\Item $item, array $userData): array

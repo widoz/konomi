@@ -9,8 +9,6 @@ namespace Widoz\Wp\Konomi\Post;
  */
 class Storage
 {
-    private const KEY = '_konomi_likes';
-
     public static function new(): Storage
     {
         return new self();
@@ -20,23 +18,23 @@ class Storage
     {
     }
 
-    public function read(int $id): array
+    public function read(int $id, string $key): array
     {
-        if ($id <= 0) {
+        if ($id <= 0 || $key === '') {
             return [];
         }
 
         /** @var array|false|string $data */
-        $data = get_post_meta($id, self::KEY, true);
+        $data = get_post_meta($id, $key, true);
         return is_array($data) ? $data : [];
     }
 
-    public function write(int $id, array $data): bool
+    public function write(int $id, string $key, array $data): bool
     {
-        if ($id <= 0) {
+        if ($id <= 0 || $key === '') {
             return false;
         }
 
-        return (bool) update_post_meta($id, self::KEY, $data);
+        return (bool) update_post_meta($id, $key, $data);
     }
 }
