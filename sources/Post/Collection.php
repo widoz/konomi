@@ -35,18 +35,11 @@ class Collection
 
     public function find(int $entityId): array
     {
-        $data = $this->storage->read($entityId, $this->key);
-        $collector = [];
-
-        foreach ($data as $userId => $rawItems) {
-            if (!is_array($rawItems)) {
-                continue;
-            }
-
-            $collector[$userId] = $this->unserialize($rawItems);
-        }
-
-        return $collector;
+        $data = $this->read($entityId);
+        return array_map(
+            fn (array $rawItems): array => $this->unserialize($rawItems),
+            $data
+        );
     }
 
     /**
@@ -58,29 +51,34 @@ class Collection
             return false;
         }
 
-        $postId = $item->id();
-        $storedData = $this->storage->read($postId, $this->key);
+        $entityId = $item->id();
+        $data = $this->read($entityId);
+        $data[$user->id()] ??= [];
 
-        $this->ensureDataStructure($storedData, $user);
-
-        if (self::has($item, $storedData, $user)) {
-            self::removeItem($item, $storedData, $user);
-            return $this->storage->write($postId, $this->key, $storedData);
+        if (self::has($item, $data, $user)) {
+            self::removeItem($item, $data, $user);
+            return $this->storage->write($entityId, $this->key, $data);
         }
 
-        self::addItem($item, $storedData, $user);
-        return $this->storage->write($postId, $this->key, $storedData);
+        self::addItem($item, $data, $user);
+        return $this->storage->write($entityId, $this->key, $data);
+    }
+
+    /**
+     * @return StoredData
+     */
+    private function read(int $entityId): array
+    {
+        $storedData = $this->storage->read($entityId, $this->key);
+        $this->ensureDataStructure($storedData);
+        return $storedData;
     }
 
     /**
      * @psalm-assert StoredData $storedData
      */
-    private function ensureDataStructure(array &$data, User\User $user): void
+    private function ensureDataStructure(array &$data): void
     {
-        if (!isset($data[$user->id()])) {
-            $data[$user->id()] = [];
-        }
-
         foreach ($data as $userId => $rawItems) {
             if (!is_array($rawItems)) {
                 unset($data[$userId]);
@@ -90,6 +88,7 @@ class Collection
             // Ensure each item in the array has correct structure
             $data[$userId] = array_filter(
                 $rawItems,
+                // phpcs:ignore Inpsyde.CodeQuality.ArgumentTypeDeclaration.NoArgumentType
                 static fn ($item): bool => is_array($item)
                     && count($item) === 2
                     && isset($item[0], $item[1])
