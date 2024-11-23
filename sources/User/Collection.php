@@ -47,21 +47,22 @@ class Collection
             return false;
         }
 
-        $originalMeta = $this->storage->read($userId, $this->key) ?: [];
-        $toStoreMeta = $originalMeta;
+        /** @var array<int, array{0: int, 1: string}> $storedData */
+        $storedData = $this->storage->read($userId, $this->key) ?: [];
+        $toStoreData = $storedData;
 
-        unset($toStoreMeta[$item->id()]);
+        unset($toStoreData[$item->id()]);
         if ($item->isActive()) {
-            $item->id() > 0 and $toStoreMeta[$item->id()] = [$item->id(), $item->type()];
+            $item->id() > 0 and $toStoreData[$item->id()] = [$item->id(), $item->type()];
         }
 
-        if ($originalMeta === $toStoreMeta) {
+        if ($storedData === $toStoreData) {
             return true;
         }
 
         do_action('konomi.user.collection.save', $item, $user, $this->key);
 
-        return $this->storage->write($userId, $this->key, $toStoreMeta);
+        return $this->storage->write($userId, $this->key, $toStoreData);
     }
 
     /**

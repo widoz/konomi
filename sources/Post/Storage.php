@@ -6,6 +6,7 @@ namespace Widoz\Wp\Konomi\Post;
 
 /**
  * @internal
+ * TODO Convert this into an Interface
  */
 class Storage
 {
