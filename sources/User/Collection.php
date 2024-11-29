@@ -6,30 +6,31 @@ namespace Widoz\Wp\Konomi\User;
 
 /**
  * @internal
+ * @psalm-type RawItem = array{0: int, 1: string}
  */
 class Collection
 {
-    /**
-     * @var array<Item>|null
-     */
-    private static array|null $cache = null;
-
-    public static function new(string $key, Storage $storage, ItemFactory $itemFactory): Collection
-    {
-        return new self($key, $storage, $itemFactory);
+    public static function new(
+        string $key,
+        Storage $storage,
+        ItemFactory $itemFactory,
+        ItemCache $cache
+    ): Collection {
+        return new self($key, $storage, $itemFactory, $cache);
     }
 
     final private function __construct(
         readonly private string $key,
         readonly private Storage $storage,
-        readonly private ItemFactory $itemFactory
+        readonly private ItemFactory $itemFactory,
+        readonly private ItemCache $cache
     ) {
     }
 
     public function find(User $user, int $id): Item
     {
-        self::$cache === null and self::$cache = $this->items($user);
-        $item = self::$cache[$id] ?? NullItem::new();
+        $this->loadItems($user);
+        $item = $this->cache->get($id);
 
         do_action('konomi.user.collection.find', $item, $user, $this->key, $id);
 
@@ -38,43 +39,80 @@ class Collection
 
     public function save(User $user, Item $item): bool
     {
-        $userId = $user->id();
-
-        if ($userId <= 0) {
-            return false;
-        }
-        if (!$item->isValid()) {
+        if (!$this->canSave($user, $item)) {
             return false;
         }
 
-        /** @var array<int, array{0: int, 1: string}> $storedData */
-        $storedData = $this->storage->read($userId, $this->key) ?: [];
-        $toStoreData = $storedData;
+        $data = $this->read($user->id());
+        $toStoreData = $this->prepareDataToStore($data, $item);
 
-        unset($toStoreData[$item->id()]);
-        if ($item->isActive()) {
-            $item->id() > 0 and $toStoreData[$item->id()] = [$item->id(), $item->type()];
-        }
-
-        if ($storedData === $toStoreData) {
+        if ($data === $toStoreData) {
             return true;
         }
 
         do_action('konomi.user.collection.save', $item, $user, $this->key);
 
-        return $this->storage->write($userId, $this->key, $toStoreData);
+        return $this->storage->write($user->id(), $this->key, $toStoreData);
+    }
+
+    /**
+     * @return array<int, RawItem>
+     */
+    private function read(int $userId): array
+    {
+        $storedData = $this->storage->read($userId, $this->key) ?: [];
+        $this->ensureDataStructure($storedData);
+        return $storedData;
+    }
+
+    private function canSave(User $user, Item $item): bool
+    {
+        return $user->id() > 0 && $item->isValid();
+    }
+
+    /**
+     * @param array<int, RawItem> $data
+     * @return array<int, RawItem>
+     */
+    private function prepareDataToStore(array $data, Item $item): array
+    {
+        $toStoreData = $data;
+        unset($toStoreData[$item->id()]);
+
+        if ($item->isActive() && $item->id() > 0) {
+            $toStoreData[$item->id()] = [$item->id(), $item->type()];
+        }
+
+        return $toStoreData;
+    }
+
+    /**
+     * @psalm-assert array<int, RawItem> $data
+     */
+    private function ensureDataStructure(array &$data): void
+    {
+        foreach ($data as $id => $item) {
+            if (!is_array($item)
+                || count($item) !== 2
+                || !isset($item[0], $item[1])
+                || !is_int($item[0])
+                || !is_string($item[1])
+            ) {
+                unset($data[$id]);
+            }
+        }
     }
 
     /**
      * @return array<Item>
      */
-    private function items(User $user): array
+    private function loadItems(User $user): array
     {
-        if (self::$cache !== null) {
-            return self::$cache;
+        if ($this->cache->all()) {
+            return $this->cache->all();
         }
 
-        foreach ($this->storage->read($user->id(), $this->key) as $rawItem) {
+        foreach ($this->read($user->id()) as $rawItem) {
             if (!is_array($rawItem)) {
                 continue;
             }
@@ -82,8 +120,7 @@ class Collection
             $this->cacheItem($rawItem);
         }
 
-        /** @psalm-suppress TypeDoesNotContainType */
-        return self::$cache ?? [];
+        return $this->cache->all();
     }
 
     private function cacheItem(array $rawItem): void
@@ -92,6 +129,6 @@ class Collection
         $type = (string) ($rawItem[1] ?? null);
 
         $item = $this->itemFactory->create($id, $type, true);
-        $item->isValid() and self::$cache[$id] = $item;
+        $this->cache->set($id, $item);
     }
 }

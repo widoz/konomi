@@ -22,6 +22,7 @@ namespace PHPSTORM_META {
                 'konomi.user.item.factory' => \Widoz\Wp\Konomi\User\ItemFactory::class,
                 'konomi.user.like.collection' => \Widoz\Wp\Konomi\User\Collection::class,
                 'konomi.user.storage' => \Widoz\Wp\Konomi\User\Storage::class,
+                'konomi.user.item.cache' => \Widoz\Wp\Konomi\User\ItemCache::class,
 
                 'konomi.post' => \Widoz\Wp\Konomi\Post\Post::class,
                 'konomi.post.like.collection' => \Widoz\Wp\Konomi\Post\Collection::class,

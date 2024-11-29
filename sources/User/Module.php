@@ -33,12 +33,14 @@ class Module implements ServiceModule, ExecutableModule
             'konomi.user.storage' => static fn () => Storage::new(),
 
             'konomi.user.item.factory' => static fn () => ItemFactory::new(),
+            'konomi.user.item.cache' => static fn () => ItemCache::new(),
             'konomi.user.like.collection' => static fn (
                 ContainerInterface $container
             ) => Collection::new(
                 '_likes',
                 $container->get('konomi.user.storage'),
-                $container->get('konomi.user.item.factory')
+                $container->get('konomi.user.item.factory'),
+                $container->get('konomi.user.item.cache')
             ),
         ];
     }
