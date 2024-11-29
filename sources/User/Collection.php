@@ -7,6 +7,7 @@ namespace Widoz\Wp\Konomi\User;
 /**
  * @internal
  * @psalm-type RawItem = array{0: int, 1: string}
+ * TODO This is a Repository pattern, we should rename it
  */
 class Collection
 {
@@ -16,6 +17,7 @@ class Collection
         ItemFactory $itemFactory,
         ItemCache $cache
     ): Collection {
+
         return new self($key, $storage, $itemFactory, $cache);
     }
 
@@ -43,7 +45,8 @@ class Collection
             return false;
         }
 
-        $data = $this->read($user->id());
+        $this->loadItems($user);
+        $data = $this->cache->all();
         $toStoreData = $this->prepareDataToStore($data, $item);
 
         if ($data === $toStoreData) {
@@ -53,16 +56,6 @@ class Collection
         do_action('konomi.user.collection.save', $item, $user, $this->key);
 
         return $this->storage->write($user->id(), $this->key, $toStoreData);
-    }
-
-    /**
-     * @return array<int, RawItem>
-     */
-    private function read(int $userId): array
-    {
-        $storedData = $this->storage->read($userId, $this->key) ?: [];
-        $this->ensureDataStructure($storedData);
-        return $storedData;
     }
 
     private function canSave(User $user, Item $item): bool
@@ -77,30 +70,15 @@ class Collection
     private function prepareDataToStore(array $data, Item $item): array
     {
         $toStoreData = $data;
-        unset($toStoreData[$item->id()]);
 
-        if ($item->isActive() && $item->id() > 0) {
-            $toStoreData[$item->id()] = [$item->id(), $item->type()];
+        if (!$item->isActive()) {
+            unset($toStoreData[$item->id()]);
+            return $toStoreData;
         }
+
+        $toStoreData[$item->id()] = [$item->id(), $item->type()];
 
         return $toStoreData;
-    }
-
-    /**
-     * @psalm-assert array<int, RawItem> $data
-     */
-    private function ensureDataStructure(array &$data): void
-    {
-        foreach ($data as $id => $item) {
-            if (!is_array($item)
-                || count($item) !== 2
-                || !isset($item[0], $item[1])
-                || !is_int($item[0])
-                || !is_string($item[1])
-            ) {
-                unset($data[$id]);
-            }
-        }
     }
 
     /**
@@ -112,23 +90,42 @@ class Collection
             return $this->cache->all();
         }
 
-        foreach ($this->read($user->id()) as $rawItem) {
-            if (!is_array($rawItem)) {
-                continue;
-            }
-
-            $this->cacheItem($rawItem);
+        foreach ($this->read($user->id()) as [$id, $type]) {
+            $item = $this->itemFactory->create($id, $type, true);
+            // TODO Cache need a Group for the user, we have to serve multiple users with
+            //      a single service.
+            $item->isValid() and $this->cache->set($id, $item);
         }
 
         return $this->cache->all();
     }
 
-    private function cacheItem(array $rawItem): void
+    /**
+     * @param int $userId
+     * @return \Generator
+     */
+    private function read(int $userId): \Generator
     {
-        $id = (int) ($rawItem[0] ?? null);
-        $type = (string) ($rawItem[1] ?? null);
+        $storedData = $this->storage->read($userId, $this->key) ?: [];
+        yield from $this->ensureDataStructure($storedData);
+    }
 
-        $item = $this->itemFactory->create($id, $type, true);
-        $this->cache->set($id, $item);
+    /**
+     * @psalm-assert array<int, RawItem> $data
+     */
+    private function ensureDataStructure(array $data): \Generator
+    {
+        foreach ($data as $id => $item) {
+            if (!is_array($item)
+                || count($item) !== 2
+                || !isset($item[0], $item[1])
+                || !is_int($item[0])
+                || !is_string($item[1])
+            ) {
+                continue;
+            }
+
+            yield $id => $item;
+        }
     }
 }
