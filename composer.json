@@ -21,7 +21,8 @@
 		"pestphp/pest": "^2.34",
 		"brain/monkey": "^2.6",
 		"mockery/mockery": "^1.6",
-		"inpsyde/wp-stubs-versions": "6.7"
+		"inpsyde/wp-stubs-versions": "6.7",
+		"phpmetrics/phpmetrics": "^2.8"
 	},
 	"autoload": {
 		"psr-4": {
