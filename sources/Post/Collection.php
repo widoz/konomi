@@ -51,17 +51,27 @@ class Collection
             return false;
         }
 
-        $entityId = $item->id();
-        $data = $this->read($entityId);
-        $data[$user->id()] ??= [];
+        $data = $this->read($item->id());
+        $toStoreData = $this->prepareDataToStore($data, $item, $user);
 
-        if (self::has($item, $data, $user)) {
-            self::removeItem($item, $data, $user);
-            return $this->storage->write($entityId, $this->key, $data);
+        if ($data === $toStoreData) {
+            return true;
         }
 
-        self::addItem($item, $data, $user);
-        return $this->storage->write($entityId, $this->key, $data);
+        do_action('konomi.post.collection.save', $item, $user, $this->key);
+
+        return $this->storage->write($item->id(), $this->key, $toStoreData);
+    }
+
+    private function prepareDataToStore(array $data, User\Item $item, User\User $user): array
+    {
+        $data[$user->id()] ??= [];
+
+        self::has($item, $data, $user)
+            ? self::removeItem($item, $data, $user)
+            : self::addItem($item, $data, $user);
+
+        return $data;
     }
 
     /**
@@ -124,7 +134,6 @@ class Collection
     {
         $data[$user->id()] = [
             ...$data[$user->id()],
-            // TODO Let the Item to serialize the data.
             [$item->id(), $item->type()],
         ];
     }
@@ -140,7 +149,6 @@ class Collection
             $id = (int) ($rawItem[0] ?? null);
             $type = (string) ($rawItem[1] ?? null);
 
-            // TODO If the item serialize it self, it also unserialize it self.
             $items[] = $this->itemFactory->create($id, $type, true);
         }
         return $items;
