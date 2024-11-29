@@ -7,16 +7,15 @@ namespace Widoz\Wp\Konomi\User;
 /**
  * @internal
  * @psalm-type RawItem = array{0: int, 1: string}
- * TODO This is a Repository pattern, we should rename it
  */
-class Collection
+class Repository
 {
     public static function new(
         string $key,
         Storage $storage,
         ItemFactory $itemFactory,
         ItemCache $cache
-    ): Collection {
+    ): Repository {
 
         return new self($key, $storage, $itemFactory, $cache);
     }

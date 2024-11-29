@@ -20,7 +20,7 @@ namespace PHPSTORM_META {
 
                 'konomi.user.current' => \Widoz\Wp\Konomi\User\CurrentUser::class,
                 'konomi.user.item.factory' => \Widoz\Wp\Konomi\User\ItemFactory::class,
-                'konomi.user.like.collection' => \Widoz\Wp\Konomi\User\Collection::class,
+                'konomi.user.like.collection' => \Widoz\Wp\Konomi\User\Repository::class,
                 'konomi.user.storage' => \Widoz\Wp\Konomi\User\Storage::class,
                 'konomi.user.item.cache' => \Widoz\Wp\Konomi\User\ItemCache::class,
 

@@ -9,14 +9,14 @@ namespace Widoz\Wp\Konomi\User;
  */
 class CurrentUser implements User
 {
-    public static function new(Collection $likeCollection): CurrentUser
+    public static function new(Repository $likeRepository): CurrentUser
     {
-        return new self(wp_get_current_user(), $likeCollection);
+        return new self(wp_get_current_user(), $likeRepository);
     }
 
     final private function __construct(
         readonly private ?\WP_User $user,
-        readonly private Collection $likeCollection
+        readonly private Repository $likeRepository
     ) {
     }
 
@@ -32,11 +32,11 @@ class CurrentUser implements User
 
     public function findLike(int $id): Item
     {
-        return $this->likeCollection->find($this, $id);
+        return $this->likeRepository->find($this, $id);
     }
 
     public function saveLike(Item $item): bool
     {
-        return $this->likeCollection->save($this, $item);
+        return $this->likeRepository->save($this, $item);
     }
 }
