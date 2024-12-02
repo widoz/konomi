@@ -45,7 +45,7 @@ class Module implements ServiceModule, ExecutableModule
     public function run(ContainerInterface $container): bool
     {
         add_action(
-            'konomi.user.collection.save',
+            'konomi.user.repository.save',
             static fn (User\Item $item, User\User $user) => $container
                 ->get('konomi.post.like.collection')
                 ->save($item, $user),

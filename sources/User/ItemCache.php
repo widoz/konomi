@@ -9,44 +9,69 @@ namespace Widoz\Wp\Konomi\User;
  */
 final class ItemCache
 {
-    /**
-     * @var array<Item>|null
-     */
-    private array|null $items = null;
-
     public static function new(): self
     {
-        return new self();
+        return new self(new \WeakMap());
     }
 
-    final private function __construct()
-    {
+    /**
+     * @param \WeakMap<User, array<Item>> $items
+     */
+    final private function __construct(
+        private \WeakMap $items
+    ) {
     }
 
-    public function has(int $id): bool
+    public function hasGroup(User $user): bool
     {
-        return isset($this->items[$id]);
+        return $this->items->offsetExists($user);
     }
 
-    public function get(int $id): Item
+    public function has(User $user, Item $item): bool
     {
-        return $this->items[$id] ?? NullItem::new();
-    }
-
-    public function set(int $id, Item $item): void
-    {
-        if ($item->isValid()) {
-            $this->items[$id] = $item;
+        if (!$this->hasGroup($user)) {
+            return false;
         }
+
+        return isset($this->items->offsetGet($user)[$item->id()]);
     }
 
-    public function all(): array
+    public function get(User $user, int $id): Item
     {
-        return $this->items ?? [];
+        if (!$this->hasGroup($user)) {
+            return NullItem::new();
+        }
+
+        return $this->items->offsetGet($user)[$id] ?? NullItem::new();
     }
 
-    public function clear(): void
+    public function set(User $user, Item $item): void
     {
-        $this->items = null;
+        if (!$this->hasGroup($user)) {
+            $this->items->offsetSet($user, []);
+        }
+
+        $collection = $this->items->offsetGet($user);
+        $collection[$item->id()] = $item;
+
+        $item->isValid() and $this->items->offsetSet($user, $collection);
+    }
+
+    public function unset(User $user, Item $item): void
+    {
+        if (!$this->has($user, $item)) {
+            return;
+        }
+
+        $collection = $this->items->offsetGet($user);
+        unset($collection[$item->id()]);
+        $this->items->offsetSet($user, $collection);
+    }
+
+    public function all(User $user): array
+    {
+        return $this->hasGroup($user)
+            ? $this->items->offsetGet($user)
+            : [];
     }
 }

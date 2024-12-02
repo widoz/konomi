@@ -31,9 +31,9 @@ class Repository
     public function find(User $user, int $id): Item
     {
         $this->loadItems($user);
-        $item = $this->cache->get($id);
+        $item = $this->cache->get($user, $id);
 
-        do_action('konomi.user.collection.find', $item, $user, $this->key, $id);
+        do_action('konomi.user.repository.find', $item, $user, $this->key, $id);
 
         return $item;
     }
@@ -45,16 +45,11 @@ class Repository
         }
 
         $this->loadItems($user);
-        $data = $this->cache->all();
-        $toStoreData = $this->prepareDataToStore($data, $item);
+        $dataToStore = $this->prepareDataToStore($user, $item);
 
-        if ($data === $toStoreData) {
-            return true;
-        }
+        do_action('konomi.user.repository.save', $item, $user, $this->key);
 
-        do_action('konomi.user.collection.save', $item, $user, $this->key);
-
-        return $this->storage->write($user->id(), $this->key, $toStoreData);
+        return $this->storage->write($user->id(), $this->key, $dataToStore);
     }
 
     private function canSave(User $user, Item $item): bool
@@ -66,37 +61,38 @@ class Repository
      * @param array<int, RawItem> $data
      * @return array<int, RawItem>
      */
-    private function prepareDataToStore(array $data, Item $item): array
+    private function prepareDataToStore(User $user, Item $item): array
     {
-        $toStoreData = $data;
-
         if (!$item->isActive()) {
-            unset($toStoreData[$item->id()]);
-            return $toStoreData;
+            $this->cache->unset($user, $item);
+            return $this->serializeData($user);
         }
 
-        $toStoreData[$item->id()] = [$item->id(), $item->type()];
+        $this->cache->set($user, $item);
+        return $this->serializeData($user);
+    }
 
-        return $toStoreData;
+    private function serializeData(User $user): array
+    {
+        return \array_map(
+            static fn (Item $item) => [$item->id(), $item->type()],
+            $this->cache->all($user)
+        );
     }
 
     /**
      * @return array<Item>
      */
-    private function loadItems(User $user): array
+    private function loadItems(User $user): void
     {
-        if ($this->cache->all()) {
-            return $this->cache->all();
+        if ($this->cache->hasGroup($user)) {
+            return;
         }
 
         foreach ($this->read($user->id()) as [$id, $type]) {
             $item = $this->itemFactory->create($id, $type, true);
-            // TODO Cache need a Group for the user, we have to serve multiple users with
-            //      a single service.
-            $item->isValid() and $this->cache->set($id, $item);
+            $item->isValid() and $this->cache->set($user, $item);
         }
-
-        return $this->cache->all();
     }
 
     /**
