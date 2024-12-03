@@ -7,7 +7,7 @@ namespace Widoz\Wp\Konomi\User;
 /**
  * @internal
  */
-final class ItemCache
+class ItemCache
 {
     public static function new(): self
     {

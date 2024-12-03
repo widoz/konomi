@@ -67,11 +67,13 @@
 		"analysis:ci": "@php ./vendor/bin/psalm --show-info=false --output-format=github",
 		"test:unit": "@php ./vendor/bin/pest --testsuite=unit",
 		"test:integration": "@php ./vendor/bin/pest --testsuite=integration",
+		"test:functional": "@php ./vendor/bin/pest --testsuite=functional",
 		"qa": [
 			"@cs",
 			"@analysis",
 			"@test:unit",
-			"@test:integration"
+			"@test:integration",
+			"@test:functional"
 		]
 	}
 }

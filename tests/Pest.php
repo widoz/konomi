@@ -11,4 +11,4 @@ uses()
     ->afterAll(static function (): void {
         \Brain\Monkey\tearDown();
     })
-    ->in('unit');
+    ->in('unit', 'integration');

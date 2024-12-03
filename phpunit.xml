@@ -19,4 +19,10 @@
 			<file>./konomi.php</file>
 		</include>
 	</source>
+
+	<coverage>
+        <report>
+            <clover outputFile="coverage.xml"/>
+        </report>
+    </coverage>
 </phpunit>

@@ -3,6 +3,7 @@
 /sources/**/dist/
 /sources/**/build-*/
 /coverage
+/coverage.xml
 /vendor/
 /node_modules/
 /php-metrics
