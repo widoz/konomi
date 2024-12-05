@@ -29,12 +29,12 @@ class Module implements ServiceModule, ExecutableModule
     {
         return [
             'konomi.post' => static fn (ContainerInterface $container) => Post::new(
-                $container->get('konomi.post.like.collection')
+                $container->get('konomi.post.like.repository')
             ),
             'konomi.post.storage' => static fn () => Storage::new(),
-            'konomi.post.like.collection' => static fn (
+            'konomi.post.like.repository' => static fn (
                 ContainerInterface $container
-            ) => Collection::new(
+            ) => Repository::new(
                 '_konomi_likes',
                 $container->get('konomi.post.storage'),
                 $container->get('konomi.user.item.factory')
@@ -47,7 +47,7 @@ class Module implements ServiceModule, ExecutableModule
         add_action(
             'konomi.user.repository.save',
             static fn (User\Item $item, User\User $user) => $container
-                ->get('konomi.post.like.collection')
+                ->get('konomi.post.like.repository')
                 ->save($item, $user),
             10,
             2

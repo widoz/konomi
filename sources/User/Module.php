@@ -28,13 +28,13 @@ class Module implements ServiceModule, ExecutableModule
     {
         return [
             'konomi.user.current' => static fn (ContainerInterface $container) => CurrentUser::new(
-                $container->get('konomi.user.like.collection')
+                $container->get('konomi.user.like.repository')
             ),
             'konomi.user.storage' => static fn () => Storage::new(),
 
             'konomi.user.item.factory' => static fn () => ItemFactory::new(),
             'konomi.user.item.cache' => static fn () => ItemCache::new(),
-            'konomi.user.like.collection' => static fn (
+            'konomi.user.like.repository' => static fn (
                 ContainerInterface $container
             ) => Repository::new(
                 '_likes',

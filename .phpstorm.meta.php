@@ -20,12 +20,12 @@ namespace PHPSTORM_META {
 
                 'konomi.user.current' => \Widoz\Wp\Konomi\User\CurrentUser::class,
                 'konomi.user.item.factory' => \Widoz\Wp\Konomi\User\ItemFactory::class,
-                'konomi.user.like.collection' => \Widoz\Wp\Konomi\User\Repository::class,
+                'konomi.user.like.repository' => \Widoz\Wp\Konomi\User\Repository::class,
                 'konomi.user.storage' => \Widoz\Wp\Konomi\User\Storage::class,
                 'konomi.user.item.cache' => \Widoz\Wp\Konomi\User\ItemCache::class,
 
                 'konomi.post' => \Widoz\Wp\Konomi\Post\Post::class,
-                'konomi.post.like.collection' => \Widoz\Wp\Konomi\Post\Collection::class,
+                'konomi.post.like.repository' => \Widoz\Wp\Konomi\Post\Repository::class,
                 'konomi.post.storage' => \Widoz\Wp\Konomi\Post\Storage::class,
 
                 'konomi.rest.like.add-schema' => \Widoz\Wp\Konomi\Rest\Like\AddSchema::class,

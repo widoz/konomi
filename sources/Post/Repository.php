@@ -15,13 +15,13 @@ use Widoz\Wp\Konomi\User;
  *
  * TODO This Collection require caching the data from the Storage
  */
-class Collection
+class Repository
 {
     public static function new(
         string $key,
         Storage $storage,
         User\ItemFactory $itemFactory
-    ): Collection {
+    ): Repository {
 
         return new self($key, $storage, $itemFactory);
     }

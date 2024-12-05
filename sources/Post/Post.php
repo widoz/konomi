@@ -10,19 +10,19 @@ namespace Widoz\Wp\Konomi\Post;
  */
 class Post
 {
-    public static function new(Collection $collection): Post
+    public static function new(Repository $repository): Post
     {
-        return new self($collection);
+        return new self($repository);
     }
 
-    final private function __construct(readonly private Collection $collection)
+    final private function __construct(readonly private Repository $repository)
     {
     }
 
     public function countForPost(int $id): int
     {
         return array_reduce(
-            $this->collection->find($id),
+            $this->repository->find($id),
             static fn (int $counter, array $items) => $counter + count($items),
             0
         );
