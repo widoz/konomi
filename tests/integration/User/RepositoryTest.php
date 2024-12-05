@@ -12,14 +12,14 @@ beforeAll(function () {
     Functions\when('wp_get_current_user')->justReturn($wpUser);
 });
 
-beforeEach(function() {
-    $this->updateStubCallCount = function(string $functionName) {
+beforeEach(function () {
+    $this->updateStubCallCount = function (string $functionName) {
         $this->stubsCounter[$functionName] = ++$this->stubsCounter[$functionName];
     };
 
     $this->stubsCounter = [
         'get_user_meta' => 0,
-        'update_user_meta' => 0
+        'update_user_meta' => 0,
     ];
 
     $this->userMetaStorage = [
@@ -44,14 +44,14 @@ beforeEach(function() {
     ];
 
     Functions\when('get_user_meta')->alias(
-        function(int $userId, string $key) {
+        function (int $userId, string $key) {
             ($this->updateStubCallCount)('get_user_meta');
             return $this->userMetaStorage[$userId][$key] ?? [];
         }
     );
 
     Functions\when('update_user_meta')->alias(
-        function(int $userId, string $key, array $data) {
+        function (int $userId, string $key, array $data) {
             ($this->updateStubCallCount)('update_user_meta');
             $this->userMetaStorage[$userId][$key] = $data;
             return true;
@@ -66,8 +66,8 @@ beforeEach(function() {
     );
 });
 
-describe('Repository', function() {
-    it('find an item for the user', function() {
+describe('Repository', function () {
+    it('find an item for the user', function () {
         Actions\expectDone('konomi.user.repository.find')->once();
         $user = User\CurrentUser::new($this->repository);
         $item = $this->repository->find($user, 2);
@@ -82,13 +82,13 @@ describe('Repository', function() {
         expect($this->stubsCounter['get_user_meta'])->toBe(1);
     });
 
-    it('skip invalid stored items when loading', function() {
+    it('skip invalid stored items when loading', function () {
         $this->userMetaStorage[1]['_key'] = [
             1 => [1, 'product'],
             2 => 'invalid',
             3 => [3, 'page', 'extra'],
             4 => ['not_int', 'post'],
-            5 => [5, 123] // type must be string
+            5 => [5, 123], // type must be string
         ];
 
         $user = User\CurrentUser::new($this->repository);
@@ -99,7 +99,7 @@ describe('Repository', function() {
         expect($items->type())->toBe('product');
     });
 
-    it('cannot save an invalid item', function() {
+    it('cannot save an invalid item', function () {
         Actions\expectDone('konomi.user.repository.save')->never();
 
         $user = User\CurrentUser::new($this->repository);
@@ -111,7 +111,7 @@ describe('Repository', function() {
         expect($this->stubsCounter['update_user_meta'])->toBe(0);
     });
 
-    it('save a valid item', function() {
+    it('save a valid item', function () {
         Actions\expectDone('konomi.user.repository.save')->once();
 
         $user = User\CurrentUser::new($this->repository);
@@ -124,7 +124,7 @@ describe('Repository', function() {
         expect($this->userMetaStorage[1]['_key'][1])->toBe([1, 'product']);
     });
 
-    it('do not save inactive items', function() {
+    it('do not save inactive items', function () {
         $user = User\CurrentUser::new($this->repository);
         $inactiveItem = User\Like::new(1, 'product', false);
 

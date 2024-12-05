@@ -13,7 +13,7 @@ beforeEach(function () {
     $this->item = Mockery::mock(Item::class);
 });
 
-describe('Item Cache', function() {
+describe('Item Cache', function () {
     it('checks if user has items group', function () {
         expect($this->cache->hasGroup($this->user))->toBeFalse();
     });
@@ -62,7 +62,7 @@ describe('Item Cache', function() {
         expect($this->cache->has($this->user, $this->item))->toBeFalse();
     });
 
-    it('return null item object if the given Item ID does not exists for the user', function() {
+    it('return null item object if the given Item ID does not exists for the user', function () {
         $this->item->shouldReceive('id')->andReturn(1);
         $this->item->shouldReceive('isValid')->andReturn(true);
 

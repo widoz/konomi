@@ -111,7 +111,8 @@ class Repository
     private function ensureDataStructure(array $data): \Generator
     {
         foreach ($data as $id => $item) {
-            if (!is_array($item)
+            if (
+                !is_array($item)
                 || count($item) !== 2
                 || !isset($item[0], $item[1])
                 || !is_int($item[0])
