@@ -22,26 +22,7 @@ beforeEach(function () {
         'update_user_meta' => 0,
     ];
 
-    $this->userMetaStorage = [
-        1 => [
-            '_key' => [
-                1 => [1, 'product'],
-                2 => [2, 'page'],
-            ],
-        ],
-        2 => [
-            '_key' => [
-                100 => [100, 'product'],
-                20 => [20, 'page'],
-            ],
-        ],
-        3 => [
-            '_key' => [
-                11 => [11, 'page'],
-                2 => [2, 'post'],
-            ],
-        ],
-    ];
+    $this->userMetaStorage = includeValidUsersLikes();
 
     Functions\when('get_user_meta')->alias(
         function (int $userId, string $key) {
@@ -59,7 +40,7 @@ beforeEach(function () {
     );
 
     $this->repository = \Widoz\Wp\Konomi\User\Repository::new(
-        '_key',
+        '_likes',
         \Widoz\Wp\Konomi\User\Storage::new(),
         \Widoz\Wp\Konomi\User\ItemFactory::new(),
         \Widoz\Wp\Konomi\User\ItemCache::new()
@@ -83,7 +64,7 @@ describe('Repository', function () {
     });
 
     it('skip invalid stored items when loading', function () {
-        $this->userMetaStorage[1]['_key'] = [
+        $this->userMetaStorage[1]['_likes'] = [
             1 => [1, 'product'],
             2 => 'invalid',
             3 => [3, 'page', 'extra'],
@@ -121,21 +102,21 @@ describe('Repository', function () {
 
         expect($result)->toBeTrue();
         expect($this->stubsCounter['update_user_meta'])->toBe(1);
-        expect($this->userMetaStorage[1]['_key'][1])->toBe([1, 'product']);
+        expect($this->userMetaStorage[1]['_likes'][1])->toBe([1, 'product']);
     });
 
     it('do not save inactive items', function () {
         $user = User\CurrentUser::new($this->repository);
         $inactiveItem = User\Like::new(1, 'product', false);
 
-        expect($this->userMetaStorage[1]['_key'])->toEqual([
+        expect($this->userMetaStorage[1]['_likes'])->toEqual([
             1 => [1, 'product'],
             2 => [2, 'page'],
         ]);
 
         $this->repository->save($user, $inactiveItem);
 
-        expect($this->userMetaStorage[1]['_key'])->toEqual([
+        expect($this->userMetaStorage[1]['_likes'])->toEqual([
             2 => [2, 'page'],
         ]);
     });

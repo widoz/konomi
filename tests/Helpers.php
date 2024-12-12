@@ -46,3 +46,8 @@ function includeValidPostUserLikes(): array
 {
     return include stubsDirectory() . '/php/valid-post-user-likes.php';
 }
+
+function includeValidUsersLikes(): array
+{
+    return include stubsDirectory() . '/php/valid-users-likes.php';
+}
