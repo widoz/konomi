@@ -7,6 +7,7 @@ namespace Widoz\Wp\Konomi\Post;
 /**
  * TODO Need a Factory and align the implementation to User. The intend is to work with objects
  *      we can share among the code base reducing the amount of data we need to pass around.
+ * @api
  */
 class Post
 {
