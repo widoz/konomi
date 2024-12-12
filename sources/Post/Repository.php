@@ -89,14 +89,14 @@ class Repository
      */
     private function ensureDataStructure(array &$data): void
     {
-        foreach ($data as $userId => $rawItems) {
+        foreach ($data as $userId => &$rawItems) {
             if (!is_array($rawItems)) {
                 unset($data[$userId]);
                 continue;
             }
 
             // Ensure each item in the array has correct structure
-            $data[$userId] = array_filter(
+            $rawItems = array_filter(
                 $rawItems,
                 // phpcs:ignore Inpsyde.CodeQuality.ArgumentTypeDeclaration.NoArgumentType
                 static fn ($item): bool => is_array($item)
@@ -133,7 +133,6 @@ class Repository
     private static function addItem(User\Item $item, array &$data, User\User $user): void
     {
         $data[$user->id()] = [
-            ...$data[$user->id()],
             [$item->id(), $item->type()],
         ];
     }

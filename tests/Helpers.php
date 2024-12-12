@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 // phpcs:disable Inpsyde.CodeQuality.NoRootNamespaceFunctions.Found
 
+function stubsDirectory(): string
+{
+    return __DIR__ . '/stubs';
+}
+
 function fixturesDirectory(): string
 {
     return __DIR__ . '/fixtures/php';
@@ -31,4 +36,13 @@ if (!function_exists('wp_normalize_path')) {
     {
         return str_replace('\\', '/', $path);
     }
+}
+
+/* -------------------------------------------------------------------------------------------------
+ *  Integration Helpers
+ * ---------------------------------------------------------------------------------------------- */
+
+function includeValidPostUserLikes(): array
+{
+    return include stubsDirectory() . '/php/valid-post-user-likes.php';
 }

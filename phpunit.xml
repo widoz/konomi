@@ -18,6 +18,10 @@
 			<directory suffix=".php">./sources/</directory>
 			<file>./konomi.php</file>
 		</include>
+		<exclude>
+			<directory>./sources/**/**/build-module</directory>
+			<directory>./sources/**/**/dist</directory>
+		</exclude>
 	</source>
 
 	<coverage>
