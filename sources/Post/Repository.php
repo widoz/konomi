@@ -9,9 +9,12 @@ use Widoz\Wp\Konomi\User;
 /**
  * @internal
  *
- * @psalm-type RawItem = array{0: int, 1: string}
- * @psalm-type RawItems = array<int, RawItem>
- * @psalm-type StoredData = array<int, RawItems>
+ * @psalm-type EntityId = int
+ * @psalm-type EntityType = string
+ * @psalm-type UserId = int
+ * @psalm-type RawItem = array{0: EntityId, 1: EntityType}
+ * @psalm-type RawItems = array<UserId, RawItem>
+ * @psalm-type StoredData = array<EntityId, RawItems>
  *
  * TODO This Collection require caching the data from the Storage
  */
@@ -39,11 +42,11 @@ class Repository
      */
     public function find(int $entityId): array
     {
-        $data = $this->read($entityId);
-        return array_map(
-            fn (array $rawItems): array => $this->unserialize($rawItems),
-            $data
-        );
+        $result = [];
+        foreach ($this->read($entityId) as $userId => $rawItems) {
+            $result[$userId] = $this->unserialize($rawItems);
+        }
+        return $result;
     }
 
     /**
@@ -55,7 +58,7 @@ class Repository
             return false;
         }
 
-        $data = $this->read($item->id());
+        $data = iterator_to_array($this->read($item->id()));
         $toStoreData = $this->prepareDataToStore($data, $item, $user);
 
         if ($data === $toStoreData) {
@@ -84,40 +87,50 @@ class Repository
     /**
      * @return StoredData
      */
-    private function read(int $entityId): array
+    private function read(int $entityId): \Generator
     {
         $storedData = $this->storage->read($entityId, $this->key);
-        $this->ensureDataStructure($storedData);
-        return $storedData;
+        yield from $this->ensureDataStructure($storedData);
     }
 
     /**
      * @psalm-assert StoredData $storedData
      */
-    private function ensureDataStructure(array &$data): void
+    private function ensureDataStructure(array $data): \Generator
     {
         foreach ($data as $userId => &$rawItems) {
             if (!is_int($userId) || $userId < 1) {
-                unset($data[$userId]);
                 continue;
             }
             if (!is_array($rawItems)) {
-                unset($data[$userId]);
                 continue;
             }
 
-            // Ensure each item in the array has correct structure
             $rawItems = array_filter(
                 $rawItems,
-                // phpcs:ignore Inpsyde.CodeQuality.ArgumentTypeDeclaration.NoArgumentType
-                static fn ($item): bool => is_array($item)
-                    && count($item) === 2
-                    && isset($item[0], $item[1])
-                    && is_int($item[0])
-                    && $item[0] > 0
-                    && is_string($item[1])
-                    && $item[1] !== ''
+                [$this, 'ensureRawItemsDataStructure']
             );
+
+            if (!empty($rawItems)) {
+                yield $userId => $rawItems;
+            }
+        }
+    }
+
+    private function ensureRawItemsDataStructure(array $data): \Generator
+    {
+        foreach ($data as $id => $item) {
+            if (
+                !is_array($item)
+                || count($item) !== 2
+                || !isset($item[0], $item[1])
+                || (!is_int($item[0]) || $item[0] < 1)
+                || (!is_string($item[1]) || $item[1] === '')
+            ) {
+                continue;
+            }
+
+            yield $id => $item;
         }
     }
 

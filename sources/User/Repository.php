@@ -6,7 +6,9 @@ namespace Widoz\Wp\Konomi\User;
 
 /**
  * @internal
- * @psalm-type RawItem = array{0: int, 1: string}
+ * @psalm-type EntityId = int
+ * @psalm-type EntityType = string
+ * @psalm-type RawItem = array{0: EntityId, 1: EntityType}
  * @psalm-type RawItems = array<int, RawItem>
  */
 class Repository

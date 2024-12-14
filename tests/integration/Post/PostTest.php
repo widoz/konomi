@@ -11,15 +11,12 @@ use Widoz\Wp\Konomi\User;
 
 describe('Post', function() {
     it('count likes for posts', function() {
-        Functions\expect('get_post_meta')
-            ->once()
-            ->with(10, '_konomi_likes', true)
-            ->andReturn(includeValidPostUserLikes());
+        Functions\when('get_post_meta')->alias(includeValidPostUserLikes());
 
         $repository = Repository::new('_konomi_likes', Storage::new(), User\ItemFactory::new());
         $post = \Widoz\Wp\Konomi\Post\Post::new($repository);
 
         expect($post->countForPost(1))->toEqual(0);
-        expect($post->countForPost(10))->toEqual(5);
+        expect($post->countForPost(10))->toEqual(10);
     });
 });

@@ -42,7 +42,7 @@ if (!function_exists('wp_normalize_path')) {
  *  Integration Helpers
  * ---------------------------------------------------------------------------------------------- */
 
-function includeValidPostUserLikes(): array
+function includeValidPostUserLikes(): \Closure
 {
     return include stubsDirectory() . '/php/valid-post-user-likes.php';
 }

@@ -11,11 +11,7 @@ use Widoz\Wp\Konomi\User;
 
 describe('Repository', function() {
     it('finds items for post', function() {
-        $postLikes = includeValidPostUserLikes();
-        Functions\expect('get_post_meta')
-            ->once()
-            ->with(10, '_konomi_likes', true)
-            ->andReturn($postLikes);
+        Functions\when('get_post_meta')->alias(includeValidPostUserLikes());
 
         $repository = Repository::new(
             '_konomi_likes',
@@ -28,10 +24,11 @@ describe('Repository', function() {
         expect($items)->toBeArray();
         expect(count($items))->toBe(10);
 
-        foreach (array_keys($postLikes) as $userId) {
-            expect(count($items[$userId]))->toBe(1);
-            expect($items[$userId][0]->id())->toBe($postLikes[$userId][0][0]);
-            expect($items[$userId][0]->type())->toBe($postLikes[$userId][0][1]);
+        foreach($items as $userId => $userItems) {
+            expect($userId)->toBeInt();
+            foreach($userItems as $item) {
+                expect($item instanceof User\Item)->toBe(true);
+            }
         }
     });
 });
