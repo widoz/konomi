@@ -11,7 +11,10 @@ use Widoz\Wp\Konomi\User;
 
 describe('Post', function() {
     it('count likes for posts', function() {
-        Functions\when('get_post_meta')->alias(includeValidPostUserLikes());
+        $this->postMetaStorage = includeValidPostUserLikes();
+        [, $getter] = setupPostMetaStorage($this->postMetaStorage);
+
+        Functions\when('get_post_meta')->alias($getter);
 
         $repository = Repository::new('_konomi_likes', Storage::new(), User\ItemFactory::new());
         $post = \Widoz\Wp\Konomi\Post\Post::new($repository);

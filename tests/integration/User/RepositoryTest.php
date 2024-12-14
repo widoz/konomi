@@ -13,31 +13,12 @@ beforeAll(function () {
 });
 
 beforeEach(function () {
-    $this->updateStubCallCount = function (string $functionName) {
-        $this->stubsCounter[$functionName] = ++$this->stubsCounter[$functionName];
-    };
-
-    $this->stubsCounter = [
-        'get_user_meta' => 0,
-        'update_user_meta' => 0,
-    ];
-
     $this->userMetaStorage = includeValidUsersLikes();
+    [$stubsCounter, $getter, $setter] = setupUserMetaStorage($this->userMetaStorage);
+    $this->stubsCounter = $stubsCounter;
 
-    Functions\when('get_user_meta')->alias(
-        function (int $userId, string $key) {
-            ($this->updateStubCallCount)('get_user_meta');
-            return $this->userMetaStorage[$userId][$key] ?? [];
-        }
-    );
-
-    Functions\when('update_user_meta')->alias(
-        function (int $userId, string $key, array $data) {
-            ($this->updateStubCallCount)('update_user_meta');
-            $this->userMetaStorage[$userId][$key] = $data;
-            return true;
-        }
-    );
+    Functions\when('get_user_meta')->alias($getter);
+    Functions\when('update_user_meta')->alias($setter);
 
     $this->repository = \Widoz\Wp\Konomi\User\Repository::new(
         '_likes',
@@ -60,7 +41,7 @@ describe('Repository', function () {
         $user = User\CurrentUser::new($this->repository);
         $this->repository->find($user, 2);
         $this->repository->find($user, 2);
-        expect($this->stubsCounter['get_user_meta'])->toBe(1);
+        expect(($this->stubsCounter)()['get_user_meta'])->toBe(1);
     });
 
     it('skip invalid stored items when loading', function () {
@@ -89,7 +70,7 @@ describe('Repository', function () {
         $result = $this->repository->save($user, $invalidItem);
 
         expect($result)->toBeFalse();
-        expect($this->stubsCounter['update_user_meta'])->toBe(0);
+        expect(($this->stubsCounter)()['update_user_meta'])->toBe(0);
     });
 
     it('save a valid item', function () {
@@ -101,8 +82,8 @@ describe('Repository', function () {
         $result = $this->repository->save($user, $item);
 
         expect($result)->toBeTrue();
-        expect($this->stubsCounter['update_user_meta'])->toBe(1);
-        expect($this->userMetaStorage[1]['_likes'][0])->toBe([1, 'product']);
+        expect(($this->stubsCounter)()['update_user_meta'])->toBe(1);
+        expect($this->userMetaStorage[1]['_likes'][1])->toBe([1, 'product']);
     });
 
     it('do not save inactive items', function () {
@@ -110,14 +91,14 @@ describe('Repository', function () {
         $inactiveItem = User\Like::new(1, 'product', false);
 
         expect($this->userMetaStorage[1]['_likes'])->toEqual([
-            [1, 'product'],
-            [2, 'page'],
+            1 => [1, 'product'],
+            2 => [2, 'page'],
         ]);
 
         $this->repository->save($user, $inactiveItem);
 
         expect($this->userMetaStorage[1]['_likes'])->toEqual([
-            [2, 'page'],
+            2 => [2, 'page'],
         ]);
     });
 });

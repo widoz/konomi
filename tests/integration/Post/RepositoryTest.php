@@ -11,7 +11,11 @@ use Widoz\Wp\Konomi\User;
 
 describe('Repository', function() {
     it('finds items for post', function() {
-        Functions\when('get_post_meta')->alias(includeValidPostUserLikes());
+        $this->postMetaStorage = includeValidPostUserLikes();
+        [, $getter, $setter] = setupPostMetaStorage($this->postMetaStorage);
+
+        Functions\when('get_post_meta')->alias($getter);
+        Functions\when('update_post_meta')->alias($setter);
 
         $repository = Repository::new(
             '_konomi_likes',

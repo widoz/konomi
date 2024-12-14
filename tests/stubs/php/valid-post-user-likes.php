@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-$data = [
-    '_konomi_likes' => [
-        10 => [
+return [
+    10 => [
+        '_konomi_likes' => [
             100 => [
                 [10, 'post'],
             ],
@@ -38,7 +38,3 @@ $data = [
         ]
     ]
 ];
-
-return static function(int $entityId, string $key, bool $single) use ($data): array {
-    return $data[$key][$entityId] ?? [];
-};

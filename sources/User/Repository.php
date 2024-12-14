@@ -79,7 +79,7 @@ class Repository
     {
         $serializedData = [];
         foreach ($this->cache->all($user) as $item) {
-            $serializedData[] = [$item->id(), $item->type()];
+            $serializedData[$item->id()] = [$item->id(), $item->type()];
         }
         return $serializedData;
     }
