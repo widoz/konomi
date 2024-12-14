@@ -33,6 +33,10 @@ class Repository
     ) {
     }
 
+    /**
+     * @param int $entityId
+     * @return array<int, array<User\Item>>
+     */
     public function find(int $entityId): array
     {
         $data = $this->read($entityId);
@@ -63,6 +67,9 @@ class Repository
         return $this->storage->write($item->id(), $this->key, $toStoreData);
     }
 
+    /**
+     * @param StoredData $data
+     */
     private function prepareDataToStore(array $data, User\Item $item, User\User $user): array
     {
         $data[$user->id()] ??= [];
@@ -90,6 +97,10 @@ class Repository
     private function ensureDataStructure(array &$data): void
     {
         foreach ($data as $userId => &$rawItems) {
+            if (!is_int($userId) || $userId < 1) {
+                unset($data[$userId]);
+                continue;
+            }
             if (!is_array($rawItems)) {
                 unset($data[$userId]);
                 continue;
@@ -103,7 +114,9 @@ class Repository
                     && count($item) === 2
                     && isset($item[0], $item[1])
                     && is_int($item[0])
+                    && $item[0] > 0
                     && is_string($item[1])
+                    && $item[1] !== ''
             );
         }
     }
@@ -137,6 +150,9 @@ class Repository
         ];
     }
 
+    /**
+     * @param RawItems $rawItems
+     */
     private function unserialize(array $rawItems): array
     {
         $items = [];

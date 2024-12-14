@@ -7,6 +7,7 @@ namespace Widoz\Wp\Konomi\User;
 /**
  * @internal
  * @psalm-type RawItem = array{0: int, 1: string}
+ * @psalm-type RawItems = array<int, RawItem>
  */
 class Repository
 {
@@ -58,8 +59,8 @@ class Repository
     }
 
     /**
-     * @param array<int, RawItem> $data
-     * @return array<int, RawItem>
+     * @param RawItems $data
+     * @return RawItems
      */
     private function prepareDataToStore(User $user, Item $item): array
     {
@@ -74,10 +75,11 @@ class Repository
 
     private function serializeData(User $user): array
     {
-        return \array_map(
-            static fn (Item $item) => [$item->id(), $item->type()],
-            $this->cache->all($user)
-        );
+        $serializedData = [];
+        foreach ($this->cache->all($user) as $item) {
+            $serializedData[] = [$item->id(), $item->type()];
+        }
+        return $serializedData;
     }
 
     /**
@@ -97,7 +99,7 @@ class Repository
 
     /**
      * @param int $userId
-     * @return \Generator
+     * @return \Generator<RawItem>
      */
     private function read(int $userId): \Generator
     {
@@ -106,7 +108,7 @@ class Repository
     }
 
     /**
-     * @psalm-assert array<int, RawItem> $data
+     * @psalm-assert RawItems $data
      */
     private function ensureDataStructure(array $data): \Generator
     {
@@ -115,8 +117,8 @@ class Repository
                 !is_array($item)
                 || count($item) !== 2
                 || !isset($item[0], $item[1])
-                || !is_int($item[0])
-                || !is_string($item[1])
+                || (!is_int($item[0]) || $item[0] < 1)
+                || (!is_string($item[1]) || $item[1] === '')
             ) {
                 continue;
             }

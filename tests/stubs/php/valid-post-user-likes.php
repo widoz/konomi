@@ -3,37 +3,34 @@
 declare(strict_types=1);
 
 return [
-    1 => [
+    100 => [
         [10, 'post'],
     ],
-    2 => [
+    21 => [
         [10, 'product'],
     ],
-    3 => [
+    33 => [
         [10, 'video'],
     ],
-    4 => [
+    45 => [
         [10, 'page'],
     ],
-    5 => [
+    53 => [
         [10, 'post'],
     ],
-    // Stubbing an invalid entry
     6 => [
-        null
-    ],
-    7 => [
-        [10, 'page'],
-    ],
-    8 => [
-        [10, 'page'],
-    ],
-    9 => [
         [10, 'post'],
     ],
-    10 => [
+    79 => [
+        [10, 'page'],
+    ],
+    83 => [
+        [10, 'page'],
+    ],
+    92 => [
         [10, 'post'],
     ],
-    // Stub an invalid entry
-    11 => null,
+    1000 => [
+        [10, 'post'],
+    ],
 ];

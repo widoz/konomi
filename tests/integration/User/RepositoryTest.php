@@ -102,7 +102,7 @@ describe('Repository', function () {
 
         expect($result)->toBeTrue();
         expect($this->stubsCounter['update_user_meta'])->toBe(1);
-        expect($this->userMetaStorage[1]['_likes'][1])->toBe([1, 'product']);
+        expect($this->userMetaStorage[1]['_likes'][0])->toBe([1, 'product']);
     });
 
     it('do not save inactive items', function () {
@@ -110,14 +110,14 @@ describe('Repository', function () {
         $inactiveItem = User\Like::new(1, 'product', false);
 
         expect($this->userMetaStorage[1]['_likes'])->toEqual([
-            1 => [1, 'product'],
-            2 => [2, 'page'],
+            [1, 'product'],
+            [2, 'page'],
         ]);
 
         $this->repository->save($user, $inactiveItem);
 
         expect($this->userMetaStorage[1]['_likes'])->toEqual([
-            2 => [2, 'page'],
+            [2, 'page'],
         ]);
     });
 });

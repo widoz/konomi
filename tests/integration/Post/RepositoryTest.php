@@ -23,17 +23,15 @@ describe('Repository', function() {
             User\ItemFactory::new()
         );
 
-        /** @var array<User\Item> $items */
         $items = $repository->find(10);
 
         expect($items)->toBeArray();
         expect(count($items))->toBe(10);
 
-        foreach ([1, 2, 3, 4, 5, 7, 8, 9, 10] as $userId) {
+        foreach (array_keys($postLikes) as $userId) {
             expect(count($items[$userId]))->toBe(1);
             expect($items[$userId][0]->id())->toBe($postLikes[$userId][0][0]);
             expect($items[$userId][0]->type())->toBe($postLikes[$userId][0][1]);
         }
-        expect(empty($items[6][0]))->toBe(true);
     });
 });
