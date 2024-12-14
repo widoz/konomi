@@ -7,7 +7,7 @@ namespace Widoz\Wp\Konomi\Rest;
 use Widoz\Wp\Konomi\Types;
 
 /**
- * @psalm-import-type MiddlewareCallable from Types
+ * @psalm-import-type MiddlewareCallable from Middleware
  */
 class MiddlewareProcess
 {

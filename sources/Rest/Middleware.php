@@ -7,7 +7,7 @@ namespace Widoz\Wp\Konomi\Rest;
 use Widoz\Wp\Konomi\Types;
 
 /**
- * @psalm-import-type MiddlewareCallable from Types
+ * @psalm-type MiddlewareCallable = callable(\WP_REST_Request): (\WP_REST_Response|\WP_Error)
  */
 interface Middleware
 {
