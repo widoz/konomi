@@ -77,11 +77,10 @@ class Repository
 
     private function serializeData(User $user): array
     {
-        $serializedData = [];
-        foreach ($this->cache->all($user) as $item) {
-            $serializedData[$item->id()] = [$item->id(), $item->type()];
-        }
-        return $serializedData;
+        return \array_map(
+            static fn (Item $item) => [$item->id(), $item->type()],
+            $this->cache->all($user)
+        );
     }
 
     /**
