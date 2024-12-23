@@ -9,8 +9,8 @@ use Widoz\Wp\Konomi\Post\Repository;
 use Widoz\Wp\Konomi\Post\Storage;
 use Widoz\Wp\Konomi\User;
 
-describe('Post', function() {
-    it('count likes for posts', function() {
+describe('Post', function () {
+    it('count likes for posts', function () {
         $this->postMetaStorage = includeValidPostUserLikes();
         [, $getter] = setupPostMetaStorage($this->postMetaStorage);
 

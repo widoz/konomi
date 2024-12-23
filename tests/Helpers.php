@@ -63,7 +63,7 @@ function setupUserMetaStorage(array &$data): array
     ];
 
     return [
-        static function() use (&$stubsCounter): array {
+        static function () use (&$stubsCounter): array {
             return $stubsCounter;
         },
         static function (int $entityId, string $key, bool $single) use (&$data, &$stubsCounter): array {
@@ -89,7 +89,7 @@ function setupPostMetaStorage(array &$data): array
     ];
 
     return [
-        static function() use (&$stubsCounter): array {
+        static function () use (&$stubsCounter): array {
             return $stubsCounter;
         },
         static function (int $entityId, string $key, bool $single) use (&$data, &$stubsCounter): array {

@@ -9,8 +9,8 @@ use Widoz\Wp\Konomi\Post\Repository;
 use Widoz\Wp\Konomi\Post\Storage;
 use Widoz\Wp\Konomi\User;
 
-describe('Repository', function() {
-    it('finds items for post', function() {
+describe('Repository', function () {
+    it('finds items for post', function () {
         $this->postMetaStorage = includeValidPostUserLikes();
         [, $getter, $setter] = setupPostMetaStorage($this->postMetaStorage);
 
@@ -28,9 +28,9 @@ describe('Repository', function() {
         expect($items)->toBeArray();
         expect(count($items))->toBe(10);
 
-        foreach($items as $userId => $userItems) {
+        foreach ($items as $userId => $userItems) {
             expect($userId)->toBeInt();
-            foreach($userItems as $item) {
+            foreach ($userItems as $item) {
                 expect($item instanceof User\Item)->toBe(true);
             }
         }
