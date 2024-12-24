@@ -23,10 +23,11 @@ namespace PHPSTORM_META {
                 'konomi.user.like.repository' => \Widoz\Wp\Konomi\User\Repository::class,
                 'konomi.user.storage' => \Widoz\Wp\Konomi\User\Storage::class,
                 'konomi.user.item.cache' => \Widoz\Wp\Konomi\User\ItemCache::class,
+                'konomi.user.raw-data-validator' => \Widoz\Wp\Konomi\User\RawDataValidator::class,
 
                 'konomi.post' => \Widoz\Wp\Konomi\Post\Post::class,
                 'konomi.post.like.repository' => \Widoz\Wp\Konomi\Post\Repository::class,
-                'konomi.post.stored-data-validator' => \Widoz\Wp\Konomi\Post\StoredDataValidator::class,
+                'konomi.post.raw-data-validator' => \Widoz\Wp\Konomi\Post\RawDataValidator::class,
                 'konomi.post.storage' => \Widoz\Wp\Konomi\Post\Storage::class,
 
                 'konomi.rest.like.add-schema' => \Widoz\Wp\Konomi\Rest\Like\AddSchema::class,
