@@ -13,7 +13,7 @@ describe('User Stored Data Validator', function () {
         $data = [
             [1, 'post'],
             [2, 'page'],
-            [3, 'video']
+            [3, 'video'],
         ];
 
         $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure($data));
@@ -26,7 +26,7 @@ describe('User Stored Data Validator', function () {
             ['0', 'post'],
             [-1, 'video'],
             ['abc', 'product'],
-            [2, 'page']
+            [2, 'page'],
         ];
 
         $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure($data));
@@ -41,7 +41,7 @@ describe('User Stored Data Validator', function () {
             'string',
             [],
             [1, 'administrator'],
-            (object)['id' => 1]
+            (object) ['id' => 1],
         ];
 
         $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure($data));
@@ -56,7 +56,7 @@ describe('User Stored Data Validator', function () {
             [1],
             [1, 'author', 'extra'],
             [2, 'editor'],
-            [3, 123]
+            [3, 123],
         ];
 
         $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure($data));

@@ -7,11 +7,10 @@ namespace Widoz\Wp\Konomi\Rest;
 use Psr\Container\ContainerInterface;
 use Inpsyde\Modularity\{
     Module\ServiceModule,
-    Module\ExecutableModule,
     Module\ModuleClassNameIdTrait
 };
 
-class Module implements ServiceModule, ExecutableModule
+class Module implements ServiceModule
 {
     use ModuleClassNameIdTrait;
 
@@ -27,14 +26,6 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            'konomi.rest.like.add-schema' => static fn () => Like\AddSchema::new(),
-            'konomi.rest.like.add-controller' => static fn (
-                ContainerInterface $container
-            ) => Like\AddController::new(
-                $container->get('konomi.user.current'),
-                $container->get('konomi.user.item.factory')
-            ),
-
             'konomi.rest.middleware.error-catch' => static fn () => Middlewares\ErrorCatch::new(),
             'konomi.rest.middleware.authentication' => static fn (
                 ContainerInterface $container
@@ -42,25 +33,5 @@ class Module implements ServiceModule, ExecutableModule
                 $container->get('konomi.user.current')
             ),
         ];
-    }
-
-    public function run(ContainerInterface $container): bool
-    {
-        add_action(
-            'rest_api_init',
-            static function () use ($container) {
-                Route::post(
-                    'konomi/v1',
-                    '/user-like',
-                    $container->get('konomi.rest.like.add-schema'),
-                    $container->get('konomi.rest.like.add-controller')
-                )
-                    ->withMiddleware($container->get('konomi.rest.middleware.error-catch'))
-                    ->withMiddleware($container->get('konomi.rest.middleware.authentication'))
-                    ->register();
-            }
-        );
-
-        return true;
     }
 }

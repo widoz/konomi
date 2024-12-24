@@ -10,8 +10,10 @@ namespace PHPSTORM_META {
                 '' => '@',
 
                 'konomi.blocks.registrar' => \Widoz\Wp\Konomi\Blocks\BlockRegistrar::class,
-                'konomi.blocks.like-context' => \Widoz\Wp\Konomi\Blocks\Like\Context::class,
                 'konomi.blocks.template-render' => \Widoz\Wp\Konomi\Blocks\TemplateRender::class,
+                'konomi.blocks.like.context' => \Widoz\Wp\Konomi\Blocks\Like\Context::class,
+                'konomi.blocks.like.rest.add-schema' => \Widoz\Wp\Konomi\Rest\Like\AddSchema::class,
+                'konomi.blocks.like.rest.add-controller' => \Widoz\Wp\Konomi\Rest\Controller::class,
 
                 'konomi.configuration' => \Widoz\Wp\Konomi\Configuration\Configuration::class,
                 'konomi.configuration.init-script-render' => \Widoz\Wp\Konomi\Configuration\ConfigurationInitScript::class,
@@ -30,8 +32,6 @@ namespace PHPSTORM_META {
                 'konomi.post.raw-data-assert' => \Widoz\Wp\Konomi\Post\RawDataAssert::class,
                 'konomi.post.storage' => \Widoz\Wp\Konomi\Post\Storage::class,
 
-                'konomi.rest.like.add-schema' => \Widoz\Wp\Konomi\Rest\Like\AddSchema::class,
-                'konomi.rest.like.add-controller' => \Widoz\Wp\Konomi\Rest\Controller::class,
                 'konomi.rest.middleware.authentication' => \Widoz\Wp\Konomi\Rest\Middleware::class,
                 'konomi.rest.middleware.error-catch' => \Widoz\Wp\Konomi\Rest\Middleware::class,
             ]

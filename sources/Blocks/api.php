@@ -13,7 +13,7 @@ use function Widoz\Wp\Konomi\package;
  */
 function context(): Context
 {
-    return package()->container()->get('konomi.blocks.like-context');
+    return package()->container()->get('konomi.blocks.like.context');
 }
 
 /**

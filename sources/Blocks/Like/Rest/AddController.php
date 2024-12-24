@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Rest\Like;
+namespace Widoz\Wp\Konomi\Blocks\Like\Rest;
 
 use Widoz\Wp\Konomi\Rest;
 use Widoz\Wp\Konomi\User;
