@@ -8,9 +8,9 @@ namespace Widoz\Wp\Konomi\User;
  * @internal
  * @psalm-type RawItem = array{0: int, 1: string}
  */
-final class RawDataValidator
+final class RawDataAssert
 {
-    public static function new(): RawDataValidator
+    public static function new(): RawDataAssert
     {
         return new self();
     }

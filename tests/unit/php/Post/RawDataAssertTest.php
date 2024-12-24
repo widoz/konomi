@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Widoz\Wp\Konomi\Post\RawDataValidator;
+use Widoz\Wp\Konomi\Post\RawDataAssert;
 
 beforeEach(function () {
-    $this->validator = RawDataValidator::new();
+    $this->rawDataAsserter = RawDataAssert::new();
 });
 
 describe('Stored Data Validator', function () {
@@ -15,7 +15,7 @@ describe('Stored Data Validator', function () {
             2 => [[2, 'page'], [3, 'post']],
         ];
 
-        $result = iterator_to_array($this->validator->ensureDataStructure($data));
+        $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure($data));
 
         expect($result)->toBe($data);
     });
@@ -28,7 +28,7 @@ describe('Stored Data Validator', function () {
             1 => [[4, 'page']],
         ];
 
-        $result = iterator_to_array($this->validator->ensureDataStructure($data));
+        $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure($data));
 
         expect($result)->toBe([1 => [[4, 'page']]]);
     });
@@ -40,7 +40,7 @@ describe('Stored Data Validator', function () {
             3 => [[1, 'post']],
         ];
 
-        $result = iterator_to_array($this->validator->ensureDataStructure($data));
+        $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure($data));
 
         expect($result)->toBe([3 => [[1, 'post']]]);
     });
@@ -56,13 +56,13 @@ describe('Stored Data Validator', function () {
             7 => [[1, 'post']],
         ];
 
-        $result = iterator_to_array($this->validator->ensureDataStructure($data));
+        $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure($data));
 
         expect($result)->toBe([7 => [[1, 'post']]]);
     });
 
     it('handles empty input array', function () {
-        $result = iterator_to_array($this->validator->ensureDataStructure([]));
+        $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure([]));
 
         expect($result)->toBe([]);
     });

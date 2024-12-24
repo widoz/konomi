@@ -19,10 +19,10 @@ class Repository
         Storage $storage,
         ItemFactory $itemFactory,
         ItemCache $cache,
-        RawDataValidator $validator
+        RawDataAssert $rawDataAsserter
     ): Repository {
 
-        return new self($key, $storage, $itemFactory, $cache, $validator);
+        return new self($key, $storage, $itemFactory, $cache, $rawDataAsserter);
     }
 
     final private function __construct(
@@ -30,7 +30,7 @@ class Repository
         readonly private Storage $storage,
         readonly private ItemFactory $itemFactory,
         readonly private ItemCache $cache,
-        readonly private RawDataValidator $validator
+        readonly private RawDataAssert $rawDataAsserter
     ) {
     }
 
@@ -106,6 +106,6 @@ class Repository
     private function read(int $userId): \Generator
     {
         $storedData = $this->storage->read($userId, $this->key);
-        yield from $this->validator->ensureDataStructure($storedData);
+        yield from $this->rawDataAsserter->ensureDataStructure($storedData);
     }
 }

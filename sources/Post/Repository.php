@@ -9,11 +9,11 @@ use Widoz\Wp\Konomi\User;
 /**
  * @internal
  *
- * @psalm-import-type UserId from RawDataValidator
- * @psalm-import-type RawItem from RawDataValidator
- * @psalm-import-type RawItems from RawDataValidator
- * @psalm-import-type StoredData from RawDataValidator
- * @psalm-import-type GeneratorStoredData from RawDataValidator
+ * @psalm-import-type UserId from RawDataAssert
+ * @psalm-import-type RawItem from RawDataAssert
+ * @psalm-import-type RawItems from RawDataAssert
+ * @psalm-import-type StoredData from RawDataAssert
+ * @psalm-import-type GeneratorStoredData from RawDataAssert
  *
  * TODO This Collection require caching the data from the Storage
  */
@@ -22,17 +22,17 @@ class Repository
     public static function new(
         string $key,
         Storage $storage,
-        RawDataValidator $validator,
+        RawDataAssert $rawDataAsserter,
         User\ItemFactory $itemFactory,
     ): Repository {
 
-        return new self($key, $storage, $validator, $itemFactory);
+        return new self($key, $storage, $rawDataAsserter, $itemFactory);
     }
 
     final private function __construct(
         readonly private string $key,
         readonly private Storage $storage,
-        readonly private RawDataValidator $validator,
+        readonly private RawDataAssert $rawDataAsserter,
         readonly private User\ItemFactory $itemFactory
     ) {
     }
@@ -90,7 +90,7 @@ class Repository
     private function read(int $entityId): \Generator
     {
         $storedData = $this->storage->read($entityId, $this->key);
-        yield from $this->validator->ensureDataStructure($storedData);
+        yield from $this->rawDataAsserter->ensureDataStructure($storedData);
     }
 
     /**

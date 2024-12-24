@@ -25,7 +25,7 @@ beforeEach(function () {
         User\Storage::new(),
         User\ItemFactory::new(),
         User\ItemCache::new(),
-        User\RawDataValidator::new()
+        User\RawDataAssert::new()
     );
 });
 

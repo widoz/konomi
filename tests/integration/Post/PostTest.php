@@ -18,7 +18,7 @@ describe('Post', function () {
         $repository = Post\Repository::new(
             '_konomi_likes',
             Post\Storage::new(),
-            Post\RawDataValidator::new(),
+            Post\RawDataAssert::new(),
             User\ItemFactory::new()
         );
         $post = \Widoz\Wp\Konomi\Post\Post::new($repository);

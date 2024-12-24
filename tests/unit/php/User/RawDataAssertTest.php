@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Widoz\Wp\Konomi\User\RawDataValidator;
+use Widoz\Wp\Konomi\User\RawDataAssert;
 
 beforeEach(function () {
-    $this->validator = RawDataValidator::new();
+    $this->rawDataAsserter = RawDataAssert::new();
 });
 
 describe('User Stored Data Validator', function () {
@@ -16,7 +16,7 @@ describe('User Stored Data Validator', function () {
             [3, 'video']
         ];
 
-        $result = iterator_to_array($this->validator->ensureDataStructure($data));
+        $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure($data));
 
         expect($result)->toBe($data);
     });
@@ -29,7 +29,7 @@ describe('User Stored Data Validator', function () {
             [2, 'page']
         ];
 
-        $result = iterator_to_array($this->validator->ensureDataStructure($data));
+        $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure($data));
 
         expect(count($result))->toBe(1);
         expect($result)->toBe([[2, 'page']]);
@@ -44,7 +44,7 @@ describe('User Stored Data Validator', function () {
             (object)['id' => 1]
         ];
 
-        $result = iterator_to_array($this->validator->ensureDataStructure($data));
+        $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure($data));
 
         expect($result)->toBe([[1, 'administrator']]);
     });
@@ -59,13 +59,13 @@ describe('User Stored Data Validator', function () {
             [3, 123]
         ];
 
-        $result = iterator_to_array($this->validator->ensureDataStructure($data));
+        $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure($data));
 
         expect($result)->toBe([[2, 'editor']]);
     });
 
     it('handles empty input array', function () {
-        $result = iterator_to_array($this->validator->ensureDataStructure([]));
+        $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure([]));
 
         expect($result)->toBe([]);
     });
