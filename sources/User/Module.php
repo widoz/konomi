@@ -11,7 +11,7 @@ use Inpsyde\Modularity\{
     Module\ModuleClassNameIdTrait
 };
 
-class Module implements ServiceModule, ExecutableModule
+class Module implements ServiceModule
 {
     use ModuleClassNameIdTrait;
 
@@ -45,10 +45,5 @@ class Module implements ServiceModule, ExecutableModule
                 $container->get('konomi.user.raw-data-assert')
             ),
         ];
-    }
-
-    public function run(ContainerInterface $container): bool
-    {
-        return true;
     }
 }
