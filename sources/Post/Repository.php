@@ -9,12 +9,11 @@ use Widoz\Wp\Konomi\User;
 /**
  * @internal
  *
- * @psalm-type EntityId = int
- * @psalm-type EntityType = string
- * @psalm-type UserId = int
- * @psalm-type RawItem = array{0: EntityId, 1: EntityType}
- * @psalm-type RawItems = array<UserId, RawItem>
- * @psalm-type StoredData = array<EntityId, RawItems>
+ * @psalm-import-type UserId from StoredDataValidator
+ * @psalm-import-type RawItem from StoredDataValidator
+ * @psalm-import-type RawItems from StoredDataValidator
+ * @psalm-import-type StoredData from StoredDataValidator
+ * @psalm-import-type GeneratorStoredData from StoredDataValidator
  *
  * TODO This Collection require caching the data from the Storage
  */
@@ -23,22 +22,23 @@ class Repository
     public static function new(
         string $key,
         Storage $storage,
-        User\ItemFactory $itemFactory
+        StoredDataValidator $validator,
+        User\ItemFactory $itemFactory,
     ): Repository {
 
-        return new self($key, $storage, $itemFactory);
+        return new self($key, $storage, $validator, $itemFactory);
     }
 
     final private function __construct(
         readonly private string $key,
         readonly private Storage $storage,
-        readonly private User\ItemFactory $itemFactory,
+        readonly private StoredDataValidator $validator,
+        readonly private User\ItemFactory $itemFactory
     ) {
     }
 
     /**
-     * @param int $entityId
-     * @return array<int, array<User\Item>>
+     * @return array<UserId, array<User\Item>>
      */
     public function find(int $entityId): array
     {
@@ -85,53 +85,12 @@ class Repository
     }
 
     /**
-     * @return StoredData
+     * @return GeneratorStoredData
      */
     private function read(int $entityId): \Generator
     {
         $storedData = $this->storage->read($entityId, $this->key);
-        yield from $this->ensureDataStructure($storedData);
-    }
-
-    /**
-     * @psalm-assert StoredData $storedData
-     */
-    private function ensureDataStructure(array $data): \Generator
-    {
-        foreach ($data as $userId => &$rawItems) {
-            if (!is_int($userId) || $userId < 1) {
-                continue;
-            }
-            if (!is_array($rawItems)) {
-                continue;
-            }
-
-            $rawItems = array_filter(
-                $rawItems,
-                [$this, 'ensureRawItemsDataStructure']
-            );
-
-            if (!empty($rawItems)) {
-                yield $userId => $rawItems;
-            }
-        }
-    }
-
-    private function ensureRawItemsDataStructure(array $data): \Generator
-    {
-        foreach ($data as $id => $item) {
-            if (
-                !is_array($item)
-                || count($item) !== 2
-                || !isset($item[0], $item[1])
-                || (!is_int($item[0]) || $item[0] < 1)
-                || (!is_string($item[1]) || $item[1] === '')
-            ) {
-                continue;
-            }
-
-            yield $id => $item;
-        }
+        yield from $this->validator->ensureDataStructure($storedData);
     }
 
     /**
@@ -165,20 +124,17 @@ class Repository
 
     /**
      * @param RawItems $rawItems
+     * @return array<User\Item>
      */
     private function unserialize(array $rawItems): array
     {
         $items = [];
-        foreach ($rawItems as $rawItem) {
-            if (!is_array($rawItem)) {
-                continue;
-            }
 
-            $id = (int) ($rawItem[0] ?? null);
-            $type = (string) ($rawItem[1] ?? null);
+        $id = (int) ($rawItems[0][0] ?? null);
+        $type = (string) ($rawItems[0][1] ?? null);
 
-            $items[] = $this->itemFactory->create($id, $type, true);
-        }
+        $items[] = $this->itemFactory->create($id, $type, true);
+
         return $items;
     }
 }

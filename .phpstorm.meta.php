@@ -26,6 +26,7 @@ namespace PHPSTORM_META {
 
                 'konomi.post' => \Widoz\Wp\Konomi\Post\Post::class,
                 'konomi.post.like.repository' => \Widoz\Wp\Konomi\Post\Repository::class,
+                'konomi.post.stored-data-validator' => \Widoz\Wp\Konomi\Post\StoredDataValidator::class,
                 'konomi.post.storage' => \Widoz\Wp\Konomi\Post\Storage::class,
 
                 'konomi.rest.like.add-schema' => \Widoz\Wp\Konomi\Rest\Like\AddSchema::class,
