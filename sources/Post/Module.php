@@ -32,13 +32,13 @@ class Module implements ServiceModule, ExecutableModule
                 $container->get('konomi.post.like.repository')
             ),
             'konomi.post.storage' => static fn () => Storage::new(),
-            'konomi.post.stored-data-validator' => static fn () => StoredDataValidator::new(),
+            'konomi.post.raw-data-validator' => static fn () => RawDataValidator::new(),
             'konomi.post.like.repository' => static fn (
                 ContainerInterface $container
             ) => Repository::new(
                 '_konomi_likes',
                 $container->get('konomi.post.storage'),
-                $container->get('konomi.post.stored-data-validator'),
+                $container->get('konomi.post.raw-data-validator'),
                 $container->get('konomi.user.item.factory')
             ),
         ];

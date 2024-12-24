@@ -34,13 +34,15 @@ class Module implements ServiceModule, ExecutableModule
 
             'konomi.user.item.factory' => static fn () => ItemFactory::new(),
             'konomi.user.item.cache' => static fn () => ItemCache::new(),
+            'konomi.user.raw-data-validator' => static fn () => RawDataValidator::new(),
             'konomi.user.like.repository' => static fn (
                 ContainerInterface $container
             ) => Repository::new(
                 '_likes',
                 $container->get('konomi.user.storage'),
                 $container->get('konomi.user.item.factory'),
-                $container->get('konomi.user.item.cache')
+                $container->get('konomi.user.item.cache'),
+                $container->get('konomi.user.raw-data-validator')
             ),
         ];
     }

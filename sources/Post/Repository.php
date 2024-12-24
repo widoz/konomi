@@ -9,11 +9,11 @@ use Widoz\Wp\Konomi\User;
 /**
  * @internal
  *
- * @psalm-import-type UserId from StoredDataValidator
- * @psalm-import-type RawItem from StoredDataValidator
- * @psalm-import-type RawItems from StoredDataValidator
- * @psalm-import-type StoredData from StoredDataValidator
- * @psalm-import-type GeneratorStoredData from StoredDataValidator
+ * @psalm-import-type UserId from RawDataValidator
+ * @psalm-import-type RawItem from RawDataValidator
+ * @psalm-import-type RawItems from RawDataValidator
+ * @psalm-import-type StoredData from RawDataValidator
+ * @psalm-import-type GeneratorStoredData from RawDataValidator
  *
  * TODO This Collection require caching the data from the Storage
  */
@@ -22,7 +22,7 @@ class Repository
     public static function new(
         string $key,
         Storage $storage,
-        StoredDataValidator $validator,
+        RawDataValidator $validator,
         User\ItemFactory $itemFactory,
     ): Repository {
 
@@ -32,7 +32,7 @@ class Repository
     final private function __construct(
         readonly private string $key,
         readonly private Storage $storage,
-        readonly private StoredDataValidator $validator,
+        readonly private RawDataValidator $validator,
         readonly private User\ItemFactory $itemFactory
     ) {
     }

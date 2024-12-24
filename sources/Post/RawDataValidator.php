@@ -15,9 +15,9 @@ namespace Widoz\Wp\Konomi\Post;
  * @psalm-type StoredData = array<UserId, RawItems>
  * @psalm-type GeneratorStoredData = \Generator<UserId, RawItems>
  */
-final class StoredDataValidator
+final class RawDataValidator
 {
-    public static function new(): StoredDataValidator
+    public static function new(): RawDataValidator
     {
         return new self();
     }
@@ -69,14 +69,14 @@ final class StoredDataValidator
     /**
      * @psalm-assert RawItem $item
      */
-    private static function isValidRawItem(mixed $item): bool
+    private static function isValidRawItem(mixed $rawItem): bool
     {
-        return is_array($item)
-            && count($item) === 2
-            && isset($item[0], $item[1])
-            && is_int($item[0])
-            && $item[0] > 0
-            && is_string($item[1])
-            && $item[1] !== '';
+        return is_array($rawItem)
+            && count($rawItem) === 2
+            && isset($rawItem[0], $rawItem[1])
+            && is_int($rawItem[0])
+            && $rawItem[0] > 0
+            && is_string($rawItem[1])
+            && $rawItem[1] !== '';
     }
 }

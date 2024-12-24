@@ -22,9 +22,10 @@ beforeEach(function () {
 
     $this->repository = \Widoz\Wp\Konomi\User\Repository::new(
         '_likes',
-        \Widoz\Wp\Konomi\User\Storage::new(),
-        \Widoz\Wp\Konomi\User\ItemFactory::new(),
-        \Widoz\Wp\Konomi\User\ItemCache::new()
+        User\Storage::new(),
+        User\ItemFactory::new(),
+        User\ItemCache::new(),
+        User\RawDataValidator::new()
     );
 });
 

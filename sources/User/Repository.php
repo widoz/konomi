@@ -6,10 +6,11 @@ namespace Widoz\Wp\Konomi\User;
 
 /**
  * @internal
+ *
  * @psalm-type EntityId = int
  * @psalm-type EntityType = string
  * @psalm-type RawItem = array{0: EntityId, 1: EntityType}
- * @psalm-type RawItems = array<int, RawItem>
+ * @psalm-type RawItems = array<array-key, RawItem>
  */
 class Repository
 {
@@ -17,17 +18,19 @@ class Repository
         string $key,
         Storage $storage,
         ItemFactory $itemFactory,
-        ItemCache $cache
+        ItemCache $cache,
+        RawDataValidator $validator
     ): Repository {
 
-        return new self($key, $storage, $itemFactory, $cache);
+        return new self($key, $storage, $itemFactory, $cache, $validator);
     }
 
     final private function __construct(
         readonly private string $key,
         readonly private Storage $storage,
         readonly private ItemFactory $itemFactory,
-        readonly private ItemCache $cache
+        readonly private ItemCache $cache,
+        readonly private RawDataValidator $validator
     ) {
     }
 
@@ -61,7 +64,6 @@ class Repository
     }
 
     /**
-     * @param RawItems $data
      * @return RawItems
      */
     private function prepareDataToStore(User $user, Item $item): array
@@ -75,6 +77,9 @@ class Repository
         return $this->serializeData($user);
     }
 
+    /**
+     * @return RawItems
+     */
     private function serializeData(User $user): array
     {
         return \array_map(
@@ -83,48 +88,24 @@ class Repository
         );
     }
 
-    /**
-     * @return array<Item>
-     */
     private function loadItems(User $user): void
     {
         if ($this->cache->hasGroup($user)) {
             return;
         }
 
-        foreach ($this->read($user->id()) as [$id, $type]) {
-            $item = $this->itemFactory->create($id, $type, true);
+        foreach ($this->read($user->id()) as [$entityId, $entityType]) {
+            $item = $this->itemFactory->create($entityId, $entityType, true);
             $item->isValid() and $this->cache->set($user, $item);
         }
     }
 
     /**
-     * @param int $userId
      * @return \Generator<RawItem>
      */
     private function read(int $userId): \Generator
     {
-        $storedData = $this->storage->read($userId, $this->key) ?: [];
-        yield from $this->ensureDataStructure($storedData);
-    }
-
-    /**
-     * @psalm-assert RawItems $data
-     */
-    private function ensureDataStructure(array $data): \Generator
-    {
-        foreach ($data as $id => $item) {
-            if (
-                !is_array($item)
-                || count($item) !== 2
-                || !isset($item[0], $item[1])
-                || (!is_int($item[0]) || $item[0] < 1)
-                || (!is_string($item[1]) || $item[1] === '')
-            ) {
-                continue;
-            }
-
-            yield $id => $item;
-        }
+        $storedData = $this->storage->read($userId, $this->key);
+        yield from $this->validator->ensureDataStructure($storedData);
     }
 }

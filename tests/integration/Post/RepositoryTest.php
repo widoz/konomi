@@ -19,7 +19,7 @@ describe('Repository', function () {
         $repository = Post\Repository::new(
             '_konomi_likes',
             Post\Storage::new(),
-            Post\StoredDataValidator::new(),
+            Post\RawDataValidator::new(),
             User\ItemFactory::new()
         );
 
