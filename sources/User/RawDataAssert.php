@@ -8,7 +8,7 @@ namespace Widoz\Wp\Konomi\User;
  * @internal
  * @psalm-type RawItem = array{0: int, 1: string}
  */
-final class RawDataAssert
+class RawDataAssert
 {
     public static function new(): RawDataAssert
     {

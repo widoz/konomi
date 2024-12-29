@@ -15,7 +15,7 @@ namespace Widoz\Wp\Konomi\Post;
  * @psalm-type StoredData = array<UserId, RawItems>
  * @psalm-type GeneratorStoredData = \Generator<UserId, RawItems>
  */
-final class RawDataAssert
+class RawDataAssert
 {
     public static function new(): RawDataAssert
     {
