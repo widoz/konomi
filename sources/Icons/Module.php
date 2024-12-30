@@ -36,7 +36,7 @@ class Module implements ServiceModule, ExecutableModule
 
     public function run(ContainerInterface $container): bool
     {
-        add_action('init', function () {
+        add_action('wp_enqueue_scripts', function () {
             $distLocationPath = 'sources/Icons/client/dist';
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath());
