@@ -2,7 +2,14 @@
 
 declare(strict_types=1);
 
+use Inpsyde\Modularity\Properties;
+
 // phpcs:disable Inpsyde.CodeQuality.NoRootNamespaceFunctions.Found
+
+function projectRootDirectory(): string
+{
+    return dirname(__DIR__);
+}
 
 function stubsDirectory(): string
 {
@@ -14,22 +21,39 @@ function fixturesDirectory(): string
     return __DIR__ . '/fixtures/php';
 }
 
-function wordPressDirPath(): string
-{
-    return dirname(__DIR__) . '/vendor/roots/wordpress-no-content';
-}
+/* -------------------------------------------------------------------------------------------------
+ *  Mock Helpers
+ * ---------------------------------------------------------------------------------------------- */
 
-function setUpHooks(): void
-{
-    require_once wordPressDirPath() . '/wp-includes/plugin.php';
-    if (!class_exists(\WP_Hook::class)) {
-        throw new \RuntimeException('Cannot locate WP_Hook class');
-    }
-}
+ function propertiesMock(): \Mockery\MockInterface&Properties\PluginProperties
+ {
+     return \Mockery::mock(Properties\PluginProperties::class, [
+         'baseUrl' => 'http://example.com',
+         'basePath' => projectRootDirectory(),
+         'version' => '1.0.0',
+     ]);
+ }
 
 /* -------------------------------------------------------------------------------------------------
- *  WordPress Helpers
+ *  WordPress Helpers & Stubs
  * ---------------------------------------------------------------------------------------------- */
+
+ function wordPressDirPath(): string
+ {
+     return dirname(__DIR__) . '/vendor/roots/wordpress-no-content';
+ }
+
+ function setupWpConstants(): void
+ {
+     if (!defined('ABSPATH')) {
+         define('ABSPATH', wordPressDirPath() . '/');
+     }
+
+     if (!defined('WPINC')) {
+         define('WPINC', '/wp-includes');
+     }
+
+ }
 
 if (!function_exists('wp_normalize_path')) {
     function wp_normalize_path(string $path): string
@@ -102,4 +126,16 @@ function setupPostMetaStorage(array &$data): array
             return true;
         },
     ];
+}
+
+/* -------------------------------------------------------------------------------------------------
+ *  Functional Helpers
+ * ---------------------------------------------------------------------------------------------- */
+
+function setUpHooks(): void
+{
+    require_once wordPressDirPath() . '/wp-includes/plugin.php';
+    if (!class_exists(\WP_Hook::class)) {
+        throw new \RuntimeException('Cannot locate WP_Hook class');
+    }
 }
