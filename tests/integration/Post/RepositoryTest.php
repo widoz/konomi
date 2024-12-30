@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Post;
+namespace Widoz\Wp\Konomi\Tests\Integration\Post;
 
 use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Post;
