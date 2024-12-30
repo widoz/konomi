@@ -19,6 +19,9 @@
 	<rule ref="Inpsyde.CodeQuality.StaticClosure.PossiblyStaticClosure">
 		<exclude-pattern>*/tests/*</exclude-pattern>
 	</rule>
+	<rule ref="PHPCompatibility.FunctionDeclarations.NewClosure.ThisFoundOutsideClass">
+		<exclude-pattern>*/tests/*</exclude-pattern>
+	</rule>
 
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/dist/*</exclude-pattern>
