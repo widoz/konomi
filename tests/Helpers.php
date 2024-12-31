@@ -135,7 +135,15 @@ function setupPostMetaStorage(array &$data): array
 function setUpHooks(): void
 {
     require_once wordPressDirPath() . '/wp-includes/plugin.php';
-    if (!class_exists(\WP_Hook::class)) {
-        throw new \RuntimeException('Cannot locate WP_Hook class');
-    }
+}
+
+function setUpWpError(): void
+{
+    require_once wordPressDirPath() . '/wp-includes/class-wp-error.php';
+}
+
+function setUpWpRest(): void {
+    require_once wordPressDirPath() . '/wp-includes/class-wp-http-response.php';
+    require_once wordPressDirPath() . '/wp-includes/rest-api/class-wp-rest-request.php';
+    require_once wordPressDirPath() . '/wp-includes/rest-api/class-wp-rest-response.php';
 }

@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace Pest;
 
+use \Brain\Monkey\Functions;
+
+use function \Brain\Monkey\setUp;
+use function \Brain\Monkey\tearDown;
+
 uses()
     ->beforeAll(static function (): void {
-        \Brain\Monkey\setUp();
+        setUp();
+        Functions\when('__')->returnArg(1);
     })
     ->afterAll(static function (): void {
-        \Brain\Monkey\tearDown();
+        tearDown();
     })
     ->in('unit', 'integration');
 
