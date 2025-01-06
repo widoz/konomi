@@ -23,14 +23,20 @@ beforeEach(function (): void {
     };
 
     $this->modules = [
-        ApiFetch\Module::new($this->properties) => function(): void {
-            expect(wp_script_is('konomi-icons', 'registered'))->toBe(true);
-        },
-        Icons\Module::new($this->properties) => function () : void {
-            expect(wp_module_script_is('@konomi/api-fetch', 'registered'))->toBe(true);
-            expect(asset('@konomi/api-fetch', 'modules', 'registered')['dependencies'])->toContain('@konomi/configuration');
-            expect(wp_script_is('wp-api-fetch', 'enqueued'))->toBe(true);
-        },
+        [
+            ApiFetch\Module::new($this->properties),
+            function(): void {
+                expect(wp_module_script_is('@konomi/api-fetch', 'registered'))->toBe(true);
+                expect(asset('@konomi/api-fetch', 'modules', 'registered')['dependencies'])->toContain('@konomi/configuration');
+                expect(wp_script_is('wp-api-fetch', 'enqueued'))->toBe(true);
+            }
+        ],
+        [
+            Icons\Module::new($this->properties),
+            function () : void {
+                expect(wp_script_is('konomi-icons', 'registered'))->toBe(true);
+            }
+        ]
     ];
 });
 
@@ -39,7 +45,7 @@ describe('Assets', function(): void {
         'Ensure the assets and their dependencies are correctly registered and enqueued',
         function(): void {
             $callbacks = [];
-            foreach ($this->modules as $module => $callback) {
+            foreach ($this->modules as [$module, $callback]) {
                 $module->run($this->container);
                 $callbacks[] = $callback;
             }
