@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pest;
 
-use \Brain\Monkey\Functions;
+use Brain\Monkey\Functions;
 
 use function \Brain\Monkey\setUp;
 use function \Brain\Monkey\tearDown;
