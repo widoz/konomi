@@ -8,8 +8,8 @@ use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
 
-describe('Repository', function () {
-    it('finds items for post', function () {
+describe('Repository', function (): void {
+    it('finds items for post', function (): void {
         $this->postMetaStorage = includeValidPostUserLikes();
         [, $getter, $setter] = setupPostMetaStorage($this->postMetaStorage);
 

@@ -6,13 +6,13 @@ use Brain\Monkey\Actions;
 use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\User;
 
-beforeAll(function () {
+beforeAll(function (): void {
     $wpUser = \Mockery::mock(\WP_User::class);
     $wpUser->ID = 1;
     Functions\when('wp_get_current_user')->justReturn($wpUser);
 });
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->userMetaStorage = includeValidUsersLikes();
     [$stubsCounter, $getter, $setter] = setupUserMetaStorage($this->userMetaStorage);
     $this->stubsCounter = $stubsCounter;
@@ -29,8 +29,8 @@ beforeEach(function () {
     );
 });
 
-describe('Repository', function () {
-    it('find an item for the user', function () {
+describe('Repository', function (): void {
+    it('find an item for the user', function (): void {
         Actions\expectDone('konomi.user.repository.find')->once();
         $user = User\CurrentUser::new($this->repository);
         $item = $this->repository->find($user, 2);
@@ -38,14 +38,14 @@ describe('Repository', function () {
         expect($item->type())->toBe('page');
     });
 
-    it('do not load items twice from the persistance layer', function () {
+    it('do not load items twice from the persistance layer', function (): void {
         $user = User\CurrentUser::new($this->repository);
         $this->repository->find($user, 2);
         $this->repository->find($user, 2);
         expect(($this->stubsCounter)()['get_user_meta'])->toBe(1);
     });
 
-    it('skip invalid stored items when loading', function () {
+    it('skip invalid stored items when loading', function (): void {
         $this->userMetaStorage[1]['_likes'] = [
             1 => [1, 'product'],
             2 => 'invalid',
@@ -62,7 +62,7 @@ describe('Repository', function () {
         expect($items->type())->toBe('product');
     });
 
-    it('cannot save an invalid item', function () {
+    it('cannot save an invalid item', function (): void {
         Actions\expectDone('konomi.user.repository.save')->never();
 
         $user = User\CurrentUser::new($this->repository);
@@ -74,7 +74,7 @@ describe('Repository', function () {
         expect(($this->stubsCounter)()['update_user_meta'])->toBe(0);
     });
 
-    it('save a valid item', function () {
+    it('save a valid item', function (): void {
         Actions\expectDone('konomi.user.repository.save')->once();
 
         $user = User\CurrentUser::new($this->repository);
@@ -87,7 +87,7 @@ describe('Repository', function () {
         expect($this->userMetaStorage[1]['_likes'][1])->toBe([1, 'product']);
     });
 
-    it('do not save inactive items', function () {
+    it('do not save inactive items', function (): void {
         $user = User\CurrentUser::new($this->repository);
         $inactiveItem = User\Like::new(1, 'product', false);
 

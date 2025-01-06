@@ -8,8 +8,8 @@ use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
 
-describe('Post', function () {
-    it('count likes for posts', function () {
+describe('Post', function (): void {
+    it('count likes for posts', function (): void {
         $this->postMetaStorage = includeValidPostUserLikes();
         [, $getter] = setupPostMetaStorage($this->postMetaStorage);
 

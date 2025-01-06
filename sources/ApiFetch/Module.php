@@ -32,6 +32,9 @@ class Module implements ServiceModule, ExecutableModule
         return [];
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedReturnValue
+     */
     public function run(ContainerInterface $container): bool
     {
         add_action('wp_enqueue_scripts', function (): void {

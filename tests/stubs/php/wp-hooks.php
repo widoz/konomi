@@ -6,27 +6,34 @@ use Brain\Monkey\Functions;
 
 global $wp_hooks;
 
-class WP_Hooks_Mock {
+class WP_Hooks_Mock
+{
     public $actions = [];
     public $filters = [];
 
-    public function add_action($hook_name, $callback, $priority = 10, $accepted_args = 1) {
+    public function add_action($hook_name, $callback, $priority = 10, $accepted_args = 1)
+    {
+
         $this->actions[$hook_name][] = [
             'callback' => $callback,
             'priority' => $priority,
-            'accepted_args' => $accepted_args
+            'accepted_args' => $accepted_args,
         ];
     }
 
-    public function add_filter($hook_name, $callback, $priority = 10, $accepted_args = 1) {
+    public function add_filter($hook_name, $callback, $priority = 10, $accepted_args = 1)
+    {
+
         $this->filters[$hook_name][] = [
             'callback' => $callback,
             'priority' => $priority,
-            'accepted_args' => $accepted_args
+            'accepted_args' => $accepted_args,
         ];
     }
 
-    public function do_action($hook_name, ...$args) {
+    public function do_action($hook_name, ...$args)
+    {
+
         if (isset($this->actions[$hook_name])) {
             foreach ($this->actions[$hook_name] as $action) {
                 call_user_func_array($action['callback'], array_slice($args, 0, $action['accepted_args']));
@@ -34,7 +41,9 @@ class WP_Hooks_Mock {
         }
     }
 
-    public function apply_filters($hook_name, $value, ...$args) {
+    public function apply_filters($hook_name, $value, ...$args)
+    {
+
         if (isset($this->filters[$hook_name])) {
             foreach ($this->filters[$hook_name] as $filter) {
                 $value = call_user_func_array($filter['callback'], array_merge([$value], array_slice($args, 0, $filter['accepted_args'] - 1)));

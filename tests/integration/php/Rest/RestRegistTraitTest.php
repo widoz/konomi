@@ -10,12 +10,12 @@ use Widoz\Wp\Konomi\Rest\Schema;
 use Widoz\Wp\Konomi\Rest\Middleware;
 use Widoz\Wp\Konomi\Rest\RestRegistTrait;
 
-beforeAll(function(): void {
+beforeAll(function (): void {
     setUpWpRest();
     setUpWpError();
 });
 
-beforeEach(function () {
+beforeEach(function (): void {
     $schema = new class implements Schema {
         public function toArray(): array
         {
@@ -24,12 +24,14 @@ beforeEach(function () {
     };
 
     $this->controller = new class implements \Widoz\Wp\Konomi\Rest\Controller {
-        public function __invoke(\WP_REST_Request $request): \WP_Rest_Response {
+        public function __invoke(\WP_REST_Request $request): \WP_Rest_Response
+        {
+
             return new \WP_Rest_Response(
                 [
                     'success' => true,
                     'middleware1' => $request->middleware1,
-                    'middleware2' => $request->middleware2
+                    'middleware2' => $request->middleware2,
                 ]
             );
         }
@@ -68,11 +70,11 @@ beforeEach(function () {
         );
 });
 
-describe('Rest Register', function(): void {
-    it('register rest route with correct arguments', function () {
+describe('Rest Register', function (): void {
+    it('register rest route with correct arguments', function (): void {
         $handler = null;
         Functions\when('register_rest_route')->alias(
-            function(string $namespace, string $route, array $args) use (&$handler): bool {
+            function (string $namespace, string $route, array $args) use (&$handler): bool {
                 $handler = $args['callback'];
 
                 expect($namespace)->toBe('test/v1');

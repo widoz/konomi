@@ -6,16 +6,20 @@ namespace Widoz\Wp\Konomi\User;
 
 /**
  * @internal
+ *
+ * @psalm-type Map = \WeakMap<User, array<Item>|null>
  */
 class ItemCache
 {
     public static function new(): self
     {
-        return new self(new \WeakMap());
+        /** @var Map $items */
+        $items = new \WeakMap();
+        return new self($items);
     }
 
     /**
-     * @param \WeakMap<User, array<Item>> $items
+     * @param Map $items
      */
     final private function __construct(
         private \WeakMap $items

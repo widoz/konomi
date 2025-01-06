@@ -3,15 +3,15 @@
 declare(strict_types=1);
 
 use Widoz\Wp\Konomi\Rest\MiddlewareProcess;
-use \Widoz\Wp\Konomi\Rest\Middleware;
+use Widoz\Wp\Konomi\Rest\Middleware;
 
-beforeAll(function(): void {
+beforeAll(function (): void {
     setUpWpRest();
     setUpWpError();
 });
 
-describe('Middleware Process', function() {
-    it('loop the middlewares', function(): void {
+describe('Middleware Process', function (): void {
+    it('loop the middlewares', function (): void {
         $middlewares = [
             new class implements Middleware {
                 public function __invoke(
@@ -35,7 +35,7 @@ describe('Middleware Process', function() {
             },
         ];
 
-        $controller = function(\WP_REST_Request $request): \WP_REST_Response {
+        $controller = function (\WP_REST_Request $request): \WP_REST_Response {
             return new WP_REST_Response(['data']);
         };
 

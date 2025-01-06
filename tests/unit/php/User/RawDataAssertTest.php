@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 use Widoz\Wp\Konomi\User\RawDataAssert;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->rawDataAsserter = RawDataAssert::new();
 });
 
-describe('User Stored Data Validator', function () {
-    it('validates correct data structure', function () {
+describe('User Stored Data Validator', function (): void {
+    it('validates correct data structure', function (): void {
         $data = [
             [1, 'post'],
             [2, 'page'],
@@ -21,7 +21,7 @@ describe('User Stored Data Validator', function () {
         expect($result)->toBe($data);
     });
 
-    it('filters out invalid raw entities', function () {
+    it('filters out invalid raw entities', function (): void {
         $data = [
             ['0', 'post'],
             [-1, 'video'],
@@ -35,7 +35,7 @@ describe('User Stored Data Validator', function () {
         expect($result)->toBe([[2, 'page']]);
     });
 
-    it('filters out invalid raw items structure', function () {
+    it('filters out invalid raw items structure', function (): void {
         $data = [
             null,
             'string',
@@ -49,7 +49,7 @@ describe('User Stored Data Validator', function () {
         expect($result)->toBe([[1, 'administrator']]);
     });
 
-    it('filters out invalid item format', function () {
+    it('filters out invalid item format', function (): void {
         $data = [
             [1, ''],
             [1, null],
@@ -64,7 +64,7 @@ describe('User Stored Data Validator', function () {
         expect($result)->toBe([[2, 'editor']]);
     });
 
-    it('handles empty input array', function () {
+    it('handles empty input array', function (): void {
         $result = iterator_to_array($this->rawDataAsserter->ensureDataStructure([]));
 
         expect($result)->toBe([]);

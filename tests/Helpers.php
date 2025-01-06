@@ -25,35 +25,34 @@ function fixturesDirectory(): string
  *  Mock Helpers
  * ---------------------------------------------------------------------------------------------- */
 
- function propertiesMock(): \Mockery\MockInterface&Properties\PluginProperties
- {
-     return \Mockery::mock(Properties\PluginProperties::class, [
-         'baseUrl' => 'http://example.com',
-         'basePath' => projectRootDirectory(),
-         'version' => '1.0.0',
-     ]);
- }
+function propertiesMock(): \Mockery\MockInterface&Properties\PluginProperties
+{
+    return \Mockery::mock(Properties\PluginProperties::class, [
+        'baseUrl' => 'http://example.com',
+        'basePath' => projectRootDirectory(),
+        'version' => '1.0.0',
+    ]);
+}
 
 /* -------------------------------------------------------------------------------------------------
  *  WordPress Helpers & Stubs
  * ---------------------------------------------------------------------------------------------- */
 
- function wordPressDirPath(): string
- {
-     return dirname(__DIR__) . '/vendor/roots/wordpress-no-content';
- }
+function wordPressDirPath(): string
+{
+    return dirname(__DIR__) . '/vendor/roots/wordpress-no-content';
+}
 
- function setupWpConstants(): void
- {
-     if (!defined('ABSPATH')) {
-         define('ABSPATH', wordPressDirPath() . '/');
-     }
+function setupWpConstants(): void
+{
+    if (!defined('ABSPATH')) {
+        define('ABSPATH', wordPressDirPath() . '/');
+    }
 
-     if (!defined('WPINC')) {
-         define('WPINC', '/wp-includes');
-     }
-
- }
+    if (!defined('WPINC')) {
+        define('WPINC', '/wp-includes');
+    }
+}
 
 if (!function_exists('wp_normalize_path')) {
     function wp_normalize_path(string $path): string
@@ -142,7 +141,9 @@ function setUpWpError(): void
     require_once wordPressDirPath() . '/wp-includes/class-wp-error.php';
 }
 
-function setUpWpRest(): void {
+function setUpWpRest(): void
+{
+
     require_once wordPressDirPath() . '/wp-includes/class-wp-http-response.php';
     require_once wordPressDirPath() . '/wp-includes/rest-api/class-wp-rest-request.php';
     require_once wordPressDirPath() . '/wp-includes/rest-api/class-wp-rest-response.php';

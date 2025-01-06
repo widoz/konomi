@@ -34,8 +34,11 @@ class MiddlewareProcess
         $runner = array_reduce(
             array_reverse($middlewares),
             /** @param MiddlewareCallable $next */
-            static fn (callable $next, Middleware $middleware)
+            static fn (callable $next, Middleware $middleware): callable
                 => static fn (\WP_REST_Request $request): \WP_REST_Response|\WP_Error
+                /**
+                 * phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable
+                 */
                 => $middleware($request, $next),
             $controller
         );

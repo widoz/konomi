@@ -7,27 +7,27 @@ use Widoz\Wp\Konomi\User\NullItem;
 use Widoz\Wp\Konomi\User\User;
 use Widoz\Wp\Konomi\User\Item;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->cache = ItemCache::new();
     $this->user = Mockery::mock(User::class);
     $this->item = Mockery::mock(Item::class);
 });
 
-describe('Item Cache', function () {
-    it('checks if user has items group', function () {
+describe('Item Cache', function (): void {
+    it('checks if user has items group', function (): void {
         expect($this->cache->hasGroup($this->user))->toBeFalse();
     });
 
-    it('checks if user has specific item', function () {
+    it('checks if user has specific item', function (): void {
         $this->item->shouldReceive('id')->andReturn(1);
         expect($this->cache->has($this->user, $this->item))->toBeFalse();
     });
 
-    it('gets null item when user has no items', function () {
+    it('gets null item when user has no items', function (): void {
         expect($this->cache->get($this->user, 1))->toBeInstanceOf(NullItem::class);
     });
 
-    it('sets and gets item for user', function () {
+    it('sets and gets item for user', function (): void {
         $this->item->shouldReceive('id')->andReturn(1);
         $this->item->shouldReceive('isValid')->andReturn(true);
 
@@ -35,7 +35,7 @@ describe('Item Cache', function () {
         expect($this->cache->has($this->user, $this->item))->toBeTrue();
     });
 
-    it('unsets item for user', function () {
+    it('unsets item for user', function (): void {
         $this->item->shouldReceive('id')->andReturn(1);
         $this->item->shouldReceive('isValid')->andReturn(true);
 
@@ -44,7 +44,7 @@ describe('Item Cache', function () {
         expect($this->cache->has($this->user, $this->item))->toBeFalse();
     });
 
-    it('gets all items for user', function () {
+    it('gets all items for user', function (): void {
         expect($this->cache->all($this->user))->toBeArray()->toBeEmpty();
 
         $this->item->shouldReceive('id')->andReturn(1);
@@ -54,7 +54,7 @@ describe('Item Cache', function () {
         expect($this->cache->all($this->user))->toBeArray()->toHaveCount(1);
     });
 
-    it('do not unset an item if not present in the cache', function () {
+    it('do not unset an item if not present in the cache', function (): void {
         $this->item->shouldReceive('id')->andReturn(1);
         $this->item->shouldReceive('isValid')->andReturn(true);
 
@@ -62,11 +62,14 @@ describe('Item Cache', function () {
         expect($this->cache->has($this->user, $this->item))->toBeFalse();
     });
 
-    it('return null item object if the given Item ID does not exists for the user', function () {
-        $this->item->shouldReceive('id')->andReturn(1);
-        $this->item->shouldReceive('isValid')->andReturn(true);
+    it(
+        'return null item object if the given Item ID does not exists for the user',
+        function (): void {
+            $this->item->shouldReceive('id')->andReturn(1);
+            $this->item->shouldReceive('isValid')->andReturn(true);
 
-        $this->cache->set($this->user, $this->item);
-        expect($this->cache->get($this->user, 2))->toBeInstanceOf(NullItem::class);
-    });
+            $this->cache->set($this->user, $this->item);
+            expect($this->cache->get($this->user, 2))->toBeInstanceOf(NullItem::class);
+        }
+    );
 });

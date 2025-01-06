@@ -6,8 +6,8 @@ namespace Pest;
 
 use Brain\Monkey\Functions;
 
-use function \Brain\Monkey\setUp;
-use function \Brain\Monkey\tearDown;
+use function Brain\Monkey\setUp;
+use function Brain\Monkey\tearDown;
 
 uses()
     ->beforeAll(static function (): void {
