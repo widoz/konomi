@@ -70,29 +70,27 @@ beforeEach(function (): void {
         );
 });
 
-describe('Rest Register', function (): void {
-    it('register rest route with correct arguments', function (): void {
-        $handler = null;
-        Functions\when('register_rest_route')->alias(
-            function (string $namespace, string $route, array $args) use (&$handler): bool {
-                $handler = $args['callback'];
+test('Rest Register', function (): void {
+    $handler = null;
+    Functions\when('register_rest_route')->alias(
+        function (string $namespace, string $route, array $args) use (&$handler): bool {
+            $handler = $args['callback'];
 
-                expect($namespace)->toBe('test/v1');
-                expect($route)->toBe('/test');
-                expect($args['methods'])->toContain(Method::POST->value);
-                expect(isset($args['schema']))->toBeTrue();
-                expect($args['permission_callback'])->toBe('__return_true');
+            expect($namespace)->toBe('test/v1');
+            expect($route)->toBe('/test');
+            expect($args['methods'])->toContain(Method::POST->value);
+            expect(isset($args['schema']))->toBeTrue();
+            expect($args['permission_callback'])->toBe('__return_true');
 
-                return true;
-            }
-        );
+            return true;
+        }
+    );
 
-        $this->route->register();
-        $response = $handler(new \WP_REST_Request());
-        $data = $response->get_data();
+    $this->route->register();
+    $response = $handler(new \WP_REST_Request());
+    $data = $response->get_data();
 
-        expect($data['success'])->toBeTrue();
-        expect($data['middleware1'])->toBeTrue();
-        expect($data['middleware2'])->toBeTrue();
-    });
+    expect($data['success'])->toBeTrue();
+    expect($data['middleware1'])->toBeTrue();
+    expect($data['middleware2'])->toBeTrue();
 });

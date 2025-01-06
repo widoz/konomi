@@ -29,7 +29,7 @@ beforeEach(function (): void {
     );
 });
 
-describe('Repository', function (): void {
+describe('User Repository', function (): void {
     it('find an item for the user', function (): void {
         Actions\expectDone('konomi.user.repository.find')->once();
         $user = User\CurrentUser::new($this->repository);
