@@ -8,7 +8,6 @@ use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Rest\Method;
 use Widoz\Wp\Konomi\Rest\Schema;
 use Widoz\Wp\Konomi\Rest\Middleware;
-use Widoz\Wp\Konomi\Rest\RestRegistTrait;
 
 beforeAll(function (): void {
     setUpWpRest();
@@ -70,7 +69,7 @@ beforeEach(function (): void {
         );
 });
 
-test('Rest Register', function (): void {
+test('Register Rest Endpoints With Middlewares', function (): void {
     $handler = null;
     Functions\when('register_rest_route')->alias(
         function (string $namespace, string $route, array $args) use (&$handler): bool {
