@@ -5,20 +5,33 @@ declare(strict_types=1);
 namespace Widoz\Wp\Konomi\Tests\Integration\ApiFetch;
 
 use Widoz\Wp\Konomi\ApiFetch;
+use Widoz\Wp\Konomi\Configuration;
 use Widoz\Wp\Konomi\Icons;
 
 beforeEach(function (): void {
     setupWpConstants();
     $this->properties = propertiesMock();
     $this->container = new class implements \Psr\Container\ContainerInterface {
+        /** @var array<mixed> $services */
+        private array $services = [];
+
         public function get(string $id): mixed
         {
-            return null;
+            if (!$this->has($id)) {
+                // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
+                throw new \Error("Service {$id} not found");
+            }
+            return $this->services[$id]($this);
         }
 
         public function has(string $id): bool
         {
-            return false;
+            return isset($this->services[$id]);
+        }
+
+        public function set(string $id, mixed $service): void
+        {
+            $this->services[$id] = $service;
         }
     };
 
@@ -34,12 +47,24 @@ beforeEach(function (): void {
             },
         ],
         [
+            Configuration\Module::new($this->properties, ''),
+            function (): void {
+                expect(wp_script_is('konomi-configuration', 'registered'))->toBe(true);
+            },
+        ],
+        [
             Icons\Module::new($this->properties),
             function (): void {
                 expect(wp_script_is('konomi-icons', 'registered'))->toBe(true);
             },
         ],
     ];
+
+    foreach ($this->modules as [$module]) {
+        foreach ($module->services() as $key => $service) {
+            $this->container->set($key, $service);
+        }
+    }
 });
 
 describe('Assets', function (): void {
@@ -53,6 +78,7 @@ describe('Assets', function (): void {
             }
 
             do_action('wp_enqueue_scripts');
+            do_action('enqueue_block_editor_assets');
             // The Data mock the json file content
             apply_filters(
                 'wp_inline_script_attributes',

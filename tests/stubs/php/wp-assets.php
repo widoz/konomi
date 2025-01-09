@@ -27,6 +27,16 @@ function asset(string $handle, string $what, string $status): array
     return $GLOBALS['container'][$what][$status][$handle] ?? [];
 }
 
+if (!function_exists('wp_add_inline_script')) {
+    function wp_add_inline_script(string $handle, string $data, string $position = 'after'): void
+    {
+        $GLOBALS['container']['scripts']['inline'][$handle] = [
+            'position' => $position,
+            'data' => $data,
+        ];
+    }
+}
+
 if (!function_exists('wp_register_script_module')) {
     function wp_register_script_module(string $handle, string $src, array $dependencies, string $version): void
     {
