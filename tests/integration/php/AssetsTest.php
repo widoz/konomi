@@ -39,8 +39,7 @@ beforeEach(function (): void {
         [
             ApiFetch\Module::new($this->properties),
             function (): void {
-                expect(wp_module_script_is('@konomi/api-fetch', 'registered'))
-                    ->toBe(true);
+                expect(wp_module_script_is('@konomi/api-fetch', 'registered'))->toBe(true);
                 expect(asset('@konomi/api-fetch', 'modules', 'registered')['dependencies'])
                     ->toContain('@konomi/configuration');
                 expect(wp_script_is('wp-api-fetch', 'enqueued'))->toBe(true);
@@ -49,7 +48,20 @@ beforeEach(function (): void {
         [
             Configuration\Module::new($this->properties, ''),
             function (): void {
+                // Be sure the script is registered and the configuration storage is configured.
                 expect(wp_script_is('konomi-configuration', 'registered'))->toBe(true);
+                expect(asset('konomi-configuration', 'scripts', 'inline')['position'])
+                    ->toBe('after');
+                expect(asset('konomi-configuration', 'scripts', 'inline')['data'])
+                    ->toContain('window.konomiConfiguration.initConfiguration');
+
+                // Be sure the module is registered and the configuration storage is configured.
+                expect(wp_module_script_is('@konomi/configuration', 'registered'))->toBe(true);
+                expect(html())->toContain(
+<<<SCRIPT
+<script type="module">import { initConfiguration } from '@konomi/configuration';\ninitConfiguration
+SCRIPT
+                );
             },
         ],
         [
@@ -83,8 +95,9 @@ describe('Assets', function (): void {
             apply_filters(
                 'wp_inline_script_attributes',
                 ['type' => 'importmap'],
-                '"@konomi\/api-fetch"'
+                '"@konomi\/api-fetch", "@konomi\/configuration"'
             );
+            do_action('wp_footer');
 
             foreach ($callbacks as $callback) {
                 $callback();

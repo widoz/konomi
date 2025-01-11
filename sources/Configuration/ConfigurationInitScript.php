@@ -15,7 +15,7 @@ class ConfigurationInitScript
     {
     }
 
-    public function printConfigurationInitializer(): void
+    public function printModuleConfigurationInitializer(): void
     {
         wp_print_inline_script_tag(
             <<<JS
@@ -25,6 +25,14 @@ class ConfigurationInitScript
             [
                 'type' => 'module',
             ]
+        );
+    }
+
+    public function addScriptConfigurationInitializer(): void
+    {
+        wp_add_inline_script(
+            'konomi-configuration',
+            "window.konomiConfiguration.initConfiguration('{$this->configuration->serialize()}');"
         );
     }
 }

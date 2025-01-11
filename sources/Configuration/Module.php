@@ -47,7 +47,6 @@ class Module implements ServiceModule, ExecutableModule
     public function run(ContainerInterface $container): bool
     {
         add_action('enqueue_block_editor_assets', function () use ($container): void {
-            $service = $container->get('konomi.configuration');
             $distLocationPath = 'sources/Configuration/client/dist';
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath());
@@ -67,10 +66,9 @@ class Module implements ServiceModule, ExecutableModule
                 true
             );
 
-            wp_add_inline_script(
-                'konomi-configuration',
-                "window.konomiConfiguration.initConfiguration('{$service->serialize()}');"
-            );
+            $container
+                ->get('konomi.configuration.init-script-render')
+                ->addScriptConfigurationInitializer();
         });
 
         add_action('wp_enqueue_scripts', function (): void {
@@ -100,7 +98,7 @@ class Module implements ServiceModule, ExecutableModule
                     static function () use ($container): void {
                         $container
                             ->get('konomi.configuration.init-script-render')
-                            ->printConfigurationInitializer();
+                            ->printModuleConfigurationInitializer();
                     }
                 );
             }

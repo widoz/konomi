@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Widoz\Wp\Konomi\Tests\Unit\Configuration;
 
 use Brain\Monkey\Functions;
-use Widoz\Wp\Konomi\Configuration\Configuration;
-use Widoz\Wp\Konomi\Configuration\ConfigurationInitScript;
+use Widoz\Wp\Konomi\Configuration;
 
 describe('Initialize the Configuration in Frontend', function (): void {
     it('render a js module calling the client initConfiguration function', function (): void {
         $expectedConfiguration = '{"key":"value"}';
 
-        $configuration = \Mockery::mock(Configuration::class);
-        $configurationInitScript = ConfigurationInitScript::new($configuration);
+        $configuration = \Mockery::mock(Configuration\Configuration::class);
+        $configurationInitScript = Configuration\ConfigurationInitScript::new($configuration);
 
-        $configuration->expects('serialize')
+        $configuration
+            ->expects('serialize')
             ->once()
             ->andReturn($expectedConfiguration);
 
@@ -31,6 +31,27 @@ describe('Initialize the Configuration in Frontend', function (): void {
                 ]
             );
 
-        $configurationInitScript->printConfigurationInitializer();
+        $configurationInitScript->printModuleConfigurationInitializer();
+    });
+
+    it('render the js script calling the client initConfiguration function', function(): void {
+        $expectedConfiguration = '{"key":"value"}';
+
+        $configuration = \Mockery::mock(Configuration\Configuration::class);
+        $configurationInitScript = Configuration\ConfigurationInitScript::new($configuration);
+
+        $configuration
+            ->expects('serialize')
+            ->once()
+            ->andReturn($expectedConfiguration);
+
+        Functions\expect('wp_add_inline_script')
+            ->once()
+            ->with(
+                'konomi-configuration',
+                "window.konomiConfiguration.initConfiguration('{$expectedConfiguration}');"
+            );
+
+        $configurationInitScript->addScriptConfigurationInitializer();
     });
 });

@@ -27,6 +27,11 @@ function asset(string $handle, string $what, string $status): array
     return $GLOBALS['container'][$what][$status][$handle] ?? [];
 }
 
+function html(): string
+{
+    return $GLOBALS['container']['html'] ?? '';
+}
+
 if (!function_exists('wp_add_inline_script')) {
     function wp_add_inline_script(string $handle, string $data, string $position = 'after'): void
     {
@@ -84,5 +89,18 @@ if (!function_exists('wp_module_script_is')) {
     function wp_module_script_is(string $handle, string $what): bool
     {
         return array_key_exists($handle, $GLOBALS['container']['modules'][$what]);
+    }
+}
+
+if (!function_exists('wp_print_inline_script_tag')) {
+    function wp_print_inline_script_tag(string $script, array $config): void
+    {
+        if (!isset($GLOBALS['container']['html'])) {
+            $GLOBALS['container']['html'] = '';
+        }
+
+        $type = $config['type'] ?? '';
+
+        $GLOBALS['container']['html'] .= "<script type=\"{$type}\">{$script}</script>";
     }
 }
