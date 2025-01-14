@@ -29,34 +29,32 @@ beforeEach(function (): void {
 });
 
 describe('Repository', function (): void {
-    describe('find', function (): void {
-        it('returns an empty array when no post is found', function (): void {
-            $postId = 1;
-            $this->storage->expects('read')->with($postId, $this->key)->andReturn([]);
-            $this->rawDataAsserter->expects('ensureDataStructure')->with([])->andReturn((fn () => yield from [])());
-            expect($this->repository->find($postId))->toBe([]);
-        });
+    it('returns an empty array when no post is found', function (): void {
+        $postId = 1;
+        $this->storage->expects('read')->with($postId, $this->key)->andReturn([]);
+        $this->rawDataAsserter->expects('ensureDataStructure')->with([])->andReturn((fn () => yield from [])());
+        expect($this->repository->find($postId))->toBe([]);
+    });
 
-        it('returns post data when post exists', function (): void {
-            $postId = 10;
-            $rawData = [
-                100 => [
-                    [10, 'post'],
-                ],
-                21 => [
-                    [10, 'product'],
-                ],
-            ];
+    it('returns post data when post exists', function (): void {
+        $postId = 10;
+        $rawData = [
+            100 => [
+                [10, 'post'],
+            ],
+            21 => [
+                [10, 'product'],
+            ],
+        ];
 
-            $this->storage->expects('read')->with($postId, $this->key)->andReturn($rawData);
-            $this->rawDataAsserter->expects('ensureDataStructure')->with($rawData)->andReturn((fn () => yield from $rawData)());
-            $this->itemFactory->shouldReceive('create')->andReturnUsing(fn (int $id, string $type) => Like::new($id, $type, true));
-            $result = $this->repository->find($postId);
+        $this->storage->expects('read')->with($postId, $this->key)->andReturn($rawData);
+        $this->rawDataAsserter->expects('ensureDataStructure')->with($rawData)->andReturn((fn () => yield from $rawData)());
+        $this->itemFactory->shouldReceive('create')->andReturnUsing(fn (int $id, string $type) => Like::new($id, $type, true));
+        $result = $this->repository->find($postId);
 
-            expect($result[100]->id())->toBe(10);
-            expect($result[100]->type())->toBe('post');
-            expect($result[21]->id())->toBe(10);
-            expect($result[21]->type())->toBe('product');
-        });
+        expect($result[100]->id())->toBe(10);
+        expect($result[100]->type())->toBe('post');
+        expect($result[21]->id())->toBe(10);
+        expect($result[21]->type())->toBe('product');
     });
 });
