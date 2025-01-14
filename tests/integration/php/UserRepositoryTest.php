@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Widoz\Wp\Konomi\Tests\Integration;
+
 use Brain\Monkey\Actions;
 use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\User;

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Widoz\Wp\Konomi\Tests\Unit\Rest\Middlewares;
+
 use Widoz\Wp\Konomi\Rest\Middlewares\ErrorCatch;
 
 beforeAll(function (): void {
@@ -12,13 +14,13 @@ beforeAll(function (): void {
 describe('ErrorCatch Middleware', function (): void {
     it('passes through successful response', function (): void {
         $request = new \WP_Rest_Request();
-        $next = fn (\WP_Rest_Request $request) => new WP_REST_Response(['success' => true]);
+        $next = fn (\WP_Rest_Request $request) => new \WP_REST_Response(['success' => true]);
 
         $errorCatch = ErrorCatch::new();
         $response = $errorCatch($request, $next);
 
         expect($response)
-            ->toBeInstanceOf(WP_REST_Response::class)
+            ->toBeInstanceOf(\WP_REST_Response::class)
             ->and($response->get_data())->toBe(['success' => true]);
     });
 
@@ -33,7 +35,7 @@ describe('ErrorCatch Middleware', function (): void {
         $response = $errorCatch($request, $next);
 
         expect($response)
-            ->toBeInstanceOf(WP_Error::class)
+            ->toBeInstanceOf(\WP_Error::class)
             ->and($response->get_error_code())->toBe('internal_error')
             ->and($response->get_error_data())
             ->toHaveKey('status', 500)

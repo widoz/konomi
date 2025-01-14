@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use Widoz\Wp\Konomi\Rest\Middleware;
+namespace Widoz\Wp\Konomi\Tests\Unit\Rest\Middlewares;
+
 use Widoz\Wp\Konomi\Rest\Middlewares\Authentication;
 use Widoz\Wp\Konomi\User\User;
 
@@ -25,20 +26,20 @@ describe('Authentication Middleware', function (): void {
         $response = $auth($this->request, $next);
 
         expect($response)
-            ->toBeInstanceOf(WP_Error::class)
+            ->toBeInstanceOf(\WP_Error::class)
             ->and($response->get_error_code())->toBe('unauthorized')
             ->and($response->get_error_data()['status'])->toBe(401);
     });
 
     it('calls next middleware when user is logged in', function (): void {
         $this->user->expects('isLoggedIn')->andReturnTrue();
-        $next = fn (\WP_Rest_Request $request) => new WP_REST_Response(['success' => true]);
+        $next = fn (\WP_Rest_Request $request) => new \WP_REST_Response(['success' => true]);
 
         $auth = Authentication::new($this->user);
         $response = $auth($this->request, $next);
 
         expect($response)
-            ->toBeInstanceOf(WP_REST_Response::class)
+            ->toBeInstanceOf(\WP_REST_Response::class)
             ->and($response->get_data())->toBe(['success' => true]);
     });
 });

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Widoz\Wp\Konomi\Tests\Unit\Post;
+
 use Widoz\Wp\Konomi\Post\RawDataAssert;
 
 beforeEach(function (): void {

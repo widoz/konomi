@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Widoz\Wp\Konomi\Tests\Unit\Rest;
+
 use Widoz\Wp\Konomi\Rest\MiddlewareProcess;
 use Widoz\Wp\Konomi\Rest\Middleware;
 
@@ -36,7 +38,7 @@ describe('Middleware Process', function (): void {
         ];
 
         $controller = function (\WP_REST_Request $request): \WP_REST_Response {
-            return new WP_REST_Response(['data']);
+            return new \WP_REST_Response(['data']);
         };
 
         /** @var \WP_Rest_Request&\Mockery\MockInterface $request */

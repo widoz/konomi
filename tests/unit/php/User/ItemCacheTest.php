@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
+namespace Widoz\Wp\Konomi\Tests\Unit\User;
+
 use Widoz\Wp\Konomi\User\ItemCache;
 use Widoz\Wp\Konomi\User\NullItem;
 use Widoz\Wp\Konomi\User\User;
 use Widoz\Wp\Konomi\User\Item;
+use Mockery;
 
 beforeEach(function (): void {
     $this->cache = ItemCache::new();
