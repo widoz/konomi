@@ -57,11 +57,7 @@ beforeEach(function (): void {
 
                 // Be sure the module is registered and the configuration storage is configured.
                 expect(wp_module_script_is('@konomi/configuration', 'registered'))->toBe(true);
-                expect(html())->toContain(
-<<<SCRIPT
-<script type="module">import { initConfiguration } from '@konomi/configuration';\ninitConfiguration
-SCRIPT
-                );
+                expect(html())->toContain("<script type=\"module\">import { initConfiguration } from '@konomi/configuration';\ninitConfiguration");
             },
         ],
         [

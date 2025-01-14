@@ -34,7 +34,7 @@ describe('Initialize the Configuration in Frontend', function (): void {
         $configurationInitScript->printModuleConfigurationInitializer();
     });
 
-    it('render the js script calling the client initConfiguration function', function(): void {
+    it('render the js script calling the client initConfiguration function', function (): void {
         $expectedConfiguration = '{"key":"value"}';
 
         $configuration = \Mockery::mock(Configuration\Configuration::class);

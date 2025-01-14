@@ -38,7 +38,7 @@ class Repository
     }
 
     /**
-     * @return array<UserId, array<User\Item>>
+     * @return array<UserId, User\Item>
      */
     public function find(int $entityId): array
     {
@@ -124,17 +124,12 @@ class Repository
 
     /**
      * @param RawItems $rawItems
-     * @return array<User\Item>
+     * @return User\Item
      */
-    private function unserialize(array $rawItems): array
+    private function unserialize(array $rawItems): User\Item
     {
-        $items = [];
-
         $id = (int) ($rawItems[0][0] ?? null);
         $type = (string) ($rawItems[0][1] ?? null);
-
-        $items[] = $this->itemFactory->create($id, $type, true);
-
-        return $items;
+        return $this->itemFactory->create($id, $type, true);
     }
 }

@@ -8,12 +8,12 @@ use Mockery;
 use Widoz\Wp\Konomi\Blocks;
 use Widoz\Wp\Konomi\User;
 
-beforeAll(function(): void {
+beforeAll(function (): void {
     setUpWpRest();
     setUpWpError();
 });
 
-beforeEach(function(): void {
+beforeEach(function (): void {
     /** @var Mockery\MockInterface&User\User $user */
     $this->user = Mockery::mock(User\User::class);
     /** @var Mockery\MockInterface&User\ItemFactory $likeFactory */
@@ -24,8 +24,8 @@ beforeEach(function(): void {
     $this->request = Mockery::mock(\WP_REST_Request::class);
 });
 
-describe('Add Controller', function(): void {
-    it('Successfully save a Like', function(): void {
+describe('Add Controller', function (): void {
+    it('Successfully save a Like', function (): void {
         $id = 1;
         $type = 'post';
         $isActive = true;
@@ -34,7 +34,7 @@ describe('Add Controller', function(): void {
                 'id' => $id,
                 'type' => $type,
                 'isActive' => $isActive,
-            ]
+            ],
         ];
 
         $this->request
@@ -68,7 +68,7 @@ describe('Add Controller', function(): void {
      * In this test the request values do not matter much but the
      * `Item::isValid` is what makes the difference.
      */
-    it('Fails to save the Like because of invalid data', function(): void {
+    it('Fails to save the Like because of invalid data', function (): void {
         $id = 1;
         $type = 'post';
         $isActive = true;
@@ -77,7 +77,7 @@ describe('Add Controller', function(): void {
                 'id' => $id,
                 'type' => $type,
                 'isActive' => $isActive,
-            ]
+            ],
         ];
 
         $this->request
@@ -106,7 +106,7 @@ describe('Add Controller', function(): void {
      * In this test the Request values do not matter much but the
      * `User::saveLike`.
      */
-    it ('Fails to save the Like', function(): void {
+    it('Fails to save the Like', function (): void {
         $id = 1;
         $type = 'post';
         $isActive = true;
@@ -115,7 +115,7 @@ describe('Add Controller', function(): void {
                 'id' => $id,
                 'type' => $type,
                 'isActive' => $isActive,
-            ]
+            ],
         ];
 
         $this->request
