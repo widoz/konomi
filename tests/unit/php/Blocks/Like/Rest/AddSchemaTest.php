@@ -7,26 +7,28 @@ namespace Widoz\Wp\Konomi\Tests\Unit\Blocks\Like\Rest;
 use Widoz\Wp\Konomi\Blocks;
 
 describe('Add Schema', function (): void {
-    it('should return the correct schema', function (): void {
-        $schema = Blocks\Like\Rest\AddSchema::new();
+    describe('toArray', function(): void {
+        it('should return the correct schema', function (): void {
+            $schema = Blocks\Like\Rest\AddSchema::new();
 
-        expect($schema->toArray())->toBe([
-            'title' => '_like',
-            'type' => 'object',
-            'properties' => [
-                'id' => [
-                    'required' => true,
-                    'type' => 'integer',
+            expect($schema->toArray())->toBe([
+                'title' => '_like',
+                'type' => 'object',
+                'properties' => [
+                    'id' => [
+                        'required' => true,
+                        'type' => 'integer',
+                    ],
+                    'type' => [
+                        'required' => true,
+                        'type' => 'string',
+                    ],
+                    'isActive' => [
+                        'required' => true,
+                        'type' => 'boolean',
+                    ],
                 ],
-                'type' => [
-                    'required' => true,
-                    'type' => 'string',
-                ],
-                'isActive' => [
-                    'required' => true,
-                    'type' => 'boolean',
-                ],
-            ],
-        ]);
+            ]);
+        });
     });
 });

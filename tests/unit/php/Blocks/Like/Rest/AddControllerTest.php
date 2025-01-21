@@ -25,123 +25,80 @@ beforeEach(function (): void {
 });
 
 describe('Add Controller', function (): void {
-    it('Successfully save a Like', function (): void {
-        $id = 1;
-        $type = 'post';
-        $isActive = true;
-        $rawRequestData = [
-            '_like' => [
-                'id' => $id,
-                'type' => $type,
-                'isActive' => $isActive,
-            ],
-        ];
+    describe('__invoke', function(): void {
+        it('Successfully save a Like', function (): void {
+            $id = 1;
+            $type = 'post';
+            $isActive = true;
+            $rawRequestData = makeRequestData($id, $type, $isActive);
 
-        $this->request
-            ->shouldReceive('get_param')
-            ->with('meta')
-            ->andReturn($rawRequestData);
+            $this->request->shouldReceive('get_param')->with('meta')->andReturn($rawRequestData);
+            $this->likeFactory->shouldReceive('create')->with($id, $type, $isActive)->andReturn($this->like);
+            $this->like->shouldReceive('isValid')->andReturn(true);
+            $this->user->shouldReceive('saveLike')->with($this->like)->andReturn(true);
 
-        $this->likeFactory
-            ->shouldReceive('create')
-            ->with($id, $type, $isActive)
-            ->andReturn($this->like);
+            $controller = Blocks\Like\Rest\AddController::new($this->user, $this->likeFactory);
+            $result = $controller($this->request);
 
-        $this->like
-            ->shouldReceive('isValid')
-            ->andReturn(true);
+            expect($result->get_status())->toBe(201);
+            expect($result->get_data()['success'])->toBe(true);
+            expect($result->get_data()['message'])->toContain('Like saved');
+        });
 
-        $this->user
-            ->shouldReceive('saveLike')
-            ->with($this->like)
-            ->andReturn(true);
+        /**
+         * In this test the request values do not matter much but the
+         * `Item::isValid` is what makes the difference.
+         */
+        it('Fails to save the Like because of invalid data', function (): void {
+            $id = 1;
+            $type = 'post';
+            $isActive = true;
+            $rawRequestData = makeRequestData($id, $type, $isActive);
 
-        $controller = Blocks\Like\Rest\AddController::new($this->user, $this->likeFactory);
-        $result = $controller($this->request);
+            $this->request->shouldReceive('get_param')->with('meta')->andReturn($rawRequestData);
+            $this->likeFactory->shouldReceive('create')->with($id, $type, $isActive)->andReturn($this->like);
+            $this->like->shouldReceive('isValid')->andReturn(false);
 
-        expect($result->get_status())->toBe(201);
-        expect($result->get_data()['success'])->toBe(true);
-        expect($result->get_data()['message'])->toContain('Like saved');
-    });
+            $controller = Blocks\Like\Rest\AddController::new($this->user, $this->likeFactory);
+            $result = $controller($this->request);
 
-    /**
-     * In this test the request values do not matter much but the
-     * `Item::isValid` is what makes the difference.
-     */
-    it('Fails to save the Like because of invalid data', function (): void {
-        $id = 1;
-        $type = 'post';
-        $isActive = true;
-        $rawRequestData = [
-            '_like' => [
-                'id' => $id,
-                'type' => $type,
-                'isActive' => $isActive,
-            ],
-        ];
+            expect($result->get_error_code())->toContain('invalid_like_data');
+            expect($result->get_error_message())->toContain('Invalid Like Data');
+            expect($result->get_error_data()['status'])->toBe(400);
+        });
 
-        $this->request
-            ->shouldReceive('get_param')
-            ->with('meta')
-            ->andReturn($rawRequestData);
+        /**
+         * In this test the Request values do not matter much but the
+         * `User::saveLike`.
+         */
+        it('Fails to save the Like', function (): void {
+            $id = 1;
+            $type = 'post';
+            $isActive = true;
+            $rawRequestData = makeRequestData($id, $type, $isActive);
 
-        $this->likeFactory
-            ->shouldReceive('create')
-            ->with($id, $type, $isActive)
-            ->andReturn($this->like);
+            $this->request->shouldReceive('get_param')->with('meta')->andReturn($rawRequestData);
+            $this->likeFactory->shouldReceive('create')->with($id, $type, $isActive)->andReturn($this->like);
+            $this->like->shouldReceive('isValid')->andReturn(true);
+            $this->user->shouldReceive('saveLike')->with($this->like)->andReturn(false);
 
-        $this->like
-            ->shouldReceive('isValid')
-            ->andReturn(false);
+            $controller = Blocks\Like\Rest\AddController::new($this->user, $this->likeFactory);
+            $result = $controller($this->request);
 
-        $controller = Blocks\Like\Rest\AddController::new($this->user, $this->likeFactory);
-        $result = $controller($this->request);
-
-        expect($result->get_error_code())->toContain('invalid_like_data');
-        expect($result->get_error_message())->toContain('Invalid Like Data');
-        expect($result->get_error_data()['status'])->toBe(400);
-    });
-
-    /**
-     * In this test the Request values do not matter much but the
-     * `User::saveLike`.
-     */
-    it('Fails to save the Like', function (): void {
-        $id = 1;
-        $type = 'post';
-        $isActive = true;
-        $rawRequestData = [
-            '_like' => [
-                'id' => $id,
-                'type' => $type,
-                'isActive' => $isActive,
-            ],
-        ];
-
-        $this->request
-            ->shouldReceive('get_param')
-            ->with('meta')
-            ->andReturn($rawRequestData);
-
-        $this->likeFactory
-            ->shouldReceive('create')
-            ->with($id, $type, $isActive)
-            ->andReturn($this->like);
-
-        $this->like
-            ->shouldReceive('isValid')
-            ->andReturn(true);
-
-        $this->user
-            ->shouldReceive('saveLike')
-            ->with($this->like)
-            ->andReturn(false);
-
-        $controller = Blocks\Like\Rest\AddController::new($this->user, $this->likeFactory);
-        $result = $controller($this->request);
-
-        expect($result->get_error_code())->toContain('failed_to_save_like');
-        expect($result->get_error_message())->toContain('Failed to save like');
-        expect($result->get_error_data()['status'])->toBe(500);
+            expect($result->get_error_code())->toContain('failed_to_save_like');
+            expect($result->get_error_message())->toContain('Failed to save like');
+            expect($result->get_error_data()['status'])->toBe(500);
+        });
     });
 });
+
+function makeRequestData(int $id, string $type, bool $isActive): array
+{
+    return [
+        '_like' => [
+            'id' => $id,
+            'type' => $type,
+            'isActive' => $isActive,
+        ],
+    ];
+}
