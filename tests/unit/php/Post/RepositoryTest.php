@@ -11,9 +11,11 @@ use Widoz\Wp\Konomi\Post\{
 };
 use Widoz\Wp\Konomi\User\{
     ItemFactory,
-    Like
+    Like,
+    User
 };
 use Mockery;
+use Brain\Monkey\Actions;
 
 beforeEach(function (): void {
     $this->key = 'key';
@@ -57,6 +59,46 @@ describe('Repository', function (): void {
             expect($result[100]->type())->toBe('post');
             expect($result[21]->id())->toBe(10);
             expect($result[21]->type())->toBe('product');
+        });
+    });
+
+    describe('save', function(): void {
+        it('returns false when item is invalid', function (): void {
+            $invalidItem = Mockery::mock(Like::class, ['isValid' => false]);
+            $user = Mockery::mock(User::class);
+            expect($this->repository->save($invalidItem, $user))->toBeFalse();
+            Actions\expectAdded('konomi.post.collection.save')->never();
+        });
+
+        it('adds new item when it does not exist', function (): void {
+            $postId = 10;
+            $userId = 1;
+            $item = Like::new($postId, 'post', true);
+            /** @var User&\Mockery\MockInterface $user */
+            $user = Mockery::mock(User::class);
+
+            $user->shouldReceive('id')->andReturn($userId);
+            $this->storage->expects('read')->with($postId, $this->key)->andReturn([]);
+            $this->rawDataAsserter->expects('ensureDataStructure')->with([])->andReturn((fn () => yield from [])());
+            $this->storage->expects('write')->with($postId, $this->key, [$userId => [[$postId, 'post']]])->andReturn(true);
+
+            expect($this->repository->save($item, $user))->toBeTrue();
+        });
+
+        it('removes item when it exists', function (): void {
+            $postId = 10;
+            $userId = 1;
+            $existingData = [$userId => [[$postId, 'post']]];
+            $item = Like::new($postId, 'post', true);
+            /** @var User&\Mockery\MockInterface $user */
+            $user = Mockery::mock(User::class);
+
+            $user->shouldReceive('id')->andReturn($userId);
+            $this->storage->expects('read')->with($postId, $this->key)->andReturn($existingData);
+            $this->rawDataAsserter->expects('ensureDataStructure')->with($existingData)->andReturn((fn () => yield from $existingData)());
+            $this->storage->expects('write')->with($postId, $this->key, [$userId => []])->andReturn(true);
+
+            expect($this->repository->save($item, $user))->toBeTrue();
         });
     });
 });

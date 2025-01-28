@@ -59,11 +59,7 @@ class Repository
         }
 
         $data = iterator_to_array($this->read($item->id()));
-        $toStoreData = $this->prepareDataToStore($data, $item, $user);
-
-        if ($data === $toStoreData) {
-            return true;
-        }
+        $toStoreData = $this->toggleItem($data, $item, $user);
 
         do_action('konomi.post.collection.save', $item, $user, $this->key);
 
@@ -73,7 +69,7 @@ class Repository
     /**
      * @param StoredData $data
      */
-    private function prepareDataToStore(array $data, User\Item $item, User\User $user): array
+    private function toggleItem(array $data, User\Item $item, User\User $user): array
     {
         $data[$user->id()] ??= [];
 
