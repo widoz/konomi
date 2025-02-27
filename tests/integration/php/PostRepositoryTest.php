@@ -43,4 +43,16 @@ describe('Post Repository', function (): void {
         expect($items)->toBeArray();
         expect(count($items))->toBe(0);
     });
+
+    it('return empty collection if the entity Id is zero', function (): void {
+        $items = $this->repository->find(0);
+        expect($items)->toBeArray();
+        expect(count($items))->toBe(0);
+    });
+
+    it('return empty collection if the entity Id is less than 0', function (): void {
+        $items = $this->repository->find(rand(-100, -1));
+        expect($items)->toBeArray();
+        expect(count($items))->toBe(0);
+    });
 });
