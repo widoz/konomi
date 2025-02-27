@@ -18,7 +18,7 @@ beforeEach(function (): void {
 });
 
 describe('Authentication Middleware', function (): void {
-    describe('__invoke', function(): void {
+    describe('__invoke', function (): void {
         it('returns error when user is not logged in', function (): void {
             $this->user->expects('isLoggedIn')->andReturnFalse();
             $next = fn () => null;

@@ -9,7 +9,7 @@ use Brain\Monkey\Filters;
 use Widoz\Wp\Konomi\Blocks\TemplateRender;
 
 describe('Template Render', function (): void {
-    describe('render', function(): void {
+    describe('render', function (): void {
         it('render a template with given arguments', function (): void {
             $data = ['name' => 'Konomi'];
             $path = 'hello-konomi';

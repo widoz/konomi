@@ -8,7 +8,7 @@ use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Blocks\BlockRegistrar;
 
 describe('Block Registrar', function (): void {
-    describe('registerBlockTypes', function(): void {
+    describe('registerBlockTypes', function (): void {
         it('register all blocks in the blocks directory', function (): void {
             $blocksDirectory = fixturesDirectory() . '/blocks';
             $blockRegistrar = BlockRegistrar::new($blocksDirectory);

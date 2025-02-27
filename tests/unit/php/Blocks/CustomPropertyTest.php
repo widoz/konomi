@@ -27,7 +27,7 @@ describe('Custom Property', function (): void {
         });
     });
 
-    describe('__toString', function(): void {
+    describe('__toString', function (): void {
         it('Sanitize Value', function (): void {
             $customProperty = CustomProperty::new('key', 'value', static fn (): string => 'sanitized');
             expect($customProperty->__toString())->toBe('key:sanitized;');

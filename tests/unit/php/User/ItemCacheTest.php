@@ -17,20 +17,20 @@ beforeEach(function (): void {
 });
 
 describe('Item Cache', function (): void {
-    describe('hasGroup', function(): void {
+    describe('hasGroup', function (): void {
         it('checks if user has items group', function (): void {
             expect($this->cache->hasGroup($this->user))->toBeFalse();
         });
     });
 
-    describe('has', function(): void {
+    describe('has', function (): void {
         it('checks if user has specific item', function (): void {
             $this->item->shouldReceive('id')->andReturn(1);
             expect($this->cache->has($this->user, $this->item))->toBeFalse();
         });
     });
 
-    describe('get', function(): void {
+    describe('get', function (): void {
         it('gets null item when user has no items', function (): void {
             expect($this->cache->get($this->user, 1))->toBeInstanceOf(NullItem::class);
         });
@@ -47,7 +47,7 @@ describe('Item Cache', function (): void {
         );
     });
 
-    describe('set', function(): void {
+    describe('set', function (): void {
         it('sets and gets item for user', function (): void {
             $this->item->shouldReceive('id')->andReturn(1);
             $this->item->shouldReceive('isValid')->andReturn(true);
@@ -57,7 +57,7 @@ describe('Item Cache', function (): void {
         });
     });
 
-    describe('unset', function(): void {
+    describe('unset', function (): void {
         it('unsets item for user', function (): void {
             $this->item->shouldReceive('id')->andReturn(1);
             $this->item->shouldReceive('isValid')->andReturn(true);
@@ -76,7 +76,7 @@ describe('Item Cache', function (): void {
         });
     });
 
-    describe('all', function(): void {
+    describe('all', function (): void {
         it('gets all items for user', function (): void {
             expect($this->cache->all($this->user))->toBeArray()->toBeEmpty();
 

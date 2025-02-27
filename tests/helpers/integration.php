@@ -15,6 +15,7 @@ function includeValidUsersLikes(): array
 }
 
 /**
+ * @param array<int, array<string, mixed>> $data
  * @return array{0: callable, 1: callable, 2: callable, 3: callable}
  */
 function setupUserMetaStorage(array &$data): array
@@ -28,9 +29,9 @@ function setupUserMetaStorage(array &$data): array
         static function () use (&$stubsCounter): array {
             return $stubsCounter;
         },
-        static function (int $entityId, string $key, bool $single) use (&$data, &$stubsCounter): array {
+        static function (int $entityId, string $key) use (&$data, &$stubsCounter): array {
             $stubsCounter['get_user_meta']++;
-            return $data[$entityId][$key] ?? [];
+            return (array)($data[$entityId][$key] ?? null);
         },
         static function (int $entityId, string $key, array $newData) use (&$data, &$stubsCounter): bool {
             $stubsCounter['update_user_meta']++;
@@ -56,7 +57,7 @@ function setupPostMetaStorage(array &$data): array
         },
         static function (int $entityId, string $key, bool $single) use (&$data, &$stubsCounter): array {
             $stubsCounter['get_post_meta']++;
-            return $data[$entityId][$key] ?? [];
+            return (array)($data[$entityId][$key] ?? null);
         },
         static function (int $entityId, string $key, array $newData) use (&$data, &$stubsCounter): bool {
             $stubsCounter['update_post_meta']++;

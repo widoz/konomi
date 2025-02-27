@@ -8,7 +8,7 @@ use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
 
-beforeEach(function(): void {
+beforeEach(function (): void {
     $this->postMetaStorage = includeValidPostUserLikes();
     [, $getter, $setter] = setupPostMetaStorage($this->postMetaStorage);
 
@@ -23,7 +23,7 @@ beforeEach(function(): void {
     );
 });
 
-describe('Post Repository', function(): void {
+describe('Post Repository', function (): void {
     it('find items from post repository', function (): void {
         $items = $this->repository->find(10);
 
@@ -38,7 +38,7 @@ describe('Post Repository', function(): void {
         }
     });
 
-    it('return empty collection if nothing found', function(): void {
+    it('return empty collection if nothing found', function (): void {
         $items = $this->repository->find(1);
         expect($items)->toBeArray();
         expect(count($items))->toBe(0);

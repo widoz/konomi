@@ -11,7 +11,7 @@ beforeEach(function (): void {
 });
 
 describe('User Stored Data Validator', function (): void {
-    describe('ensureDataStructure', function(): void {
+    describe('ensureDataStructure', function (): void {
         it('validates correct data structure', function (): void {
             $data = [
                 [1, 'post'],

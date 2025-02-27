@@ -10,7 +10,7 @@ use Widoz\Wp\Konomi\User;
 use Widoz\Wp\Konomi\Blocks\Like\Context;
 
 describe('Like Context', function (): void {
-    describe('toArray', function(): void {
+    describe('toArray', function (): void {
         it('ensure valid serialization', function (): void {
             $user = \Mockery::mock(User\User::class, [
                 'isLoggedIn' => true,

@@ -8,7 +8,7 @@ use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Configuration;
 
 describe('Initialize the Configuration in Frontend', function (): void {
-    describe('printModuleConfigurationInitializer', function(): void {
+    describe('printModuleConfigurationInitializer', function (): void {
         it('render a js module calling the client initConfiguration function', function (): void {
             $expectedConfiguration = '{"key":"value"}';
 
@@ -36,7 +36,7 @@ describe('Initialize the Configuration in Frontend', function (): void {
         });
     });
 
-    describe('addScriptConfigurationInitializer', function() : void {
+    describe('addScriptConfigurationInitializer', function (): void {
         it('render the js script calling the client initConfiguration function', function (): void {
             $expectedConfiguration = '{"key":"value"}';
 

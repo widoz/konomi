@@ -21,7 +21,7 @@ beforeEach(function (): void {
 });
 
 describe('Post', function (): void {
-    describe('countForPost', function(): void {
+    describe('countForPost', function (): void {
         it('should count the amount of items found in the repository', function (): void {
             $this->repository->shouldReceive('find')->with(1)->andReturn([
                 100 => $this->item,

@@ -25,7 +25,7 @@ beforeEach(function (): void {
 });
 
 describe('Add Controller', function (): void {
-    describe('__invoke', function(): void {
+    describe('__invoke', function (): void {
         it('Successfully save a Like', function (): void {
             $id = 1;
             $type = 'post';

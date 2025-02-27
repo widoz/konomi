@@ -11,7 +11,7 @@ beforeEach(function (): void {
 });
 
 describe('Raw Data Assert', function (): void {
-    describe('ensureDataStructure', function(): void {
+    describe('ensureDataStructure', function (): void {
         it('validates correct data structure', function (): void {
             $data = [
                 1 => [[1, 'post']],

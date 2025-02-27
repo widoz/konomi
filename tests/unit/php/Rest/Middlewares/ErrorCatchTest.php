@@ -12,7 +12,7 @@ beforeAll(function (): void {
 });
 
 describe('ErrorCatch Middleware', function (): void {
-    describe('__invoke', function(): void {
+    describe('__invoke', function (): void {
         it('passes through successful response', function (): void {
             $request = new \WP_Rest_Request();
             $next = fn (\WP_Rest_Request $request) => new \WP_REST_Response(['success' => true]);

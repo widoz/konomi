@@ -13,7 +13,7 @@ beforeAll(function (): void {
 });
 
 describe('Middleware Process', function (): void {
-    describe('run', function(): void {
+    describe('run', function (): void {
         it('loop the middlewares', function (): void {
             $middlewares = [
                 new class implements Middleware {
