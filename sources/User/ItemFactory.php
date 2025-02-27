@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\User;
 
+/**
+ * @api
+ */
 class ItemFactory
 {
     public static function new(): ItemFactory
