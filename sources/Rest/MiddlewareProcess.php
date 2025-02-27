@@ -15,6 +15,7 @@ class MiddlewareProcess
 {
     /**
      * @psalm-suppress UnusedConstructor - This class should not be instantiated
+     * @codeCoverageIgnore
      */
     final private function __construct()
     {
