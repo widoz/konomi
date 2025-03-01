@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Rest;
 
-use Widoz\Wp\Konomi\Types;
-
 /**
  * @internal
  *

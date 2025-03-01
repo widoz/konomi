@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\User;
 
+/**
+ * @internal
+ */
 class NullItem implements Item
 {
     public static function new(): self

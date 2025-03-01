@@ -7,6 +7,9 @@ namespace Widoz\Wp\Konomi\Blocks\Like\Rest;
 use Widoz\Wp\Konomi\Rest;
 use Widoz\Wp\Konomi\User;
 
+/**
+ * @internal
+ */
 class AddController implements Rest\Controller
 {
     public static function new(

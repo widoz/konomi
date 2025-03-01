@@ -39,7 +39,7 @@ class Module implements ServiceModule, ExecutableModule
                 '_konomi_likes',
                 $container->get('konomi.post.storage'),
                 $container->get('konomi.post.raw-data-assert'),
-                $container->get('konomi.user.item.factory')
+                $container->get('konomi.user.like-factory')
             ),
         ];
     }

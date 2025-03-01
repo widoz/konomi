@@ -6,6 +6,9 @@ namespace Widoz\Wp\Konomi\Blocks\Like\Rest;
 
 use Widoz\Wp\Konomi\Rest;
 
+/**
+ * @internal
+ */
 class AddSchema implements Rest\Schema
 {
     public static function new(): AddSchema

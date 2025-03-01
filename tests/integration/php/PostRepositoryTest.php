@@ -19,7 +19,7 @@ beforeEach(function (): void {
         '_konomi_likes',
         Post\Storage::new(),
         Post\RawDataAssert::new(),
-        User\ItemFactory::new()
+        User\LikeFactory::new()
     );
 });
 

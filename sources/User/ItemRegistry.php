@@ -9,7 +9,7 @@ namespace Widoz\Wp\Konomi\User;
  *
  * @psalm-type Map = \WeakMap<User, array<Item>|null>
  */
-class ItemCache
+class ItemRegistry
 {
     public static function new(): self
     {

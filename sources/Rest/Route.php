@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Rest;
 
+/**
+ * @api
+ */
 class Route
 {
     use RestRegistTrait;

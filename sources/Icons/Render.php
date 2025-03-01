@@ -31,11 +31,14 @@ class Render
             return self::$cache[$name];
         }
 
-        self::$cache[$name] = self::ksesIcon(
-            (string) file_get_contents("{$this->configuration->iconsPath()}/{$name}.svg")
-        );
+        self::$cache[$name] = self::ksesIcon($this->readSvg($name));
 
         return self::$cache[$name];
+    }
+
+    private function readSvg(string $name): string
+    {
+        return (string) file_get_contents("{$this->configuration->iconsPath()}/{$name}.svg");
     }
 
     private static function ksesIcon(string $markup): string

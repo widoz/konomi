@@ -7,7 +7,6 @@ namespace Widoz\Wp\Konomi\User;
 use Psr\Container\ContainerInterface;
 use Inpsyde\Modularity\{
     Module\ServiceModule,
-    Module\ExecutableModule,
     Module\ModuleClassNameIdTrait
 };
 
@@ -32,16 +31,16 @@ class Module implements ServiceModule
             ),
             'konomi.user.storage' => static fn () => Storage::new(),
 
-            'konomi.user.item.factory' => static fn () => ItemFactory::new(),
-            'konomi.user.item.cache' => static fn () => ItemCache::new(),
+            'konomi.user.like-factory' => static fn () => LikeFactory::new(),
+            'konomi.user.item-registry' => static fn () => ItemRegistry::new(),
             'konomi.user.raw-data-assert' => static fn () => RawDataAssert::new(),
             'konomi.user.like.repository' => static fn (
                 ContainerInterface $container
             ) => Repository::new(
                 '_likes',
                 $container->get('konomi.user.storage'),
-                $container->get('konomi.user.item.factory'),
-                $container->get('konomi.user.item.cache'),
+                $container->get('konomi.user.like-factory'),
+                $container->get('konomi.user.item-registry'),
                 $container->get('konomi.user.raw-data-assert')
             ),
         ];

@@ -21,10 +21,10 @@ namespace PHPSTORM_META {
                 'konomi.icon' => \Widoz\Wp\Konomi\Icons\Render::class,
 
                 'konomi.user.current' => \Widoz\Wp\Konomi\User\CurrentUser::class,
-                'konomi.user.item.factory' => \Widoz\Wp\Konomi\User\ItemFactory::class,
+                'konomi.user.like-factory' => \Widoz\Wp\Konomi\User\ItemFactory::class,
                 'konomi.user.like.repository' => \Widoz\Wp\Konomi\User\Repository::class,
                 'konomi.user.storage' => \Widoz\Wp\Konomi\User\Storage::class,
-                'konomi.user.item.cache' => \Widoz\Wp\Konomi\User\ItemCache::class,
+                'konomi.user.item-registry' => \Widoz\Wp\Konomi\User\ItemRegistry::class,
                 'konomi.user.raw-data-assert' => \Widoz\Wp\Konomi\User\RawDataAssert::class,
 
                 'konomi.post' => \Widoz\Wp\Konomi\Post\Post::class,

@@ -7,7 +7,7 @@ namespace Widoz\Wp\Konomi\Tests\Unit\Post;
 use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Post\Storage;
 
-describe('Storage', function () {
+describe('Storage', function (): void {
     it('read data from the storage', function (): void {
         $storage = Storage::new();
         Functions\expect('get_post_meta')->once()->with(1, 'key', true)->andReturn(['data']);

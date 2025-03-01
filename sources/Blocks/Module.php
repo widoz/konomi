@@ -52,7 +52,7 @@ class Module implements ServiceModule, ExecutableModule
                 ContainerInterface $container
             ) => Like\Rest\AddController::new(
                 $container->get('konomi.user.current'),
-                $container->get('konomi.user.item.factory')
+                $container->get('konomi.user.like-factory')
             ),
         ];
     }

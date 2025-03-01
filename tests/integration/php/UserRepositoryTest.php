@@ -22,11 +22,12 @@ beforeEach(function (): void {
     Functions\when('get_user_meta')->alias($getter);
     Functions\when('update_user_meta')->alias($setter);
 
+    $cache = User\ItemRegistry::new();
     $this->repository = \Widoz\Wp\Konomi\User\Repository::new(
         '_likes',
         User\Storage::new(),
-        User\ItemFactory::new(),
-        User\ItemCache::new(),
+        User\LikeFactory::new(),
+        $cache,
         User\RawDataAssert::new()
     );
 });

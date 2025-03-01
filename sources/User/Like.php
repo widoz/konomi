@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\User;
 
+/**
+ * @internal
+ */
 class Like implements Item
 {
     public static function new(int $id, string $type, bool $isActive): self
