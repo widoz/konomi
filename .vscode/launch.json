@@ -13,16 +13,16 @@
 			]
 		},
 		{
-            "name": "Wp Env",
-            "type": "php",
-            "request": "launch",
-            "port": 9003,
-            "pathMappings": {
-                "/var/www/html/wp-content/plugins/konomi": "${workspaceFolder}",
+			"name": "Wp Env",
+			"type": "php",
+			"request": "launch",
+			"port": 9003,
+			"pathMappings": {
+				"/var/www/html/wp-content/plugins/konomi": "${workspaceFolder}",
 				"/var/www/html/wp-admin": "${workspaceFolder}/vendor/roots/wordpress-no-content/wp-admin",
-				"/var/www/html/wp-includes": "${workspaceFolder}/vendor/roots/wordpress-no-content/wp-includes",
-            },
-            "hostname": "0.0.0.0"
-        }
+				"/var/www/html/wp-includes": "${workspaceFolder}/vendor/roots/wordpress-no-content/wp-includes"
+			},
+			"hostname": "0.0.0.0"
+		}
 	]
 }
