@@ -7,7 +7,9 @@ namespace Widoz\Wp\Konomi\Blocks\Like;
 use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
 
-// TODO Think about a way to encapsulate the Array
+/**
+ * @api
+ */
 class Context
 {
     private int $instanceId = 0;

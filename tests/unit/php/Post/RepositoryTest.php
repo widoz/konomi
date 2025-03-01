@@ -31,7 +31,7 @@ beforeEach(function (): void {
 });
 
 describe('Repository', function (): void {
-    describe('find', function (): void {
+    describe('find', function(): void {
         it('returns an empty array when no post is found', function (): void {
             $postId = 1;
             $this->storage->expects('read')->with($postId, $this->key)->andReturn([]);
@@ -62,7 +62,7 @@ describe('Repository', function (): void {
         });
     });
 
-    describe('save', function (): void {
+    describe('save', function(): void {
         it('returns false when item is invalid', function (): void {
             $invalidItem = Mockery::mock(Like::class, ['isValid' => false]);
             $user = Mockery::mock(User::class);

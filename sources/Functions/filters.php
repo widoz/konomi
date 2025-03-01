@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Functions;
 
+/**
+ * @api
+ */
 function add_action_on_module_import(string $moduleName, callable $action): void
 {
     add_single_conditional_filter(
@@ -18,6 +21,9 @@ function add_action_on_module_import(string $moduleName, callable $action): void
     );
 }
 
+/**
+ * @api
+ */
 function add_single_conditional_filter(string $name, callable $condition, callable $callback): void
 {
     $filterCallback = static function (mixed ...$args) use (

@@ -6,6 +6,9 @@ namespace Widoz\Wp\Konomi\Icons;
 
 use Widoz\Wp\Konomi\Configuration;
 
+/**
+ * @api
+ */
 class Render
 {
     /**
