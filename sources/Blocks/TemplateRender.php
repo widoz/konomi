@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Widoz\Wp\Konomi\Blocks;
 
 /**
- * @api
+ * @internal
  */
 class TemplateRender
 {

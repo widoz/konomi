@@ -8,7 +8,7 @@ use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
 
 /**
- * @api
+ * @interal
  */
 class Context
 {
