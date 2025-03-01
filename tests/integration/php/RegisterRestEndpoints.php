@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Widoz\Wp\Konomi\Tests\Integration\Rest;
 
 use Brain\Monkey\Functions;
-use Widoz\Wp\Konomi\Rest\Method;
-use Widoz\Wp\Konomi\Rest\Schema;
-use Widoz\Wp\Konomi\Rest\Middleware;
+use Widoz\Wp\Konomi\Rest;
 
 beforeAll(function (): void {
     setUpWpRest();
@@ -15,14 +13,14 @@ beforeAll(function (): void {
 });
 
 beforeEach(function (): void {
-    $schema = new class implements Schema {
+    $schema = new class implements Rest\Schema {
         public function toArray(): array
         {
             return [];
         }
     };
 
-    $this->controller = new class implements \Widoz\Wp\Konomi\Rest\Controller {
+    $this->controller = new class implements Rest\Controller {
         public function __invoke(\WP_REST_Request $request): \WP_Rest_Response
         {
 
@@ -35,14 +33,14 @@ beforeEach(function (): void {
             );
         }
     };
-    $this->route = \Widoz\Wp\Konomi\Rest\Route::post(
+    $this->route = Rest\Route::post(
         'test/v1',
         '/test',
         $schema,
         $this->controller
     )
         ->withMiddleware(
-            new class implements Middleware
+            new class implements Rest\Middleware
             {
                 public function __invoke(
                     \WP_REST_Request $request,
@@ -55,7 +53,7 @@ beforeEach(function (): void {
             }
         )
         ->withMiddleware(
-            new class implements Middleware
+            new class implements Rest\Middleware
             {
                 public function __invoke(
                     \WP_REST_Request $request,
@@ -77,7 +75,7 @@ test('Register Rest Endpoints With Middlewares', function (): void {
 
             expect($namespace)->toBe('test/v1');
             expect($route)->toBe('/test');
-            expect($args['methods'])->toContain(Method::POST->value);
+            expect($args['methods'])->toContain(Rest\Method::POST->value);
             expect(isset($args['schema']))->toBeTrue();
             expect($args['permission_callback'])->toBe('__return_true');
 
