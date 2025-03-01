@@ -15,6 +15,7 @@ describe('LikeFactory', function (): void {
         expect($item)->toBeInstanceOf(Item::class)
             ->and($item->id())->toEqual(1)
             ->and($item->type())->toEqual('type')
-            ->and($item->isActive())->toEqual(true);
+            ->and($item->isActive())->toBeTrue()
+            ->and($item->isValid())->toBeTrue();
     });
 });
