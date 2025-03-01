@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Blocks;
 
+    /**
+ * @internal
+ */
 class TemplateRender
 {
     public static function new(string $templateRootDir, bool $isDebugMode): TemplateRender

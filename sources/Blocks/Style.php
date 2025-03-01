@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Blocks;
 
+    /**
+ * @internal
+ */
 class Style implements \Stringable
 {
     public static function new(): Style
