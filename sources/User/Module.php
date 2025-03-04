@@ -30,6 +30,11 @@ class Module implements ServiceModule
                 $container->get('konomi.user.like.repository')
             ),
             'konomi.user.storage' => static fn () => Storage::new(),
+            'konomi.user.user-factory' => static fn (
+                ContainerInterface $container
+            ) => UserFactory::new(
+                $container->get('konomi.user.current')
+            ),
 
             'konomi.user.like-factory' => static fn () => LikeFactory::new(),
             'konomi.user.item-registry' => static fn () => ItemRegistry::new(),

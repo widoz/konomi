@@ -13,15 +13,15 @@ use Widoz\Wp\Konomi\User;
 class AddController implements Rest\Controller
 {
     public static function new(
-        User\User $user,
+        User\UserFactory $userFactory,
         User\ItemFactory $likeFactory
     ): AddController {
 
-        return new self($user, $likeFactory);
+        return new self($userFactory, $likeFactory);
     }
 
     final private function __construct(
-        private readonly User\User $user,
+        private readonly User\UserFactory $userFactory,
         private readonly User\ItemFactory $likeFactory
     ) {
     }
@@ -34,7 +34,7 @@ class AddController implements Rest\Controller
             return $this->failedBecauseInvalidData();
         }
 
-        return $this->user->saveLike($like)
+        return $this->userFactory->create()->saveLike($like)
             ? $this->successResponse()
             : $this->failedToSaveError();
     }

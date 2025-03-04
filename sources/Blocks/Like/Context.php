@@ -14,13 +14,13 @@ class Context
 {
     private int $instanceId = 0;
 
-    public static function new(User\User $user, Post\Post $post): Context
+    public static function new(User\UserFactory $userFactory, Post\Post $post): Context
     {
-        return new self($user, $post);
+        return new self($userFactory, $post);
     }
 
     final private function __construct(
-        readonly private User\User $user,
+        readonly private User\UserFactory $userFactory,
         readonly private Post\Post $post
     ) {
     }
@@ -40,7 +40,7 @@ class Context
 
     public function isUserLoggedIn(): bool
     {
-        return $this->user->isLoggedIn();
+        return $this->user()->isLoggedIn();
     }
 
     public function postType(): string
@@ -65,6 +65,13 @@ class Context
 
     private function like(): User\Item
     {
-        return $this->user->findLike($this->postId());
+        return $this->user()->findLike($this->postId());
+    }
+
+    private function user(): User\User
+    {
+        static $user = null;
+        $user or $user = $this->userFactory->create();
+        return $user;
     }
 }

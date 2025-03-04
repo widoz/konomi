@@ -43,7 +43,7 @@ class Module implements ServiceModule, ExecutableModule
             'konomi.blocks.like.context' => static fn (
                 ContainerInterface $container
             ) => Context::new(
-                $container->get('konomi.user.current'),
+                $container->get('konomi.user.user-factory'),
                 $container->get('konomi.post')
             ),
 
@@ -51,7 +51,7 @@ class Module implements ServiceModule, ExecutableModule
             'konomi.blocks.like.rest.add-controller' => static fn (
                 ContainerInterface $container
             ) => Like\Rest\AddController::new(
-                $container->get('konomi.user.current'),
+                $container->get('konomi.user.user-factory'),
                 $container->get('konomi.user.like-factory')
             ),
         ];
