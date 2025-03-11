@@ -27,7 +27,7 @@ class CurrentUser implements User
 
     public function id(): int
     {
-        return $this->user?->ID ?? 0;
+        return $this->user->ID ?? 0;
     }
 
     public function findLike(int $id): Item

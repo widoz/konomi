@@ -51,7 +51,6 @@ class Module implements ServiceModule, ExecutableModule
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath());
 
-            /** @psalm-suppress UnresolvableInclude */
             $configuration = (array) (include "{$baseDir}/{$distLocationPath}/konomi-configuration.asset.php");
 
             /** @var array<string> $dependencies */
@@ -76,7 +75,6 @@ class Module implements ServiceModule, ExecutableModule
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath());
 
-            /** @psalm-suppress UnresolvableInclude */
             $configuration = (array) (include "{$baseDir}/{$moduleLocationPath}/konomi-configuration.asset.php");
 
             $dependencies = (array) ($configuration['dependencies'] ?? null);

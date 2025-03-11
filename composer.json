@@ -17,12 +17,12 @@
 	"require-dev": {
 		"inpsyde/php-coding-standards": "^2.0.0-beta",
 		"roots/wordpress-no-content": "^6.7",
-		"vimeo/psalm": "^5.23",
 		"pestphp/pest": "^2.34",
 		"brain/monkey": "^2.6",
 		"mockery/mockery": "^1.6",
 		"inpsyde/wp-stubs-versions": "6.7",
-		"phpmetrics/phpmetrics": "^2.8"
+		"phpmetrics/phpmetrics": "^2.8",
+		"phpstan/phpstan": "^2.1"
 	},
 	"autoload": {
 		"psr-4": {

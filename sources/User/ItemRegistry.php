@@ -6,23 +6,17 @@ namespace Widoz\Wp\Konomi\User;
 
 /**
  * @internal
- *
- * @psalm-type Map = \WeakMap<User, array<Item>|null>
  */
 class ItemRegistry
 {
     public static function new(): self
     {
-        /** @var Map $items */
         $items = new \WeakMap();
         return new self($items);
     }
 
-    /**
-     * @param Map $items
-     */
     final private function __construct(
-        private \WeakMap $items
+        private readonly \WeakMap $items
     ) {
     }
 

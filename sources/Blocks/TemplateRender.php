@@ -38,7 +38,6 @@ class TemplateRender
                 throw new \RuntimeException("Konomi, template file not found: $path");
             }
 
-            /** @psalm-suppress UnresolvableInclude */
             $path and include realpath($path);
             return (string) ob_get_clean();
         };

@@ -6,7 +6,7 @@ namespace Widoz\Wp\Konomi\User;
 
 /**
  * @internal
- * @psalm-type RawItem = array{0: int, 1: string}
+ * @phpstan-type RawItem = array{0: int, 1: string}
  */
 class RawDataAssert
 {
@@ -34,7 +34,7 @@ class RawDataAssert
     }
 
     /**
-     * @psalm-assert RawItem $rawItem
+     * @phpstan-assert RawItem $rawItem
      */
     private static function isValidRawItem(mixed $rawItem): bool
     {

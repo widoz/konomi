@@ -52,7 +52,7 @@ describe('CurrentUser', function (): void {
         expect($result)->toBe($this->mockItem);
     });
 
-    it('save Item', function(): void {
+    it('save Item', function (): void {
         Functions\expect('wp_get_current_user')->once()->andReturn($this->wpUser);
         $currentUser = User\CurrentUser::new($this->repository);
         $item = User\Like::new(123, 'post', true);

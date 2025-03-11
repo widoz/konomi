@@ -41,7 +41,6 @@ class Module implements ServiceModule, ExecutableModule
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath());
 
-            /** @psalm-suppress UnresolvableInclude */
             $configuration = (array) (include "{$baseDir}/{$distLocationPath}/konomi-icons.asset.php");
 
             /** @var array<string> $dependencies */

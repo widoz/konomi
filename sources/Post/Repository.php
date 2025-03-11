@@ -9,11 +9,11 @@ use Widoz\Wp\Konomi\User;
 /**
  * @internal
  *
- * @psalm-import-type UserId from RawDataAssert
- * @psalm-import-type RawItem from RawDataAssert
- * @psalm-import-type RawItems from RawDataAssert
- * @psalm-import-type StoredData from RawDataAssert
- * @psalm-import-type GeneratorStoredData from RawDataAssert
+ * @phpstan-import-type UserId from RawDataAssert
+ * @phpstan-import-type RawItem from RawDataAssert
+ * @phpstan-import-type RawItems from RawDataAssert
+ * @phpstan-import-type StoredData from RawDataAssert
+ * @phpstan-import-type GeneratorStoredData from RawDataAssert
  *
  * TODO This Collection require caching the data from the Storage
  */
@@ -49,9 +49,6 @@ class Repository
         return $result;
     }
 
-    /**
-     * @psalm-suppress PossiblyUnusedReturnValue Isn't up to use to decide that.
-     */
     public function save(User\Item $item, User\User $user): bool
     {
         if (!$item->isValid()) {
