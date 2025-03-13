@@ -20,6 +20,9 @@ class TemplateRender
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function render(string $path, array $data): string
     {
         $isDebugMode = $this->isDebugMode;

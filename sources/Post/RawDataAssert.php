@@ -27,6 +27,7 @@ class RawDataAssert
     }
 
     /**
+     * @param StoredData $data
      * @return GeneratorStoredData
      */
     public function ensureDataStructure(array $data): \Generator

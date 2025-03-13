@@ -76,11 +76,11 @@ class AddController implements Rest\Controller
     }
 
     /**
+     * @param array{_like?: array{id?: mixed, type?: string, isActive?: bool }} $meta
      * @return array{id: int, type: string, isActive: bool}
      */
-    private function ensureMeta(?array $meta): array
+    private function ensureMeta(array $meta): array
     {
-        $meta = (array) $meta;
         $like = (array) ($meta['_like'] ?? null);
 
         return [

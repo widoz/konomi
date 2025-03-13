@@ -65,6 +65,7 @@ class Repository
 
     /**
      * @param StoredData $data
+     * @return StoredData
      */
     private function toggleItem(array $data, User\Item $item, User\User $user): array
     {

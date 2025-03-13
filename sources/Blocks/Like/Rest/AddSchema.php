@@ -20,6 +20,13 @@ class AddSchema implements Rest\Schema
     {
     }
 
+    /**
+     * @return array{
+     *     title: '_like',
+     *     type: string,
+     *     properties: array<string, array{required: bool, type: string}>
+     * }
+     */
     public function toArray(): array
     {
         return [
