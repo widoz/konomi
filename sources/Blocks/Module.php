@@ -74,7 +74,9 @@ class Module implements ServiceModule, ExecutableModule
             }
         );
 
-        add_action('init', [$container->get('konomi.blocks.registrar'), 'registerBlockTypes']);
+        /** @var BlockRegistrar $blocksRegistrar */
+        $blocksRegistrar = $container->get('konomi.blocks.registrar');
+        add_action('init', [$blocksRegistrar, 'registerBlockTypes']);
 
         return true;
     }
