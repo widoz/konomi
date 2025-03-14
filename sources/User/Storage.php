@@ -18,17 +18,22 @@ class Storage
     {
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function read(int $id, string $key): array
     {
         if ($id <= 0 || $key === '') {
             return [];
         }
 
-        /** @var array|false|string */
         $data = get_user_meta($id, $key, true);
         return is_array($data) ? $data : [];
     }
 
+    /**
+     * @param array<mixed> $data
+     */
     public function write(int $id, string $key, array $data): bool
     {
         if ($id <= 0 || $key === '') {

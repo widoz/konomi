@@ -20,6 +20,7 @@ class RawDataAssert
     }
 
     /**
+     * @param array<mixed> $rawItems
      * @return \Generator<array-key, RawItem>
      */
     public function ensureDataStructure(array $rawItems): \Generator
