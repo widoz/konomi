@@ -12,7 +12,8 @@ use Inpsyde\Modularity\{
 };
 use Psr\Container\ContainerInterface;
 use Widoz\Wp\Konomi\Rest;
-use Widoz\Wp\Konomi\Blocks\Like\Context;
+use Widoz\Wp\Konomi\User;
+use Widoz\Wp\Konomi\Post;
 
 class Module implements ServiceModule, ExecutableModule
 {
@@ -33,26 +34,26 @@ class Module implements ServiceModule, ExecutableModule
         $isDebug = $this->appProperties->isDebug();
 
         return [
-            'konomi.blocks.template-render' => static fn () => TemplateRender::new(
+            TemplateRender::class => static fn () => TemplateRender::new(
                 "{$basePath}/sources/Blocks/",
                 $isDebug
             ),
-            'konomi.blocks.registrar' => static fn () => BlockRegistrar::new(
+            BlockRegistrar::class => static fn () => BlockRegistrar::new(
                 "{$basePath}/sources/Blocks"
             ),
-            'konomi.blocks.like.context' => static fn (
+            Like\Context::class => static fn (
                 ContainerInterface $container
-            ) => Context::new(
-                $container->get('konomi.user.user-factory'),
-                $container->get('konomi.post')
+            ) => Like\Context::new(
+                $container->get(User\UserFactory::class),
+                $container->get(Post\Post::class)
             ),
 
-            'konomi.blocks.like.rest.add-schema' => static fn () => Like\Rest\AddSchema::new(),
-            'konomi.blocks.like.rest.add-controller' => static fn (
+            Like\Rest\AddSchema::class => static fn () => Like\Rest\AddSchema::new(),
+            Like\Rest\AddController::class => static fn (
                 ContainerInterface $container
             ) => Like\Rest\AddController::new(
-                $container->get('konomi.user.user-factory'),
-                $container->get('konomi.user.like-factory')
+                $container->get(User\UserFactory::class),
+                $container->get(User\LikeFactory::class)
             ),
         ];
     }
@@ -65,17 +66,17 @@ class Module implements ServiceModule, ExecutableModule
                 Rest\Route::post(
                     'konomi/v1',
                     '/user-like',
-                    $container->get('konomi.blocks.like.rest.add-schema'),
-                    $container->get('konomi.blocks.like.rest.add-controller')
+                    $container->get(Like\Rest\AddSchema::class),
+                    $container->get(Like\Rest\AddController::class)
                 )
-                    ->withMiddleware($container->get('konomi.rest.middleware.error-catch'))
-                    ->withMiddleware($container->get('konomi.rest.middleware.authentication'))
+                    ->withMiddleware($container->get(Rest\Middlewares\ErrorCatch::class))
+                    ->withMiddleware($container->get(Rest\Middlewares\Authentication::class))
                     ->register();
             }
         );
 
         /** @var BlockRegistrar $blocksRegistrar */
-        $blocksRegistrar = $container->get('konomi.blocks.registrar');
+        $blocksRegistrar = $container->get(BlockRegistrar::class);
         add_action('init', [$blocksRegistrar, 'registerBlockTypes']);
 
         return true;

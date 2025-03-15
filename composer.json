@@ -22,7 +22,8 @@
 		"mockery/mockery": "^1.6",
 		"inpsyde/wp-stubs-versions": "6.7",
 		"phpmetrics/phpmetrics": "^2.8",
-		"phpstan/phpstan": "^2.1"
+		"phpstan/phpstan": "^2.1",
+		"bnf/phpstan-psr-container": "^1.1"
 	},
 	"autoload": {
 		"psr-4": {

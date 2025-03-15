@@ -9,6 +9,7 @@ use Inpsyde\Modularity\{
     Module\ServiceModule,
     Module\ModuleClassNameIdTrait
 };
+use Widoz\Wp\Konomi\User;
 
 class Module implements ServiceModule
 {
@@ -26,11 +27,11 @@ class Module implements ServiceModule
     public function services(): array
     {
         return [
-            'konomi.rest.middleware.error-catch' => static fn () => Middlewares\ErrorCatch::new(),
-            'konomi.rest.middleware.authentication' => static fn (
+            Middlewares\ErrorCatch::class => static fn () => Middlewares\ErrorCatch::new(),
+            Middlewares\Authentication::class => static fn (
                 ContainerInterface $container
             ) => Middlewares\Authentication::new(
-                $container->get('konomi.user.current')
+                $container->get(User\CurrentUser::class)
             ),
         ];
     }

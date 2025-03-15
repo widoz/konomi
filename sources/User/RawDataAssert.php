@@ -26,16 +26,12 @@ class RawDataAssert
     public function ensureDataStructure(array $rawItems): \Generator
     {
         foreach ($rawItems as $item) {
-            if (!self::isValidRawItem($item)) {
-                continue;
-            }
-
-            yield $item;
+            self::isValidRawItem($item) and yield $item;
         }
     }
 
     /**
-     * @phpstan-assert RawItem $rawItem
+     * @phpstan-assert-if-true RawItem $rawItem
      */
     private static function isValidRawItem(mixed $rawItem): bool
     {

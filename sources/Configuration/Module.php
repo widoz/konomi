@@ -32,14 +32,14 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            'konomi.configuration' => fn () => Configuration::new(
+            Configuration::class => fn () => Configuration::new(
                 $this->appProperties,
                 $this->relativeIconsPath
             ),
-            'konomi.configuration.init-script-render' => static fn (
+            ConfigurationInitScript::class => static fn (
                 ContainerInterface $container
             ) => ConfigurationInitScript::new(
-                $container->get('konomi.configuration')
+                $container->get(Configuration::class)
             ),
         ];
     }
@@ -66,7 +66,7 @@ class Module implements ServiceModule, ExecutableModule
             );
 
             $container
-                ->get('konomi.configuration.init-script-render')
+                ->get(ConfigurationInitScript::class)
                 ->addScriptConfigurationInitializer();
         });
 
@@ -95,7 +95,7 @@ class Module implements ServiceModule, ExecutableModule
                     'wp_footer',
                     static function () use ($container): void {
                         $container
-                            ->get('konomi.configuration.init-script-render')
+                            ->get(ConfigurationInitScript::class)
                             ->printModuleConfigurationInitializer();
                     }
                 );
