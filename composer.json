@@ -65,8 +65,8 @@
 	"scripts": {
 		"cs": "@php ./vendor/bin/phpcs",
 		"cs:fix": "@php ./vendor/bin/phpcbf",
-		"analysis": "@php ./vendor/bin/psalm --show-info=false --output-format=compact",
-		"analysis:ci": "@php ./vendor/bin/psalm --show-info=false --output-format=github",
+		"analysis": "@php ./vendor/bin/phpstan analyse",
+		"analysis:ci": "@php ./vendor/bin/phpstan --error-format=github",
 		"test:unit": "@php ./vendor/bin/pest --testsuite=unit",
 		"test:integration": "@php ./vendor/bin/pest --testsuite=integration",
 		"test:functional": "@php ./vendor/bin/pest --testsuite=functional",

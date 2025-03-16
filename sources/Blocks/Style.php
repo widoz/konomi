@@ -10,7 +10,7 @@ namespace Widoz\Wp\Konomi\Blocks;
 class Style implements \Stringable
 {
     /**
-     * @var array<CustomProperty<mixed>>
+     * @var array<CustomProperty>
      */
     private array $properties = [];
 
@@ -23,10 +23,6 @@ class Style implements \Stringable
     {
     }
 
-    /**
-     * @param CustomProperty<mixed> $property
-     * @param CustomProperty<mixed> ...$properties
-     */
     public function add(CustomProperty $property, CustomProperty ...$properties): self
     {
         array_push($this->properties, $property, ...$properties);

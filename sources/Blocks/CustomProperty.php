@@ -6,7 +6,6 @@ namespace Widoz\Wp\Konomi\Blocks;
 
 /**
  * @internal
- * @template V
  */
 class CustomProperty
 {
@@ -15,23 +14,17 @@ class CustomProperty
      */
     private $sanitizer;
 
-    /**
-     * @template T extends self::V
-     * @param T $value
-     * @return self<T>
-     */
-    public static function new(string $key, mixed $value, callable $sanitizer): self
+    public static function new(string $key, string $value, callable $sanitizer): self
     {
         return new self($key, $value, $sanitizer);
     }
 
     /**
-     * @param V $value
      * @param callable $sanitizer
      */
     final private function __construct(
         readonly public string $key,
-        readonly public mixed $value,
+        readonly public string $value,
         $sanitizer
     ) {
 
@@ -46,9 +39,7 @@ class CustomProperty
     public function __toString(): string
     {
         $sanitizer = $this->sanitizer;
-        $value = (string) $this->value;
-        $sanitizedValue = (string) $sanitizer($value);
-
+        $sanitizedValue = (string) $sanitizer($this->value);
         return "{$this->key}:{$sanitizedValue};";
     }
 }

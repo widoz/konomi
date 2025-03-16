@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Widoz\Wp\Konomi\Blocks\Like\Rest;
 
 use Widoz\Wp\Konomi\Rest;
@@ -67,7 +65,7 @@ class AddController implements Rest\Controller
 
     private function likeByRequest(\WP_REST_Request $request): User\Item
     {
-        $rawLike = $this->ensureMeta((array) $request->get_param('meta'));
+        $rawLike = $this->ensureMeta($request->get_param('meta'));
         return $this->likeFactory->create(
             $rawLike['id'],
             $rawLike['type'],
@@ -76,17 +74,24 @@ class AddController implements Rest\Controller
     }
 
     /**
-     * @param array{_like?: array{id?: mixed, type?: string, isActive?: bool }} $meta
      * @return array{id: int, type: string, isActive: bool}
      */
-    private function ensureMeta(array $meta): array
+    private function ensureMeta(mixed $meta): array
     {
-        $like = (array) ($meta['_like'] ?? null);
+        if (!is_array($meta)) {
+            return ['id' => 0, 'type' => '', 'isActive' => false];
+        }
+
+        $rawLike = (array) ($meta['_like'] ?? null);
+
+        $id = is_int($rawLike['id'] ?? null) ? $rawLike['id'] : 0;
+        $type = is_string($rawLike['type'] ?? null) ? $rawLike['type'] : '';
+        $isActive = is_bool($rawLike['isActive'] ?? null) ? $rawLike['isActive'] : false;
 
         return [
-            'id' => (int) ($like['id'] ?? null),
-            'type' => (string) ($like['type'] ?? null),
-            'isActive' => (bool) ($like['isActive'] ?? null),
+            'id' => $id,
+            'type' => $type,
+            'isActive' => $isActive,
         ];
     }
 }

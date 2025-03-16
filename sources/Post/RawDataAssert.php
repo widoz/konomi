@@ -6,7 +6,6 @@ namespace Widoz\Wp\Konomi\Post;
 
 /**
  * @internal
- *
  * @phpstan-type EntityId = int
  * @phpstan-type EntityType = string
  * @phpstan-type UserId = int
@@ -27,7 +26,7 @@ class RawDataAssert
     }
 
     /**
-     * @param StoredData $data
+     * @param array<mixed> $data
      * @return GeneratorStoredData
      */
     public function ensureDataStructure(array $data): \Generator
@@ -44,14 +43,24 @@ class RawDataAssert
         }
     }
 
+    /**
+     * @phpstan-assert-if-true UserId $userId
+     */
     private static function isValidUserId(mixed $userId): bool
     {
         return is_int($userId) && $userId > 0;
     }
 
+    /**
+     * @phpstan-assert-if-true RawItems $rawItems
+     * @param mixed $rawItems
+     */
     private static function areRawItemsValid(mixed $rawItems): bool
     {
         if (!is_array($rawItems)) {
+            return false;
+        }
+        if (count($rawItems) !== 2) {
             return false;
         }
         if (!self::isValidRawItem($rawItems[0] ?? [])) {
@@ -61,6 +70,9 @@ class RawDataAssert
         return true;
     }
 
+    /**
+     * @phpstan-assert-if-true RawItem $rawItem
+     */
     private static function isValidRawItem(mixed $rawItem): bool
     {
         return is_array($rawItem)
