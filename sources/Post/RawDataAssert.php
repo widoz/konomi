@@ -6,14 +6,13 @@ namespace Widoz\Wp\Konomi\Post;
 
 /**
  * @internal
- *
- * @psalm-type EntityId = int
- * @psalm-type EntityType = string
- * @psalm-type UserId = int
- * @psalm-type RawItem = array{0: EntityId, 1: EntityType}
- * @psalm-type RawItems = array<array-key, RawItem>
- * @psalm-type StoredData = array<UserId, RawItems>
- * @psalm-type GeneratorStoredData = \Generator<UserId, RawItems>
+ * @phpstan-type EntityId = int
+ * @phpstan-type EntityType = string
+ * @phpstan-type UserId = int
+ * @phpstan-type RawItem = array{0: EntityId, 1: EntityType}
+ * @phpstan-type RawItems = array<array-key, RawItem>
+ * @phpstan-type StoredData = array<UserId, RawItems>
+ * @phpstan-type GeneratorStoredData = \Generator<UserId, RawItems>
  */
 class RawDataAssert
 {
@@ -27,6 +26,7 @@ class RawDataAssert
     }
 
     /**
+     * @param array<mixed> $data
      * @return GeneratorStoredData
      */
     public function ensureDataStructure(array $data): \Generator
@@ -44,7 +44,7 @@ class RawDataAssert
     }
 
     /**
-     * @psalm-assert UserId $userId
+     * @phpstan-assert-if-true UserId $userId
      */
     private static function isValidUserId(mixed $userId): bool
     {
@@ -52,7 +52,8 @@ class RawDataAssert
     }
 
     /**
-     * @psalm-assert RawItems $rawItems
+     * @phpstan-assert-if-true RawItems $rawItems
+     * @param mixed $rawItems
      */
     private static function areRawItemsValid(mixed $rawItems): bool
     {
@@ -67,7 +68,7 @@ class RawDataAssert
     }
 
     /**
-     * @psalm-assert RawItem $item
+     * @phpstan-assert-if-true RawItem $rawItem
      */
     private static function isValidRawItem(mixed $rawItem): bool
     {

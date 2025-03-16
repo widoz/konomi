@@ -16,6 +16,10 @@ beforeAll(function (): void {
 beforeEach(function (): void {
     /** @var Mockery\MockInterface&User\User $user */
     $this->user = Mockery::mock(User\User::class);
+    /** @var Mockery\MockInterface&User\UserFactory $userFactory */
+    $this->userFactory = Mockery::mock(User\UserFactory::class, [
+        'create' => $this->user,
+    ]);
     /** @var Mockery\MockInterface&User\ItemFactory $likeFactory */
     $this->likeFactory = Mockery::mock(User\ItemFactory::class);
     /** @var Mockery\MockInterface&User\Item $like */
@@ -37,7 +41,10 @@ describe('Add Controller', function (): void {
             $this->like->shouldReceive('isValid')->andReturn(true);
             $this->user->shouldReceive('saveLike')->with($this->like)->andReturn(true);
 
-            $controller = Blocks\Like\Rest\AddController::new($this->user, $this->likeFactory);
+            $controller = Blocks\Like\Rest\AddController::new(
+                $this->userFactory,
+                $this->likeFactory
+            );
             $result = $controller($this->request);
 
             expect($result->get_status())->toBe(201);
@@ -59,7 +66,7 @@ describe('Add Controller', function (): void {
             $this->likeFactory->shouldReceive('create')->with($id, $type, $isActive)->andReturn($this->like);
             $this->like->shouldReceive('isValid')->andReturn(false);
 
-            $controller = Blocks\Like\Rest\AddController::new($this->user, $this->likeFactory);
+            $controller = Blocks\Like\Rest\AddController::new($this->userFactory, $this->likeFactory);
             $result = $controller($this->request);
 
             expect($result->get_error_code())->toContain('invalid_like_data');
@@ -82,7 +89,10 @@ describe('Add Controller', function (): void {
             $this->like->shouldReceive('isValid')->andReturn(true);
             $this->user->shouldReceive('saveLike')->with($this->like)->andReturn(false);
 
-            $controller = Blocks\Like\Rest\AddController::new($this->user, $this->likeFactory);
+            $controller = Blocks\Like\Rest\AddController::new(
+                $this->userFactory,
+                $this->likeFactory
+            );
             $result = $controller($this->request);
 
             expect($result->get_error_code())->toContain('failed_to_save_like');

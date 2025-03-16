@@ -6,23 +6,23 @@ namespace Widoz\Wp\Konomi\User;
 
 /**
  * @internal
- *
- * @psalm-type Map = \WeakMap<User, array<Item>|null>
+ * @phpstan-type Items = array<int, Item>
+ * @phpstan-type Collection = \WeakMap<User, Items>
  */
 class ItemRegistry
 {
     public static function new(): self
     {
-        /** @var Map $items */
+        /** @var Collection $items */
         $items = new \WeakMap();
         return new self($items);
     }
 
     /**
-     * @param Map $items
+     * @param Collection $items
      */
     final private function __construct(
-        private \WeakMap $items
+        private readonly \WeakMap $items
     ) {
     }
 
@@ -72,6 +72,9 @@ class ItemRegistry
         $this->items->offsetSet($user, $collection);
     }
 
+    /**
+     * @return Items
+     */
     public function all(User $user): array
     {
         return $this->hasGroup($user)

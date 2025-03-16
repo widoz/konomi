@@ -7,12 +7,11 @@ namespace Widoz\Wp\Konomi\Rest;
 /**
  * @internal
  *
- * @psalm-import-type MiddlewareCallable from Middleware
+ * @phpstan-import-type MiddlewareCallable from Middleware
  */
 class MiddlewareProcess
 {
     /**
-     * @psalm-suppress UnusedConstructor - This class should not be instantiated
      * @codeCoverageIgnore
      */
     final private function __construct()

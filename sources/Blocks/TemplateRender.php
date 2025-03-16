@@ -20,6 +20,9 @@ class TemplateRender
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function render(string $path, array $data): string
     {
         $isDebugMode = $this->isDebugMode;
@@ -30,15 +33,15 @@ class TemplateRender
 
         $renderer = function (string $path, array $data): string {
             ob_start();
-            $data = (array) apply_filters('konomi.template.render.data', $data, $path);
-            $path = (string) apply_filters('konomi.template.render.path', $path, $data);
+
+            $data = $this->filterData($data, $path);
+            $path = $this->filterPath($path, $data);
 
             if (!is_readable($path) && $this->isDebugMode) {
                 // @phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
                 throw new \RuntimeException("Konomi, template file not found: $path");
             }
 
-            /** @psalm-suppress UnresolvableInclude */
             $path and include realpath($path);
             return (string) ob_get_clean();
         };
@@ -54,6 +57,25 @@ class TemplateRender
         }
 
         return $output;
+    }
+
+    /**
+     * @param array<mixed> $data
+     * @return array<mixed>
+     */
+    private function filterData(array $data, string $path): array
+    {
+        $filteredData = apply_filters('konomi.template.render.data', $data, $path);
+        return is_array($filteredData) ? $filteredData : $data;
+    }
+
+    /**
+     * @param array<mixed> $data
+     */
+    private function filterPath(string $path, array $data): string
+    {
+        $filteredPath = apply_filters('konomi.template.render.path', $path, $data);
+        return is_string($filteredPath) ? $filteredPath : $path;
     }
 
     private static function ensureExtension(string $path): string

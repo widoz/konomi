@@ -4,17 +4,22 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Blocks;
 
-    /**
+/**
  * @internal
  */
 class Style implements \Stringable
 {
+    /**
+     * @var array<CustomProperty>
+     */
+    private array $properties = [];
+
     public static function new(): Style
     {
-        return new self([]);
+        return new self();
     }
 
-    final private function __construct(private array $properties)
+    final private function __construct()
     {
     }
 

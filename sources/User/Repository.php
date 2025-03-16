@@ -7,10 +7,10 @@ namespace Widoz\Wp\Konomi\User;
 /**
  * @internal
  *
- * @psalm-type EntityId = int
- * @psalm-type EntityType = string
- * @psalm-type RawItem = array{0: EntityId, 1: EntityType}
- * @psalm-type RawItems = array<array-key, RawItem>
+ * @phpstan-type EntityId = int
+ * @phpstan-type EntityType = string
+ * @phpstan-type RawItem = array{0: EntityId, 1: EntityType}
+ * @phpstan-type RawItems = array<array-key, RawItem>
  */
 class Repository
 {

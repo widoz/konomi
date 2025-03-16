@@ -17,12 +17,13 @@
 	"require-dev": {
 		"inpsyde/php-coding-standards": "^2.0.0-beta",
 		"roots/wordpress-no-content": "^6.7",
-		"vimeo/psalm": "^5.23",
 		"pestphp/pest": "^2.34",
 		"brain/monkey": "^2.6",
 		"mockery/mockery": "^1.6",
 		"inpsyde/wp-stubs-versions": "6.7",
-		"phpmetrics/phpmetrics": "^2.8"
+		"phpmetrics/phpmetrics": "^2.8",
+		"phpstan/phpstan": "^2.1",
+		"bnf/phpstan-psr-container": "^1.1"
 	},
 	"autoload": {
 		"psr-4": {
@@ -64,8 +65,8 @@
 	"scripts": {
 		"cs": "@php ./vendor/bin/phpcs",
 		"cs:fix": "@php ./vendor/bin/phpcbf",
-		"analysis": "@php ./vendor/bin/psalm --show-info=false --output-format=compact",
-		"analysis:ci": "@php ./vendor/bin/psalm --show-info=false --output-format=github",
+		"analysis": "@php ./vendor/bin/phpstan analyse",
+		"analysis:ci": "@php ./vendor/bin/phpstan --error-format=github",
 		"test:unit": "@php ./vendor/bin/pest --testsuite=unit",
 		"test:integration": "@php ./vendor/bin/pest --testsuite=integration",
 		"test:functional": "@php ./vendor/bin/pest --testsuite=functional",

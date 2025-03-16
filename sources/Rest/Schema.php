@@ -9,5 +9,8 @@ namespace Widoz\Wp\Konomi\Rest;
  */
 interface Schema
 {
+    /**
+     * @return array<mixed>
+     */
     public function toArray(): array;
 }

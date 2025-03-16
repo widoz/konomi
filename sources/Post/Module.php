@@ -28,18 +28,18 @@ class Module implements ServiceModule, ExecutableModule
     public function services(): array
     {
         return [
-            'konomi.post' => static fn (ContainerInterface $container) => Post::new(
-                $container->get('konomi.post.like.repository')
+            Post::class => static fn (ContainerInterface $container) => Post::new(
+                $container->get(Repository::class)
             ),
-            'konomi.post.storage' => static fn () => Storage::new(),
-            'konomi.post.raw-data-assert' => static fn () => RawDataAssert::new(),
-            'konomi.post.like.repository' => static fn (
+            Storage::class => static fn () => Storage::new(),
+            RawDataAssert::class => static fn () => RawDataAssert::new(),
+            Repository::class => static fn (
                 ContainerInterface $container
             ) => Repository::new(
                 '_konomi_likes',
-                $container->get('konomi.post.storage'),
-                $container->get('konomi.post.raw-data-assert'),
-                $container->get('konomi.user.like-factory')
+                $container->get(Storage::class),
+                $container->get(RawDataAssert::class),
+                $container->get(User\LikeFactory::class)
             ),
         ];
     }
@@ -49,7 +49,7 @@ class Module implements ServiceModule, ExecutableModule
         add_action(
             'konomi.user.repository.save',
             static fn (User\Item $item, User\User $user) => $container
-                ->get('konomi.post.like.repository')
+                ->get(Repository::class)
                 ->save($item, $user),
             10,
             2

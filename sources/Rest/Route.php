@@ -18,8 +18,7 @@ class Route
 
     public static function post(string $namespace, string $route, Schema $schema, Controller $controller): self
     {
-        $instance = new self($namespace, $route, Method::POST, $schema, $controller);
-        return $instance;
+        return new self($namespace, $route, Method::POST, $schema, $controller);
     }
 
     final private function __construct(

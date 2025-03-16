@@ -25,6 +25,15 @@ class Context
     ) {
     }
 
+    /**
+     * @return array{
+     *     id: int,
+     *     type: string,
+     *     count: int,
+     *     isUserLoggedIn: bool,
+     *     isActive: bool
+     * }
+     */
     public function toArray(): array
     {
         $like = $this->like();

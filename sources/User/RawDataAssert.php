@@ -6,7 +6,7 @@ namespace Widoz\Wp\Konomi\User;
 
 /**
  * @internal
- * @psalm-type RawItem = array{0: int, 1: string}
+ * @phpstan-type RawItem = array{0: int, 1: string}
  */
 class RawDataAssert
 {
@@ -20,21 +20,18 @@ class RawDataAssert
     }
 
     /**
+     * @param array<mixed> $rawItems
      * @return \Generator<array-key, RawItem>
      */
     public function ensureDataStructure(array $rawItems): \Generator
     {
         foreach ($rawItems as $item) {
-            if (!self::isValidRawItem($item)) {
-                continue;
-            }
-
-            yield $item;
+            self::isValidRawItem($item) and yield $item;
         }
     }
 
     /**
-     * @psalm-assert RawItem $rawItem
+     * @phpstan-assert-if-true RawItem $rawItem
      */
     private static function isValidRawItem(mixed $rawItem): bool
     {

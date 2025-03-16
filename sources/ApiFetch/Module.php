@@ -32,9 +32,6 @@ class Module implements ServiceModule, ExecutableModule
         return [];
     }
 
-    /**
-     * @psalm-suppress PossiblyUnusedReturnValue
-     */
     public function run(ContainerInterface $container): bool
     {
         add_action('wp_enqueue_scripts', function (): void {
@@ -42,7 +39,6 @@ class Module implements ServiceModule, ExecutableModule
             $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
             $baseDir = untrailingslashit($this->appProperties->basePath());
 
-            /** @psalm-suppress UnresolvableInclude */
             $configuration = (array) (include "{$baseDir}/{$moduleLocationPath}/konomi-api-fetch.asset.php");
 
             $dependencies = (array) ($configuration['dependencies'] ?? null);
