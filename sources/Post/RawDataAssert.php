@@ -60,9 +60,6 @@ class RawDataAssert
         if (!is_array($rawItems)) {
             return false;
         }
-        if (count($rawItems) !== 2) {
-            return false;
-        }
         if (!self::isValidRawItem($rawItems[0] ?? [])) {
             return false;
         }

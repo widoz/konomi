@@ -16,6 +16,9 @@ describe('Like Context', function (): void {
                 'isLoggedIn' => true,
                 'findLike' => \Mockery::mock(User\Item::class, ['isActive' => true]),
             ]);
+            $userFactory = \Mockery::mock(User\UserFactory::class, [
+                'create' => $user,
+            ]);
             $post = \Mockery::mock(Post\Post::class, [
                 'countForPost' => 1,
             ]);
@@ -23,7 +26,7 @@ describe('Like Context', function (): void {
             Functions\expect('get_the_ID')->andReturn(10);
             Functions\expect('get_post_type')->andReturn('post-type');
 
-            $likeContext = Context::new($user, $post);
+            $likeContext = Context::new($userFactory, $post);
             $likeContextAsArray = $likeContext->toArray();
 
             expect($likeContext->instanceId())->toEqual(1)

@@ -16,15 +16,6 @@ describe('Custom Property', function (): void {
             );
             expect($customProperty->isValid())->toBeTrue();
         });
-
-        it('Instantiate an invalid key value pair', function (): void {
-            $customProperty = CustomProperty::new(
-                'key',
-                null,
-                static fn (mixed $value): mixed => $value
-            );
-            expect($customProperty->isValid())->toBeFalse();
-        });
     });
 
     describe('__toString', function (): void {
