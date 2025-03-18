@@ -37,25 +37,32 @@ class Module implements ServiceModule, ExecutableModule
 
     public function run(ContainerInterface $container): bool
     {
-        add_action('wp_enqueue_scripts', function () {
-            $distLocationPath = 'sources/Icons/client/dist';
-            $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
-            $baseDir = untrailingslashit($this->appProperties->basePath());
+        $actions = [
+            'wp_enqueue_scripts',
+            'admin_enqueue_scripts',
+        ];
 
-            $configuration = (array) (include "{$baseDir}/{$distLocationPath}/konomi-icons.asset.php");
+        foreach ($actions as $action) {
+            add_action($action, function () {
+                $distLocationPath = 'sources/Icons/client/dist';
+                $baseUrl = untrailingslashit($this->appProperties->baseUrl() ?? '');
+                $baseDir = untrailingslashit($this->appProperties->basePath());
 
-            /** @var array<string> $dependencies */
-            $dependencies = (array) ($configuration['dependencies'] ?? null);
-            $version = (string) ($configuration['version'] ?? $this->appProperties->version());
+                $configuration = (array) (include "{$baseDir}/{$distLocationPath}/konomi-icons.asset.php");
 
-            wp_register_script(
-                'konomi-icons',
-                "{$baseUrl}/{$distLocationPath}/konomi-icons.js",
-                $dependencies,
-                $version,
-                true
-            );
-        });
+                /** @var array<string> $dependencies */
+                $dependencies = (array) ($configuration['dependencies'] ?? null);
+                $version = (string) ($configuration['version'] ?? $this->appProperties->version());
+
+                wp_register_script(
+                    'konomi-icons',
+                    "{$baseUrl}/{$distLocationPath}/konomi-icons.js",
+                    $dependencies,
+                    $version,
+                    true
+                );
+            });
+        }
 
         return true;
     }
