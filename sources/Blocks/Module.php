@@ -39,7 +39,8 @@ class Module implements ServiceModule, ExecutableModule
                 $isDebug
             ),
             BlockRegistrar::class => static fn () => BlockRegistrar::new(
-                "{$basePath}/sources/Blocks"
+                "{$basePath}/sources/Blocks",
+                "{$basePath}/sources/Blocks/blocks-manifest.php"
             ),
             Like\Context::class => static fn (
                 ContainerInterface $container

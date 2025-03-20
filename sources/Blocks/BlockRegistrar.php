@@ -12,18 +12,24 @@ class BlockRegistrar
     /**
      * @throws \InvalidArgumentException
      */
-    public static function new(string $blocksDirectory): self
+    public static function new(string $blocksDirectory, string $blocksManifestPath): self
     {
-        return new self($blocksDirectory);
+        return new self($blocksDirectory, $blocksManifestPath);
     }
 
     /**
      * @throws \InvalidArgumentException
      */
-    final private function __construct(private readonly string $blocksDirectory)
-    {
+    final private function __construct(
+        private readonly string $blocksDirectory,
+        private readonly string $blocksManifestPath
+    ) {
+
         $this->blocksDirectory or throw new \InvalidArgumentException(
             'Blocks directory must be a non-empty string'
+        );
+        $this->blocksManifestPath or throw new \InvalidArgumentException(
+            'Blocks manifest path must be a non-empty string'
         );
     }
 
@@ -31,6 +37,11 @@ class BlockRegistrar
     {
         $blocksDirectory = untrailingslashit($this->blocksDirectory);
         $blockPaths = new \DirectoryIterator($blocksDirectory);
+
+        wp_register_block_metadata_collection(
+            $blocksDirectory,
+            $this->blocksManifestPath
+        );
 
         foreach ($blockPaths as $blockPath) {
             if ($blockPath->isDot() || $blockPath->isFile()) {
