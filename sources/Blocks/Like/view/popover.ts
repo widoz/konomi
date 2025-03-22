@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { popoverElement } from './elements';
+import { popoverElement } from './elements/popover-element';
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
 export function renderResponseError( toggler: HTMLElement ): void {

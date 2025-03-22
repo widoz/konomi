@@ -7,7 +7,7 @@ import { getContext, getElement, store } from '@wordpress/interactivity';
  * Internal dependencies
  */
 import { addLike } from './add-like-command';
-import { loginModalElement } from './elements';
+import { loginModalElement } from './elements/login-modal-element';
 import { renderResponseError } from './popover';
 
 type ResponseError = Readonly< {
