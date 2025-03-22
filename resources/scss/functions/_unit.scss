@@ -4,11 +4,11 @@ $browser-context: 16;
 
 @function em($pixels, $context: $browser-context) {
 
-	@if (unitless($pixels)) {
+	@if (math.is-unitless($pixels)) {
 		$pixels: $pixels * 1px;
 	}
 
-	@if (unitless($context)) {
+	@if (math.is-unitless($context)) {
 		$context: $context * 1px;
 	}
 
@@ -17,11 +17,11 @@ $browser-context: 16;
 
 @function rem($pixels, $context: $browser-context) {
 
-	@if (unitless($pixels)) {
+	@if (math.is-unitless($pixels)) {
 		$pixels: $pixels * 1px;
 	}
 
-	@if (unitless($context)) {
+	@if (math.is-unitless($context)) {
 		$context: $context * 1px;
 	}
 
