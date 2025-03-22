@@ -95,7 +95,7 @@ const { actions } = store( 'konomi', {
 				return;
 			}
 
-			renderResponseError( element.ref );
+			renderResponseError( element.ref, 'Unknown error occurred, please try again later.' );
 		},
 
 		toggleLoginModal: (): void => {
