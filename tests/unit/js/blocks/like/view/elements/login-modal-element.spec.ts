@@ -1,10 +1,11 @@
 import { jest, describe, it, expect, beforeEach } from '@jest/globals';
-import { findInteractivityParent } from '../../../../../../sources/Blocks/Like/view/utils';
+import { parseHTML } from '@test/helpers';
+import { findInteractivityParent } from '../../../../../../../sources/Blocks/Like/view/utils';
 import {
 	loginModalElement,
-} from '../../../../../../sources/Blocks/Like/view/elements/login-modal-element';
+} from '../../../../../../../sources/Blocks/Like/view/elements/login-modal-element';
 
-jest.mock( '../../../../../../sources/Blocks/Like/view/utils', () => ({
+jest.mock( '../../../../../../../sources/Blocks/Like/view/utils', () => ({
 	findInteractivityParent: jest.fn(),
 }) );
 
@@ -21,12 +22,6 @@ describe( 'loginModalElement', () => {
       <button class="trigger-button">Trigger</button>
     </div>
   `;
-
-	const parseHTML = ( html: string ) => {
-		const parser = new DOMParser();
-		const doc = parser.parseFromString( html, 'text/html' );
-		return doc.body.firstElementChild as HTMLElement;
-	};
 
 	beforeEach( () => {
 		jest.clearAllMocks();

@@ -46,6 +46,9 @@
 			],
 			"@wordpress/blocks": [
 				"./node_modules/@wordpress/blocks/src"
+			],
+			"@test/helpers": [
+				"./tests/helpers.ts"
 			]
 		}
 	},
