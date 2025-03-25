@@ -37,7 +37,6 @@ $style = (string) Blocks\style()->add(
      */
     $renderer->render('Like/partials/button', [
         'anchor' => $anchor,
-        'count' => $context->count(),
         'label' => esc_html__('Save this post', 'konomi'),
     ]) ?>
 

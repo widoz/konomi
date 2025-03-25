@@ -33,9 +33,5 @@ $label = (string) ($data['label'] ?? null);
         </span>
     <?php endif ?>
 
-    <span class="konomi-like-count" data-wp-text="context.count">
-        <?=
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        $count ?>
-    </span>
+    <span class="konomi-like-count" data-wp-text="context.count"></span>
 </button>
