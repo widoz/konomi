@@ -15,3 +15,8 @@ function renderer(): TemplateRender
 {
     return package()->container()->get(TemplateRender::class);
 }
+
+function style(): Style
+{
+    return Style::new();
+}
