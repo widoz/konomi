@@ -15,7 +15,6 @@ $renderer = Blocks\renderer();
 $context = Blocks\context();
 $generatedContext = $context->toArray();
 $uuid = $context->instanceId();
-$id = $context->postId();
 $anchor = "--konomi-like-{$uuid}";
 
 $style = (string) Blocks\style()->add(
@@ -50,7 +49,6 @@ $style = (string) Blocks\style()->add(
 
     <?=
     $renderer->render('Like/partials/dialog', [
-        'postId' => $id,
         'loginPageUrl' => wp_login_url(add_query_arg([])),
         'loginPageLabel' => esc_html__('Login', 'konomi'),
         'title' => esc_html__('Sign in to like', 'konomi'),
