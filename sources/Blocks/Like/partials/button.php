@@ -9,7 +9,6 @@ use Widoz\Wp\Konomi\Icons;
 $data = (array) ($data ?? null);
 
 $anchor = (string) ($data['anchor'] ?? null);
-$count = (int) ($data['count'] ?? null);
 $label = (string) ($data['label'] ?? null);
 ?>
 
