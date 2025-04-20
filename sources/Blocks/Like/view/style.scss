@@ -12,8 +12,14 @@
 	--konomi-color--gray: #696969ff;
 	--konomi-color--white: #fff;
 
-	--konomi-icon--inactive: var(--konomi-color--inactive, var(--konomi-color--gray));
-	--konomi-icon--active: var(--konomi-color--active, var(--konomi-color--crimson));
+	--konomi-icon--inactive: var(
+		--konomi-color--inactive,
+		var(--konomi-color--gray)
+	);
+	--konomi-icon--active: var(
+		--konomi-color--active,
+		var(--konomi-color--crimson)
+	);
 
 	margin: 0;
 	padding: 0;
@@ -72,7 +78,6 @@
 	}
 
 	.konomi-like-response-message {
-
 		inset-area: block-start; /* stylelint-disable property-no-unknown */
 		inset-block-end: anchor(top);
 		inset-inline-start: anchor(right);
