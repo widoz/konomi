@@ -4095,6 +4095,23 @@
     core-js "^3.31.0"
     react "^18.3.0"
 
+"@wordpress/babel-preset-default@^8.22.0":
+  version "8.22.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/babel-preset-default/-/babel-preset-default-8.22.0.tgz#111cf2c0f4771534a409b0d820d7e2b3e6a2e485"
+  integrity sha512-iBPcAtfT6Qo745RBtiKyy6OwKB6qlLusLGE/+2W160oX4oaPlbrJbf37tb3LaYMR/+ncEakiio3eNUlR9wQE9A==
+  dependencies:
+    "@babel/core" "7.25.7"
+    "@babel/plugin-transform-react-jsx" "7.25.7"
+    "@babel/plugin-transform-runtime" "7.25.7"
+    "@babel/preset-env" "7.25.7"
+    "@babel/preset-typescript" "7.25.7"
+    "@babel/runtime" "7.25.7"
+    "@wordpress/browserslist-config" "^6.22.0"
+    "@wordpress/warning" "^3.22.0"
+    browserslist "^4.21.10"
+    core-js "^3.31.0"
+    react "^18.3.0"
+
 "@wordpress/base-styles@^5.20.0":
   version "5.20.0"
   resolved "https://registry.yarnpkg.com/@wordpress/base-styles/-/base-styles-5.20.0.tgz#c40d0044fec1cb154fa8dcc18ed25de3b459bc92"
@@ -4250,6 +4267,11 @@
   version "6.20.0"
   resolved "https://registry.yarnpkg.com/@wordpress/browserslist-config/-/browserslist-config-6.20.0.tgz#ad654203100be82c3c1851266cdb626353e0805a"
   integrity sha512-n9Q1UN3QL4DuZLySZpbJoZbQvBTjMjRV5yaxnmQaEpOyqablX4GnYq39fwTY72hBN/c1b0oyOFcsbhsrx0wqzg==
+
+"@wordpress/browserslist-config@^6.22.0":
+  version "6.22.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/browserslist-config/-/browserslist-config-6.22.0.tgz#a46e4d41a885497689c3f742eb2d6bb2ac271aea"
+  integrity sha512-IrvIkmBSO/DsTQCSWqeds95JN31nl138RvspB93Y5+f9gF5RuZ281HhRas5HbSgPa/SMHRXz6uT4wzNamP2Piw==
 
 "@wordpress/commands@^0.28.0":
   version "0.28.0"
@@ -4711,6 +4733,29 @@
     globals "^13.12.0"
     requireindex "^1.2.0"
 
+"@wordpress/eslint-plugin@^22.8.0":
+  version "22.8.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/eslint-plugin/-/eslint-plugin-22.8.0.tgz#777ef290a16637be874a020aed484ef20b8c6e75"
+  integrity sha512-VH39xtdnKqLag8PUhS+y4n0Ted4lPtUQ1vIr66DiFvGWMZ4+GfFl8IFOIWi41+6Obw8kgKuOUJhd0qSl+8tg1w==
+  dependencies:
+    "@babel/eslint-parser" "7.25.7"
+    "@typescript-eslint/eslint-plugin" "^6.4.1"
+    "@typescript-eslint/parser" "^6.4.1"
+    "@wordpress/babel-preset-default" "^8.22.0"
+    "@wordpress/prettier-config" "^4.22.0"
+    cosmiconfig "^7.0.0"
+    eslint-config-prettier "^8.3.0"
+    eslint-plugin-import "^2.25.2"
+    eslint-plugin-jest "^27.4.3"
+    eslint-plugin-jsdoc "^46.4.6"
+    eslint-plugin-jsx-a11y "^6.5.1"
+    eslint-plugin-playwright "^0.15.3"
+    eslint-plugin-prettier "^5.0.0"
+    eslint-plugin-react "^7.27.0"
+    eslint-plugin-react-hooks "^4.3.0"
+    globals "^13.12.0"
+    requireindex "^1.2.0"
+
 "@wordpress/hooks@^3.57.0":
   version "3.57.0"
   resolved "https://registry.yarnpkg.com/@wordpress/hooks/-/hooks-3.57.0.tgz#54206bbe82dfa7d0012a48822db07ae306b38177"
@@ -4948,6 +4993,11 @@
   version "4.20.0"
   resolved "https://registry.yarnpkg.com/@wordpress/prettier-config/-/prettier-config-4.20.0.tgz#31810f67ff464319b8ee1dd524a0ddfb0c0bc1fe"
   integrity sha512-YucOkFoglNTe96CcmorzmFVX94r+mEjXQZZWkZgLwq8dvdeRM3UO39+dETYAfo8HZ4BYx6KfpREIV7tZ8PDHmQ==
+
+"@wordpress/prettier-config@^4.22.0":
+  version "4.22.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/prettier-config/-/prettier-config-4.22.0.tgz#1c5283efb113aa601865099c763f5230851e9d84"
+  integrity sha512-+XsgTyVSrPd7m+s4G/fNBuyzvkE/Dgx3syUn5G5KLhnb5atRb4r1hWrLBg/oC8vsU5kGEyO+p6LEDRjcZtl0nQ==
 
 "@wordpress/primitives@^3.55.0":
   version "3.55.0"
@@ -5245,6 +5295,11 @@
   version "3.20.0"
   resolved "https://registry.yarnpkg.com/@wordpress/warning/-/warning-3.20.0.tgz#2cc45bbb4a29d7e7aa3b1e8436ed2ac30b1d8c3d"
   integrity sha512-IQRvlWwNWO6kncZ/qQEX/KCvsrm/0FIcuCXrTXlGP4OslRG7XtU9xs2lOP34Y6G3onMwhpD8mXFUK7udq305EQ==
+
+"@wordpress/warning@^3.22.0":
+  version "3.22.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/warning/-/warning-3.22.0.tgz#ae896b9d8a29b382ce5e6f429197576e3f05a96d"
+  integrity sha512-GvL9XdnRyDfFbwtZ6X0hoRDlQr6G5kHLWhq5gnE6uJ9xqiuPR9CQgM24a8LE3Oje1ipdWvPA7Cyr6tv4y8TuMQ==
 
 "@wordpress/warning@^3.4.0":
   version "3.4.0"
