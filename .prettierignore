@@ -1,10 +1,8 @@
-build
+./**/build
 ./**/dist
-
 .psalm
 .github
-
 ./coverage
 ./vendor
 ./node_modules
-
+*.scss
