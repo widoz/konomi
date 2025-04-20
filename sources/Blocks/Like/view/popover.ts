@@ -4,13 +4,13 @@
 import { popoverElement } from './elements/popover-element';
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-export function renderResponseError( toggler: HTMLElement, defaultMessage: string ): void {
-	renderResponse( toggler, 'error', defaultMessage );
+export function renderResponseError( toggler: HTMLElement ): void {
+	renderResponse( toggler, 'error' );
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-function renderResponse( toggler: HTMLElement, key: string, defaultMessage: string ): void {
-	const message = toggler.dataset[ key ] ?? defaultMessage;
+function renderResponse( toggler: HTMLElement, key: string ): void {
+	const message = toggler.dataset[ key ] ?? '';
 	if ( ! message ) {
 		return;
 	}
@@ -21,6 +21,7 @@ function renderResponse( toggler: HTMLElement, key: string, defaultMessage: stri
 
 	setTimeout( () => {
 		popover.hidePopover();
+		popover.innerHTML = '';
 		toggler.dataset[ key ] = '';
 	}, 3000 );
 }

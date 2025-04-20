@@ -7,7 +7,6 @@ namespace Widoz\Wp\Konomi\Blocks\Like;
 $data = (array) ($data ?? null);
 
 $anchor = (string) ($data['anchor'] ?? null);
-$defaultMessage = (string) ($data['defaultMessage'] ?? null);
 ?>
 
 <span
@@ -15,5 +14,4 @@ $defaultMessage = (string) ($data['defaultMessage'] ?? null);
     class="konomi-like-response-message"
     style="position-anchor: <?= esc_attr($anchor) ?>"
 >
-    <?= esc_html($defaultMessage) ?>
 </span>

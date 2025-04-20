@@ -43,7 +43,6 @@ $style = (string) Blocks\style()->add(
     <?=
     $renderer->render('Like/partials/popover', [
         'anchor' => $anchor,
-        'defaultMessage' => esc_html__('Unknown error, please try again later!', 'konomi'),
     ]) ?>
 
     <?=
