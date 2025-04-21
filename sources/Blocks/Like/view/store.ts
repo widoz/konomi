@@ -104,7 +104,7 @@ export function init(): void {
 				useLayoutEffect( () => {
 					const element = getElement();
 					if ( element.ref && context.error.code ) {
-						renderMessage( element.ref, () => {
+						renderMessage( element.ref ).finally( () => {
 							context.error = {
 								code: '',
 								message: '',

@@ -25,31 +25,12 @@ describe( 'Popover Module', () => {
     </div>
   `;
 
-	const MARKUP_WITH_EMPTY_ERROR_DATA = `
-    <div data-wp-interactive="konomi">
-      <div class="konomi-like-response-message">Popover Message</div>
-      <button class="trigger-button" data-error="">Trigger</button>
-    </div>
-  `;
-
-	const MARKUP_WITHOUT_ERROR_DATA = `
-    <div data-wp-interactive="konomi">
-      <div class="konomi-like-response-message">Popover Message</div>
-      <button class="trigger-button">Trigger</button>
-    </div>
-  `;
-
 	beforeEach( () => {
-		jest.useFakeTimers();
 		jest.clearAllMocks();
 	} );
 
-	afterEach( () => {
-		jest.useRealTimers();
-	} );
-
 	describe( 'renderMessage', () => {
-		it( 'render the popover and execute a callback when it becomes hidden', () => {
+		it( 'should render the popover and hide it after delay', ( done ) => {
 			const parent = parseHTML( MARKUP_WITH_ERROR_DATA );
 			const toggler = parent.querySelector(
 				'.trigger-button'
@@ -60,21 +41,32 @@ describe( 'Popover Module', () => {
 				showPopover: jest.fn(),
 				hidePopover: jest.fn(),
 			};
-			const onHideMessage = jest.fn();
 
 			jest.mocked( popoverElement ).mockReturnValue(
 				popover as unknown as HTMLElement
 			);
 
-			renderMessage( toggler, onHideMessage );
+			renderMessage( toggler ).finally( () => {
+				expect( popoverElement ).toHaveBeenCalledWith( toggler );
+				expect( popover.showPopover ).toHaveBeenCalled();
+				expect( popover.hidePopover ).toHaveBeenCalled();
+				done();
+			} );
+		} );
 
-			expect( popoverElement ).toHaveBeenCalledWith( toggler );
-			expect( popover.showPopover ).toHaveBeenCalled();
+		it( 'should reject when popover element is not found', async () => {
+			const parent = parseHTML( MARKUP_WITH_ERROR_DATA );
+			const toggler = parent.querySelector(
+				'.trigger-button'
+			) as HTMLElement;
 
-			jest.advanceTimersByTime( 3000 );
+			jest.mocked( popoverElement ).mockReturnValue(
+				null as unknown as HTMLElement
+			);
 
-			expect( popover.hidePopover ).toHaveBeenCalled();
-			expect( onHideMessage ).toHaveBeenCalled();
+			await expect( renderMessage( toggler ) ).rejects.toThrow(
+				'Konomi: Popover element not found.'
+			);
 		} );
 	} );
 } );
