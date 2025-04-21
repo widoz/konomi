@@ -13,5 +13,7 @@ $anchor = (string) ($data['anchor'] ?? null);
     popover="manual"
     class="konomi-like-response-message"
     style="position-anchor: <?= esc_attr($anchor) ?>"
+    data-wp-text="context.error.message"
+    data-wp-run--maybe-render-response-error="callbacks.maybeRenderResponseError"
 >
 </span>

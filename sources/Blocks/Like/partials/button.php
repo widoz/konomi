@@ -18,7 +18,6 @@ $label = (string) ($data['label'] ?? null);
     echo get_block_wrapper_attributes() ?>
     data-wp-class--is-active="context.isActive"
     data-wp-on-async--click="actions.toggleStatus"
-    data-wp-run--maybe-show-errors="callbacks.maybeShowErrorPopup"
     data-wp-run--maybe-show-login-modal="callbacks.toggleLoginModal"
     style="anchor-name: <?= esc_attr($anchor) ?>"
 >

@@ -44,6 +44,10 @@ class Context
             'count' => $this->count(),
             'isUserLoggedIn' => $this->isUserLoggedIn(),
             'isActive' => $like->isActive(),
+            'error' => [
+                'code' => '',
+                'message' => '',
+            ]
         ];
     }
 

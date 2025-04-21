@@ -1,14 +1,19 @@
 /**
  * WordPress dependencies
  */
-import { getContext, getElement, store } from '@wordpress/interactivity';
+import {
+	getContext,
+	getElement,
+	useLayoutEffect,
+	store,
+} from '@wordpress/interactivity';
 
 /**
  * Internal dependencies
  */
 import { addLike } from './add-like-command';
 import { loginModalElement } from './elements/login-modal-element';
-import { renderResponseError } from './popover';
+import { renderMessage } from './popover';
 
 type ResponseError = Readonly< {
 	code: string;
@@ -25,8 +30,13 @@ type Context = {
 	count: number;
 	isUserLoggedIn: boolean;
 	loginRequired: boolean;
+	error: {
+		code: ResponseError[ 'code' ];
+		message: ResponseError[ 'message' ];
+	};
 };
 
+// eslint-disable-next-line max-lines-per-function
 export function init(): void {
 	const { actions } = store( 'konomi', {
 		state: {},
@@ -53,8 +63,6 @@ export function init(): void {
 					return;
 				}
 
-				const element = getElement();
-
 				try {
 					yield addLike( {
 						meta: {
@@ -67,11 +75,11 @@ export function init(): void {
 					} );
 				} catch ( error: any ) {
 					const responseError = error as ResponseError;
-
+					context.error = {
+						code: responseError.code,
+						message: responseError.message,
+					};
 					actions.revertStatus();
-					if ( element.ref ) {
-						element.ref.dataset[ 'error' ] = responseError.message;
-					}
 				}
 			},
 
@@ -90,13 +98,21 @@ export function init(): void {
 		},
 
 		callbacks: {
-			maybeShowErrorPopup: (): void => {
-				const element = getElement();
-				if ( ! ( element.ref instanceof HTMLElement ) ) {
-					return;
-				}
-
-				renderResponseError( element.ref );
+			maybeRenderResponseError: (): void => {
+				const context = getContext< Context >( 'konomi' );
+				// eslint-disable-next-line react-hooks/rules-of-hooks
+				useLayoutEffect( () => {
+					const element = getElement();
+					if ( element.ref && context.error.code ) {
+						renderMessage( element.ref, () => {
+							context.error = {
+								code: '',
+								message: '',
+							};
+						} );
+					}
+					// eslint-disable-next-line react-hooks/exhaustive-deps
+				}, [ context.error.code, context.error.message ] );
 			},
 
 			toggleLoginModal: (): void => {
