@@ -16,7 +16,7 @@
 	},
 	"require-dev": {
 		"inpsyde/php-coding-standards": "^2.0.0-beta",
-		"roots/wordpress-no-content": "^6.7",
+		"roots/wordpress-no-content": "^6.8",
 		"pestphp/pest": "^2.34",
 		"brain/monkey": "^2.6",
 		"mockery/mockery": "^1.6",
