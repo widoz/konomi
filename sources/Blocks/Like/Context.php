@@ -47,7 +47,7 @@ class Context
             'error' => [
                 'code' => '',
                 'message' => '',
-            ]
+            ],
         ];
     }
 
