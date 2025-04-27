@@ -52,6 +52,6 @@
 		"lint:css:fix": "wp-scripts lint-style ./sources/**/*.scss --fix",
 		"test": "jest",
 		"test:update-snapshots": "yarn test -u",
-		"qa": "yarn lint:js && yarn lint:css"
+		"qa": "yarn lint:js && yarn lint:css && yarn test"
 	}
 }
