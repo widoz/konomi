@@ -37,7 +37,7 @@ jobs:
         run: composer analysis:ci
 
       - name: Unit Tests
-        run: composer test:init
+        run: composer test:unit
 
       - name: Integration Tests
         run: composer test:integration
