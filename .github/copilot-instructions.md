@@ -85,6 +85,7 @@
     namedExport: jest.fn(),
   }));
   ```
+- When need to partially mock something, use the `@total-typescript/shoehorn` package rather than the typescript `as` keyword.
 
 ## Examples
 
