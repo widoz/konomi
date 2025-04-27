@@ -20,7 +20,7 @@ jest.mock( '@wordpress/interactivity', () => ( {
 	getContext: jest.fn(),
 	getElement: jest.fn(),
 	store: jest.fn(),
-	useLayoutEffect: jest.fn( ( callback: () => void ) => callback() ),
+	useLayoutEffect: jest.fn(),
 } ) );
 
 jest.mock(
@@ -211,9 +211,8 @@ describe( 'Interactivity Store', () => {
 		describe( 'maybeRenderResponseError', () => {
 			it( 'should call useLayoutEffect with correct dependencies', () => {
 				init();
-				jest.mocked( getElement ).mockReturnValue(
-					mockElement( document.createElement( 'div' ) )
-				);
+				mockGetElementReturnValue( document.createElement( 'div' ) );
+				mockUseLayoutEffect();
 				mockStore.callbacks.maybeRenderResponseError();
 				expect( useLayoutEffect ).toHaveBeenCalledWith(
 					expect.any( Function ),
@@ -229,9 +228,7 @@ describe( 'Interactivity Store', () => {
 				init();
 
 				const elementRef = document.createElement( 'div' );
-				jest.mocked( getElement ).mockReturnValue(
-					mockElement( elementRef )
-				);
+				mockGetElementReturnValue( elementRef );
 
 				const renderPromise = Promise.resolve();
 				jest.spyOn( popoverModule, 'renderMessage' ).mockReturnValue(
@@ -240,7 +237,6 @@ describe( 'Interactivity Store', () => {
 
 				const layoutEffectCallback = mockUseLayoutEffect();
 				mockStore.callbacks.maybeRenderResponseError();
-				layoutEffectCallback();
 
 				await renderPromise;
 
@@ -256,9 +252,7 @@ describe( 'Interactivity Store', () => {
 				};
 				init();
 
-				jest.mocked( getElement ).mockReturnValue(
-					mockElement( document.createElement( 'div' ) )
-				);
+				mockGetElementReturnValue( document.createElement( 'div' ) );
 
 				const renderPromise = Promise.resolve();
 				jest.spyOn( popoverModule, 'renderMessage' ).mockReturnValue(
@@ -267,7 +261,6 @@ describe( 'Interactivity Store', () => {
 
 				const layoutEffectCallback = mockUseLayoutEffect();
 				mockStore.callbacks.maybeRenderResponseError();
-				layoutEffectCallback();
 
 				await renderPromise;
 
@@ -281,9 +274,7 @@ describe( 'Interactivity Store', () => {
 				};
 				init();
 
-				jest.mocked( getElement ).mockReturnValue(
-					mockElement( null )
-				);
+				mockGetElementReturnValue( null );
 
 				const renderPromise = Promise.resolve();
 				jest.spyOn( popoverModule, 'renderMessage' ).mockReturnValue(
@@ -292,7 +283,6 @@ describe( 'Interactivity Store', () => {
 
 				const layoutEffectCallback = mockUseLayoutEffect();
 				mockStore.callbacks.maybeRenderResponseError();
-				layoutEffectCallback();
 
 				await renderPromise;
 
@@ -307,9 +297,7 @@ describe( 'Interactivity Store', () => {
 				init();
 
 				const elementRef = document.createElement( 'div' );
-				jest.mocked( getElement ).mockReturnValue(
-					mockElement( elementRef )
-				);
+				mockGetElementReturnValue( elementRef );
 
 				const renderPromise = Promise.resolve();
 				jest.spyOn( popoverModule, 'renderMessage' ).mockReturnValue(
@@ -318,7 +306,6 @@ describe( 'Interactivity Store', () => {
 
 				const layoutEffectCallback = mockUseLayoutEffect();
 				mockStore.callbacks.maybeRenderResponseError();
-				layoutEffectCallback();
 
 				await renderPromise;
 
@@ -335,9 +322,7 @@ describe( 'Interactivity Store', () => {
 				init();
 
 				const elementRef = document.createElement( 'div' );
-				jest.mocked( getElement ).mockReturnValue(
-					mockElement( elementRef )
-				);
+				mockGetElementReturnValue( elementRef );
 
 				const mockDialog = fromPartial< HTMLDialogElement >( {
 					showModal: jest.fn(),
@@ -363,9 +348,7 @@ describe( 'Interactivity Store', () => {
 				init();
 
 				const elementRef = document.createElement( 'div' );
-				jest.mocked( getElement ).mockReturnValue(
-					mockElement( elementRef )
-				);
+				mockGetElementReturnValue( elementRef );
 
 				const mockDialog = fromPartial< HTMLDialogElement >( {
 					showModal: jest.fn(),
@@ -388,9 +371,7 @@ describe( 'Interactivity Store', () => {
 
 			it( 'should do nothing when element ref is not an HTMLElement', () => {
 				init();
-				jest.mocked( getElement ).mockReturnValue(
-					mockElement( null )
-				);
+				mockGetElementReturnValue( null );
 				mockStore.callbacks.toggleLoginModal();
 				expect( loginModalElement ).not.toHaveBeenCalled();
 			} );
@@ -402,19 +383,19 @@ type Element = {
 	ref: HTMLElement | null;
 	attributes: h.JSX.HTMLAttributes< EventTarget >;
 };
-function mockElement( element: HTMLElement | null ): Element {
-	return fromPartial< Element >( { ref: element } );
+function mockGetElementReturnValue( element: HTMLElement | null ): Element {
+	const returnValue = fromPartial< Element >( { ref: element } );
+	jest.mocked( getElement ).mockReturnValue( returnValue );
+	return returnValue;
 }
 
 type Callback = () => void;
 /**
  * Cannot use @testing-library/preact because of some issues with the modules.
+ * @link https://github.com/testing-library/preact-testing-library/issues/70
  */
-function mockUseLayoutEffect(): Callback {
-	let layoutEffectCallback: Callback = () => {};
-	jest.mocked( useLayoutEffect ).mockImplementationOnce( ( callback ) => {
-		layoutEffectCallback = callback;
-		return callback();
-	} );
-	return layoutEffectCallback;
+function mockUseLayoutEffect(): void {
+	jest.mocked( useLayoutEffect ).mockImplementationOnce(
+		( callback: () => void ) => callback()
+	);
 }
