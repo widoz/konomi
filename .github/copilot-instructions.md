@@ -74,6 +74,8 @@
 - Use `it` blocks for specific test cases
 - Follow the Arrange-Act-Assert pattern in tests
 - Clear mocks between tests with `beforeEach(() => { jest.clearAllMocks() })`
+- Use the `@total-typescript/shoehorn` package for partial mocking
+- Use `@testing-library/react` for React component testing
 
 ### Mocking in TypeScript Tests
 - Mock dependencies using `jest.mock()`
