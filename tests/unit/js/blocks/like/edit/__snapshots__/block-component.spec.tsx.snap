@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlockComponent should match snapshot 1`] = `
+<div>
+  <div
+    class="konomi-like"
+    style="--konomi-color--inactive: #cccccc; --konomi-color--active: #ff0000;"
+  >
+    <button
+      class="mock-block-props"
+    >
+      <div
+        data-testid="svg-heart"
+      >
+        Heart Icon
+      </div>
+      <span
+        class="konomi-like-count"
+      >
+        10
+      </span>
+    </button>
+  </div>
+</div>
+`;

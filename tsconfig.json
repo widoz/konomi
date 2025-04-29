@@ -3,22 +3,15 @@
 		"target": "ES2022",
 		"checkJs": true,
 		"allowJs": true,
-		"alwaysStrict": true,
 		"exactOptionalPropertyTypes": true,
 		"noFallthroughCasesInSwitch": true,
-		"noImplicitAny": true,
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
-		"noImplicitThis": true,
-		"strictNullChecks": true,
-		"strictFunctionTypes": true,
-		"strictPropertyInitialization": true,
 		"noPropertyAccessFromIndexSignature": true,
 		"noUncheckedIndexedAccess": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"strict": true,
-		"useUnknownInCatchVariables": true,
 		"resolveJsonModule": true,
 		"sourceMap": true,
 		"jsx": "react",
@@ -26,34 +19,22 @@
 		"esModuleInterop": true,
 		"baseUrl": ".",
 		"module": "ESNext",
-		"moduleResolution": "NodeNext",
-		"typeRoots": [
-			"./node_modules/@types",
-			"./@types"
-		],
+		"moduleResolution": "Bundler",
+		"typeRoots": [ "./node_modules/@types", "./@types" ],
 		"rootDir": "./",
 		"paths": {
-			"@konomi/wp-types": [
-				"./@types/wp"
-			],
-			"@konomi/types": [
-				"./@types"
-			],
-			"@konomi/configuration": [
-				"./sources/Configuration/client"
-			],
+			"@konomi/wp-types": [ "./@types/wp" ],
+			"@konomi/types": [ "./@types" ],
+			"@konomi/api-fetch": [ "./sources/ApiFetch/client" ],
+			"@konomi/configuration": [ "./sources/Configuration/client" ],
+			"@konomi/icons": [ "./sources/Icons/client" ],
 			"@wordpress/block-editor": [
 				"./node_modules/@wordpress/block-editor/src"
-			]
+			],
+			"@wordpress/blocks": [ "./node_modules/@wordpress/blocks/src" ],
+			"@test/helpers": [ "./tests/helpers.ts" ]
 		}
 	},
-	"include": [
-		"./sources",
-		"./@types"
-	],
-	"exclude": [
-		"dist",
-		"node_modules",
-		"tests"
-	]
+	"include": [ "./sources", "./@types" ],
+	"exclude": [ "**/dist/", "**/build-module/", "node_modules", "tests" ]
 }

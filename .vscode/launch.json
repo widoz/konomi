@@ -1,0 +1,28 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Local",
+			"type": "php",
+			"request": "launch",
+			"port": 9003,
+			"runtimeArgs": [
+				"-dxdebug.mode=debug",
+				"-dxdebug.start_with_request=yes",
+				"-dxdebug.client_port=9003"
+			]
+		},
+		{
+			"name": "Wp Env",
+			"type": "php",
+			"request": "launch",
+			"port": 9003,
+			"pathMappings": {
+				"/var/www/html/wp-content/plugins/konomi": "${workspaceFolder}",
+				"/var/www/html/wp-admin": "${workspaceFolder}/vendor/roots/wordpress-no-content/wp-admin",
+				"/var/www/html/wp-includes": "${workspaceFolder}/vendor/roots/wordpress-no-content/wp-includes"
+			},
+			"hostname": "0.0.0.0"
+		}
+	]
+}

@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd"
-    bootstrap="vendor/autoload.php"
-    colors="true"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd"
+	colors="true"
 >
-    <testsuites>
-        <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/php/unit</directory>
-        </testsuite>
-    </testsuites>
+	<testsuites>
+		<testsuite name="unit">
+			<directory suffix="Test.php">./tests/unit/php</directory>
+		</testsuite>
+		<testsuite name="integration">
+			<directory suffix="Test.php">./tests/integration</directory>
+		</testsuite>
+		<testsuite name="functional">
+			<directory suffix="Test.php">./tests/functional</directory>
+		</testsuite>
+	</testsuites>
 
-    <source>
-        <include>
-            <directory suffix=".php">./sources/server/src</directory>
-            <file>./konomi.php</file>
-        </include>
-    </source>
+	<source>
+		<include>
+			<directory suffix=".php">./sources/</directory>
+			<file>./konomi.php</file>
+		</include>
+		<exclude>
+			<directory>./sources/**/**/build-module</directory>
+			<directory>./sources/**/**/dist</directory>
+		</exclude>
+	</source>
+
+	<coverage>
+        <report>
+            <clover outputFile="coverage.xml"/>
+        </report>
+    </coverage>
 </phpunit>

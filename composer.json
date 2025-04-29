@@ -15,16 +15,33 @@
 		"inpsyde/modularity": "^1.5"
 	},
 	"require-dev": {
-		"inpsyde/php-coding-standards": "^1.0",
-		"roots/wordpress-no-content": "^6.5",
-		"vimeo/psalm": "^5.23",
+		"inpsyde/php-coding-standards": "^2.0.0-beta",
+		"roots/wordpress-no-content": "^6.8",
 		"pestphp/pest": "^2.34",
 		"brain/monkey": "^2.6",
-		"mockery/mockery": "^1.6"
+		"mockery/mockery": "^1.6",
+		"inpsyde/wp-stubs-versions": "6.7",
+		"phpmetrics/phpmetrics": "^2.8",
+		"phpstan/phpstan": "^2.1",
+		"bnf/phpstan-psr-container": "^1.1"
 	},
 	"autoload": {
 		"psr-4": {
 			"Widoz\\Wp\\Konomi\\": "sources/"
+		},
+		"files": [
+			"sources/Functions/filters.php",
+			"sources/package.php",
+			"sources/Blocks/api.php",
+			"sources/Icons/api.php"
+		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Widoz\\Wp\\Konomi\\Tests\\": "tests/",
+			"Widoz\\Wp\\Konomi\\Tests\\Unit\\": "tests/unit/php",
+			"Widoz\\Wp\\Konomi\\Tests\\Integration\\": "tests/integration/php",
+			"Widoz\\Wp\\Konomi\\Tests\\Functional\\": "tests/functional/php"
 		}
 	},
 	"config": {
@@ -36,10 +53,29 @@
 			"pestphp/pest-plugin": true
 		}
 	},
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://raw.githubusercontent.com/inpsyde/wp-stubs/main",
+			"only": [
+				"inpsyde/wp-stubs-versions"
+			]
+		}
+	],
 	"scripts": {
-		"cs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
-		"cs:fix": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
-		"psalm": "@php ./vendor/bin/psalm",
-		"test": "@php ./vendor/bin/pest"
+		"cs": "@php ./vendor/bin/phpcs",
+		"cs:fix": "@php ./vendor/bin/phpcbf",
+		"analysis": "@php ./vendor/bin/phpstan analyse",
+		"analysis:ci": "@php ./vendor/bin/phpstan --error-format=github",
+		"test:unit": "@php ./vendor/bin/pest --testsuite=unit",
+		"test:integration": "@php ./vendor/bin/pest --testsuite=integration",
+		"test:functional": "@php ./vendor/bin/pest --testsuite=functional",
+		"qa": [
+			"@cs",
+			"@analysis",
+			"@test:unit",
+			"@test:integration",
+			"@test:functional"
+		]
 	}
 }

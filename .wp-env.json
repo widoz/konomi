@@ -1,7 +1,8 @@
 {
 	"core": "./vendor/roots/wordpress-no-content",
 	"plugins": [
-		"."
+		".",
+		"https://downloads.wordpress.org/plugin/query-monitor.3.11.0.zip"
 	],
 	"env": {
 		"development": {
@@ -14,6 +15,8 @@
 		}
 	},
 	"config": {
-		"WP_ENVIRONMENT_TYPE": "local"
+		"WP_ENVIRONMENT_TYPE": "local",
+		"WP_DEBUG_LOG": true,
+		"WP_DEBUG_DISPLAY": true
 	}
 }

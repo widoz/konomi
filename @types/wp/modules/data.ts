@@ -1,7 +1,7 @@
 declare module '@wordpress/data' {
 	import type React from 'react';
 	import type { WithoutInjectedProps } from '@wordpress/compose';
-	import type Wp from '@konomi/wp-types';
+	import type { Wp } from '@konomi/wp-types';
 
 	type DataRegistry = Readonly< {
 		select: select;

@@ -10,21 +10,11 @@
 		"import/resolver": "typescript"
 	},
 	"parserOptions": {
+		"project": true,
 		"ecmaVersion": "latest",
 		"sourceType": "module",
-		"project": "./tsconfig.json"
+		"tsconfigRootDir": "./"
 	},
-	"overrides": [
-		{
-			"files": ["webpack.config.js"],
-			"env": {
-				"node": true
-			},
-			"rules": {
-				"@typescript-eslint/no-var-requires": "off"
-			}
-		}
-	],
 	"rules": {
 		"consistent-return": "off",
 		"dot-notation": "off",
@@ -39,7 +29,7 @@
 		"max-depth": ["error", 2],
 		"max-lines": ["error", {"max": 300, "skipBlankLines": false, "skipComments": false}],
 		"max-statements-per-line": ["error", {"max": 1}],
-		"complexity": ["error", 2],
+		"complexity": ["error", 3],
 		"max-lines-per-function": ["error", 25],
 		"max-nested-callbacks": ["error", 2],
 		"no-multiple-empty-lines": ["error", {"max": 1, "maxEOF": 1, "maxBOF": 0}],
@@ -115,7 +105,6 @@
 			"error",
 			"property"
 		],
-		"@wordpress/dependency-group": "error",
 		"@wordpress/i18n-text-domain": [
 			"error",
 			{

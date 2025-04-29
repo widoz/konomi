@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+// This file is generated. Do not modify it manually.
+return [
+    'Like' => [
+        '$schema' => 'https://schemas.wp.org/trunk/block.json',
+        'apiVersion' => 3,
+        'name' => 'konomi/like',
+        'version' => '1.0.0',
+        'title' => 'Like',
+        'category' => 'design',
+        'icon' => 'smiley',
+        'description' => 'Like',
+        'example' => [
+
+        ],
+        'attributes' => [
+            'inactiveColor' => [
+                'type' => 'string',
+            ],
+            'activeColor' => [
+                'type' => 'string',
+            ],
+        ],
+        'supports' => [
+            'html' => false,
+            'interactivity' => true,
+        ],
+        'textdomain' => 'konomi',
+        'editorScript' => 'file:./dist/konomi-like-block.js',
+        'viewScriptModule' => 'file:./build-module/konomi-like-block-view.js',
+        'style' => 'file:./dist/style-konomi-like-block.css',
+        'render' => 'file:./render.php',
+        'blockHooks' => [
+            'core/post-title' => 'after',
+        ],
+    ],
+];

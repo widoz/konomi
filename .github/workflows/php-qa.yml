@@ -34,7 +34,13 @@ jobs:
         run: composer cs
 
       - name: Check Static Analysis
-        run: composer psalm
+        run: composer analysis:ci
 
       - name: Unit Tests
-        run: composer test
+        run: composer test:unit
+
+      - name: Integration Tests
+        run: composer test:integration
+
+      - name: Functional Tests
+        run: composer test:functional
