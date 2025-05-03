@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Like;
+namespace Widoz\Wp\Konomi\Blocks\Bookmark;
 
-use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
 
 /**
@@ -14,14 +13,13 @@ class Context
 {
     private int $instanceId = 0;
 
-    public static function new(User\UserFactory $userFactory, Post\Post $post): Context
+    public static function new(User\UserFactory $userFactory): Context
     {
-        return new self($userFactory, $post);
+        return new self($userFactory);
     }
 
     final private function __construct(
-        readonly private User\UserFactory $userFactory,
-        readonly private Post\Post $post
+        readonly private User\UserFactory $userFactory
     ) {
     }
 
@@ -29,21 +27,19 @@ class Context
      * @return array{
      *     id: int,
      *     type: string,
-     *     count: int,
      *     isUserLoggedIn: bool,
      *     isActive: bool
      * }
      */
     public function toArray(): array
     {
-        $like = $this->like();
+        $bookmark = $this->bookmark();
 
         return [
             'id' => $this->postId(),
             'type' => $this->postType(),
-            'count' => $this->count(),
             'isUserLoggedIn' => $this->isUserLoggedIn(),
-            'isActive' => $like->isActive(),
+            'isActive' => $bookmark->isActive(),
             'error' => [
                 'code' => '',
                 'message' => '',
@@ -66,19 +62,14 @@ class Context
         return (int) get_the_ID();
     }
 
-    public function count(): int
-    {
-        return $this->post->countForPost($this->postId(), User\ItemGroup::REACTION);
-    }
-
     public function instanceId(): int
     {
         return ++$this->instanceId;
     }
 
-    private function like(): User\Item
+    private function bookmark(): User\Item
     {
-        return $this->user()->findItem($this->postId(), User\ItemGroup::REACTION);
+        return $this->user()->findItem($this->postId(), User\ItemGroup::BOOKMARK);
     }
 
     private function user(): User\User

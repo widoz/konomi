@@ -91,5 +91,18 @@ module.exports = [
 			path: path.resolve('./sources/Blocks/Like/build-module'),
 			clean: true,
 		},
+	},
+
+	{
+		...configuration,
+		entry: {
+			'konomi-bookmark-block-view': './sources/Blocks/Bookmark/view/index.ts',
+		},
+		output: {
+			...configuration.output,
+			filename: '[name].js',
+			path: path.resolve('./sources/Blocks/Bookmark/build-module'),
+			clean: true,
+		},
 	}
 ]

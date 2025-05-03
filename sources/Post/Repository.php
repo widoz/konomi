@@ -40,13 +40,17 @@ class Repository
     /**
      * @return array<UserId, User\Item>
      */
-    public function find(int $entityId): array
+    public function find(int $entityId, User\ItemGroup $group): array
     {
         $result = [];
-        foreach ($this->read($entityId) as $userId => $rawItems) {
+        foreach ($this->read($entityId, $group) as $userId => $rawItems) {
             $result[$userId] = $this->unserialize($rawItems);
         }
-        return $result;
+
+        return array_filter(
+            $result,
+            static fn (User\Item $item) => $item->group()->value === $group->value,
+        );
     }
 
     public function save(User\Item $item, User\User $user): bool
@@ -55,12 +59,17 @@ class Repository
             return false;
         }
 
-        $data = iterator_to_array($this->read($item->id()));
+        $data = iterator_to_array($this->read($item->id(), $item->group()));
         $toStoreData = $this->toggleItem($data, $item, $user);
 
         do_action('konomi.post.collection.save', $item, $user, $this->key);
 
-        return $this->storage->write($item->id(), $this->key, $toStoreData);
+        return $this->storage->write(
+            $item->id(),
+            // TODO Extract into Value Object
+            "{$this->key}//{$item->group()->value}",
+            $toStoreData
+        );
     }
 
     /**
@@ -81,9 +90,9 @@ class Repository
     /**
      * @return GeneratorStoredData
      */
-    private function read(int $entityId): \Generator
+    private function read(int $entityId, User\ItemGroup $group): \Generator
     {
-        $storedData = $this->storage->read($entityId, $this->key);
+        $storedData = $this->storage->read($entityId, "{$this->key}//{$group->value}");
         yield from $this->rawDataAsserter->ensureDataStructure($storedData);
     }
 
@@ -92,7 +101,11 @@ class Repository
      */
     private static function has(User\Item $item, array $data, User\User $user): bool
     {
-        return in_array([$item->id(), $item->type()], $data[$user->id()], true);
+        return in_array(
+            [$item->id(), $item->type(), $item->group()->value],
+            $data[$user->id()],
+            true
+        );
     }
 
     /**
@@ -112,7 +125,7 @@ class Repository
     private static function addItem(User\Item $item, array &$data, User\User $user): void
     {
         $data[$user->id()] = [
-            [$item->id(), $item->type()],
+            [$item->id(), $item->type(), $item->group()->value],
         ];
     }
 
@@ -122,8 +135,10 @@ class Repository
      */
     private function unserialize(array $rawItems): User\Item
     {
+        // TODO We probably want to return a Null Item.
         $id = (int) ($rawItems[0][0] ?? null);
         $type = (string) ($rawItems[0][1] ?? null);
-        return $this->itemFactory->create($id, $type, true);
+        $group = (string) ($rawItems[0][2] ?? null);
+        return $this->itemFactory->create($id, $type, true, $group);
     }
 }

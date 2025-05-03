@@ -6,9 +6,16 @@ namespace Widoz\Wp\Konomi\Blocks;
 
 use function Widoz\Wp\Konomi\package;
 
-function context(): Like\Context
+// TODO Make it internal for Like
+function likeContext(): Like\Context
 {
     return package()->container()->get(Like\Context::class);
+}
+
+// TODO Make it internal for Bookmark
+function bookmarkContext(): Bookmark\Context
+{
+    return package()->container()->get(Bookmark\Context::class);
 }
 
 function renderer(): TemplateRender

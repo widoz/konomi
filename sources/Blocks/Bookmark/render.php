@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Like;
+namespace Widoz\Wp\Konomi\Blocks\Bookmark;
 
 use Widoz\Wp\Konomi\Blocks;
 
@@ -12,10 +12,10 @@ $inactiveColor = (string) ($attributes['inactiveColor'] ?? null);
 $activeColor = (string) ($attributes['activeColor'] ?? null);
 
 $renderer = Blocks\renderer();
-$context = Blocks\likeContext();
+$context = Blocks\bookmarkContext();
 $generatedContext = $context->toArray();
 $uuid = $context->instanceId();
-$anchor = "--konomi-like-{$uuid}";
+$anchor = "--konomi-bookmark-{$uuid}";
 
 $style = (string) Blocks\style()->add(
     Blocks\CustomProperty::new('--konomi-color--inactive', $inactiveColor, 'sanitize_hex_color'),
@@ -24,8 +24,8 @@ $style = (string) Blocks\style()->add(
 ?>
 
 <div
-    data-wp-interactive="konomiLike"
-    class="konomi-like"
+    data-wp-interactive="konomiBookmark"
+    class="konomi-bookmark"
     style="<?= esc_attr($style) ?>"
     <?php
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -35,22 +35,22 @@ $style = (string) Blocks\style()->add(
     /*
      * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
      */
-    $renderer->render('Like/partials/button', [
+    $renderer->render('Bookmark/partials/button', [
         'anchor' => $anchor,
-        'label' => esc_html__('Save this post', 'konomi'),
+        'label' => esc_html__('Bookmark this post', 'konomi'),
     ]) ?>
 
     <?=
-    $renderer->render('Like/partials/popover', [
+    $renderer->render('Bookmark/partials/popover', [
         'anchor' => $anchor,
     ]) ?>
 
     <?=
-    $renderer->render('Like/partials/dialog', [
+    $renderer->render('Bookmark/partials/dialog', [
         'loginPageUrl' => wp_login_url(add_query_arg([])),
         'loginPageLabel' => esc_html__('Login', 'konomi'),
-        'title' => esc_html__('Sign in to like', 'konomi'),
-        'message' => esc_html__('You need to be signed in to save your likes.', 'konomi'),
+        'title' => esc_html__('Sign in to bookmark', 'konomi'),
+        'message' => esc_html__('You need to be signed in to save your bookmarks.', 'konomi'),
         'closeLabel' => esc_html__('Close', 'konomi'),
     ])
     // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped

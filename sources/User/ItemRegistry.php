@@ -7,58 +7,62 @@ namespace Widoz\Wp\Konomi\User;
 /**
  * @internal
  * @phpstan-type Items = array<int, Item>
- * @phpstan-type Collection = \WeakMap<User, Items>
+ * @phpstan-type Collection = array<string, Items>
  */
 class ItemRegistry
 {
     public static function new(): self
     {
-        /** @var Collection $items */
-        $items = new \WeakMap();
-        return new self($items);
+        return new self();
     }
 
     /**
      * @param Collection $items
      */
     final private function __construct(
-        private readonly \WeakMap $items
+        private array $items = []
     ) {
     }
 
-    public function hasGroup(User $user): bool
+    public function hasGroup(User $user, ItemGroup $group): bool
     {
-        return $this->items->offsetExists($user);
+        $key = self::key($user, $group)->value();
+        return isset($this->items[$key]);
     }
 
     public function has(User $user, Item $item): bool
     {
-        if (!$this->hasGroup($user)) {
+        $key = self::key($user, $item->group())->value();
+        if (!$this->hasGroup($user, $item->group())) {
             return false;
         }
 
-        return isset($this->items->offsetGet($user)[$item->id()]);
+        return isset($this->items[$key][$item->id()]);
     }
 
-    public function get(User $user, int $id): Item
+    public function get(User $user, int $id, ItemGroup $group): Item
     {
-        if (!$this->hasGroup($user)) {
-            return NullItem::new();
+        $nullItem = Item::null();
+        $key = self::key($user, $group)->value();
+
+        if (!$this->hasGroup($user, $group)) {
+            return $nullItem;
         }
 
-        return $this->items->offsetGet($user)[$id] ?? NullItem::new();
+        return $this->items[$key][$id] ?? $nullItem;
     }
 
     public function set(User $user, Item $item): void
     {
-        if (!$this->hasGroup($user)) {
-            $this->items->offsetSet($user, []);
+        $key = self::key($user, $item->group())->value();
+        if (!$this->hasGroup($user, $item->group())) {
+            $this->items[$key] = [];
         }
 
-        $collection = $this->items->offsetGet($user);
+        $collection = $this->items[$key];
         $collection[$item->id()] = $item;
 
-        $item->isValid() and $this->items->offsetSet($user, $collection);
+        $item->isValid() and $this->items[$key] = $collection;
     }
 
     public function unset(User $user, Item $item): void
@@ -67,18 +71,25 @@ class ItemRegistry
             return;
         }
 
-        $collection = $this->items->offsetGet($user);
+        $key = self::key($user, $item->group())->value();
+        $collection = $this->items[$key];
         unset($collection[$item->id()]);
-        $this->items->offsetSet($user, $collection);
+        $this->items[$key] = $collection;
     }
 
     /**
      * @return Items
      */
-    public function all(User $user): array
+    public function all(User $user, ItemGroup $group): array
     {
-        return $this->hasGroup($user)
-            ? $this->items->offsetGet($user)
+        $key = self::key($user, $group)->value();
+        return $this->hasGroup($user, $group)
+            ? $this->items[$key]
             : [];
+    }
+
+    private static function key(User $user, ItemGroup $group): ItemRegistryKey
+    {
+        return ItemRegistryKey::new($user, $group);
     }
 }

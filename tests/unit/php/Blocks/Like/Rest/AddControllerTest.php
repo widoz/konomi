@@ -39,7 +39,7 @@ describe('Add Controller', function (): void {
             $this->request->shouldReceive('get_param')->with('meta')->andReturn($rawRequestData);
             $this->likeFactory->shouldReceive('create')->with($id, $type, $isActive)->andReturn($this->like);
             $this->like->shouldReceive('isValid')->andReturn(true);
-            $this->user->shouldReceive('saveLike')->with($this->like)->andReturn(true);
+            $this->user->shouldReceive('saveItem')->with($this->like)->andReturn(true);
 
             $controller = Blocks\Like\Rest\AddController::new(
                 $this->userFactory,
@@ -87,7 +87,7 @@ describe('Add Controller', function (): void {
             $this->request->shouldReceive('get_param')->with('meta')->andReturn($rawRequestData);
             $this->likeFactory->shouldReceive('create')->with($id, $type, $isActive)->andReturn($this->like);
             $this->like->shouldReceive('isValid')->andReturn(true);
-            $this->user->shouldReceive('saveLike')->with($this->like)->andReturn(false);
+            $this->user->shouldReceive('saveItem')->with($this->like)->andReturn(false);
 
             $controller = Blocks\Like\Rest\AddController::new(
                 $this->userFactory,

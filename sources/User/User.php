@@ -13,7 +13,7 @@ interface User
 
     public function id(): int;
 
-    public function findLike(int $id): Item;
+    public function findItem(int $id, ItemGroup $group): Item;
 
-    public function saveLike(Item $item): bool;
+    public function saveItem(Item $item): bool;
 }

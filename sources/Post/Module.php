@@ -36,10 +36,10 @@ class Module implements ServiceModule, ExecutableModule
             Repository::class => static fn (
                 ContainerInterface $container
             ) => Repository::new(
-                '_konomi_likes',
+                '_konomi_items',
                 $container->get(Storage::class),
                 $container->get(RawDataAssert::class),
-                $container->get(User\LikeFactory::class)
+                $container->get(User\ItemFactory::class)
             ),
         ];
     }

@@ -116,5 +116,20 @@ module.exports = [
 			path: path.resolve('./sources/Blocks/Like/dist'),
 			clean: true,
 		},
+	},
+
+	/*
+	 * The Bookmark block build
+	 */
+	{
+		...configuration,
+		entry: {
+			'konomi-bookmark-block': './sources/Blocks/Bookmark/index.ts',
+		},
+		output: {
+			filename: '[name].js',
+			path: path.resolve('./sources/Blocks/Bookmark/dist'),
+			clean: true,
+		},
 	}
 ]

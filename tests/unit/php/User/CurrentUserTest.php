@@ -48,7 +48,7 @@ describe('CurrentUser', function (): void {
         Functions\expect('wp_get_current_user')->once()->andReturn($this->wpUser);
         $currentUser = User\CurrentUser::new($this->repository);
         $this->repository->shouldReceive('find')->once()->with($currentUser, $itemId)->andReturn($this->mockItem);
-        $result = $currentUser->findLike($itemId);
+        $result = $currentUser->findItem($itemId);
         expect($result)->toBe($this->mockItem);
     });
 
@@ -57,6 +57,6 @@ describe('CurrentUser', function (): void {
         $currentUser = User\CurrentUser::new($this->repository);
         $item = User\Like::new(123, 'post', true);
         $this->repository->shouldReceive('save')->once()->with($currentUser, $item);
-        $currentUser->saveLike($item);
+        $currentUser->saveItem($item);
     });
 });

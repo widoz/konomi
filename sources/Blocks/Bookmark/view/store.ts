@@ -11,7 +11,7 @@ import {
 /**
  * Internal dependencies
  */
-import { addLike } from './add-like-command';
+import { addBookmark } from './add-bookmark-command';
 import { loginModalElement } from './elements/login-modal-element';
 import { renderMessage } from './popover';
 
@@ -27,7 +27,6 @@ type Context = {
 	id: number;
 	type: string;
 	isActive: boolean;
-	count: number;
 	isUserLoggedIn: boolean;
 	loginRequired: boolean;
 	error: {
@@ -38,24 +37,19 @@ type Context = {
 
 // eslint-disable-next-line max-lines-per-function
 export function init(): void {
-	const { actions } = store( 'konomiLike', {
+	const { actions } = store( 'konomiBookmark', {
 		state: {},
 
 		actions: {
 			toggleStatus: (): void => {
-				const context = getContext< Context >( 'konomiLike' );
-
+				const context = getContext< Context >( 'konomiBookmark' );
 				context.isActive = ! context.isActive;
-				context.count = context.isActive
-					? context.count + 1
-					: context.count - 1;
-
 				actions.updateUserPreferences();
 			},
 
 			// eslint-disable-next-line max-lines-per-function,complexity
 			*updateUserPreferences(): Generator< Promise< void > > {
-				const context = getContext< Context >( 'konomiLike' );
+				const context = getContext< Context >( 'konomiBookmark' );
 
 				if ( ! context.isUserLoggedIn ) {
 					context.loginRequired = true;
@@ -64,9 +58,9 @@ export function init(): void {
 				}
 
 				try {
-					yield addLike( {
+					yield addBookmark( {
 						meta: {
-							_like: {
+							_bookmark: {
 								id: context.id,
 								type: context.type,
 								isActive: context.isActive,
@@ -84,22 +78,19 @@ export function init(): void {
 			},
 
 			closeLoginModal: () => {
-				const context = getContext< Context >( 'konomiLike' );
+				const context = getContext< Context >( 'konomiBookmark' );
 				context.loginRequired = false;
 			},
 
 			revertStatus: (): void => {
-				const context = getContext< Context >( 'konomiLike' );
-				context.count = context.isActive
-					? context.count - 1
-					: context.count + 1;
+				const context = getContext< Context >( 'konomiBookmark' );
 				context.isActive = ! context.isActive;
 			},
 		},
 
 		callbacks: {
 			maybeRenderResponseError: (): void => {
-				const context = getContext< Context >( 'konomiLike' );
+				const context = getContext< Context >( 'konomiBookmark' );
 				// eslint-disable-next-line react-hooks/rules-of-hooks
 				useLayoutEffect( () => {
 					const element = getElement();
@@ -121,7 +112,7 @@ export function init(): void {
 					return;
 				}
 
-				const context = getContext< Context >( 'konomiLike' );
+				const context = getContext< Context >( 'konomiBookmark' );
 				const _loginModalElement = loginModalElement( element.ref );
 
 				if ( context.loginRequired ) {

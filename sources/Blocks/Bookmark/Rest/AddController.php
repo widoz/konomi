@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Like\Rest;
+namespace Widoz\Wp\Konomi\Blocks\Bookmark\Rest;
 
 use Widoz\Wp\Konomi\Rest;
 use Widoz\Wp\Konomi\User;
@@ -14,27 +14,27 @@ class AddController implements Rest\Controller
 {
     public static function new(
         User\UserFactory $userFactory,
-        User\ItemFactory $itemFactory
+        User\ItemFactory $bookmarkFactory
     ): AddController {
 
-        return new self($userFactory, $itemFactory);
+        return new self($userFactory, $bookmarkFactory);
     }
 
     final private function __construct(
         private readonly User\UserFactory $userFactory,
-        private readonly User\ItemFactory $itemFactory
+        private readonly User\ItemFactory $bookmarkFactory
     ) {
     }
 
     public function __invoke(\WP_REST_Request $request): \WP_REST_Response|\WP_Error
     {
-        $like = $this->likeByRequest($request);
+        $bookmark = $this->bookmarkByRequest($request);
 
-        if (!$like->isValid()) {
+        if (!$bookmark->isValid()) {
             return $this->failedBecauseInvalidData();
         }
 
-        return $this->userFactory->create()->saveItem($like)
+        return $this->userFactory->create()->saveItem($bookmark)
             ? $this->successResponse()
             : $this->failedToSaveError();
     }
@@ -43,15 +43,15 @@ class AddController implements Rest\Controller
     {
         return new \WP_REST_Response([
             'success' => true,
-            'message' => 'Like saved',
+            'message' => 'Bookmark saved',
         ], 201);
     }
 
     private function failedBecauseInvalidData(): \WP_Error
     {
         return new \WP_Error(
-            'invalid_like_data',
-            'Invalid Like Data, please contact the support or try again later.',
+            'invalid_bookmark_data',
+            'Invalid Bookmark data, please contact the support or try again later.',
             ['status' => 400]
         );
     }
@@ -59,20 +59,20 @@ class AddController implements Rest\Controller
     private function failedToSaveError(): \WP_Error
     {
         return new \WP_Error(
-            'failed_to_save_like',
-            'Failed to save like',
+            'failed_to_save_bookmark',
+            'Failed to save bookmark',
             ['status' => 500]
         );
     }
 
-    private function likeByRequest(\WP_REST_Request $request): User\Item
+    private function bookmarkByRequest(\WP_REST_Request $request): User\Item
     {
-        $rawLike = $this->ensureMeta($request->get_param('meta'));
-        return $this->itemFactory->create(
-            $rawLike['id'],
-            $rawLike['type'],
-            $rawLike['isActive'],
-            User\ItemGroup::REACTION
+        $rawBookmark = $this->ensureMeta($request->get_param('meta'));
+        return $this->bookmarkFactory->create(
+            $rawBookmark['id'],
+            $rawBookmark['type'],
+            $rawBookmark['isActive'],
+            User\ItemGroup::BOOKMARK
         );
     }
 
@@ -85,11 +85,11 @@ class AddController implements Rest\Controller
             return ['id' => 0, 'type' => '', 'isActive' => false];
         }
 
-        $rawLike = (array) ($meta['_like'] ?? null);
+        $rawBookmark = (array) ($meta['_bookmark'] ?? null);
 
-        $id = is_int($rawLike['id'] ?? null) ? $rawLike['id'] : 0;
-        $type = is_string($rawLike['type'] ?? null) ? $rawLike['type'] : '';
-        $isActive = is_bool($rawLike['isActive'] ?? null) ? $rawLike['isActive'] : false;
+        $id = is_int($rawBookmark['id'] ?? null) ? $rawBookmark['id'] : 0;
+        $type = is_string($rawBookmark['type'] ?? null) ? $rawBookmark['type'] : '';
+        $isActive = is_bool($rawBookmark['isActive'] ?? null) ? $rawBookmark['isActive'] : false;
 
         return [
             'id' => $id,

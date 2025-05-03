@@ -36,11 +36,13 @@ class RawDataAssert
     private static function isValidRawItem(mixed $rawItem): bool
     {
         return is_array($rawItem)
-            && count($rawItem) === 2
+            && count($rawItem) === 3
             && isset($rawItem[0], $rawItem[1])
             && is_int($rawItem[0])
             && $rawItem[0] > 0
             && is_string($rawItem[1])
-            && $rawItem[1] !== '';
+            && $rawItem[1] !== ''
+            && is_string($rawItem[2])
+            && $rawItem[2] !== '';
     }
 }
