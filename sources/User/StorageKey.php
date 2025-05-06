@@ -14,7 +14,7 @@ class StorageKey
         return new self($base);
     }
 
-    final private function __construct(private string $base)
+    final private function __construct(private readonly string $base)
     {
     }
 
