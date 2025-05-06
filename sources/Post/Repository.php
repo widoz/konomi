@@ -20,7 +20,7 @@ use Widoz\Wp\Konomi\User;
 class Repository
 {
     public static function new(
-        string $key,
+        StorageKey $key,
         Storage $storage,
         RawDataAssert $rawDataAsserter,
         User\ItemFactory $itemFactory,
@@ -30,7 +30,7 @@ class Repository
     }
 
     final private function __construct(
-        readonly private string $key,
+        readonly private StorageKey $key,
         readonly private Storage $storage,
         readonly private RawDataAssert $rawDataAsserter,
         readonly private User\ItemFactory $itemFactory
@@ -66,8 +66,7 @@ class Repository
 
         return $this->storage->write(
             $item->id(),
-            // TODO Extract into Value Object
-            "{$this->key}//{$item->group()->value}",
+            "{$this->key->for($item->group())}",
             $toStoreData
         );
     }
@@ -92,7 +91,7 @@ class Repository
      */
     private function read(int $entityId, User\ItemGroup $group): \Generator
     {
-        $storedData = $this->storage->read($entityId, "{$this->key}//{$group->value}");
+        $storedData = $this->storage->read($entityId, $this->key->for($group));
         yield from $this->rawDataAsserter->ensureDataStructure($storedData);
     }
 

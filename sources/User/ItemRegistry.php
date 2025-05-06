@@ -26,43 +26,43 @@ class ItemRegistry
 
     public function hasGroup(User $user, ItemGroup $group): bool
     {
-        $key = self::key($user, $group)->value();
-        return isset($this->items[$key]);
+        $key = self::key($user, $group);
+        return isset($this->items["$key"]);
     }
 
     public function has(User $user, Item $item): bool
     {
-        $key = self::key($user, $item->group())->value();
+        $key = self::key($user, $item->group());
         if (!$this->hasGroup($user, $item->group())) {
             return false;
         }
 
-        return isset($this->items[$key][$item->id()]);
+        return isset($this->items["$key"][$item->id()]);
     }
 
     public function get(User $user, int $id, ItemGroup $group): Item
     {
         $nullItem = Item::null();
-        $key = self::key($user, $group)->value();
+        $key = self::key($user, $group);
 
         if (!$this->hasGroup($user, $group)) {
             return $nullItem;
         }
 
-        return $this->items[$key][$id] ?? $nullItem;
+        return $this->items["$key"][$id] ?? $nullItem;
     }
 
     public function set(User $user, Item $item): void
     {
-        $key = self::key($user, $item->group())->value();
+        $key = self::key($user, $item->group());
         if (!$this->hasGroup($user, $item->group())) {
-            $this->items[$key] = [];
+            $this->items["$key"] = [];
         }
 
-        $collection = $this->items[$key];
+        $collection = $this->items["$key"];
         $collection[$item->id()] = $item;
 
-        $item->isValid() and $this->items[$key] = $collection;
+        $item->isValid() and $this->items["$key"] = $collection;
     }
 
     public function unset(User $user, Item $item): void
@@ -71,10 +71,10 @@ class ItemRegistry
             return;
         }
 
-        $key = self::key($user, $item->group())->value();
-        $collection = $this->items[$key];
+        $key = self::key($user, $item->group());
+        $collection = $this->items["$key"];
         unset($collection[$item->id()]);
-        $this->items[$key] = $collection;
+        $this->items["$key"] = $collection;
     }
 
     /**
@@ -82,9 +82,9 @@ class ItemRegistry
      */
     public function all(User $user, ItemGroup $group): array
     {
-        $key = self::key($user, $group)->value();
+        $key = self::key($user, $group);
         return $this->hasGroup($user, $group)
-            ? $this->items[$key]
+            ? $this->items["$key"]
             : [];
     }
 

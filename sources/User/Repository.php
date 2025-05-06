@@ -15,7 +15,7 @@ namespace Widoz\Wp\Konomi\User;
 class Repository
 {
     public static function new(
-        string $key,
+        StorageKey $key,
         Storage $storage,
         ItemFactory $itemFactory,
         ItemRegistry $registry,
@@ -26,7 +26,7 @@ class Repository
     }
 
     final private function __construct(
-        readonly private string $key,
+        readonly private StorageKey $key,
         readonly private Storage $storage,
         readonly private ItemFactory $itemFactory,
         readonly private ItemRegistry $registry,
@@ -57,7 +57,7 @@ class Repository
 
         return $this->storage->write(
             $user->id(),
-            "{$this->key}//{$item->group()->value}",
+            $this->key->for($item->group()),
             $dataToStore
         );
     }
@@ -112,8 +112,7 @@ class Repository
      */
     private function read(User $user, ItemGroup $group): \Generator
     {
-        // TODO Extract into Value Object
-        $storedData = $this->storage->read($user->id(), "{$this->key}//{$group->value}");
+        $storedData = $this->storage->read($user->id(), $this->key->for($group));
         yield from $this->rawDataAsserter->ensureDataStructure($storedData);
     }
 }

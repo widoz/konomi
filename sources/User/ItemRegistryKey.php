@@ -7,7 +7,7 @@ namespace Widoz\Wp\Konomi\User;
 /**
  * @internal
  */
-class ItemRegistryKey
+class ItemRegistryKey implements \Stringable
 {
     public static function new(User $user, ItemGroup $group): self
     {
@@ -20,8 +20,29 @@ class ItemRegistryKey
     ) {
     }
 
-    public function value(): string
+    public function __toString(): string
     {
-        return $this->user->id() . '//' . $this->group->value;
+        $userId = $this->user->id();
+        $groupValue = $this->group->value;
+
+        if (empty($userId)) {
+            throw new \InvalidArgumentException('User ID cannot be empty');
+        }
+
+        if (empty($groupValue)) {
+            throw new \InvalidArgumentException('Group value cannot be empty');
+        }
+
+        $key = preg_replace(
+            '/[^a-z0-9.]/',
+            '',
+            $userId . '.' . $groupValue
+        );
+
+        if (empty($key)) {
+            throw new \RuntimeException('Registry key cannot be empty after sanitization');
+        }
+
+        return $key;
     }
 }
