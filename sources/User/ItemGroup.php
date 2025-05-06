@@ -30,7 +30,7 @@ enum ItemGroup: string
         throw new \ValueError(
             sprintf(
                 '%s is not a valid backing value for enum %s',
-                $value,
+                esc_html($value),
                 self::class
             )
         );
