@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
     10 => [
-        '_konomi_likes' => [
+        '_konomi_items.reaction' => [
             100 => [
                 [10, 'post'],
             ],

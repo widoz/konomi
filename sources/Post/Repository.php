@@ -44,13 +44,9 @@ class Repository
     {
         $result = [];
         foreach ($this->read($entityId, $group) as $userId => $rawItems) {
-            $result[$userId] = $this->unserialize($rawItems);
+            $result[$userId] = $this->unserialize($rawItems, $group);
         }
-
-        return array_filter(
-            $result,
-            static fn (User\Item $item) => $item->group()->value === $group->value,
-        );
+        return $result;
     }
 
     public function save(User\Item $item, User\User $user): bool
@@ -100,11 +96,7 @@ class Repository
      */
     private static function has(User\Item $item, array $data, User\User $user): bool
     {
-        return in_array(
-            [$item->id(), $item->type(), $item->group()->value],
-            $data[$user->id()],
-            true
-        );
+        return in_array([$item->id(), $item->type()], $data[$user->id()], true);
     }
 
     /**
@@ -124,7 +116,7 @@ class Repository
     private static function addItem(User\Item $item, array &$data, User\User $user): void
     {
         $data[$user->id()] = [
-            [$item->id(), $item->type(), $item->group()->value],
+            [$item->id(), $item->type()],
         ];
     }
 
@@ -132,12 +124,11 @@ class Repository
      * @param RawItems $rawItems
      * @return User\Item
      */
-    private function unserialize(array $rawItems): User\Item
+    private function unserialize(array $rawItems, User\ItemGroup $group): User\Item
     {
         // TODO We probably want to return a Null Item.
         $id = (int) ($rawItems[0][0] ?? null);
         $type = (string) ($rawItems[0][1] ?? null);
-        $group = (string) ($rawItems[0][2] ?? null);
         return $this->itemFactory->create($id, $type, true, $group);
     }
 }

@@ -14,7 +14,7 @@ describe('Like Context', function (): void {
         it('ensure valid serialization', function (): void {
             $user = \Mockery::mock(User\User::class, [
                 'isLoggedIn' => true,
-                'findLike' => \Mockery::mock(User\Item::class, ['isActive' => true]),
+                'findItem' => \Mockery::mock(User\Item::class, ['isActive' => true]),
             ]);
             $userFactory = \Mockery::mock(User\UserFactory::class, [
                 'create' => $user,

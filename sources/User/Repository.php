@@ -85,7 +85,7 @@ class Repository
     private function serializeData(User $user, ItemGroup $group): array
     {
         return \array_map(
-            static fn (Item $item) => [$item->id(), $item->type(), $item->group()->value],
+            static fn (Item $item) => [$item->id(), $item->type()],
             $this->registry->all($user, $group)
         );
     }
@@ -96,7 +96,7 @@ class Repository
             return;
         }
 
-        foreach ($this->read($user, $group) as [$entityId, $entityType, $group]) {
+        foreach ($this->read($user, $group) as [$entityId, $entityType]) {
             $item = $this->itemFactory->create(
                 $entityId,
                 $entityType,

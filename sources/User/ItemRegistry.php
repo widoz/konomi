@@ -90,6 +90,7 @@ class ItemRegistry
 
     private static function key(User $user, ItemGroup $group): ItemRegistryKey
     {
+        // TODO Must be a service with a factory.
         return ItemRegistryKey::new($user, $group);
     }
 }
