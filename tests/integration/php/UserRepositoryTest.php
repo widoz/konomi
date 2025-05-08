@@ -42,7 +42,8 @@ describe('User Repository', function (): void {
 
     it('do not load items twice from the persistence layer', function (): void {
         $user = User\CurrentUser::new($this->repository);
-        $this->repository->find($user, 2, User\ItemGroup::REACTION);;
+        $this->repository->find($user, 2, User\ItemGroup::REACTION);
+
         $this->repository->find($user, 2, User\ItemGroup::REACTION);
         expect(($this->stubsCounter)()['get_user_meta'])->toBe(1);
     });

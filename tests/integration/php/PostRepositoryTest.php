@@ -86,7 +86,6 @@ describe('Post Repository', function (): void {
             ->and($storedItem->type())->toEqual($itemToStore->type())
             ->and($storedItem->isActive())->toEqual($itemToStore->isActive())
             ->and($storedItem->isValid())->toBeTrue();
-
     });
 
     it('override existing item in post repository', function (): void {
