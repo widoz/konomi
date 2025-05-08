@@ -92,7 +92,7 @@ describe('Post Repository', function (): void {
         $result = $this->repository->save($itemToStore, $this->currentUser);
 
         expect($result)->toBeTrue();
-        expect($this->postMetaStorage[1]['_konomi_items'][$this->wpUser->ID])->toBeEmpty();
+        expect($this->postMetaStorage[1]['_konomi_items.reaction'][$this->wpUser->ID])->toBeEmpty();
     });
 
     it('do not store invalid items', function (): void {
@@ -101,6 +101,6 @@ describe('Post Repository', function (): void {
         $result = $this->repository->save($itemToStore, $this->currentUser);
 
         expect($result)->toBeFalse();
-        expect($this->postMetaStorage[-1]['_konomi_items'][$this->wpUser->ID])->toBeEmpty();
+        expect($this->postMetaStorage[-1]['_konomi_items.reaction'][$this->wpUser->ID])->toBeEmpty();
     });
 });
