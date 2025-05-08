@@ -21,60 +21,58 @@ beforeEach(function (): void {
 
     $this->currentUser = User\CurrentUser::new(
         User\Repository::new(
-            '_likes',
+            User\StorageKey::new('_konomi_items'),
             User\Storage::new(),
-            User\LikeFactory::new(),
+            User\ItemFactory::new(),
             User\ItemRegistry::new(),
             User\RawDataAssert::new()
         )
     );
     $this->repository = Post\Repository::new(
-        '_konomi_likes',
+        Post\StorageKey::new('_konomi_items'),
         Post\Storage::new(),
         Post\RawDataAssert::new(),
-        User\LikeFactory::new()
+        User\ItemFactory::new()
     );
 });
 
 describe('Post Repository', function (): void {
     it('find items from post repository', function (): void {
-        $items = $this->repository->find(10);
+        $items = $this->repository->find(10, User\ItemGroup::REACTION);
 
         expect($items)->toBeArray();
         expect(count($items))->toBe(10);
 
-        foreach ($items as $userId => $userItems) {
+        foreach ($items as $userId => $item) {
             expect($userId)->toBeInt();
-            foreach ($userItems as $item) {
-                expect($item instanceof User\Item)->toBe(true);
-            }
+            expect($item instanceof User\Item)->toBe(true);
         }
     });
 
     it('return empty collection if nothing found', function (): void {
-        $items = $this->repository->find(1);
+        $items = $this->repository->find(1, User\ItemGroup::REACTION);
         expect($items)->toBeArray();
         expect(count($items))->toBe(0);
     });
 
     it('return empty collection if the entity Id is zero', function (): void {
-        $items = $this->repository->find(0);
+        $items = $this->repository->find(0, User\ItemGroup::REACTION);
         expect($items)->toBeArray();
         expect(count($items))->toBe(0);
     });
 
     it('return empty collection if the entity Id is less than 0', function (): void {
-        $items = $this->repository->find(rand(-100, -1));
+        $items = $this->repository->find(rand(-100, -1), User\ItemGroup::REACTION);
         expect($items)->toBeArray();
         expect(count($items))->toBe(0);
     });
 
     it('save items to post repository', function (): void {
-        $itemToStore = User\Like::new(1, 'type', true);
+        $itemToStore = User\Item::new(1, 'type', true);
         $result = $this->repository->save($itemToStore, $this->currentUser);
-        $storedItem = User\Like::new(
-            $this->postMetaStorage[1]['_konomi_likes'][$this->wpUser->ID][0][0],
-            $this->postMetaStorage[1]['_konomi_likes'][$this->wpUser->ID][0][1],
+        $storedItem = User\Item::new(
+            $this->postMetaStorage[1]['_konomi_items.reaction'][$this->wpUser->ID][0][0],
+            $this->postMetaStorage[1]['_konomi_items.reaction'][$this->wpUser->ID][0][1],
             $itemToStore->isActive()
         );
 
@@ -87,22 +85,22 @@ describe('Post Repository', function (): void {
     });
 
     it('override existing item in post repository', function (): void {
-        $itemToStore = User\Like::new(1, 'type', true);
+        $itemToStore = User\Item::new(1, 'type', true);
         $this->repository->save($itemToStore, $this->currentUser);
 
-        $itemToStore = User\Like::new(1, 'type', false);
+        $itemToStore = User\Item::new(1, 'type', false);
         $result = $this->repository->save($itemToStore, $this->currentUser);
 
         expect($result)->toBeTrue();
-        expect($this->postMetaStorage[1]['_konomi_likes'][$this->wpUser->ID])->toBeEmpty();
+        expect($this->postMetaStorage[1]['_konomi_items'][$this->wpUser->ID])->toBeEmpty();
     });
 
     it('do not store invalid items', function (): void {
-        $itemToStore = User\Like::new(-1, '', true);
+        $itemToStore = User\Item::new(-1, '', true);
         $this->repository->save($itemToStore, $this->currentUser);
         $result = $this->repository->save($itemToStore, $this->currentUser);
 
         expect($result)->toBeFalse();
-        expect($this->postMetaStorage[-1]['_konomi_likes'][$this->wpUser->ID])->toBeEmpty();
+        expect($this->postMetaStorage[-1]['_konomi_items'][$this->wpUser->ID])->toBeEmpty();
     });
 });
