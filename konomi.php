@@ -26,7 +26,6 @@ add_action(
             if (!\is_readable($autoloadFile)) {
                 return;
             }
-            /** @psalm-suppress UnresolvableInclude */
             require_once $autoloadFile;
         }
 
