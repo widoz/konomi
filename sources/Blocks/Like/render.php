@@ -12,7 +12,7 @@ $inactiveColor = (string) ($attributes['inactiveColor'] ?? null);
 $activeColor = (string) ($attributes['activeColor'] ?? null);
 
 $renderer = Blocks\renderer();
-$context = Blocks\likeContext();
+$context = Blocks\context(Context::class);
 $generatedContext = $context->toArray();
 $uuid = $context->instanceId();
 $anchor = "--konomi-like-{$uuid}";

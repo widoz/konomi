@@ -97,7 +97,7 @@ describe('all', function (): void {
     it('gets all items for user', function (): void {
         $this->user->shouldReceive('id')->andReturn(1);
         expect($this->registry->all($this->user, ItemGroup::REACTION))->toBeArray()->toBeEmpty();
-        for($count = 1; $count <= 10; $count++) {
+        for ($count = 1; $count <= 10; $count++) {
             $item = Item::new($count, 'post', true);
             $this->registry->set($this->user, $item);
         }

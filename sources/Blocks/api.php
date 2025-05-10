@@ -6,16 +6,17 @@ namespace Widoz\Wp\Konomi\Blocks;
 
 use function Widoz\Wp\Konomi\package;
 
-// TODO Make it internal for Like
-function likeContext(): Like\Context
+function context(string $contextName): Context
 {
-    return package()->container()->get(Like\Context::class);
-}
+    $service = package()->container()->get($contextName);
+    if (!$service instanceof Context) {
+        throw new \InvalidArgumentException(
+            // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
+            "Service '{$contextName}' is not a valid context."
+        );
+    }
 
-// TODO Make it internal for Bookmark
-function bookmarkContext(): Bookmark\Context
-{
-    return package()->container()->get(Bookmark\Context::class);
+    return $service;
 }
 
 function renderer(): TemplateRender

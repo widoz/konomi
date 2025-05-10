@@ -6,11 +6,12 @@ namespace Widoz\Wp\Konomi\Blocks\Like;
 
 use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
+use Widoz\Wp\Konomi\Blocks;
 
 /**
  * @internal
  */
-class Context
+class Context implements Blocks\Context
 {
     private int $instanceId = 0;
 
@@ -66,14 +67,14 @@ class Context
         return (int) get_the_ID();
     }
 
-    public function count(): int
-    {
-        return $this->post->countForPost($this->postId(), User\ItemGroup::REACTION);
-    }
-
     public function instanceId(): int
     {
         return ++$this->instanceId;
+    }
+
+    private function count(): int
+    {
+        return $this->post->countForPost($this->postId(), User\ItemGroup::REACTION);
     }
 
     private function like(): User\Item

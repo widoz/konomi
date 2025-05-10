@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Widoz\Wp\Konomi\Blocks\Bookmark;
 
 use Widoz\Wp\Konomi\User;
+use Widoz\Wp\Konomi\Blocks;
 
 /**
  * @internal
  */
-class Context
+class Context implements Blocks\Context
 {
     private int $instanceId = 0;
 
