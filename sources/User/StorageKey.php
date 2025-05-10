@@ -18,6 +18,10 @@ class StorageKey
     {
     }
 
+    /**
+     * @throws \InvalidArgumentException If ItemGroup is an empty string
+     * @throws \UnexpectedValueException If the returning key is an empty string
+     */
     public function for(User\ItemGroup $group): string
     {
         $groupValue = $group->value;
@@ -33,7 +37,7 @@ class StorageKey
         );
 
         if (empty($key)) {
-            throw new \RuntimeException('Storage key cannot be empty after sanitization');
+            throw new \UnexpectedValueException('Storage key cannot be empty after sanitization');
         }
 
         return $key;

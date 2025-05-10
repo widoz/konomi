@@ -26,7 +26,7 @@ class Repository
     }
 
     final private function __construct(
-        readonly private StorageKey $key,
+        readonly private StorageKey $storageKey,
         readonly private Storage $storage,
         readonly private ItemFactory $itemFactory,
         readonly private ItemRegistry $registry,
@@ -39,7 +39,7 @@ class Repository
         $this->loadItems($user, $group);
         $item = $this->registry->get($user, $id, $group);
 
-        do_action('konomi.user.repository.find', $item, $user, $this->key, $id);
+        do_action('konomi.user.repository.find', $item, $user, $this->storageKey, $id);
 
         return $item;
     }
@@ -53,11 +53,11 @@ class Repository
         $this->loadItems($user, $item->group());
         $dataToStore = $this->prepareDataToStore($user, $item);
 
-        do_action('konomi.user.repository.save', $item, $user, $this->key);
+        do_action('konomi.user.repository.save', $item, $user, $item->group(), $this->storageKey);
 
         return $this->storage->write(
             $user->id(),
-            $this->key->for($item->group()),
+            $this->storageKey->for($item->group()),
             $dataToStore
         );
     }
@@ -112,7 +112,7 @@ class Repository
      */
     private function read(User $user, ItemGroup $group): \Generator
     {
-        $storedData = $this->storage->read($user->id(), $this->key->for($group));
+        $storedData = $this->storage->read($user->id(), $this->storageKey->for($group));
         yield from $this->rawDataAsserter->ensureDataStructure($storedData);
     }
 }

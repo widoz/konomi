@@ -7,42 +7,26 @@ namespace Widoz\Wp\Konomi\User;
 /**
  * @internal
  */
-class ItemRegistryKey implements \Stringable
+class ItemRegistryKey
 {
-    public static function new(User $user, ItemGroup $group): self
+    public static function new(): self
     {
-        return new self($user, $group);
+        return new self();
     }
 
-    final private function __construct(
-        private readonly User $user,
-        private readonly ItemGroup $group,
-    ) {
+    final private function __construct()
+    {
     }
 
-    public function __toString(): string
+    public function for(User $user, ItemGroup $group): string
     {
-        $userId = $this->user->id();
-        $groupValue = $this->group->value;
+        $userId = $user->id();
+        $groupValue = $group->value;
 
-        if (empty($userId)) {
-            throw new \InvalidArgumentException('User ID cannot be empty');
+        if (!$userId || !$groupValue) {
+            return '';
         }
 
-        if (empty($groupValue)) {
-            throw new \InvalidArgumentException('Group value cannot be empty');
-        }
-
-        $key = preg_replace(
-            '/[^a-z0-9.]/',
-            '',
-            $userId . '.' . $groupValue
-        );
-
-        if (empty($key)) {
-            throw new \RuntimeException('Registry key cannot be empty after sanitization');
-        }
-
-        return $key;
+        return (string) preg_replace('/[^a-z0-9.]/', '', $userId . '.' . $groupValue);
     }
 }

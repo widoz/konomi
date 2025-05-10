@@ -22,11 +22,12 @@ beforeEach(function (): void {
     Functions\when('get_user_meta')->alias($getter);
     Functions\when('update_user_meta')->alias($setter);
 
+    $itemRegistryKey = User\ItemRegistryKey::new();
     $this->repository = User\Repository::new(
         User\StorageKey::new('_konomi_items'),
         User\Storage::new(),
         User\ItemFactory::new(),
-        User\ItemRegistry::new(),
+        User\ItemRegistry::new($itemRegistryKey),
         User\RawDataAssert::new()
     );
 });

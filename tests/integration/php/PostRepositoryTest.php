@@ -19,12 +19,13 @@ beforeEach(function (): void {
     Functions\when('update_post_meta')->alias($setter);
     Functions\when('wp_get_current_user')->justReturn($this->wpUser);
 
+    $itemRegistryKey = User\ItemRegistryKey::new();
     $this->currentUser = User\CurrentUser::new(
         User\Repository::new(
             User\StorageKey::new('_konomi_items'),
             User\Storage::new(),
             User\ItemFactory::new(),
-            User\ItemRegistry::new(),
+            User\ItemRegistry::new($itemRegistryKey),
             User\RawDataAssert::new()
         )
     );

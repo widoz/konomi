@@ -11,28 +11,30 @@ namespace Widoz\Wp\Konomi\User;
  */
 class ItemRegistry
 {
-    public static function new(): self
+    public static function new(ItemRegistryKey $itemRegistryKey): self
     {
-        return new self();
+        return new self($itemRegistryKey);
     }
 
     /**
      * @param Collection $items
      */
     final private function __construct(
+        private readonly ItemRegistryKey $itemRegistryKey,
         private array $items = []
     ) {
     }
 
     public function hasGroup(User $user, ItemGroup $group): bool
     {
-        $key = self::key($user, $group);
+        $key = self::keyFor($user, $group);
         return isset($this->items["$key"]);
     }
 
     public function has(User $user, Item $item): bool
     {
-        $key = self::key($user, $item->group());
+        $key = self::keyFor($user, $item->group());
+
         if (!$this->hasGroup($user, $item->group())) {
             return false;
         }
@@ -43,7 +45,7 @@ class ItemRegistry
     public function get(User $user, int $id, ItemGroup $group): Item
     {
         $nullItem = Item::null();
-        $key = self::key($user, $group);
+        $key = self::keyFor($user, $group);
 
         if (!$this->hasGroup($user, $group)) {
             return $nullItem;
@@ -54,7 +56,12 @@ class ItemRegistry
 
     public function set(User $user, Item $item): void
     {
-        $key = self::key($user, $item->group());
+        $key = self::keyFor($user, $item->group());
+
+        // Avoid storing items with an empty key string.
+        if (!$key) {
+            return;
+        }
         if (!$this->hasGroup($user, $item->group())) {
             $this->items["$key"] = [];
         }
@@ -71,7 +78,7 @@ class ItemRegistry
             return;
         }
 
-        $key = self::key($user, $item->group());
+        $key = self::keyFor($user, $item->group());
         $collection = $this->items["$key"];
         unset($collection[$item->id()]);
         $this->items["$key"] = $collection;
@@ -82,15 +89,14 @@ class ItemRegistry
      */
     public function all(User $user, ItemGroup $group): array
     {
-        $key = self::key($user, $group);
+        $key = self::keyFor($user, $group);
         return $this->hasGroup($user, $group)
             ? $this->items["$key"]
             : [];
     }
 
-    private static function key(User $user, ItemGroup $group): ItemRegistryKey
+    private function keyFor(User $user, ItemGroup $group): string
     {
-        // TODO Must be a service with a factory.
-        return ItemRegistryKey::new($user, $group);
+        return $this->itemRegistryKey->for($user, $group);
     }
 }

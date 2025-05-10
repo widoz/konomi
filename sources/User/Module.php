@@ -37,7 +37,12 @@ class Module implements ServiceModule
             ),
 
             ItemFactory::class => static fn () => ItemFactory::new(),
-            ItemRegistry::class => static fn () => ItemRegistry::new(),
+            ItemRegistryKey::class => static fn () => ItemRegistryKey::new(),
+            ItemRegistry::class => static fn (
+                ContainerInterface $container
+            ) => ItemRegistry::new(
+                $container->get(ItemRegistryKey::class)
+            ),
             RawDataAssert::class => static fn () => RawDataAssert::new(),
             StorageKey::class => static fn () => StorageKey::new('_konomi_items'),
             Repository::class => static fn (
