@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Bookmark;
+namespace Widoz\Wp\Konomi\Blocks;
 
 use Widoz\Wp\Konomi\Icons;
 
@@ -10,6 +10,7 @@ $data = (array) ($data ?? null);
 
 $anchor = (string) ($data['anchor'] ?? null);
 $label = (string) ($data['label'] ?? null);
+$iconName = (string) ($data['icon'] ?? null);
 ?>
 
 <button
@@ -23,11 +24,13 @@ $label = (string) ($data['label'] ?? null);
 >
     <?=
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    Icons\icon()->render('bookmark') ?>
+    Icons\icon()->render($iconName) ?>
 
     <?php if ($label) : ?>
-        <span class="konomi-bookmark-label" data-wp-text="context.label">
+        <span class="konomi-label" data-wp-text="context.label">
             <?= esc_html($label) ?>
         </span>
     <?php endif ?>
+
+    <span class="konomi-count" data-wp-text="context.count"></span>
 </button>

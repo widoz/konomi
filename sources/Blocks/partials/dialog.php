@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Bookmark;
+namespace Widoz\Wp\Konomi\Blocks;
 
 use Widoz\Wp\Konomi\Icons;
 
@@ -36,4 +36,3 @@ $closeLabel = (string) ($data['closerLabel'] ?? null);
         </span>
     </button>
 </dialog>
-

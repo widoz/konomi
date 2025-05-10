@@ -35,18 +35,19 @@ $style = (string) Blocks\style()->add(
     /*
      * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
      */
-    $renderer->render('Like/partials/button', [
+    $renderer->render('partials/button', [
         'anchor' => $anchor,
         'label' => esc_html__('Save this post', 'konomi'),
+        'icon' => 'heart',
     ]) ?>
 
     <?=
-    $renderer->render('Like/partials/popover', [
+    $renderer->render('partials/popover', [
         'anchor' => $anchor,
     ]) ?>
 
     <?=
-    $renderer->render('Like/partials/dialog', [
+    $renderer->render('partials/dialog', [
         'loginPageUrl' => wp_login_url(add_query_arg([])),
         'loginPageLabel' => esc_html__('Login', 'konomi'),
         'title' => esc_html__('Sign in to like', 'konomi'),

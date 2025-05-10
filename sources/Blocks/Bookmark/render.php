@@ -35,18 +35,19 @@ $style = (string) Blocks\style()->add(
     /*
      * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
      */
-    $renderer->render('Bookmark/partials/button', [
+    $renderer->render('partials/button', [
         'anchor' => $anchor,
         'label' => esc_html__('Bookmark this post', 'konomi'),
+        'icon' => 'bookmark',
     ]) ?>
 
     <?=
-    $renderer->render('Bookmark/partials/popover', [
+    $renderer->render('partials/popover', [
         'anchor' => $anchor,
     ]) ?>
 
     <?=
-    $renderer->render('Bookmark/partials/dialog', [
+    $renderer->render('partials/dialog', [
         'loginPageUrl' => wp_login_url(add_query_arg([])),
         'loginPageLabel' => esc_html__('Login', 'konomi'),
         'title' => esc_html__('Sign in to bookmark', 'konomi'),
