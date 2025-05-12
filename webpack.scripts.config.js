@@ -104,6 +104,21 @@ module.exports = [
 	},
 
 	/*
+	 * The Konomi main block build
+	 */
+	{
+		...configuration,
+		entry: {
+			'konomi-konomi-block': './sources/Blocks/Konomi/index.ts',
+		},
+		output: {
+			filename: '[name].js',
+			path: path.resolve('./sources/Blocks/Konomi/dist'),
+			clean: true,
+		},
+	},
+
+	/*
 	 * The Like block build
 	 */
 	{

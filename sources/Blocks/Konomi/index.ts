@@ -10,7 +10,10 @@ import { registerBlockType } from '@wordpress/blocks';
 import './view/style.scss';
 
 import { Edit } from './edit';
+import { Save } from './edit/save';
+import metadata from './block.json';
 
-registerBlockType( 'konomi/like', {
+registerBlockType( metadata.name, {
 	edit: Edit,
+	save: Save,
 } );

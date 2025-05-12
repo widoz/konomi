@@ -24,8 +24,5 @@
 	"editorScript": "file:./dist/konomi-bookmark-block.js",
 	"viewScriptModule": "file:./build-module/konomi-bookmark-block-view.js",
 	"style": "file:./dist/style-konomi-bookmark-block.css",
-	"render": "file:./render.php",
-	"blockHooks": {
-		"core/post-title": "after"
-	}
+	"render": "file:./render.php"
 }
