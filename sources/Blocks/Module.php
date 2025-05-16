@@ -42,6 +42,15 @@ class Module implements ServiceModule, ExecutableModule
                 "{$basePath}/sources/Blocks",
                 "{$basePath}/sources/Blocks/blocks-manifest.php"
             ),
+            InstanceId::class => static fn () => InstanceId::new(),
+
+            /**
+             * Konomi
+             */
+            Konomi\Context::class => static fn (ContainerInterface $container) => Konomi\Context::new(
+                $container->get(User\UserFactory::class),
+                $container->get(InstanceId::class)
+            ),
 
             /*
              * Like
@@ -50,7 +59,8 @@ class Module implements ServiceModule, ExecutableModule
                 ContainerInterface $container
             ) => Like\Context::new(
                 $container->get(User\UserFactory::class),
-                $container->get(Post\Post::class)
+                $container->get(Post\Post::class),
+                $container->get(InstanceId::class)
             ),
             Like\Rest\AddSchema::class => static fn () => Like\Rest\AddSchema::new(),
             Like\Rest\AddController::class => static fn (
@@ -67,6 +77,7 @@ class Module implements ServiceModule, ExecutableModule
                 ContainerInterface $container
             ) => Bookmark\Context::new(
                 $container->get(User\UserFactory::class),
+                $container->get(InstanceId::class)
             ),
             Bookmark\Rest\AddSchema::class => static fn () => Bookmark\Rest\AddSchema::new(),
             Bookmark\Rest\AddController::class => static fn (

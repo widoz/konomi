@@ -62,7 +62,9 @@ return array(
 		'textdomain' => 'konomi',
 		'editorScript' => 'file:./dist/konomi-konomi-block.js',
 		'viewScriptModule' => 'file:./build-module/konomi-konomi-block-view.js',
-		'style' => 'file:./dist/style-konomi-konomi-block.css',
+		'viewStyle' => array(
+			'file:./dist/style-konomi-konomi-block.css'
+		),
 		'render' => 'file:./render.php',
 		'blockHooks' => array(
 			'core/post-title' => 'after'

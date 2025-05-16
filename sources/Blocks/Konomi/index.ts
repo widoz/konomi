@@ -11,9 +11,8 @@ import './view/style.scss';
 
 import { Edit } from './edit';
 import { Save } from './edit/save';
-import metadata from './block.json';
 
-registerBlockType( metadata.name, {
+registerBlockType( 'konomi/konomi', {
 	edit: Edit,
 	save: Save,
 } );

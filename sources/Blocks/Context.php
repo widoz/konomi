@@ -11,7 +11,7 @@ interface Context
      */
     public function toArray(): array;
 
-    public function instanceId(): int;
+    public function instanceId(): InstanceId;
 
     public function isUserLoggedIn(): bool;
 

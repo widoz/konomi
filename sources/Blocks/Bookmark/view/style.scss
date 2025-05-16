@@ -76,25 +76,4 @@
 			}
 		}
 	}
-
-	.konomi-bookmark-response-message {
-		inset-area: block-start; /* stylelint-disable property-no-unknown */
-		inset-block-end: anchor(top);
-		inset-inline-start: anchor(right);
-		margin: 0;
-		min-width: 6vw;
-		position: absolute;
-		text-align: center;
-	}
-
-	.konomi-login-modal {
-
-		.konomi-login-modal-closer {
-
-			@include reset-button-style();
-			position: absolute;
-			right: #{functions.em(16)};
-			top: #{functions.em(16)};
-		}
-	}
 }

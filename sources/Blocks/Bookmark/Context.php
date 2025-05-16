@@ -12,23 +12,22 @@ use Widoz\Wp\Konomi\Blocks;
  */
 class Context implements Blocks\Context
 {
-    private int $instanceId = 0;
+    public static function new(
+        User\UserFactory $userFactory,
+        Blocks\InstanceId $instanceId
+    ): Context {
 
-    public static function new(User\UserFactory $userFactory): Context
-    {
-        return new self($userFactory);
+        return new self($userFactory, $instanceId);
     }
 
     final private function __construct(
-        readonly private User\UserFactory $userFactory
+        readonly private User\UserFactory $userFactory,
+        readonly private Blocks\InstanceId $instanceId
     ) {
     }
 
     /**
      * @return array{
-     *     id: int,
-     *     type: string,
-     *     isUserLoggedIn: bool,
      *     isActive: bool
      * }
      */
@@ -37,14 +36,7 @@ class Context implements Blocks\Context
         $bookmark = $this->bookmark();
 
         return [
-            'id' => $this->postId(),
-            'type' => $this->postType(),
-            'isUserLoggedIn' => $this->isUserLoggedIn(),
             'isActive' => $bookmark->isActive(),
-            'error' => [
-                'code' => '',
-                'message' => '',
-            ],
         ];
     }
 
@@ -63,9 +55,9 @@ class Context implements Blocks\Context
         return (int) get_the_ID();
     }
 
-    public function instanceId(): int
+    public function instanceId(): Blocks\InstanceId
     {
-        return ++$this->instanceId;
+        return $this->instanceId;
     }
 
     private function bookmark(): User\Item

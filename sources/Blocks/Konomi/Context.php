@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Like;
+namespace Widoz\Wp\Konomi\Blocks\Konomi;
 
-use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
 use Widoz\Wp\Konomi\Blocks;
 
@@ -15,33 +14,36 @@ class Context implements Blocks\Context
 {
     public static function new(
         User\UserFactory $userFactory,
-        Post\Post $post,
         Blocks\InstanceId $instanceId
     ): Context {
 
-        return new self($userFactory, $post, $instanceId);
+        return new self($userFactory, $instanceId);
     }
 
     final private function __construct(
         readonly private User\UserFactory $userFactory,
-        readonly private Post\Post $post,
         readonly private Blocks\InstanceId $instanceId
     ) {
     }
 
     /**
      * @return array{
-     *     count: int,
-     *     isActive: bool
+     *     id: int,
+     *     type: string,
+     *     isUserLoggedIn: bool,
+     *     error: array{ code: string, message: string }
      * }
      */
     public function toArray(): array
     {
-        $like = $this->like();
-
         return [
-            'count' => $this->count(),
-            'isActive' => $like->isActive(),
+            'id' => $this->postId(),
+            'type' => $this->postType(),
+            'isUserLoggedIn' => $this->isUserLoggedIn(),
+            'error' => [
+                'code' => '',
+                'message' => '',
+            ],
         ];
     }
 
@@ -63,16 +65,6 @@ class Context implements Blocks\Context
     public function instanceId(): Blocks\InstanceId
     {
         return $this->instanceId;
-    }
-
-    private function count(): int
-    {
-        return $this->post->countForPost($this->postId(), User\ItemGroup::REACTION);
-    }
-
-    private function like(): User\Item
-    {
-        return $this->user()->findItem($this->postId(), User\ItemGroup::REACTION);
     }
 
     private function user(): User\User

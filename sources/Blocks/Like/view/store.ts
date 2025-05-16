@@ -1,19 +1,17 @@
 /**
  * WordPress dependencies
  */
-import {
-	getContext,
-	getElement,
-	useLayoutEffect,
-	store,
-} from '@wordpress/interactivity';
+import { getContext, store } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies
  */
 import { addLike } from './add-like-command';
-import { loginModalElement } from './elements/login-modal-element';
-import { renderMessage } from './popover';
+
+type Context = {
+	isActive: boolean;
+	count: number;
+};
 
 type ResponseError = Readonly< {
 	code: string;
@@ -23,11 +21,9 @@ type ResponseError = Readonly< {
 	};
 } >;
 
-type Context = {
+type KonomiContext = {
 	id: number;
 	type: string;
-	isActive: boolean;
-	count: number;
 	isUserLoggedIn: boolean;
 	loginRequired: boolean;
 	error: {
@@ -55,37 +51,33 @@ export function init(): void {
 
 			// eslint-disable-next-line max-lines-per-function,complexity
 			*updateUserPreferences(): Generator< Promise< void > > {
-				const context = getContext< Context >( 'konomiLike' );
+				const konomiContext = getContext< KonomiContext >( 'konomi' );
 
-				if ( ! context.isUserLoggedIn ) {
-					context.loginRequired = true;
+				if ( ! konomiContext.isUserLoggedIn ) {
+					konomiContext.loginRequired = true;
 					actions.revertStatus();
 					return;
 				}
 
 				try {
+					const likeContext = getContext< Context >( 'konomiLike' );
 					yield addLike( {
 						meta: {
 							_like: {
-								id: context.id,
-								type: context.type,
-								isActive: context.isActive,
+								id: konomiContext.id,
+								type: konomiContext.type,
+								isActive: likeContext.isActive,
 							},
 						},
 					} );
 				} catch ( error: any ) {
 					const responseError = error as ResponseError;
-					context.error = {
+					konomiContext.error = {
 						code: responseError.code,
 						message: responseError.message,
 					};
 					actions.revertStatus();
 				}
-			},
-
-			closeLoginModal: () => {
-				const context = getContext< Context >( 'konomiLike' );
-				context.loginRequired = false;
 			},
 
 			revertStatus: (): void => {
@@ -94,41 +86,6 @@ export function init(): void {
 					? context.count - 1
 					: context.count + 1;
 				context.isActive = ! context.isActive;
-			},
-		},
-
-		callbacks: {
-			maybeRenderResponseError: (): void => {
-				const context = getContext< Context >( 'konomiLike' );
-				// eslint-disable-next-line react-hooks/rules-of-hooks
-				useLayoutEffect( () => {
-					const element = getElement();
-					if ( element.ref && context.error.code ) {
-						renderMessage( element.ref ).finally( () => {
-							context.error = {
-								code: '',
-								message: '',
-							};
-						} );
-					}
-					// eslint-disable-next-line react-hooks/exhaustive-deps
-				}, [ context.error.code, context.error.message ] );
-			},
-
-			toggleLoginModal: (): void => {
-				const element = getElement();
-				if ( ! ( element.ref instanceof HTMLElement ) ) {
-					return;
-				}
-
-				const context = getContext< Context >( 'konomiLike' );
-				const _loginModalElement = loginModalElement( element.ref );
-
-				if ( context.loginRequired ) {
-					_loginModalElement.showModal();
-				} else {
-					_loginModalElement.close();
-				}
 			},
 		},
 	} );

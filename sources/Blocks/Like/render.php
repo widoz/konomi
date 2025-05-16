@@ -13,9 +13,9 @@ $activeColor = (string) ($attributes['activeColor'] ?? null);
 
 $renderer = Blocks\renderer();
 $context = Blocks\context(Context::class);
-$generatedContext = $context->toArray();
-$uuid = $context->instanceId();
-$anchor = "--konomi-like-{$uuid}";
+
+$uuid = $context->instanceId()->current();
+$anchor = "--konomi-{$uuid}";
 
 $style = (string) Blocks\style()->add(
     Blocks\CustomProperty::new('--konomi-color--inactive', $inactiveColor, 'sanitize_hex_color'),
@@ -29,7 +29,7 @@ $style = (string) Blocks\style()->add(
     style="<?= esc_attr($style) ?>"
     <?php
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    echo wp_interactivity_data_wp_context($generatedContext) ?>
+    echo wp_interactivity_data_wp_context($context->toArray()) ?>
 >
     <?=
     /*
@@ -40,20 +40,4 @@ $style = (string) Blocks\style()->add(
         'label' => esc_html__('Save this post', 'konomi'),
         'icon' => 'heart',
     ]) ?>
-
-    <?=
-    $renderer->render('partials/popover', [
-        'anchor' => $anchor,
-    ]) ?>
-
-    <?=
-    $renderer->render('partials/dialog', [
-        'loginPageUrl' => wp_login_url(add_query_arg([])),
-        'loginPageLabel' => esc_html__('Login', 'konomi'),
-        'title' => esc_html__('Sign in to like', 'konomi'),
-        'message' => esc_html__('You need to be signed in to save your likes.', 'konomi'),
-        'closeLabel' => esc_html__('Close', 'konomi'),
-    ])
-    // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
-    ?>
 </div>

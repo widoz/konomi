@@ -19,7 +19,7 @@ $iconName = (string) ($data['icon'] ?? null);
     echo get_block_wrapper_attributes() ?>
     data-wp-class--is-active="context.isActive"
     data-wp-on-async--click="actions.toggleStatus"
-    data-wp-run--maybe-show-login-modal="callbacks.toggleLoginModal"
+    data-wp-run--maybe-show-login-modal="konomi::callbacks.toggleLoginModal"
     style="anchor-name: <?= esc_attr($anchor) ?>"
 >
     <?=
