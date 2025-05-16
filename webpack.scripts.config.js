@@ -104,6 +104,21 @@ module.exports = [
 	},
 
 	/*
+	 * The Konomi main block build
+	 */
+	{
+		...configuration,
+		entry: {
+			'konomi-konomi-block': './sources/Blocks/Konomi/index.ts',
+		},
+		output: {
+			filename: '[name].js',
+			path: path.resolve('./sources/Blocks/Konomi/dist'),
+			clean: true,
+		},
+	},
+
+	/*
 	 * The Like block build
 	 */
 	{
@@ -114,6 +129,21 @@ module.exports = [
 		output: {
 			filename: '[name].js',
 			path: path.resolve('./sources/Blocks/Like/dist'),
+			clean: true,
+		},
+	},
+
+	/*
+	 * The Bookmark block build
+	 */
+	{
+		...configuration,
+		entry: {
+			'konomi-bookmark-block': './sources/Blocks/Bookmark/index.ts',
+		},
+		output: {
+			filename: '[name].js',
+			path: path.resolve('./sources/Blocks/Bookmark/dist'),
 			clean: true,
 		},
 	}

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Post;
 
+use Widoz\Wp\Konomi\User;
+
 /**
  * @api
  */
@@ -18,8 +20,8 @@ class Post
     {
     }
 
-    public function countForPost(int $id): int
+    public function countForPost(int $id, User\ItemGroup $group): int
     {
-        return count($this->repository->find($id));
+        return count($this->repository->find($id, $group));
     }
 }

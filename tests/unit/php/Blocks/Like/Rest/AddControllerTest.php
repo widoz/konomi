@@ -37,9 +37,9 @@ describe('Add Controller', function (): void {
             $rawRequestData = makeRequestData($id, $type, $isActive);
 
             $this->request->shouldReceive('get_param')->with('meta')->andReturn($rawRequestData);
-            $this->likeFactory->shouldReceive('create')->with($id, $type, $isActive)->andReturn($this->like);
+            $this->likeFactory->shouldReceive('create')->with($id, $type, $isActive, User\ItemGroup::REACTION)->andReturn($this->like);
             $this->like->shouldReceive('isValid')->andReturn(true);
-            $this->user->shouldReceive('saveLike')->with($this->like)->andReturn(true);
+            $this->user->shouldReceive('saveItem')->with($this->like)->andReturn(true);
 
             $controller = Blocks\Like\Rest\AddController::new(
                 $this->userFactory,
@@ -63,7 +63,7 @@ describe('Add Controller', function (): void {
             $rawRequestData = makeRequestData($id, $type, $isActive);
 
             $this->request->shouldReceive('get_param')->with('meta')->andReturn($rawRequestData);
-            $this->likeFactory->shouldReceive('create')->with($id, $type, $isActive)->andReturn($this->like);
+            $this->likeFactory->shouldReceive('create')->with($id, $type, $isActive, User\ItemGroup::REACTION)->andReturn($this->like);
             $this->like->shouldReceive('isValid')->andReturn(false);
 
             $controller = Blocks\Like\Rest\AddController::new($this->userFactory, $this->likeFactory);
@@ -76,7 +76,7 @@ describe('Add Controller', function (): void {
 
         /**
          * In this test the Request values do not matter much but the
-         * `User::saveLike`.
+         * `User::saveItem`.
          */
         it('Fails to save the Like', function (): void {
             $id = 1;
@@ -85,9 +85,9 @@ describe('Add Controller', function (): void {
             $rawRequestData = makeRequestData($id, $type, $isActive);
 
             $this->request->shouldReceive('get_param')->with('meta')->andReturn($rawRequestData);
-            $this->likeFactory->shouldReceive('create')->with($id, $type, $isActive)->andReturn($this->like);
+            $this->likeFactory->shouldReceive('create')->with($id, $type, $isActive, User\ItemGroup::REACTION)->andReturn($this->like);
             $this->like->shouldReceive('isValid')->andReturn(true);
-            $this->user->shouldReceive('saveLike')->with($this->like)->andReturn(false);
+            $this->user->shouldReceive('saveItem')->with($this->like)->andReturn(false);
 
             $controller = Blocks\Like\Rest\AddController::new(
                 $this->userFactory,

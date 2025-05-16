@@ -54,6 +54,9 @@ const configuration = {
 };
 
 module.exports = [
+	/*
+	 * Configuration Module
+	 */
 	{
 		...configuration,
 		entry: {
@@ -67,6 +70,9 @@ module.exports = [
 		},
 	},
 
+	/*
+	 * Api Fetch Module
+	 */
 	{
 		...configuration,
 		entry: {
@@ -80,6 +86,25 @@ module.exports = [
 		},
 	},
 
+	/*
+	 * Konomi Block Module
+	 */
+	{
+		...configuration,
+		entry: {
+			'konomi-konomi-block-view': './sources/Blocks/Konomi/view/index.ts',
+		},
+		output: {
+			...configuration.output,
+			filename: '[name].js',
+			path: path.resolve('./sources/Blocks/Konomi/build-module'),
+			clean: true,
+		},
+	},
+
+	/*
+	 * Like Block Module
+	 */
 	{
 		...configuration,
 		entry: {
@@ -89,6 +114,22 @@ module.exports = [
 			...configuration.output,
 			filename: '[name].js',
 			path: path.resolve('./sources/Blocks/Like/build-module'),
+			clean: true,
+		},
+	},
+
+	/*
+	 * Bookmark Module
+	 */
+	{
+		...configuration,
+		entry: {
+			'konomi-bookmark-block-view': './sources/Blocks/Bookmark/view/index.ts',
+		},
+		output: {
+			...configuration.output,
+			filename: '[name].js',
+			path: path.resolve('./sources/Blocks/Bookmark/build-module'),
 			clean: true,
 		},
 	}

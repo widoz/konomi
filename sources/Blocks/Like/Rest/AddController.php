@@ -14,15 +14,15 @@ class AddController implements Rest\Controller
 {
     public static function new(
         User\UserFactory $userFactory,
-        User\ItemFactory $likeFactory
+        User\ItemFactory $itemFactory
     ): AddController {
 
-        return new self($userFactory, $likeFactory);
+        return new self($userFactory, $itemFactory);
     }
 
     final private function __construct(
         private readonly User\UserFactory $userFactory,
-        private readonly User\ItemFactory $likeFactory
+        private readonly User\ItemFactory $itemFactory
     ) {
     }
 
@@ -34,7 +34,7 @@ class AddController implements Rest\Controller
             return $this->failedBecauseInvalidData();
         }
 
-        return $this->userFactory->create()->saveLike($like)
+        return $this->userFactory->create()->saveItem($like)
             ? $this->successResponse()
             : $this->failedToSaveError();
     }
@@ -68,10 +68,11 @@ class AddController implements Rest\Controller
     private function likeByRequest(\WP_REST_Request $request): User\Item
     {
         $rawLike = $this->ensureMeta($request->get_param('meta'));
-        return $this->likeFactory->create(
+        return $this->itemFactory->create(
             $rawLike['id'],
             $rawLike['type'],
-            $rawLike['isActive']
+            $rawLike['isActive'],
+            User\ItemGroup::REACTION
         );
     }
 

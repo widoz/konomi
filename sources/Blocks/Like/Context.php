@@ -6,31 +6,32 @@ namespace Widoz\Wp\Konomi\Blocks\Like;
 
 use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
+use Widoz\Wp\Konomi\Blocks;
 
 /**
  * @internal
  */
-class Context
+class Context implements Blocks\Context
 {
-    private int $instanceId = 0;
+    public static function new(
+        User\UserFactory $userFactory,
+        Post\Post $post,
+        Blocks\InstanceId $instanceId
+    ): Context {
 
-    public static function new(User\UserFactory $userFactory, Post\Post $post): Context
-    {
-        return new self($userFactory, $post);
+        return new self($userFactory, $post, $instanceId);
     }
 
     final private function __construct(
         readonly private User\UserFactory $userFactory,
-        readonly private Post\Post $post
+        readonly private Post\Post $post,
+        readonly private Blocks\InstanceId $instanceId
     ) {
     }
 
     /**
      * @return array{
-     *     id: int,
-     *     type: string,
      *     count: int,
-     *     isUserLoggedIn: bool,
      *     isActive: bool
      * }
      */
@@ -39,15 +40,8 @@ class Context
         $like = $this->like();
 
         return [
-            'id' => $this->postId(),
-            'type' => $this->postType(),
             'count' => $this->count(),
-            'isUserLoggedIn' => $this->isUserLoggedIn(),
             'isActive' => $like->isActive(),
-            'error' => [
-                'code' => '',
-                'message' => '',
-            ],
         ];
     }
 
@@ -66,19 +60,19 @@ class Context
         return (int) get_the_ID();
     }
 
-    public function count(): int
+    public function instanceId(): Blocks\InstanceId
     {
-        return $this->post->countForPost($this->postId());
+        return $this->instanceId;
     }
 
-    public function instanceId(): int
+    private function count(): int
     {
-        return ++$this->instanceId;
+        return $this->post->countForPost($this->postId(), User\ItemGroup::REACTION);
     }
 
     private function like(): User\Item
     {
-        return $this->user()->findLike($this->postId());
+        return $this->user()->findItem($this->postId(), User\ItemGroup::REACTION);
     }
 
     private function user(): User\User

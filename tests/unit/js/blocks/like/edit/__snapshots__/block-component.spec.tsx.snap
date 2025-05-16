@@ -15,7 +15,7 @@ exports[`BlockComponent should match snapshot 1`] = `
         Heart Icon
       </div>
       <span
-        class="konomi-like-count"
+        class="konomi-count"
       >
         10
       </span>

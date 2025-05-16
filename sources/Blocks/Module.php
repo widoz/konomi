@@ -42,19 +42,49 @@ class Module implements ServiceModule, ExecutableModule
                 "{$basePath}/sources/Blocks",
                 "{$basePath}/sources/Blocks/blocks-manifest.php"
             ),
+            InstanceId::class => static fn () => InstanceId::new(),
+
+            /**
+             * Konomi
+             */
+            Konomi\Context::class => static fn (ContainerInterface $container) => Konomi\Context::new(
+                $container->get(User\UserFactory::class),
+                $container->get(InstanceId::class)
+            ),
+
+            /*
+             * Like
+             */
             Like\Context::class => static fn (
                 ContainerInterface $container
             ) => Like\Context::new(
                 $container->get(User\UserFactory::class),
-                $container->get(Post\Post::class)
+                $container->get(Post\Post::class),
+                $container->get(InstanceId::class)
             ),
-
             Like\Rest\AddSchema::class => static fn () => Like\Rest\AddSchema::new(),
             Like\Rest\AddController::class => static fn (
                 ContainerInterface $container
             ) => Like\Rest\AddController::new(
                 $container->get(User\UserFactory::class),
-                $container->get(User\LikeFactory::class)
+                $container->get(User\ItemFactory::class)
+            ),
+
+            /*
+             * Bookmark
+             */
+            Bookmark\Context::class => static fn (
+                ContainerInterface $container
+            ) => Bookmark\Context::new(
+                $container->get(User\UserFactory::class),
+                $container->get(InstanceId::class)
+            ),
+            Bookmark\Rest\AddSchema::class => static fn () => Bookmark\Rest\AddSchema::new(),
+            Bookmark\Rest\AddController::class => static fn (
+                ContainerInterface $container
+            ) => Bookmark\Rest\AddController::new(
+                $container->get(User\UserFactory::class),
+                $container->get(User\ItemFactory::class)
             ),
         ];
     }
@@ -69,6 +99,21 @@ class Module implements ServiceModule, ExecutableModule
                     '/user-like',
                     $container->get(Like\Rest\AddSchema::class),
                     $container->get(Like\Rest\AddController::class)
+                )
+                    ->withMiddleware($container->get(Rest\Middlewares\ErrorCatch::class))
+                    ->withMiddleware($container->get(Rest\Middlewares\Authentication::class))
+                    ->register();
+            }
+        );
+
+        add_action(
+            'rest_api_init',
+            static function () use ($container) {
+                Rest\Route::post(
+                    'konomi/v1',
+                    '/user-bookmark',
+                    $container->get(Bookmark\Rest\AddSchema::class),
+                    $container->get(Bookmark\Rest\AddController::class)
                 )
                     ->withMiddleware($container->get(Rest\Middlewares\ErrorCatch::class))
                     ->withMiddleware($container->get(Rest\Middlewares\Authentication::class))

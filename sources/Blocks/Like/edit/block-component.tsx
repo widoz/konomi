@@ -30,7 +30,7 @@ export function BlockComponent(
 		<div className="konomi-like" style={ style }>
 			<button { ...useBlockProps() }>
 				<SvgHeart />
-				<span className="konomi-like-count">10</span>
+				<span className="konomi-count">10</span>
 			</button>
 		</div>
 	);
