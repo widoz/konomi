@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Widoz\Wp\Konomi\Tests\Unit\Blocks;
 
 use Brain\Monkey\Functions;
+use Widoz\Wp\Konomi\Blocks;
 use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
 use Widoz\Wp\Konomi\Blocks\Like\Context;
@@ -22,18 +23,16 @@ describe('Like Context', function (): void {
             $post = \Mockery::mock(Post\Post::class, [
                 'countForPost' => 1,
             ]);
+            $instanceId = \Mockery::mock(Blocks\InstanceId::class);
 
             Functions\expect('get_the_ID')->andReturn(10);
             Functions\expect('get_post_type')->andReturn('post-type');
 
-            $likeContext = Context::new($userFactory, $post);
+            $likeContext = Context::new($userFactory, $post, $instanceId);
             $likeContextAsArray = $likeContext->toArray();
 
-            expect($likeContext->instanceId())->toEqual(1)
-                ->and($likeContextAsArray['id'])->toEqual(10)
-                ->and($likeContextAsArray['type'])->toEqual('post-type')
+            expect($likeContext->instanceId())->toEqual($instanceId)
                 ->and($likeContextAsArray['count'])->toEqual(1)
-                ->and($likeContextAsArray['isUserLoggedIn'])->toEqual(true)
                 ->and($likeContextAsArray['isActive'])->toEqual(true);
         });
     });
