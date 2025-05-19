@@ -12,10 +12,4 @@ interface Context
     public function toArray(): array;
 
     public function instanceId(): InstanceId;
-
-    public function isUserLoggedIn(): bool;
-
-    public function postType(): string;
-
-    public function postId(): int;
 }

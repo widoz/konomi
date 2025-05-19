@@ -12,6 +12,9 @@ use Widoz\Wp\Konomi\Blocks;
  */
 class Context implements Blocks\Context
 {
+    use Blocks\PostContextTrait;
+    use Blocks\UserContextTrait;
+
     public static function new(
         User\UserFactory $userFactory,
         Blocks\InstanceId $instanceId
@@ -40,21 +43,6 @@ class Context implements Blocks\Context
         ];
     }
 
-    public function isUserLoggedIn(): bool
-    {
-        return $this->user()->isLoggedIn();
-    }
-
-    public function postType(): string
-    {
-        return (string) get_post_type($this->postId());
-    }
-
-    public function postId(): int
-    {
-        return (int) get_the_ID();
-    }
-
     public function instanceId(): Blocks\InstanceId
     {
         return $this->instanceId;
@@ -62,13 +50,6 @@ class Context implements Blocks\Context
 
     private function bookmark(): User\Item
     {
-        return $this->user()->findItem($this->postId(), User\ItemGroup::BOOKMARK);
-    }
-
-    private function user(): User\User
-    {
-        static $user = null;
-        $user or $user = $this->userFactory->create();
-        return $user;
+        return $this->user($this->userFactory)->findItem($this->postId(), User\ItemGroup::BOOKMARK);
     }
 }
