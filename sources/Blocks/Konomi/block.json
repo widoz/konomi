@@ -25,9 +25,9 @@
 		"core/group"
 	],
 	"textdomain": "konomi",
-	"editorScript": "file:./dist/konomi-konomi-block.js",
+	"editorScript": "file:./dist/js/konomi-konomi-block.js",
 	"viewScriptModule": "file:./build-module/konomi-konomi-block-view.js",
-	"viewStyle": "file:./dist/style-konomi-konomi-block.css",
+	"viewStyle": "file:./dist/css/style-konomi-konomi-block.css",
 	"render": "file:./render.php",
 	"blockHooks": {
 		"core/post-title": "after"

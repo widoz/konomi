@@ -26,9 +26,9 @@ return array(
 			'interactivity' => true
 		),
 		'textdomain' => 'konomi',
-		'editorScript' => 'file:./dist/konomi-bookmark-block.js',
+		'editorScript' => 'file:./dist/js/konomi-bookmark-block.js',
 		'viewScriptModule' => 'file:./build-module/konomi-bookmark-block-view.js',
-		'style' => 'file:./dist/style-konomi-bookmark-block.css',
+		'style' => 'file:./dist/css/style-konomi-bookmark-block.css',
 		'render' => 'file:./render.php'
 	),
 	'Konomi' => array(
@@ -60,9 +60,9 @@ return array(
 			'core/group'
 		),
 		'textdomain' => 'konomi',
-		'editorScript' => 'file:./dist/konomi-konomi-block.js',
+		'editorScript' => 'file:./dist/js/konomi-konomi-block.js',
 		'viewScriptModule' => 'file:./build-module/konomi-konomi-block-view.js',
-		'viewStyle' => 'file:./dist/style-konomi-konomi-block.css',
+		'viewStyle' => 'file:./dist/css/style-konomi-konomi-block.css',
 		'render' => 'file:./render.php',
 		'blockHooks' => array(
 			'core/post-title' => 'after'
@@ -93,9 +93,9 @@ return array(
 			'interactivity' => true
 		),
 		'textdomain' => 'konomi',
-		'editorScript' => 'file:./dist/konomi-like-block.js',
+		'editorScript' => 'file:./dist/js/konomi-like-block.js',
 		'viewScriptModule' => 'file:./build-module/konomi-like-block-view.js',
-		'style' => 'file:./dist/style-konomi-like-block.css',
+		'style' => 'file:./dist/css/style-konomi-like-block.css',
 		'render' => 'file:./render.php'
 	)
 );

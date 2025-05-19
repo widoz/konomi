@@ -21,8 +21,8 @@
 		"interactivity": true
 	},
 	"textdomain": "konomi",
-	"editorScript": "file:./dist/konomi-bookmark-block.js",
+	"editorScript": "file:./dist/js/konomi-bookmark-block.js",
 	"viewScriptModule": "file:./build-module/konomi-bookmark-block-view.js",
-	"style": "file:./dist/style-konomi-bookmark-block.css",
+	"style": "file:./dist/css/style-konomi-bookmark-block.css",
 	"render": "file:./render.php"
 }

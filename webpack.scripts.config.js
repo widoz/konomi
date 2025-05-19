@@ -7,6 +7,7 @@ const path = require('path')
  */
 const baseConfiguration = require('@wordpress/scripts/config/webpack.config')
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 /**
  * Internal dependencies
  */
@@ -50,6 +51,21 @@ const configuration = {
 	},
 	output: {},
 }
+
+const CleanUpJSPlugin = {
+	apply: (compiler) => {
+		compiler.hooks.emit.tapAsync('CleanUpJSPlugin', (compilation, callback) => {
+			// Find all .js files that correspond to CSS entries
+			Object.keys(compilation.assets)
+				.filter(asset => /\.js$/.test(asset) && asset.includes('-css'))
+				.forEach(asset => {
+					// Remove these JS files from the output
+					delete compilation.assets[asset];
+				});
+			callback();
+		});
+	}
+};
 
 module.exports = [
 	/*
@@ -113,7 +129,17 @@ module.exports = [
 		},
 		output: {
 			filename: '[name].js',
-			path: path.resolve('./sources/Blocks/Konomi/dist'),
+			path: path.resolve('./sources/Blocks/Konomi/dist/js'),
+			clean: true,
+		},
+	},
+	{
+		...configuration,
+		entry: {
+			'konomi-konomi-block': './sources/Blocks/Konomi/view/style.scss',
+		},
+		output: {
+			path: path.resolve('./sources/Blocks/Konomi/dist/css'),
 			clean: true,
 		},
 	},
@@ -128,7 +154,17 @@ module.exports = [
 		},
 		output: {
 			filename: '[name].js',
-			path: path.resolve('./sources/Blocks/Like/dist'),
+			path: path.resolve('./sources/Blocks/Like/dist/js'),
+			clean: true,
+		},
+	},
+	{
+		...configuration,
+		entry: {
+			'konomi-like-block': './sources/Blocks/Like/view/style.scss',
+		},
+		output: {
+			path: path.resolve('./sources/Blocks/Like/dist/css'),
 			clean: true,
 		},
 	},
@@ -143,8 +179,25 @@ module.exports = [
 		},
 		output: {
 			filename: '[name].js',
-			path: path.resolve('./sources/Blocks/Bookmark/dist'),
+			path: path.resolve('./sources/Blocks/Bookmark/dist/js'),
 			clean: true,
 		},
+	},
+	{
+		...configuration,
+		entry: {
+			'konomi-bookmark-block': './sources/Blocks/Bookmark/view/style.scss',
+		},
+		output: {
+			path: path.resolve('./sources/Blocks/Bookmark/dist/css'),
+			clean: true,
+		},
+		plugins: [
+			...configuration.plugins.filter(plugin => plugin.constructor.name !== 'CleanWebpackPlugin'),
+			new CleanWebpackPlugin( {
+				cleanAfterEveryBuildPatterns: [ '**\.(js|php)' ],
+				cleanStaleWebpackAssets: false,
+			} )
+		]
 	}
 ]

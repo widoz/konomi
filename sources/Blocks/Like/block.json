@@ -21,8 +21,8 @@
 		"interactivity": true
 	},
 	"textdomain": "konomi",
-	"editorScript": "file:./dist/konomi-like-block.js",
+	"editorScript": "file:./dist/js/konomi-like-block.js",
 	"viewScriptModule": "file:./build-module/konomi-like-block-view.js",
-	"style": "file:./dist/style-konomi-like-block.css",
+	"style": "file:./dist/css/style-konomi-like-block.css",
 	"render": "file:./render.php"
 }

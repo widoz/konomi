@@ -8,7 +8,7 @@
 }
 
 .konomi-bookmark {
-	--konomi-color--crimson: #dc143cff;
+	--konomi-color--lightblue: #14a0dc;
 	--konomi-color--gray: #696969ff;
 	--konomi-color--white: #fff;
 
@@ -18,7 +18,7 @@
 	);
 	--konomi-icon--active: var(
 		--konomi-color--active,
-		var(--konomi-color--crimson)
+		var(--konomi-color--lightblue)
 	);
 
 	margin: 0;
