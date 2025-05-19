@@ -2,7 +2,7 @@ import { apiFetch } from '@konomi/api-fetch';
 
 type Payload = Readonly< {
 	meta: Readonly< {
-		_like: Readonly< {
+		_reaction: Readonly< {
 			id: number;
 			type: string;
 			isActive: boolean;

@@ -2,35 +2,36 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Like\Rest;
+namespace Widoz\Wp\Konomi\Blocks\Rest;
 
 use Widoz\Wp\Konomi\Rest;
 
 /**
  * @internal
+ * @phpstan-type PropertiesSchema = array{
+ *      title: string,
+ *      type: string,
+ *      properties: array<string, array{required: bool, type: string}>
+ *  }
  */
 class AddSchema implements Rest\Schema
 {
-    public static function new(): AddSchema
+    public static function new(string $title): AddSchema
     {
-        return new self();
+        return new self($title);
     }
 
-    final private function __construct()
+    final private function __construct(readonly string $title)
     {
     }
 
     /**
-     * @return array{
-     *     title: '_like',
-     *     type: string,
-     *     properties: array<string, array{required: bool, type: string}>
-     * }
+     * @return PropertiesSchema
      */
     public function toArray(): array
     {
         return [
-            'title' => '_like',
+            'title' => $this->title,
             'type' => 'object',
             'properties' => [
                 'id' => [

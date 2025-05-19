@@ -63,7 +63,7 @@ export function init(): void {
 					const likeContext = getContext< Context >( 'konomiLike' );
 					yield addLike( {
 						meta: {
-							_like: {
+							_reaction: {
 								id: konomiContext.id,
 								type: konomiContext.type,
 								isActive: likeContext.isActive,

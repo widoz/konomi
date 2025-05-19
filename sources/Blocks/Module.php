@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Blocks;
 
+use Psr\Container\ContainerInterface;
 use Inpsyde\Modularity\{
     Module\ExecutableModule,
     Module\ModuleClassNameIdTrait,
     Module\ServiceModule,
     Properties\Properties
 };
-use Psr\Container\ContainerInterface;
+use Widoz\Wp\Konomi\Blocks\{
+    Rest\AddControllerFactory,
+    Rest\AddSchemaFactory,
+    Rest\AddResponse
+};
 use Widoz\Wp\Konomi\Rest;
 use Widoz\Wp\Konomi\User;
 use Widoz\Wp\Konomi\Post;
@@ -44,7 +49,18 @@ class Module implements ServiceModule, ExecutableModule
             ),
             InstanceId::class => static fn () => InstanceId::new(),
 
-            /**
+            /*
+             * Rest
+             */
+            AddSchemaFactory::class => static fn () => AddSchemaFactory::new(),
+            AddControllerFactory::class => static fn (
+                ContainerInterface $container
+            ) => AddControllerFactory::new(
+                $container->get(User\UserFactory::class),
+                $container->get(User\ItemFactory::class),
+            ),
+
+            /*
              * Konomi
              */
             Konomi\Context::class => static fn (ContainerInterface $container) => Konomi\Context::new(
@@ -62,13 +78,6 @@ class Module implements ServiceModule, ExecutableModule
                 $container->get(Post\Post::class),
                 $container->get(InstanceId::class)
             ),
-            Like\Rest\AddSchema::class => static fn () => Like\Rest\AddSchema::new(),
-            Like\Rest\AddController::class => static fn (
-                ContainerInterface $container
-            ) => Like\Rest\AddController::new(
-                $container->get(User\UserFactory::class),
-                $container->get(User\ItemFactory::class)
-            ),
 
             /*
              * Bookmark
@@ -78,13 +87,6 @@ class Module implements ServiceModule, ExecutableModule
             ) => Bookmark\Context::new(
                 $container->get(User\UserFactory::class),
                 $container->get(InstanceId::class)
-            ),
-            Bookmark\Rest\AddSchema::class => static fn () => Bookmark\Rest\AddSchema::new(),
-            Bookmark\Rest\AddController::class => static fn (
-                ContainerInterface $container
-            ) => Bookmark\Rest\AddController::new(
-                $container->get(User\UserFactory::class),
-                $container->get(User\ItemFactory::class)
             ),
         ];
     }
@@ -97,8 +99,16 @@ class Module implements ServiceModule, ExecutableModule
                 Rest\Route::post(
                     'konomi/v1',
                     '/user-like',
-                    $container->get(Like\Rest\AddSchema::class),
-                    $container->get(Like\Rest\AddController::class)
+                    $container->get(AddSchemaFactory::class)->create('React Rest Api Schema'),
+                    $container->get(AddControllerFactory::class)->create(
+                        User\ItemGroup::REACTION,
+                        AddResponse::new(
+                            User\ItemGroup::REACTION,
+                            'Like saved',
+                            'Invalid Like data, please contact the support or try again later.',
+                            'Failed to save like'
+                        )
+                    )
                 )
                     ->withMiddleware($container->get(Rest\Middlewares\ErrorCatch::class))
                     ->withMiddleware($container->get(Rest\Middlewares\Authentication::class))
@@ -112,8 +122,16 @@ class Module implements ServiceModule, ExecutableModule
                 Rest\Route::post(
                     'konomi/v1',
                     '/user-bookmark',
-                    $container->get(Bookmark\Rest\AddSchema::class),
-                    $container->get(Bookmark\Rest\AddController::class)
+                    $container->get(AddSchemaFactory::class)->create('React Rest Api Schema'),
+                    $container->get(AddControllerFactory::class)->create(
+                        User\ItemGroup::BOOKMARK,
+                        AddResponse::new(
+                            User\ItemGroup::BOOKMARK,
+                            'Bookmark saved',
+                            'Invalid Bookmark data, please contact the support or try again later.',
+                            'Failed to save bookmark'
+                        )
+                    )
                 )
                     ->withMiddleware($container->get(Rest\Middlewares\ErrorCatch::class))
                     ->withMiddleware($container->get(Rest\Middlewares\Authentication::class))
