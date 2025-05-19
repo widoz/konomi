@@ -14,7 +14,7 @@ import {
 import { loginModalElement } from './elements/login-modal-element';
 import { renderMessage } from './popover';
 
-type ResponseError = Readonly< {
+export type ResponseError = Readonly< {
 	code: string;
 	message: string;
 	data: {
@@ -22,7 +22,7 @@ type ResponseError = Readonly< {
 	};
 } >;
 
-type Context = {
+export type Context = {
 	id: number;
 	type: string;
 	isUserLoggedIn: boolean;
