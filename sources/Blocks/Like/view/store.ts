@@ -7,29 +7,14 @@ import { getContext, store } from '@wordpress/interactivity';
  * Internal dependencies
  */
 import { addLike } from './add-like-command';
+import type {
+	Context as OuterContext,
+	ResponseError,
+} from '../../Konomi/view/store';
 
-type Context = {
+export type Context = {
 	isActive: boolean;
 	count: number;
-};
-
-type ResponseError = Readonly< {
-	code: string;
-	message: string;
-	data: {
-		status: number;
-	};
-} >;
-
-type KonomiContext = {
-	id: number;
-	type: string;
-	isUserLoggedIn: boolean;
-	loginRequired: boolean;
-	error: {
-		code: ResponseError[ 'code' ];
-		message: ResponseError[ 'message' ];
-	};
 };
 
 // eslint-disable-next-line max-lines-per-function
@@ -51,10 +36,10 @@ export function init(): void {
 
 			// eslint-disable-next-line max-lines-per-function,complexity
 			*updateUserPreferences(): Generator< Promise< void > > {
-				const konomiContext = getContext< KonomiContext >( 'konomi' );
+				const outerContext = getContext< OuterContext >( 'konomi' );
 
-				if ( ! konomiContext.isUserLoggedIn ) {
-					konomiContext.loginRequired = true;
+				if ( ! outerContext.isUserLoggedIn ) {
+					outerContext.loginRequired = true;
 					actions.revertStatus();
 					return;
 				}
@@ -64,15 +49,15 @@ export function init(): void {
 					yield addLike( {
 						meta: {
 							_reaction: {
-								id: konomiContext.id,
-								type: konomiContext.type,
+								id: outerContext.id,
+								type: outerContext.type,
 								isActive: likeContext.isActive,
 							},
 						},
 					} );
 				} catch ( error: any ) {
 					const responseError = error as ResponseError;
-					konomiContext.error = {
+					outerContext.error = {
 						code: responseError.code,
 						message: responseError.message,
 					};

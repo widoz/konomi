@@ -4,14 +4,13 @@ import {
 	it,
 	expect,
 	beforeEach,
-	afterEach,
 } from '@jest/globals';
 import { parseHTML } from '@test/helpers';
-import { renderMessage } from '../../../../../../sources/Blocks/Like/view/popover';
-import { popoverElement } from '../../../../../../sources/Blocks/Like/view/elements/popover-element';
+import { renderMessage } from '../../../../../../sources/Blocks/Konomi/view/popover';
+import { popoverElement } from '../../../../../../sources/Blocks/Konomi/view/elements/popover-element';
 
 jest.mock(
-	'../../../../../../sources/Blocks/Like/view/elements/popover-element',
+	'../../../../../../sources/Blocks/Konomi/view/elements/popover-element',
 	() => ( {
 		popoverElement: jest.fn(),
 	} )

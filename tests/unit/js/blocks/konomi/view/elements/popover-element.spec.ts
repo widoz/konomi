@@ -1,9 +1,9 @@
 import { jest, describe, it, expect, beforeEach } from '@jest/globals';
 import { parseHTML } from '@test/helpers';
-import { findInteractivityParent } from '../../../../../../../sources/Blocks/Like/view/utils';
-import { popoverElement } from '../../../../../../../sources/Blocks/Like/view/elements/popover-element';
+import { findInteractivityParent } from '../../../../../../../sources/Blocks/Konomi/view/utils';
+import { popoverElement } from '../../../../../../../sources/Blocks/Konomi/view/elements/popover-element';
 
-jest.mock( '../../../../../../../sources/Blocks/Like/view/utils', () => ( {
+jest.mock( '../../../../../../../sources/Blocks/Konomi/view/utils', () => ( {
 	findInteractivityParent: jest.fn(),
 } ) );
 
@@ -31,7 +31,7 @@ describe( 'popoverElement', () => {
 			'.trigger-button'
 		) as HTMLElement;
 		const popover = parent.querySelector(
-			'.konomi-like-response-message'
+			'.konomi-response-message'
 		) as HTMLElement;
 		jest.mocked( findInteractivityParent ).mockReturnValue( parent );
 		const result = popoverElement( testElement );

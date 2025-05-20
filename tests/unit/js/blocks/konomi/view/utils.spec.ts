@@ -1,7 +1,7 @@
-import {jest, describe, it, expect} from '@jest/globals';
+import {describe, it, expect} from '@jest/globals';
 import {parseHTML} from '@test/helpers'
 import { getByTestId } from '@testing-library/dom';
-import { findInteractivityParent } from '../../../../../../sources/Blocks/Like/view/utils';
+import { findInteractivityParent } from '../../../../../../sources/Blocks/Konomi/view/utils';
 
 const MARKUP_ROOT_IS_INTERACTIVE = `
 	<div data-testid="parent" data-wp-interactive="konomi">
