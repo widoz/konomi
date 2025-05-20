@@ -10,6 +10,9 @@ return array(
 		'category' => 'design',
 		'icon' => 'smiley',
 		'description' => 'Bookmark',
+		'parent' => array(
+			'konomi/konomi'
+		),
 		'example' => array(
 			
 		),
@@ -77,6 +80,9 @@ return array(
 		'category' => 'design',
 		'icon' => 'smiley',
 		'description' => 'Like',
+		'parent' => array(
+			'konomi/konomi'
+		),
 		'example' => array(
 			
 		),

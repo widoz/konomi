@@ -8,11 +8,8 @@
 }
 
 .konomi {
-	.konomi-bookmark-response-message {
-		inset-area: block-start; /* stylelint-disable property-no-unknown */
-		inset-block-end: anchor(top);
-		inset-inline-start: anchor(right);
-		margin: 0;
+	.konomi-response-message {
+		inset-block: anchor(right) anchor(top);
 		min-width: 6vw;
 		position: absolute;
 		text-align: center;

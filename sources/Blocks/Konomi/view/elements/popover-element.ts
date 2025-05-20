@@ -6,7 +6,7 @@ export function popoverElement(
 ): HTMLElement | null {
 	return (
 		findInteractivityParent( element )?.querySelector< HTMLElement >(
-			'.konomi-like-response-message'
+			'.konomi-response-message'
 		) ?? null
 	);
 }
