@@ -1,4 +1,5 @@
 import type { APIFetchOptions, APIFetchMiddleware } from '@wordpress/api-fetch';
+export * from './utilities';
 
 export declare global {
 	export interface APIFetch {

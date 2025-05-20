@@ -15,7 +15,7 @@ import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
  */
 import type { KonomiEdit } from './types';
 
-export function Edit( props: Readonly< KonomiEdit.EditProps > ): JSX.Element {
+export function Edit( props: KonomiEdit.EditProps ): JSX.Element {
 	const { attributes } = props;
 	const blockProps = useBlockProps();
 	const innerBlockProps = useInnerBlocksProps( blockProps, {
@@ -26,7 +26,6 @@ export function Edit( props: Readonly< KonomiEdit.EditProps > ): JSX.Element {
 					layout: {
 						type: 'flex',
 						flexWrap: 'nowrap',
-						justifyContent: 'center',
 					},
 				},
 				[
