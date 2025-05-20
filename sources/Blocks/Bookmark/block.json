@@ -7,6 +7,7 @@
 	"category": "design",
 	"icon": "smiley",
 	"description": "Bookmark",
+	"parent": ["konomi/konomi"],
 	"example": {},
 	"attributes": {
 		"inactiveColor": {
