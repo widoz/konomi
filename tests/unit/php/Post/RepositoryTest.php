@@ -49,7 +49,7 @@ describe('find', function (): void {
 
         $this->storage->expects('read')->with($postId, $this->key)->andReturn($rawData);
         $this->rawDataAsserter->expects('ensureDataStructure')->with($rawData)->andReturn((fn () => yield from $rawData)());
-        $this->itemFactory->shouldReceive('create')->andReturnUsing(fn (int $id, string $type) => Item::new($id, $type, true));
+        $this->itemFactory->shouldReceive('create')->andReturnUsing(fn (int $id, string $type, bool $isActive, $group) => Item::new($id, $type, $isActive, $group));
         $result = $this->repository->find($postId, ItemGroup::REACTION);
 
         expect($result[100]->id())->toBe(10);

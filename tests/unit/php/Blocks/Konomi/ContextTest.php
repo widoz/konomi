@@ -6,9 +6,8 @@ namespace Widoz\Wp\Konomi\Tests\Unit\Blocks;
 
 use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Blocks;
-use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
-use Widoz\Wp\Konomi\Blocks\Like\Context;
+use Widoz\Wp\Konomi\Blocks\Konomi\Context;
 
 describe('toArray', function (): void {
     it('ensure valid serialization', function (): void {
@@ -19,18 +18,17 @@ describe('toArray', function (): void {
         $userFactory = \Mockery::mock(User\UserFactory::class, [
             'create' => $user,
         ]);
-        $post = \Mockery::mock(Post\Post::class, [
-            'countForPost' => 1,
-        ]);
         $instanceId = \Mockery::mock(Blocks\InstanceId::class);
 
         Functions\expect('get_the_ID')->andReturn(10);
+        Functions\expect('get_post_type')->andReturn('post-type');
 
-        $likeContext = Context::new($userFactory, $post, $instanceId);
-        $likeContextAsArray = $likeContext->toArray();
+        $context = Context::new($userFactory, $instanceId);
+        $contextAsArray = $context->toArray();
 
-        expect($likeContext->instanceId())->toEqual($instanceId)
-            ->and($likeContextAsArray['count'])->toEqual(1)
-            ->and($likeContextAsArray['isActive'])->toEqual(true);
+        expect($context->instanceId())->toEqual($instanceId)
+            ->and($contextAsArray['id'])->toEqual(10)
+            ->and($contextAsArray['type'])->toEqual('post-type')
+            ->and($contextAsArray['error'])->toEqual(['code' => '', 'message' => '']);
     });
 });

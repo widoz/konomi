@@ -86,6 +86,24 @@ describe('__invoke', function (): void {
             ->and($result->get_error_data()['status'])->toBe(400);
     });
 
+    it('Fails to save the Item because meta parameter is not an array', function (): void {
+        $this->request->shouldReceive('get_param')->with('meta')->andReturn('NOT AN ARRAY');
+        $this->itemFactory->shouldReceive('create')->with(0, '', false, User\ItemGroup::REACTION)->andReturn($this->item);
+        $this->item->shouldReceive('isValid')->andReturn(false);
+
+        $controller = Blocks\Rest\AddController::new(
+            $this->userFactory,
+            $this->itemFactory,
+            User\ItemGroup::REACTION,
+            $this->addResponse
+        );
+        $result = $controller($this->request);
+
+        expect($result->get_error_code())->toContain('invalid_like_data')
+            ->and($result->get_error_message())->toContain('Invalid Like Data')
+            ->and($result->get_error_data()['status'])->toBe(400);
+    });
+
     /**
      * In this test the Request values do not matter much but the
      * `User::saveItem`.

@@ -126,7 +126,6 @@ class Repository
      */
     private function unserialize(array $rawItems, User\ItemGroup $group): User\Item
     {
-        // TODO We probably want to return a Null Item.
         $id = (int) ($rawItems[0][0] ?? null);
         $type = (string) ($rawItems[0][1] ?? null);
         return $this->itemFactory->create($id, $type, true, $group);

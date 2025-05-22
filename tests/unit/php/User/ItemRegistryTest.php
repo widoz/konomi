@@ -73,6 +73,13 @@ describe('set', function (): void {
         $this->registry->set($this->user, $item);
         expect($this->registry->has($this->user, $item))->toBeTrue();
     });
+
+    it('does not store item when key is empty due to user id being 0', function (): void {
+        $this->user->shouldReceive('id')->andReturn(0);
+        $item = Item::new(1, 'post', true);
+        $this->registry->set($this->user, $item);
+        expect($this->registry->has($this->user, $item))->toBeFalse();
+    });
 });
 
 describe('unset', function (): void {

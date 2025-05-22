@@ -10,7 +10,7 @@ class StorageKey
 {
     public static function new(string $base): StorageKey
     {
-        assert(!empty($base));
+        assert($base);
         return new self($base);
     }
 
