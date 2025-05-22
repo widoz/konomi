@@ -12,7 +12,7 @@ import type {
 	ResponseError,
 } from '../../Konomi/view/store';
 
-type Context = {
+export type Context = {
 	isActive: boolean;
 };
 
