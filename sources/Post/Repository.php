@@ -20,7 +20,7 @@ use Widoz\Wp\Konomi\User;
 class Repository
 {
     public static function new(
-        string $key,
+        StorageKey $key,
         Storage $storage,
         RawDataAssert $rawDataAsserter,
         User\ItemFactory $itemFactory,
@@ -30,7 +30,7 @@ class Repository
     }
 
     final private function __construct(
-        readonly private string $key,
+        readonly private StorageKey $key,
         readonly private Storage $storage,
         readonly private RawDataAssert $rawDataAsserter,
         readonly private User\ItemFactory $itemFactory
@@ -40,11 +40,11 @@ class Repository
     /**
      * @return array<UserId, User\Item>
      */
-    public function find(int $entityId): array
+    public function find(int $entityId, User\ItemGroup $group): array
     {
         $result = [];
-        foreach ($this->read($entityId) as $userId => $rawItems) {
-            $result[$userId] = $this->unserialize($rawItems);
+        foreach ($this->read($entityId, $group) as $userId => $rawItems) {
+            $result[$userId] = $this->unserialize($rawItems, $group);
         }
         return $result;
     }
@@ -55,12 +55,16 @@ class Repository
             return false;
         }
 
-        $data = iterator_to_array($this->read($item->id()));
+        $data = iterator_to_array($this->read($item->id(), $item->group()));
         $toStoreData = $this->toggleItem($data, $item, $user);
 
         do_action('konomi.post.collection.save', $item, $user, $this->key);
 
-        return $this->storage->write($item->id(), $this->key, $toStoreData);
+        return $this->storage->write(
+            $item->id(),
+            "{$this->key->for($item->group())}",
+            $toStoreData
+        );
     }
 
     /**
@@ -81,9 +85,9 @@ class Repository
     /**
      * @return GeneratorStoredData
      */
-    private function read(int $entityId): \Generator
+    private function read(int $entityId, User\ItemGroup $group): \Generator
     {
-        $storedData = $this->storage->read($entityId, $this->key);
+        $storedData = $this->storage->read($entityId, $this->key->for($group));
         yield from $this->rawDataAsserter->ensureDataStructure($storedData);
     }
 
@@ -120,10 +124,10 @@ class Repository
      * @param RawItems $rawItems
      * @return User\Item
      */
-    private function unserialize(array $rawItems): User\Item
+    private function unserialize(array $rawItems, User\ItemGroup $group): User\Item
     {
         $id = (int) ($rawItems[0][0] ?? null);
         $type = (string) ($rawItems[0][1] ?? null);
-        return $this->itemFactory->create($id, $type, true);
+        return $this->itemFactory->create($id, $type, true, $group);
     }
 }

@@ -33,13 +33,14 @@ class Module implements ServiceModule, ExecutableModule
             ),
             Storage::class => static fn () => Storage::new(),
             RawDataAssert::class => static fn () => RawDataAssert::new(),
+            StorageKey::class => static fn () => StorageKey::new('_konomi_items'),
             Repository::class => static fn (
                 ContainerInterface $container
             ) => Repository::new(
-                '_konomi_likes',
+                $container->get(StorageKey::class),
                 $container->get(Storage::class),
                 $container->get(RawDataAssert::class),
-                $container->get(User\LikeFactory::class)
+                $container->get(User\ItemFactory::class)
             ),
         ];
     }

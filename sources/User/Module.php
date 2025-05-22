@@ -36,15 +36,21 @@ class Module implements ServiceModule
                 $container->get(CurrentUser::class)
             ),
 
-            LikeFactory::class => static fn () => LikeFactory::new(),
-            ItemRegistry::class => static fn () => ItemRegistry::new(),
+            ItemFactory::class => static fn () => ItemFactory::new(),
+            ItemRegistryKey::class => static fn () => ItemRegistryKey::new(),
+            ItemRegistry::class => static fn (
+                ContainerInterface $container
+            ) => ItemRegistry::new(
+                $container->get(ItemRegistryKey::class)
+            ),
             RawDataAssert::class => static fn () => RawDataAssert::new(),
+            StorageKey::class => static fn () => StorageKey::new('_konomi_items'),
             Repository::class => static fn (
                 ContainerInterface $container
             ) => Repository::new(
-                '_likes',
+                $container->get(StorageKey::class),
                 $container->get(Storage::class),
-                $container->get(LikeFactory::class),
+                $container->get(ItemFactory::class),
                 $container->get(ItemRegistry::class),
                 $container->get(RawDataAssert::class)
             ),

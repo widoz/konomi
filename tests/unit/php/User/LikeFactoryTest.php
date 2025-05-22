@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Tests\Unit\User;
 
-use Widoz\Wp\Konomi\User\{
-    LikeFactory,
-    Item
-};
+use Widoz\Wp\Konomi\User\{ItemFactory, Item, ItemGroup};
 
 describe('LikeFactory', function (): void {
     it('should create a new Item instance', function (): void {
-        $item = LikeFactory::new()->create(1, 'type', true);
+        $item = ItemFactory::new()->create(1, 'type', true, ItemGroup::REACTION);
         expect($item)->toBeInstanceOf(Item::class)
             ->and($item->id())->toEqual(1)
             ->and($item->type())->toEqual('type')

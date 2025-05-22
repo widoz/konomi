@@ -1,19 +1,15 @@
 import { jest, describe, it, expect, beforeEach } from '@jest/globals';
-import { fromPartial } from '@total-typescript/shoehorn';
-import type { h } from 'preact';
-import { act } from 'preact/test-utils';
 
 import {
 	getContext,
-	getElement,
-	useLayoutEffect,
 	store,
 } from '@wordpress/interactivity';
 
 import { init } from '../../../../../../sources/Blocks/Like/view/store';
 import { addLike } from '../../../../../../sources/Blocks/Like/view/add-like-command';
-import * as popoverModule from '../../../../../../sources/Blocks/Like/view/popover';
-import { loginModalElement } from '../../../../../../sources/Blocks/Like/view/elements/login-modal-element';
+
+import type { Context as OuterContext } from '../../../../../../sources/Blocks/Konomi/view/store';
+import type { Context } from '../../../../../../sources/Blocks/Like/view/store';
 
 // Mock dependencies
 jest.mock( '@wordpress/interactivity', () => ( {
@@ -27,49 +23,28 @@ jest.mock(
 	'../../../../../../sources/Blocks/Like/view/add-like-command',
 	() => ( {
 		addLike: jest.fn(),
-	} )
-);
-
-jest.mock(
-	'../../../../../../sources/Blocks/Like/view/elements/login-modal-element',
-	() => ( {
-		loginModalElement: jest.fn(),
-	} )
+	} ),
 );
 
 describe( 'Interactivity Store', () => {
 	let mockNamespace: string;
 	let mockStore: {
-		state: Record< string, unknown >;
-		actions: Record< string, ( ...args: any[] ) => void >;
-		callbacks: Record< string, ( ...args: any[] ) => void >;
+		state: Record<string, unknown>;
+		actions: Record<string, ( ...args: any[] ) => void>;
 	};
-	let mockContext: {
-		id: number;
-		type: string;
-		isActive: boolean;
-		count: number;
-		isUserLoggedIn: boolean;
-		loginRequired: boolean;
-		error?: {
-			code: string;
-			message: string;
-		};
-	};
+	let mockContext: Context;
+	let outerMockContext: OuterContext;
 
 	beforeEach( () => {
 		jest.clearAllMocks();
 
-		// Mock renderMessage to return a Promise
-		jest.spyOn( popoverModule, 'renderMessage' ).mockImplementation( () =>
-			Promise.resolve()
-		);
-
 		mockContext = {
-			id: 1,
-			type: 'post',
 			isActive: false,
 			count: 5,
+		};
+		outerMockContext = {
+			id: 1,
+			type: 'post',
 			isUserLoggedIn: true,
 			loginRequired: false,
 			error: {
@@ -77,22 +52,28 @@ describe( 'Interactivity Store', () => {
 				message: '',
 			},
 		};
-		jest.mocked( getContext ).mockReturnValue( mockContext );
+		// @ts-ignore
+		jest.mocked( getContext ).mockImplementation( ( name?: string ) => {
+			switch ( name ) {
+				case 'konomi': return outerMockContext;
+				case 'konomiLike': return mockContext;
+			}
+		} );
 
-		mockStore = { state: {}, actions: {}, callbacks: {} };
+		mockStore = { state: {}, actions: {} };
 		jest.mocked( store ).mockImplementation(
 			( namespace: string, config: any ) => {
 				mockNamespace = namespace;
 				mockStore = config;
 				return { actions: config.actions };
-			}
+			},
 		);
 	} );
 
 	describe( 'store', () => {
 		it( 'should be initialized with the correct namespace', () => {
 			init();
-			expect( mockNamespace ).toEqual( 'konomi' );
+			expect( mockNamespace ).toEqual( 'konomiLike' );
 		} );
 	} );
 
@@ -126,15 +107,6 @@ describe( 'Interactivity Store', () => {
 			} );
 		} );
 
-		describe( 'closeLoginModal', () => {
-			it( 'should set loginRequired to false', () => {
-				init();
-				mockContext.loginRequired = true;
-				mockStore.actions.closeLoginModal();
-				expect( mockContext.loginRequired ).toBe( false );
-			} );
-		} );
-
 		describe( 'revertStatus', () => {
 			it( 'should revert isActive status from true to false and decrement count', () => {
 				init();
@@ -158,14 +130,14 @@ describe( 'Interactivity Store', () => {
 		describe( 'updateUserPreferences', () => {
 			it( 'should set loginRequired and revert status if user is not logged in', () => {
 				init();
-				mockContext.isUserLoggedIn = false;
+				outerMockContext.isUserLoggedIn = false;
 				const revertStatusSpy = jest.fn();
 				mockStore.actions.revertStatus = revertStatusSpy;
 
 				const generator = mockStore.actions.updateUserPreferences();
 				generator.next();
 
-				expect( mockContext.loginRequired ).toBe( true );
+				expect( outerMockContext.loginRequired ).toBe( true );
 				expect( revertStatusSpy ).toHaveBeenCalled();
 			} );
 
@@ -177,9 +149,9 @@ describe( 'Interactivity Store', () => {
 
 				expect( addLike ).toHaveBeenCalledWith( {
 					meta: {
-						_like: {
-							id: mockContext.id,
-							type: mockContext.type,
+						_reaction: {
+							id: outerMockContext.id,
+							type: outerMockContext.type,
 							isActive: mockContext.isActive,
 						},
 					},
@@ -188,7 +160,7 @@ describe( 'Interactivity Store', () => {
 
 			it( 'should handle errors by setting error context and reverting status', () => {
 				init();
-				mockContext.isUserLoggedIn = true;
+				outerMockContext.isUserLoggedIn = true;
 				const error = {
 					code: 'ERROR_CODE',
 					message: 'Error message',
@@ -199,203 +171,11 @@ describe( 'Interactivity Store', () => {
 				generator.next();
 				generator.throw( error );
 
-				expect( mockContext.error ).toEqual( {
+				expect( outerMockContext.error ).toEqual( {
 					code: error.code,
 					message: error.message,
 				} );
 			} );
 		} );
 	} );
-
-	describe( 'callbacks', () => {
-		describe( 'maybeRenderResponseError', () => {
-			it( 'should call useLayoutEffect with correct dependencies', () => {
-				init();
-				mockGetElementReturnValue( document.createElement( 'div' ) );
-				mockUseLayoutEffect();
-				mockStore.callbacks.maybeRenderResponseError();
-				expect( useLayoutEffect ).toHaveBeenCalledWith(
-					expect.any( Function ),
-					[ mockContext.error?.code, mockContext.error?.message ]
-				);
-			} );
-
-			it( 'should call renderMessage with the contextual element if context has error', async () => {
-				mockContext.error = {
-					code: 'ERROR_CODE',
-					message: 'Error message',
-				};
-				init();
-
-				const elementRef = document.createElement( 'div' );
-				mockGetElementReturnValue( elementRef );
-
-				const renderPromise = Promise.resolve();
-				jest.spyOn( popoverModule, 'renderMessage' ).mockReturnValue(
-					renderPromise
-				);
-
-				const layoutEffectCallback = mockUseLayoutEffect();
-				mockStore.callbacks.maybeRenderResponseError();
-
-				await renderPromise;
-
-				expect( popoverModule.renderMessage ).toHaveBeenCalledWith(
-					elementRef
-				);
-			} );
-
-			it( 'should not call renderMessage if context does not have error', async () => {
-				mockContext.error = {
-					code: '',
-					message: '',
-				};
-				init();
-
-				mockGetElementReturnValue( document.createElement( 'div' ) );
-
-				const renderPromise = Promise.resolve();
-				jest.spyOn( popoverModule, 'renderMessage' ).mockReturnValue(
-					renderPromise
-				);
-
-				const layoutEffectCallback = mockUseLayoutEffect();
-				mockStore.callbacks.maybeRenderResponseError();
-
-				await renderPromise;
-
-				expect( popoverModule.renderMessage ).not.toHaveBeenCalled();
-			} );
-
-			it( 'should not call renderMessage if element ref is not an HTMLElement', async () => {
-				mockContext.error = {
-					code: 'ERROR_CODE',
-					message: 'Error message',
-				};
-				init();
-
-				mockGetElementReturnValue( null );
-
-				const renderPromise = Promise.resolve();
-				jest.spyOn( popoverModule, 'renderMessage' ).mockReturnValue(
-					renderPromise
-				);
-
-				const layoutEffectCallback = mockUseLayoutEffect();
-				mockStore.callbacks.maybeRenderResponseError();
-
-				await renderPromise;
-
-				expect( popoverModule.renderMessage ).not.toHaveBeenCalled();
-			} );
-
-			it( 'should reset error context after renderMessage completes', async () => {
-				mockContext.error = {
-					code: 'ERROR_CODE',
-					message: 'Error message',
-				};
-				init();
-
-				const elementRef = document.createElement( 'div' );
-				mockGetElementReturnValue( elementRef );
-
-				const renderPromise = Promise.resolve();
-				jest.spyOn( popoverModule, 'renderMessage' ).mockReturnValue(
-					renderPromise
-				);
-
-				const layoutEffectCallback = mockUseLayoutEffect();
-				mockStore.callbacks.maybeRenderResponseError();
-
-				await renderPromise;
-
-				expect( mockContext.error ).toEqual( {
-					code: '',
-					message: '',
-				} );
-			} );
-		} );
-
-		describe( 'toggleLoginModal', () => {
-			it( 'should show modal when loginRequired is true', () => {
-				mockContext.loginRequired = true;
-				init();
-
-				const elementRef = document.createElement( 'div' );
-				mockGetElementReturnValue( elementRef );
-
-				const mockDialog = fromPartial< HTMLDialogElement >( {
-					showModal: jest.fn(),
-					close: jest.fn(),
-				} );
-				jest.mocked( loginModalElement ).mockImplementationOnce(
-					( element: any ) => {
-						if ( element !== elementRef ) {
-							throw new Error( 'Element ref mismatch' );
-						}
-						return mockDialog;
-					}
-				);
-
-				mockStore.callbacks.toggleLoginModal();
-
-				expect( mockDialog.showModal ).toHaveBeenCalled();
-				expect( mockDialog.close ).not.toHaveBeenCalled();
-			} );
-
-			it( 'should close modal when loginRequired is false', () => {
-				mockContext.loginRequired = false;
-				init();
-
-				const elementRef = document.createElement( 'div' );
-				mockGetElementReturnValue( elementRef );
-
-				const mockDialog = fromPartial< HTMLDialogElement >( {
-					showModal: jest.fn(),
-					close: jest.fn(),
-				} );
-				jest.mocked( loginModalElement ).mockImplementationOnce(
-					( element: any ) => {
-						if ( element !== elementRef ) {
-							throw new Error( 'Element ref mismatch' );
-						}
-						return mockDialog;
-					}
-				);
-
-				mockStore.callbacks.toggleLoginModal();
-
-				expect( mockDialog.close ).toHaveBeenCalled();
-				expect( mockDialog.showModal ).not.toHaveBeenCalled();
-			} );
-
-			it( 'should do nothing when element ref is not an HTMLElement', () => {
-				init();
-				mockGetElementReturnValue( null );
-				mockStore.callbacks.toggleLoginModal();
-				expect( loginModalElement ).not.toHaveBeenCalled();
-			} );
-		} );
-	} );
 } );
-
-type Element = {
-	ref: HTMLElement | null;
-	attributes: h.JSX.HTMLAttributes< EventTarget >;
-};
-function mockGetElementReturnValue( element: HTMLElement | null ): Element {
-	const returnValue = fromPartial< Element >( { ref: element } );
-	jest.mocked( getElement ).mockReturnValue( returnValue );
-	return returnValue;
-}
-
-type Callback = () => void;
-/**
- * Cannot use @testing-library/preact because of some issues with the modules.
- * @link https://github.com/testing-library/preact-testing-library/issues/70
- */
-function mockUseLayoutEffect(): void {
-	jest.mocked( useLayoutEffect ).mockImplementationOnce(
-		( callback: () => void ) => callback()
-	);
-}

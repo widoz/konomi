@@ -48,6 +48,10 @@ class BlockRegistrar
                 continue;
             }
 
+            $blockJson = $blockPath->getPathname() . '/block.json';
+            if (!file_exists($blockJson)) {
+                continue;
+            }
             register_block_type_from_metadata($blockPath->getPathname());
         }
     }
