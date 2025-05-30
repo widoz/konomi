@@ -4,6 +4,11 @@ parameters:
 		- sources
 	scanFiles:
 		- vendor/inpsyde/wp-stubs-versions/6.7.php
+		- tests/helpers/functional.php
+		- tests/helpers/functions.php
+		- tests/helpers/integration.php
+		- tests/helpers/mocks.php
+		- tests/helpers/wp.php
 	treatPhpDocTypesAsCertain: false
 includes:
 	- vendor/bnf/phpstan-psr-container/extension.neon
