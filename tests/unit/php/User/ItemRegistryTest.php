@@ -80,6 +80,13 @@ describe('set', function (): void {
         $this->registry->set($this->user, $item);
         expect($this->registry->has($this->user, $item))->toBeFalse();
     });
+
+    it('does not store invalid item', function (): void {
+        $this->user->shouldReceive('id')->andReturn(1);
+        $invalidItem = Item::null();
+        $this->registry->set($this->user, $invalidItem);
+        expect($this->registry->has($this->user, $invalidItem))->toBeFalse();
+    });
 });
 
 describe('unset', function (): void {

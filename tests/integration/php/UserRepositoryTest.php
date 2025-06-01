@@ -55,7 +55,7 @@ describe('User Repository', function (): void {
             2 => 'invalid',
             3 => [3, 'page', 'extra'],
             4 => ['not_int', 'post'],
-            5 => [5, 123], // type must be string
+            5 => [5, 123], // the type must be string
         ];
 
         $user = User\CurrentUser::new($this->repository);

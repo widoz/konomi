@@ -58,6 +58,10 @@ class ItemRegistry
     {
         $key = self::keyFor($user, $item->group());
 
+        if (!$item->isValid()) {
+            return;
+        }
+
         // Avoid storing items with an empty key string.
         if (!$key) {
             return;
@@ -69,7 +73,7 @@ class ItemRegistry
         $collection = $this->items["$key"];
         $collection[$item->id()] = $item;
 
-        $item->isValid() and $this->items["$key"] = $collection;
+        $this->items["$key"] = $collection;
     }
 
     public function unset(User $user, Item $item): void

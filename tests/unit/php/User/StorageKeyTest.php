@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Widoz\Wp\Konomi\Tests\Unit\User;
 
+use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\User\StorageKey;
 use Widoz\Wp\Konomi\User\ItemGroup;
 
@@ -48,7 +49,7 @@ describe('for', function (): void {
     it('throws an UnexpectedValueException when key is empty after sanitization', function (): void {
         $base = '!@#$%^&*()';
         $storageKey = StorageKey::new($base);
-        \Brain\Monkey\Functions\expect('preg_replace')->once()->andReturn('');
+        Functions\expect('preg_replace')->once()->andReturn('');
         expect(fn () => $storageKey->for(ItemGroup::REACTION))->toThrow(\UnexpectedValueException::class, 'Storage key cannot be empty after sanitization');
     });
 });
