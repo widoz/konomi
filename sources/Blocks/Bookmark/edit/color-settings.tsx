@@ -16,7 +16,6 @@ type ColorSetting = Readonly< {
 	onColorCleared: ( color: BookmarkEdit.Color ) => void;
 } >;
 
-// TODO How can I configure the PanelColorGradientSettings to only accept HEX colors?
 export function ColorSettings( props: BookmarkEdit.EditProps ): JSX.Element {
 	const { inactiveColor, activeColor } = props.attributes;
 

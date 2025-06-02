@@ -16,7 +16,6 @@ type ColorSetting = Readonly< {
 	onColorCleared: ( color: LikeEdit.Color ) => void;
 } >;
 
-// TODO How can I configure the PanelColorGradientSettings to only accept HEX colors?
 export function ColorSettings( props: LikeEdit.EditProps ): JSX.Element {
 	const { inactiveColor, activeColor } = props.attributes;
 

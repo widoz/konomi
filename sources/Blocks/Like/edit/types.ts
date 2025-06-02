@@ -4,7 +4,6 @@
 import type React from 'react';
 
 export namespace LikeEdit {
-	// TODO Change type to recognize HEX
 	export type Color = string | undefined;
 
 	export type Attributes = Readonly< {
@@ -17,7 +16,6 @@ export namespace LikeEdit {
 		setAttributes: ( newAttributes: Partial< Attributes > ) => void;
 	} >;
 
-	// TODO Rename to a --konomi-color--(inactive|active)
 	export interface CustomCSSProperties extends React.CSSProperties {
 		'--konomi-color--inactive': Attributes[ 'inactiveColor' ];
 		'--konomi-color--active': Attributes[ 'activeColor' ];
