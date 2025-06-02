@@ -23,7 +23,7 @@ class InstanceId
     public function current(): int
     {
         if ($this->instanceId === null) {
-            ++$this->instanceId;
+            $this->instanceId = 1;
         }
 
         return $this->instanceId;
@@ -31,6 +31,6 @@ class InstanceId
 
     public function reset(): void
     {
-        $this->instanceId = null;
+        ++$this->instanceId;
     }
 }
