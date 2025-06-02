@@ -19,7 +19,7 @@ jest.mock(
 describe( 'Popover Module', () => {
 	const MARKUP_WITH_ERROR_DATA = `
     <div data-wp-interactive="konomi">
-      <div class="konomi-like-response-message">Popover Message</div>
+      <div class="konomi-response-message">Popover Message</div>
       <button class="trigger-button" data-error="Test error message">Trigger</button>
     </div>
   `;

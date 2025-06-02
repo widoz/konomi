@@ -78,14 +78,14 @@ describe( 'Interactivity Store', () => {
 
 	describe( 'actions', () => {
 		describe( 'toggleStatus', () => {
-			it( 'should toggle isActive from false to true and increment count', () => {
+			it( 'should toggle isActive from false to true', () => {
 				init();
 				mockContext.isActive = false;
 				mockStore.actions.toggleStatus();
 				expect( mockContext.isActive ).toBe( true );
 			} );
 
-			it( 'should toggle isActive from true to false and decrement count', () => {
+			it( 'should toggle isActive from true to false', () => {
 				init();
 				mockContext.isActive = true;
 				mockStore.actions.toggleStatus();
@@ -103,14 +103,14 @@ describe( 'Interactivity Store', () => {
 		} );
 
 		describe( 'revertStatus', () => {
-			it( 'should revert isActive status from true to false and decrement count', () => {
+			it( 'should revert isActive status from true to false', () => {
 				init();
 				mockContext.isActive = true;
 				mockStore.actions.revertStatus();
 				expect( mockContext.isActive ).toBe( false );
 			} );
 
-			it( 'should revert isActive status from false to true and increment count', () => {
+			it( 'should revert isActive status from false to true', () => {
 				init();
 				mockContext.isActive = false;
 				mockStore.actions.revertStatus();

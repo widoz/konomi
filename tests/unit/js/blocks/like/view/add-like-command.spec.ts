@@ -14,7 +14,7 @@ describe( 'addLike', () => {
 	it( 'should call apiFetch with the correct parameters', async () => {
 		const mockPayload = {
 			meta: {
-				_like: {
+				_reaction: {
 					id: 123,
 					type: 'post',
 					isActive: true,
@@ -36,7 +36,7 @@ describe( 'addLike', () => {
 	it( 'should return a promise from apiFetch', async () => {
 		const mockPayload = {
 			meta: {
-				_like: {
+				_reaction: {
 					id: 456,
 					type: 'comment',
 					isActive: false,
@@ -55,7 +55,7 @@ describe( 'addLike', () => {
 	it( 'should propagate errors from apiFetch', async () => {
 		const mockPayload = {
 			meta: {
-				_like: {
+				_reaction: {
 					id: 789,
 					type: 'post',
 					isActive: true,

@@ -28,9 +28,9 @@ beforeEach(function (): void {
     $this->request = Mockery::mock(\WP_REST_Request::class);
     /** @var Mockery\MockInterface&Blocks\Rest\AddResponse $addResponse */
     $this->addResponse = Mockery::mock(Blocks\Rest\AddResponse::class, [
-        'successResponse' => new \WP_REST_Response(['success' => true, 'message' => 'Like saved'], 201),
-        'failedToSaveError' => new \WP_Error('failed_to_save_like', 'Failed to save like', ['status' => 500]),
-        'failedBecauseInvalidData' => new \WP_Error('invalid_like_data', 'Invalid Like Data', ['status' => 400]),
+        'successResponse' => new \WP_REST_Response(['success' => true, 'message' => 'Reaction saved'], 201),
+        'failedToSaveError' => new \WP_Error('failed_to_save_reaction', 'Failed to save reaction', ['status' => 500]),
+        'failedBecauseInvalidData' => new \WP_Error('invalid_reaction_data', 'Invalid Reaction Data', ['status' => 400]),
     ]);
 });
 
@@ -56,7 +56,7 @@ describe('__invoke', function (): void {
 
         expect($result->get_status())->toBe(201)
             ->and($result->get_data()['success'])->toBe(true)
-            ->and($result->get_data()['message'])->toContain('Like saved');
+            ->and($result->get_data()['message'])->toContain('Reaction saved');
     });
 
     /**
@@ -81,8 +81,8 @@ describe('__invoke', function (): void {
         );
         $result = $controller($this->request);
 
-        expect($result->get_error_code())->toContain('invalid_like_data')
-            ->and($result->get_error_message())->toContain('Invalid Like Data')
+        expect($result->get_error_code())->toContain('invalid_reaction_data')
+            ->and($result->get_error_message())->toContain('Invalid Reaction Data')
             ->and($result->get_error_data()['status'])->toBe(400);
     });
 
@@ -99,8 +99,8 @@ describe('__invoke', function (): void {
         );
         $result = $controller($this->request);
 
-        expect($result->get_error_code())->toContain('invalid_like_data')
-            ->and($result->get_error_message())->toContain('Invalid Like Data')
+        expect($result->get_error_code())->toContain('invalid_reaction_data')
+            ->and($result->get_error_message())->toContain('Invalid Reaction Data')
             ->and($result->get_error_data()['status'])->toBe(400);
     });
 
@@ -127,8 +127,8 @@ describe('__invoke', function (): void {
         );
         $result = $controller($this->request);
 
-        expect($result->get_error_code())->toContain('failed_to_save_like');
-        expect($result->get_error_message())->toContain('Failed to save like');
+        expect($result->get_error_code())->toContain('failed_to_save_reaction');
+        expect($result->get_error_message())->toContain('Failed to save reaction');
         expect($result->get_error_data()['status'])->toBe(500);
     });
 });

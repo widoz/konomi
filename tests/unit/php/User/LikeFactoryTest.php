@@ -6,7 +6,7 @@ namespace Widoz\Wp\Konomi\Tests\Unit\User;
 
 use Widoz\Wp\Konomi\User\{ItemFactory, Item, ItemGroup};
 
-describe('LikeFactory', function (): void {
+describe('ItemFactory', function (): void {
     it('should create a new Item instance', function (): void {
         $item = ItemFactory::new()->create(1, 'type', true, ItemGroup::REACTION);
         expect($item)->toBeInstanceOf(Item::class)

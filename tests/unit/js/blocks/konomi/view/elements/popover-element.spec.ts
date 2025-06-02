@@ -10,7 +10,7 @@ jest.mock( '../../../../../../../sources/Blocks/Konomi/view/utils', () => ( {
 describe( 'popoverElement', () => {
 	const VALID_POPOVER_MARKUP = `
     <div data-wp-interactive="konomi">
-      <div class="konomi-like-response-message">Popover Message</div>
+      <div class="konomi-response-message">Popover Message</div>
       <button class="trigger-button">Trigger</button>
     </div>
   `;

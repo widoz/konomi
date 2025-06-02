@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Blocks\Like\Rest;
+namespace Widoz\Wp\Konomi\Tests\Unit\Blocks\Rest;
 
 use Widoz\Wp\Konomi\Blocks;
 
