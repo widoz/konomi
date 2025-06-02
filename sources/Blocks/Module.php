@@ -98,7 +98,7 @@ class Module implements ServiceModule, ExecutableModule
             static function () use ($container) {
                 Rest\Route::post(
                     'konomi/v1',
-                    '/user-like',
+                    '/user-reaction',
                     $container->get(AddSchemaFactory::class)->create('React Rest Api Schema'),
                     $container->get(AddControllerFactory::class)->create(
                         User\ItemGroup::REACTION,

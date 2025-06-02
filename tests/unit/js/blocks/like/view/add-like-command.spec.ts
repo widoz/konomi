@@ -27,7 +27,7 @@ describe( 'addLike', () => {
 		await addLike( mockPayload );
 
 		expect( apiFetch ).toHaveBeenCalledWith( {
-			path: '/konomi/v1/user-like/',
+			path: '/konomi/v1/user-reaction/',
 			method: 'POST',
 			data: mockPayload,
 		} );

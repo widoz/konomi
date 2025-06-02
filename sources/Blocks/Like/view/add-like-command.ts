@@ -12,7 +12,7 @@ type Payload = Readonly< {
 
 export function addLike( payload: Payload ): Promise< void > {
 	return apiFetch( {
-		path: '/konomi/v1/user-like/',
+		path: '/konomi/v1/user-reaction/',
 		method: 'POST',
 		data: payload,
 	} );
