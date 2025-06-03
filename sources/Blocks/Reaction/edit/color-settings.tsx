@@ -7,16 +7,16 @@ import {
 import { __ } from '@wordpress/i18n';
 import type { JSX } from 'react';
 import React from 'react';
-import type { LikeEdit } from './types';
+import type { ReactionEdit } from './types';
 
 type ColorSetting = Readonly< {
 	label: string;
-	colorValue: LikeEdit.Color;
-	onColorChange: ( color: LikeEdit.Color ) => void;
-	onColorCleared: ( color: LikeEdit.Color ) => void;
+	colorValue: ReactionEdit.Color;
+	onColorChange: ( color: ReactionEdit.Color ) => void;
+	onColorCleared: ( color: ReactionEdit.Color ) => void;
 } >;
 
-export function ColorSettings( props: LikeEdit.EditProps ): JSX.Element {
+export function ColorSettings( props: ReactionEdit.EditProps ): JSX.Element {
 	const { inactiveColor, activeColor } = props.attributes;
 
 	const items = [
@@ -41,13 +41,15 @@ export function ColorSettings( props: LikeEdit.EditProps ): JSX.Element {
 
 function createColorSetting(
 	label: string,
-	attribute: Readonly< [ 'inactiveColor' | 'activeColor', LikeEdit.Color ] >,
-	onChangeColor: LikeEdit.EditProps[ 'setAttributes' ]
+	attribute: Readonly<
+		[ 'inactiveColor' | 'activeColor', ReactionEdit.Color ]
+	>,
+	onChangeColor: ReactionEdit.EditProps[ 'setAttributes' ]
 ): ColorSetting {
 	return {
 		label,
 		colorValue: attribute[ 1 ],
-		onColorChange: ( color: LikeEdit.Color ): void => {
+		onColorChange: ( color: ReactionEdit.Color ): void => {
 			onChangeColor( { [ attribute[ 0 ] ]: color } );
 		},
 		onColorCleared: (): void => {

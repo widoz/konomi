@@ -5,11 +5,11 @@ import {
 	store,
 } from '@wordpress/interactivity';
 
-import { init } from '../../../../../../sources/Blocks/Like/view/store';
-import { addLike } from '../../../../../../sources/Blocks/Like/view/add-like-command';
+import { init } from '../../../../../../sources/Blocks/Reaction/view/store';
+import { addReaction } from '../../../../../../sources/Blocks/Reaction/view/add-reaction-command';
 
 import type { Context as OuterContext } from '../../../../../../sources/Blocks/Konomi/view/store';
-import type { Context } from '../../../../../../sources/Blocks/Like/view/store';
+import type { Context } from '../../../../../../sources/Blocks/Reaction/view/store';
 
 // Mock dependencies
 jest.mock( '@wordpress/interactivity', () => ( {
@@ -20,9 +20,9 @@ jest.mock( '@wordpress/interactivity', () => ( {
 } ) );
 
 jest.mock(
-	'../../../../../../sources/Blocks/Like/view/add-like-command',
+	'../../../../../../sources/Blocks/Reaction/view/add-reaction-command',
 	() => ( {
-		addLike: jest.fn(),
+		addReaction: jest.fn(),
 	} ),
 );
 
@@ -56,7 +56,7 @@ describe( 'Interactivity Store', () => {
 		jest.mocked( getContext ).mockImplementation( ( name?: string ) => {
 			switch ( name ) {
 				case 'konomi': return outerMockContext;
-				case 'konomiLike': return mockContext;
+				case 'konomiReaction': return mockContext;
 			}
 		} );
 
@@ -73,7 +73,7 @@ describe( 'Interactivity Store', () => {
 	describe( 'store', () => {
 		it( 'should be initialized with the correct namespace', () => {
 			init();
-			expect( mockNamespace ).toEqual( 'konomiLike' );
+			expect( mockNamespace ).toEqual( 'konomiReaction' );
 		} );
 	} );
 
@@ -141,13 +141,13 @@ describe( 'Interactivity Store', () => {
 				expect( revertStatusSpy ).toHaveBeenCalled();
 			} );
 
-			it( 'should call addLike with correct parameters if user is logged in', async () => {
+			it( 'should call addReaction with correct parameters if user is logged in', async () => {
 				init();
 
 				const generator = mockStore.actions.updateUserPreferences();
 				await generator.next();
 
-				expect( addLike ).toHaveBeenCalledWith( {
+				expect( addReaction ).toHaveBeenCalledWith( {
 					meta: {
 						_reaction: {
 							id: outerMockContext.id,

@@ -6,6 +6,6 @@ import { registerBlockType } from '@wordpress/blocks';
 
 import { Edit } from './edit';
 
-registerBlockType( 'konomi/like', {
+registerBlockType( 'konomi/reaction', {
 	edit: Edit,
 } );

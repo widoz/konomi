@@ -11,7 +11,7 @@ function includeValidPostUserLikes(): array
 
 function includeValidUsersLikes(): array
 {
-    return include stubsDirectory() . '/php/valid-users-likes.php';
+    return include stubsDirectory() . '/php/valid-users-reactions.php';
 }
 
 /**

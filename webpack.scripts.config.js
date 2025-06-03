@@ -136,31 +136,31 @@ module.exports = [
 	},
 
 	/*
-	 * The Like block build
+	 * The Reaction block build
 	 */
 	{
 		...configuration,
 		entry: {
-			'konomi-like-block': './sources/Blocks/Like/index.ts',
+			'konomi-reaction-block': './sources/Blocks/Reaction/index.ts',
 		},
 		output: {
 			filename: '[name].js',
-			path: path.resolve('./sources/Blocks/Like/dist/js'),
+			path: path.resolve('./sources/Blocks/Reaction/dist/js'),
 			clean: true,
 		},
 	},
 	{
 		...configuration,
 		entry: {
-			'konomi-like-block': './sources/Blocks/Like/view/style.scss',
+			'konomi-reaction-block': './sources/Blocks/Reaction/view/style.scss',
 		},
 		output: {
-			path: path.resolve('./sources/Blocks/Like/dist/css'),
+			path: path.resolve('./sources/Blocks/Reaction/dist/css'),
 			clean: true,
 		},
 		plugins: [
 			...configuration.plugins.filter(plugin => plugin.constructor.name !== 'CleanWebpackPlugin'),
-			cleanPluginFor('like'),
+			cleanPluginFor('reaction'),
 		],
 	},
 

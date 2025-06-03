@@ -8,7 +8,7 @@ use Brain\Monkey\Functions;
 use Widoz\Wp\Konomi\Blocks;
 use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
-use Widoz\Wp\Konomi\Blocks\Like\Context;
+use Widoz\Wp\Konomi\Blocks\Reaction\Context;
 
 describe('toArray', function (): void {
     it('ensure valid serialization', function (): void {
@@ -26,11 +26,11 @@ describe('toArray', function (): void {
 
         Functions\expect('get_the_ID')->andReturn(10);
 
-        $likeContext = Context::new($userFactory, $post, $instanceId);
-        $likeContextAsArray = $likeContext->toArray();
+        $reactionContext = Context::new($userFactory, $post, $instanceId);
+        $reactionContextAsArray = $reactionContext->toArray();
 
-        expect($likeContext->instanceId())->toEqual($instanceId)
-            ->and($likeContextAsArray['count'])->toEqual(1)
-            ->and($likeContextAsArray['isActive'])->toEqual(true);
+        expect($reactionContext->instanceId())->toEqual($instanceId)
+            ->and($reactionContextAsArray['count'])->toEqual(1)
+            ->and($reactionContextAsArray['isActive'])->toEqual(true);
     });
 });

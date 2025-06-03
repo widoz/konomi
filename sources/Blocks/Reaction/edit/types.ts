@@ -3,7 +3,7 @@
  */
 import type React from 'react';
 
-export namespace LikeEdit {
+export namespace ReactionEdit {
 	export type Color = string | undefined;
 
 	export type Attributes = Readonly< {

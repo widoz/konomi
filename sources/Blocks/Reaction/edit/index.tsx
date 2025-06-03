@@ -7,11 +7,11 @@ import React from 'react';
 /**
  * Internal dependencies
  */
-import type { LikeEdit } from './types';
+import type { ReactionEdit } from './types';
 import { BlockComponent } from './block-component';
 import { InspectorControls } from './inspector-controls';
 
-export function Edit( props: Readonly< LikeEdit.EditProps > ): JSX.Element {
+export function Edit( props: Readonly< ReactionEdit.EditProps > ): JSX.Element {
 	return (
 		<>
 			<BlockComponent { ...props } />

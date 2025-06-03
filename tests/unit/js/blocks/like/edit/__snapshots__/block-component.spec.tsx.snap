@@ -3,7 +3,7 @@
 exports[`BlockComponent should match snapshot 1`] = `
 <div>
   <div
-    class="konomi-like"
+    class="konomi-reaction"
     style="--konomi-color--inactive: #cccccc; --konomi-color--active: #ff0000;"
   >
     <button

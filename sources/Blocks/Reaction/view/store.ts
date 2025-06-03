@@ -6,7 +6,7 @@ import { getContext, store } from '@wordpress/interactivity';
 /**
  * Internal dependencies
  */
-import { addLike } from './add-like-command';
+import { addReaction } from './add-reaction-command';
 import type {
 	Context as OuterContext,
 	ResponseError,
@@ -19,12 +19,12 @@ export type Context = {
 
 // eslint-disable-next-line max-lines-per-function
 export function init(): void {
-	const { actions } = store( 'konomiLike', {
+	const { actions } = store( 'konomiReaction', {
 		state: {},
 
 		actions: {
 			toggleStatus: (): void => {
-				const context = getContext< Context >( 'konomiLike' );
+				const context = getContext< Context >( 'konomiReaction' );
 
 				context.isActive = ! context.isActive;
 				context.count = context.isActive
@@ -45,13 +45,14 @@ export function init(): void {
 				}
 
 				try {
-					const likeContext = getContext< Context >( 'konomiLike' );
-					yield addLike( {
+					const reactionContext =
+						getContext< Context >( 'konomiReaction' );
+					yield addReaction( {
 						meta: {
 							_reaction: {
 								id: outerContext.id,
 								type: outerContext.type,
-								isActive: likeContext.isActive,
+								isActive: reactionContext.isActive,
 							},
 						},
 					} );
@@ -66,7 +67,7 @@ export function init(): void {
 			},
 
 			revertStatus: (): void => {
-				const context = getContext< Context >( 'konomiLike' );
+				const context = getContext< Context >( 'konomiReaction' );
 				context.count = context.isActive
 					? context.count - 1
 					: context.count + 1;

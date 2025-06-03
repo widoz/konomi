@@ -20,9 +20,9 @@ beforeEach(function (): void {
     $this->userFactory = Mockery::mock(User\UserFactory::class, [
         'create' => $this->user,
     ]);
-    /** @var Mockery\MockInterface&User\ItemFactory $likeFactory */
+    /** @var Mockery\MockInterface&User\ItemFactory $itemFactory */
     $this->itemFactory = Mockery::mock(User\ItemFactory::class);
-    /** @var Mockery\MockInterface&User\Item $like */
+    /** @var Mockery\MockInterface&User\Item $item */
     $this->item = Mockery::mock(User\Item::class);
     /** @var Mockery\MockInterface&\WP_REST_Request $request */
     $this->request = Mockery::mock(\WP_REST_Request::class);

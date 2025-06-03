@@ -12,7 +12,7 @@
 		"active": {
 			"type": "array",
 			"default": [
-				"like",
+				"reaction",
 				"bookmark"
 			]
 		}

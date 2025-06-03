@@ -14,20 +14,20 @@ import { useBlockProps } from '@wordpress/block-editor';
 /**
  * Internal dependencies
  */
-import type { LikeEdit } from './types';
+import type { ReactionEdit } from './types';
 
 export function BlockComponent(
-	props: Readonly< LikeEdit.EditProps >
+	props: Readonly< ReactionEdit.EditProps >
 ): JSX.Element {
 	const { inactiveColor, activeColor } = props.attributes;
 
-	const style: LikeEdit.CustomCSSProperties = {
+	const style: ReactionEdit.CustomCSSProperties = {
 		'--konomi-color--inactive': inactiveColor,
 		'--konomi-color--active': activeColor,
 	};
 
 	return (
-		<div className="konomi-like" style={ style }>
+		<div className="konomi-reaction" style={ style }>
 			<button { ...useBlockProps() }>
 				<SvgHeart />
 				<span className="konomi-count">10</span>

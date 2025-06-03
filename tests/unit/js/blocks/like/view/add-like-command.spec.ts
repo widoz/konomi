@@ -1,12 +1,12 @@
 import { describe, beforeEach, jest, it, expect } from '@jest/globals';
 import { apiFetch } from '@konomi/api-fetch';
-import { addLike } from '../../../../../../sources/Blocks/Like/view/add-like-command';
+import { addReaction } from '../../../../../../sources/Blocks/Reaction/view/add-reaction-command';
 
 jest.mock( '@konomi/api-fetch', () => ( {
 	apiFetch: jest.fn(),
 } ) );
 
-describe( 'addLike', () => {
+describe( 'addReaction', () => {
 	beforeEach( () => {
 		jest.clearAllMocks();
 	} );
@@ -24,7 +24,7 @@ describe( 'addLike', () => {
 
 		jest.mocked( apiFetch ).mockResolvedValue( undefined );
 
-		await addLike( mockPayload );
+		await addReaction( mockPayload );
 
 		expect( apiFetch ).toHaveBeenCalledWith( {
 			path: '/konomi/v1/user-reaction/',
@@ -46,7 +46,7 @@ describe( 'addLike', () => {
 
 		jest.mocked( apiFetch ).mockResolvedValue( 'success' );
 
-		const result = addLike( mockPayload );
+		const result = addReaction( mockPayload );
 
 		await expect( result ).resolves.toBe( 'success' );
 		expect( apiFetch ).toHaveBeenCalled();
@@ -66,7 +66,7 @@ describe( 'addLike', () => {
 		const mockError = new Error( 'API error' );
 		jest.mocked( apiFetch ).mockRejectedValue( mockError );
 
-		await expect( addLike( mockPayload ) ).rejects.toThrow( 'API error' );
+		await expect( addReaction( mockPayload ) ).rejects.toThrow( 'API error' );
 		expect( apiFetch ).toHaveBeenCalled();
 	} );
 } );

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Like;
+namespace Widoz\Wp\Konomi\Blocks\Reaction;
 
 use Widoz\Wp\Konomi\Blocks;
 
@@ -24,8 +24,8 @@ $style = (string) Blocks\style()->add(
 ?>
 
 <div
-    data-wp-interactive="konomiLike"
-    class="konomi-like"
+    data-wp-interactive="konomiReaction"
+    class="konomi-reaction"
     style="<?= esc_attr($style) ?>"
     <?php
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

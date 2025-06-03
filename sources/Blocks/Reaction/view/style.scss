@@ -7,7 +7,7 @@
 	cursor: pointer;
 }
 
-.konomi-like {
+.konomi-reaction {
 	--konomi-color--crimson: #dc143cff;
 	--konomi-color--gray: #696969ff;
 	--konomi-color--white: #fff;
@@ -24,7 +24,7 @@
 	margin: 0;
 	padding: 0;
 
-	.wp-block-konomi-like {
+	.wp-block-konomi-reaction {
 
 		@include reset-button-style();
 		align-items: center;

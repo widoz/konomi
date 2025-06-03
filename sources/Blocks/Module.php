@@ -69,11 +69,11 @@ class Module implements ServiceModule, ExecutableModule
             ),
 
             /*
-             * Like
+             * Reaction
              */
-            Like\Context::class => static fn (
+            Reaction\Context::class => static fn (
                 ContainerInterface $container
-            ) => Like\Context::new(
+            ) => Reaction\Context::new(
                 $container->get(User\UserFactory::class),
                 $container->get(Post\Post::class),
                 $container->get(InstanceId::class)

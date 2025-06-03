@@ -50,7 +50,7 @@ return array(
 			'active' => array(
 				'type' => 'array',
 				'default' => array(
-					'like',
+					'reaction',
 					'bookmark'
 				)
 			)
@@ -71,15 +71,15 @@ return array(
 			'core/post-title' => 'after'
 		)
 	),
-	'Like' => array(
+	'Reaction' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
-		'name' => 'konomi/like',
+		'name' => 'konomi/reaction',
 		'version' => '1.0.0',
-		'title' => 'Like',
+		'title' => 'Reaction',
 		'category' => 'design',
 		'icon' => 'smiley',
-		'description' => 'Like',
+		'description' => 'Reaction e.g. Like',
 		'parent' => array(
 			'konomi/konomi'
 		),
@@ -99,9 +99,9 @@ return array(
 			'interactivity' => true
 		),
 		'textdomain' => 'konomi',
-		'editorScript' => 'file:./dist/js/konomi-like-block.js',
-		'viewScriptModule' => 'file:./build-module/konomi-like-block-view.js',
-		'style' => 'file:./dist/css/style-konomi-like-block.css',
+		'editorScript' => 'file:./dist/js/konomi-reaction-block.js',
+		'viewScriptModule' => 'file:./build-module/konomi-reaction-block-view.js',
+		'style' => 'file:./dist/css/style-konomi-reaction-block.css',
 		'render' => 'file:./render.php'
 	)
 );

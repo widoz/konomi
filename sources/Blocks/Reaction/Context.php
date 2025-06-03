@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Like;
+namespace Widoz\Wp\Konomi\Blocks\Reaction;
 
 use Widoz\Wp\Konomi\Post;
 use Widoz\Wp\Konomi\User;
@@ -40,11 +40,11 @@ class Context implements Blocks\Context
      */
     public function toArray(): array
     {
-        $like = $this->like();
+        $reaction = $this->reaction();
 
         return [
             'count' => $this->count(),
-            'isActive' => $like->isActive(),
+            'isActive' => $reaction->isActive(),
         ];
     }
 
@@ -58,7 +58,7 @@ class Context implements Blocks\Context
         return $this->post->countForPost($this->postId(), User\ItemGroup::REACTION);
     }
 
-    private function like(): User\Item
+    private function reaction(): User\Item
     {
         return $this->user($this->userFactory)->findItem($this->postId(), User\ItemGroup::REACTION);
     }

@@ -29,7 +29,7 @@ export function Edit( props: KonomiEdit.EditProps ): JSX.Element {
 					},
 				},
 				[
-					[ 'konomi/like', {} ],
+					[ 'konomi/reaction', {} ],
 					[ 'konomi/bookmark', {} ],
 				],
 			],

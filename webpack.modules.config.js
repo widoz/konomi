@@ -103,17 +103,17 @@ module.exports = [
 	},
 
 	/*
-	 * Like Block Module
+	 * Reaction Block Module
 	 */
 	{
 		...configuration,
 		entry: {
-			'konomi-like-block-view': './sources/Blocks/Like/view/index.ts',
+			'konomi-reaction-block-view': './sources/Blocks/Reaction/view/index.ts',
 		},
 		output: {
 			...configuration.output,
 			filename: '[name].js',
-			path: path.resolve('./sources/Blocks/Like/build-module'),
+			path: path.resolve('./sources/Blocks/Reaction/build-module'),
 			clean: true,
 		},
 	},
