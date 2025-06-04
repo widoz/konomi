@@ -15,7 +15,7 @@ describe('toArray', function (): void {
 
         $user = \Mockery::mock(User\User::class, [
             'findItem' => \Mockery::mock(User\Item::class, [
-                'isActive' => $expected
+                'isActive' => $expected,
             ]),
         ]);
         $userFactory = \Mockery::mock(User\UserFactory::class, [
