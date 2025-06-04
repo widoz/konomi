@@ -24,7 +24,9 @@ class ItemRegistryKey
         $groupValue = $group->value;
 
         if (!$userId || !$groupValue) {
-            return '';
+            throw new \UnexpectedValueException(
+                'Item Registry Key cannot be generated with empty user ID or group value'
+            );
         }
 
         return (string) preg_replace('/[^a-z0-9.]/', '', $userId . '.' . $groupValue);

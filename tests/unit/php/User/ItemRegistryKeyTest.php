@@ -19,12 +19,14 @@ describe('ItemRegistryKey', function (): void {
 });
 
 describe('for', function (): void {
-    it('returns empty string when user id is falsy', function (): void {
-        $user = Mockery::mock(User::class);
-        $user->shouldReceive('id')->andReturn(0);
-        $key = ItemRegistryKey::new();
-        expect($key->for($user, ItemGroup::REACTION))->toBe('');
-    });
+    it(
+        'throw error when cannot generate the key because of user or group are missing',
+        function (): void {
+            $user = Mockery::mock(User::class);
+            $user->shouldReceive('id')->andReturn(0);
+            ItemRegistryKey::new()->for($user, ItemGroup::REACTION);
+        }
+    )->expectException(\UnexpectedValueException::class);
 
     it('returns a string combining user id and group value', function (): void {
         $user = Mockery::mock(User::class);

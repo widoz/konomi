@@ -28,7 +28,7 @@ class ItemRegistry
     public function hasGroup(User $user, ItemGroup $group): bool
     {
         $key = self::keyFor($user, $group);
-        return isset($this->items["$key"]);
+        return isset($this->items[$key]);
     }
 
     public function has(User $user, Item $item): bool
@@ -39,7 +39,7 @@ class ItemRegistry
             return false;
         }
 
-        return isset($this->items["$key"][$item->id()]);
+        return isset($this->items[$key][$item->id()]);
     }
 
     public function get(User $user, int $id, ItemGroup $group): Item
@@ -51,7 +51,7 @@ class ItemRegistry
             return $nullItem;
         }
 
-        return $this->items["$key"][$id] ?? $nullItem;
+        return $this->items[$key][$id] ?? $nullItem;
     }
 
     public function set(User $user, Item $item): void
@@ -67,13 +67,13 @@ class ItemRegistry
             return;
         }
         if (!$this->hasGroup($user, $item->group())) {
-            $this->items["$key"] = [];
+            $this->items[$key] = [];
         }
 
-        $collection = $this->items["$key"];
+        $collection = $this->items[$key];
         $collection[$item->id()] = $item;
 
-        $this->items["$key"] = $collection;
+        $this->items[$key] = $collection;
     }
 
     public function unset(User $user, Item $item): void
@@ -83,9 +83,9 @@ class ItemRegistry
         }
 
         $key = self::keyFor($user, $item->group());
-        $collection = $this->items["$key"];
+        $collection = $this->items[$key];
         unset($collection[$item->id()]);
-        $this->items["$key"] = $collection;
+        $this->items[$key] = $collection;
     }
 
     /**
@@ -95,12 +95,16 @@ class ItemRegistry
     {
         $key = self::keyFor($user, $group);
         return $this->hasGroup($user, $group)
-            ? $this->items["$key"]
+            ? $this->items[$key]
             : [];
     }
 
     private function keyFor(User $user, ItemGroup $group): string
     {
-        return $this->itemRegistryKey->for($user, $group);
+        try {
+            return $this->itemRegistryKey->for($user, $group);
+        } catch (\Throwable) {
+            return '';
+        }
     }
 }
