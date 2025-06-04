@@ -23,9 +23,9 @@ class ItemRegistryKey
         $userId = $user->id();
         $groupValue = $group->value;
 
-        if (!$userId || !$groupValue) {
+        if (!$userId) {
             throw new \UnexpectedValueException(
-                'Item Registry Key cannot be generated with empty user ID or group value'
+                'Item Registry Key cannot be generated with empty user ID value'
             );
         }
 

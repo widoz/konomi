@@ -25,7 +25,7 @@ $context->instanceId()->reset();
     echo wp_interactivity_data_wp_context($context->toArray()) ?>
 >
     <?=
-     // TODO Double check if it's possible to restrict it somehow.
+    // TODO Double check if it's possible to restrict it somehow.
      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     $content ?>
 

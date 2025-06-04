@@ -20,7 +20,7 @@ describe('ItemRegistryKey', function (): void {
 
 describe('for', function (): void {
     it(
-        'throw error when cannot generate the key because of user or group are missing',
+        'throw error when cannot generate the key because of user is missing',
         function (): void {
             $user = Mockery::mock(User::class);
             $user->shouldReceive('id')->andReturn(0);
