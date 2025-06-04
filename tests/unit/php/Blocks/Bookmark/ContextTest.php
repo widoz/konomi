@@ -11,9 +11,12 @@ use Widoz\Wp\Konomi\Blocks\Bookmark\Context;
 
 describe('toArray', function (): void {
     it('ensure valid serialization', function (): void {
+        $expected = rand(0, 100) % 2 ? true : false;
+
         $user = \Mockery::mock(User\User::class, [
-            'isLoggedIn' => true,
-            'findItem' => \Mockery::mock(User\Item::class, ['isActive' => true]),
+            'findItem' => \Mockery::mock(User\Item::class, [
+                'isActive' => $expected
+            ]),
         ]);
         $userFactory = \Mockery::mock(User\UserFactory::class, [
             'create' => $user,
@@ -26,6 +29,6 @@ describe('toArray', function (): void {
         $bookmarkContextAsArray = $bookmarkContext->toArray();
 
         expect($bookmarkContext->instanceId())->toEqual($instanceId)
-            ->and($bookmarkContextAsArray['isActive'])->toEqual(true);
+            ->and($bookmarkContextAsArray['isActive'])->toEqual($expected);
     });
 });
