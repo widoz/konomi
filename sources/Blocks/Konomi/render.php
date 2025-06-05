@@ -25,9 +25,52 @@ $context->instanceId()->reset();
     echo wp_interactivity_data_wp_context($context->toArray()) ?>
 >
     <?=
-    // TODO Double check if it's possible to restrict it somehow.
-     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    $content ?>
+    wp_kses($content,  [
+        'div' => [
+            'class' => true,
+            'data-wp-interactive' => true,
+            'data-wp-context' => true,
+            'style' => true,
+        ],
+        'button' => [
+            'class' => true,
+            'data-wp-class--is-active' => true,
+            'data-wp-on-async--click' => true,
+            'data-wp-run--maybe-show-login-modal' => true,
+            'style' => true,
+            'type' => true,
+        ],
+        'svg' => [
+            'width' => true,
+            'height' => true,
+            'fill' => true,
+            'class' => true,
+            'version' => true,
+            'xmlns' => true,
+            'xmlns:svg' => true,
+        ],
+        'path' => [
+            'd' => true,
+        ],
+        'span' => [
+            'class' => true,
+            'data-wp-text' => true,
+            'data-wp-run--maybe-render-response-error' => true,
+            'popover' => true,
+            'style' => true,
+        ],
+        'dialog' => [
+            'class' => true,
+        ],
+        'h2' => [],
+        'p' => [],
+        'a' => [
+            'href' => true,
+            'class' => true,
+            'target' => true,
+            'rel' => true,
+        ],
+    ]); ?>
 
     <?=
     /*
