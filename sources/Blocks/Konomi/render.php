@@ -25,7 +25,7 @@ $context->instanceId()->reset();
     echo wp_interactivity_data_wp_context($context->toArray()) ?>
 >
     <?=
-    wp_kses($content,  [
+    wp_kses($content, [
         'div' => [
             'class' => true,
             'data-wp-interactive' => true,
