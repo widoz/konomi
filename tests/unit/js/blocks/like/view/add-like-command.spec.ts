@@ -1,12 +1,12 @@
 import { describe, beforeEach, jest, it, expect } from '@jest/globals';
 import { apiFetch } from '@konomi/api-fetch';
-import { addLike } from '../../../../../../sources/Blocks/Like/view/add-like-command';
+import { addReaction } from '../../../../../../sources/Blocks/Reaction/view/add-reaction-command';
 
 jest.mock( '@konomi/api-fetch', () => ( {
 	apiFetch: jest.fn(),
 } ) );
 
-describe( 'addLike', () => {
+describe( 'addReaction', () => {
 	beforeEach( () => {
 		jest.clearAllMocks();
 	} );
@@ -14,7 +14,7 @@ describe( 'addLike', () => {
 	it( 'should call apiFetch with the correct parameters', async () => {
 		const mockPayload = {
 			meta: {
-				_like: {
+				_reaction: {
 					id: 123,
 					type: 'post',
 					isActive: true,
@@ -24,10 +24,10 @@ describe( 'addLike', () => {
 
 		jest.mocked( apiFetch ).mockResolvedValue( undefined );
 
-		await addLike( mockPayload );
+		await addReaction( mockPayload );
 
 		expect( apiFetch ).toHaveBeenCalledWith( {
-			path: '/konomi/v1/user-like/',
+			path: '/konomi/v1/user-reaction/',
 			method: 'POST',
 			data: mockPayload,
 		} );
@@ -36,7 +36,7 @@ describe( 'addLike', () => {
 	it( 'should return a promise from apiFetch', async () => {
 		const mockPayload = {
 			meta: {
-				_like: {
+				_reaction: {
 					id: 456,
 					type: 'comment',
 					isActive: false,
@@ -46,7 +46,7 @@ describe( 'addLike', () => {
 
 		jest.mocked( apiFetch ).mockResolvedValue( 'success' );
 
-		const result = addLike( mockPayload );
+		const result = addReaction( mockPayload );
 
 		await expect( result ).resolves.toBe( 'success' );
 		expect( apiFetch ).toHaveBeenCalled();
@@ -55,7 +55,7 @@ describe( 'addLike', () => {
 	it( 'should propagate errors from apiFetch', async () => {
 		const mockPayload = {
 			meta: {
-				_like: {
+				_reaction: {
 					id: 789,
 					type: 'post',
 					isActive: true,
@@ -66,7 +66,7 @@ describe( 'addLike', () => {
 		const mockError = new Error( 'API error' );
 		jest.mocked( apiFetch ).mockRejectedValue( mockError );
 
-		await expect( addLike( mockPayload ) ).rejects.toThrow( 'API error' );
+		await expect( addReaction( mockPayload ) ).rejects.toThrow( 'API error' );
 		expect( apiFetch ).toHaveBeenCalled();
 	} );
 } );

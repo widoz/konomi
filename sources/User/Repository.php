@@ -15,7 +15,7 @@ namespace Widoz\Wp\Konomi\User;
 class Repository
 {
     public static function new(
-        string $key,
+        StorageKey $key,
         Storage $storage,
         ItemFactory $itemFactory,
         ItemRegistry $registry,
@@ -26,7 +26,7 @@ class Repository
     }
 
     final private function __construct(
-        readonly private string $key,
+        readonly private StorageKey $storageKey,
         readonly private Storage $storage,
         readonly private ItemFactory $itemFactory,
         readonly private ItemRegistry $registry,
@@ -34,12 +34,12 @@ class Repository
     ) {
     }
 
-    public function find(User $user, int $id): Item
+    public function find(User $user, int $id, ItemGroup $group): Item
     {
-        $this->loadItems($user);
-        $item = $this->registry->get($user, $id);
+        $this->loadItems($user, $group);
+        $item = $this->registry->get($user, $id, $group);
 
-        do_action('konomi.user.repository.find', $item, $user, $this->key, $id);
+        do_action('konomi.user.repository.find', $item, $user, $this->storageKey, $id);
 
         return $item;
     }
@@ -50,12 +50,16 @@ class Repository
             return false;
         }
 
-        $this->loadItems($user);
+        $this->loadItems($user, $item->group());
         $dataToStore = $this->prepareDataToStore($user, $item);
 
-        do_action('konomi.user.repository.save', $item, $user, $this->key);
+        do_action('konomi.user.repository.save', $item, $user, $item->group(), $this->storageKey);
 
-        return $this->storage->write($user->id(), $this->key, $dataToStore);
+        return $this->storage->write(
+            $user->id(),
+            $this->storageKey->for($item->group()),
+            $dataToStore
+        );
     }
 
     private function canSave(User $user, Item $item): bool
@@ -72,28 +76,33 @@ class Repository
             ? $this->registry->set($user, $item)
             : $this->registry->unset($user, $item);
 
-        return $this->serializeData($user);
+        return $this->serializeData($user, $item->group());
     }
 
     /**
      * @return RawItems
      */
-    private function serializeData(User $user): array
+    private function serializeData(User $user, ItemGroup $group): array
     {
         return \array_map(
             static fn (Item $item) => [$item->id(), $item->type()],
-            $this->registry->all($user)
+            $this->registry->all($user, $group)
         );
     }
 
-    private function loadItems(User $user): void
+    private function loadItems(User $user, ItemGroup $group): void
     {
-        if ($this->registry->hasGroup($user)) {
+        if ($this->registry->hasGroup($user, $group)) {
             return;
         }
 
-        foreach ($this->read($user) as [$entityId, $entityType]) {
-            $item = $this->itemFactory->create($entityId, $entityType, true);
+        foreach ($this->read($user, $group) as [$entityId, $entityType]) {
+            $item = $this->itemFactory->create(
+                $entityId,
+                $entityType,
+                true,
+                $group
+            );
             $item->isValid() and $this->registry->set($user, $item);
         }
     }
@@ -101,9 +110,9 @@ class Repository
     /**
      * @return \Generator<RawItem>
      */
-    private function read(User $user): \Generator
+    private function read(User $user, ItemGroup $group): \Generator
     {
-        $storedData = $this->storage->read($user->id(), $this->key);
+        $storedData = $this->storage->read($user->id(), $this->storageKey->for($group));
         yield from $this->rawDataAsserter->ensureDataStructure($storedData);
     }
 }

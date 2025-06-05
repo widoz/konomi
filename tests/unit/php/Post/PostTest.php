@@ -8,9 +8,7 @@ use Widoz\Wp\Konomi\Post\{
     Post,
     Repository
 };
-use Widoz\Wp\Konomi\User\{
-    Item
-};
+use Widoz\Wp\Konomi\User\{Item, ItemGroup};
 use Mockery;
 
 beforeEach(function (): void {
@@ -20,15 +18,13 @@ beforeEach(function (): void {
     $this->item = Mockery::mock(Item::class);
 });
 
-describe('Post', function (): void {
-    describe('countForPost', function (): void {
-        it('should count the amount of items found in the repository', function (): void {
-            $this->repository->shouldReceive('find')->with(1)->andReturn([
-                100 => $this->item,
-                200 => $this->item,
-                21 => $this->item,
-            ]);
-            expect($this->post->countForPost(1))->toBe(3);
-        });
+describe('countForPost', function (): void {
+    it('should count the amount of items found in the repository', function (): void {
+        $this->repository->shouldReceive('find')->with(1, ItemGroup::REACTION)->andReturn([
+            100 => $this->item,
+            200 => $this->item,
+            21 => $this->item,
+        ]);
+        expect($this->post->countForPost(1, ItemGroup::REACTION))->toBe(3);
     });
 });

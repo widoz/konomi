@@ -6,12 +6,12 @@ require_once __DIR__ . '/functions.php';
 
 function includeValidPostUserLikes(): array
 {
-    return include stubsDirectory() . '/php/valid-post-user-likes.php';
+    return include stubsDirectory() . '/php/valid-post-user-reactions.php';
 }
 
 function includeValidUsersLikes(): array
 {
-    return include stubsDirectory() . '/php/valid-users-likes.php';
+    return include stubsDirectory() . '/php/valid-users-reactions.php';
 }
 
 /**

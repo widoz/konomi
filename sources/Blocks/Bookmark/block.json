@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "konomi/bookmark",
+	"version": "1.0.0",
+	"title": "Bookmark",
+	"category": "design",
+	"icon": "smiley",
+	"description": "Bookmark",
+	"parent": ["konomi/konomi"],
+	"example": {},
+	"attributes": {
+		"inactiveColor": {
+			"type": "string"
+		},
+		"activeColor": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"html": false,
+		"interactivity": true
+	},
+	"textdomain": "konomi",
+	"editorScript": "file:./dist/js/konomi-bookmark-block.js",
+	"viewScriptModule": "file:./build-module/konomi-bookmark-block-view.js",
+	"style": "file:./dist/css/style-konomi-bookmark-block.css",
+	"render": "file:./render.php"
+}

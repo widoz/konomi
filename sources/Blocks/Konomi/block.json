@@ -1,0 +1,35 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "konomi/konomi",
+	"version": "1.0.0",
+	"title": "Konomi",
+	"category": "design",
+	"icon": "smiley",
+	"description": "Konomi",
+	"example": {},
+	"attributes": {
+		"active": {
+			"type": "array",
+			"default": [
+				"reaction",
+				"bookmark"
+			]
+		}
+	},
+	"supports": {
+		"html": false,
+		"interactivity": true
+	},
+	"allowedBlocks": [
+		"core/group"
+	],
+	"textdomain": "konomi",
+	"editorScript": "file:./dist/js/konomi-konomi-block.js",
+	"viewScriptModule": "file:./build-module/konomi-konomi-block-view.js",
+	"viewStyle": "file:./dist/css/style-konomi-konomi-block.css",
+	"render": "file:./render.php",
+	"blockHooks": {
+		"core/post-title": "after"
+	}
+}

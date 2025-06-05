@@ -22,6 +22,7 @@ class ErrorCatch implements Middleware
         try {
             return $next($request);
         } catch (\Throwable $exception) {
+            // TODO Only in DEBUG MODE. Or we risk to leak sensitive information.
             return new \WP_Error(
                 'internal_error',
                 __(
