@@ -23,7 +23,7 @@ jobs:
         run: yarn install
 
       - name: Build Artifacts
-        uses: widoz/github-artifacts-action#feature/compile-for-branches
+        uses: widoz/github-artifacts-action@feature/compile-for-branches
         env:
           GIT_USER: ${{ secrets.GIT_USER }}
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
