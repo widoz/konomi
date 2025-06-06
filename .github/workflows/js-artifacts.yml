@@ -1,10 +1,20 @@
-name: Build Artifacts
+name: JS Artifacts
 
 on:
+  workflow_dispatch: {}
   pull_request:
     branches:
+      - main
+  push:
+    branches:
       - feature/47/update-build-assets
-
+    paths:
+      - '.github/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'tsconfig.json'
+      - 'webpack.modules.config.js'
+      - 'webpack.scripts.config.js'
 jobs:
   build:
     runs-on: ubuntu-latest
