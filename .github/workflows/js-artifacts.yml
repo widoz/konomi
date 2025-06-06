@@ -29,5 +29,5 @@ jobs:
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
           HUSKY: 0
         with:
-          command: 'npm run build'
-          target-dir: './dist'
+          command: 'yarn build:dev:scripts'
+          target-dir: './sources'
