@@ -15,6 +15,10 @@ on:
       - 'tsconfig.json'
       - 'webpack.modules.config.js'
       - 'webpack.scripts.config.js'
+
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
