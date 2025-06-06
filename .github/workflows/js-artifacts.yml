@@ -39,5 +39,5 @@ jobs:
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
           HUSKY: 0
         with:
-          command: 'yarn build:dev:scripts'
+          command: 'yarn build'
           target-dir: './sources'
