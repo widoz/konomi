@@ -10,6 +10,7 @@ on:
       - 'sources/**.ts'
       - 'sources/**.tsx'
       - 'sources/**.scss'
+      - 'resources/**.scss'
       - '.github/workflows/js-artifacts.yml'
       - 'package.json'
       - 'yarn.lock'
