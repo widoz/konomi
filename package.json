@@ -44,6 +44,9 @@
 	},
 	"scripts": {
 		"wp-env": "wp-env",
+		"build": "yarn build:scripts && yarn build:modules",
+		"build:scripts": "tsc --noEmit && wp-scripts build --config webpack.scripts.config.js",
+		"build:modules": "tsc --noEmit && wp-scripts build --experimental-modules --config webpack.modules.config.js",
 		"build:dev:scripts": "tsc --noEmit && wp-scripts start --config webpack.scripts.config.js --webpack--devtool=inline-source-map",
 		"build:dev:modules": "tsc --noEmit && wp-scripts start --experimental-modules --config webpack.modules.config.js --webpack--devtool=inline-source-map",
 		"build:blocks-manifest": "wp-scripts build-blocks-manifest --input=./sources/Blocks --output=./sources/Blocks/blocks-manifest.php",
