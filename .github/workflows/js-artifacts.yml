@@ -7,6 +7,10 @@ on:
     branches:
       - main
     paths:
+      - 'sources/**.ts'
+      - 'sources/**.tsx'
+      - 'sources/**.scss'
+      - 'resources/**.scss'
       - '.github/workflows/js-artifacts.yml'
       - 'package.json'
       - 'yarn.lock'
@@ -16,6 +20,9 @@ on:
 
 permissions:
   contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   build:
