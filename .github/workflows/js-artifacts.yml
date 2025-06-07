@@ -2,12 +2,10 @@ name: JS Artifacts
 
 on:
   workflow_dispatch: {}
-  pull_request:
-    branches:
-      - main
+
   push:
     branches:
-      - feature/47/update-build-assets
+      - main
     paths:
       - '.github/**'
       - 'package.json'
@@ -37,7 +35,7 @@ jobs:
         run: yarn install
 
       - name: Build Artifacts
-        uses: widoz/github-artifacts-action@feature/compile-for-branches
+        uses: widoz/github-artifacts-action@main
         env:
           GIT_USER: ${{ secrets.GIT_USER }}
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
