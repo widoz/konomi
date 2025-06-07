@@ -1,4 +1,4 @@
 * text eol=lf
 
-/sources/**/dist/ linguist-generated
-/sources/**/build-*/ linguist-generated
++/sources/**/dist/** linguist-generated
++/sources/**/build-*/** linguist-generated
