@@ -58,6 +58,6 @@
 		"test": "jest",
 		"test:update-snapshots": "yarn test -u",
 		"test:coverage": "jest --coverage",
-		"qa": "yarn lint:js && yarn lint:css && yarn test:coverage"
+		"qa": "tsc --noEmit && yarn lint:js && yarn lint:css && yarn test:coverage"
 	}
 }

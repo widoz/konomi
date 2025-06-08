@@ -9,15 +9,15 @@ on:
       - '**.php'
 
 jobs:
-  build:
+  server-linting:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '--skip ci') && !github.event.pull_request.draft"
+    if: ${{ !contains(github.event.head_commit.message, '--skip ci') && !github.event.pull_request.draft }}
     strategy:
       matrix:
-        php-versions: [ '8.1', '8.2', '8.3' ]
+        php-versions: [ '8.1', '8.2', '8.3', '8.4' ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
