@@ -16,7 +16,7 @@ on:
             - 'resources/**.scss'
 
 jobs:
-    js-qa:
+    testing-coverage:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
