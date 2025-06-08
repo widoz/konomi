@@ -1,4 +1,4 @@
-name: JS Artifacts
+name: Artifacts
 
 on:
   workflow_dispatch: {}

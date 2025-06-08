@@ -1,12 +1,15 @@
-name: PHP QA
+name: Server Linting
+
 on:
   pull_request:
+    types: [ assigned, opened, reopened, ready_for_review, synchronize ]
+
   push:
     branches:
       - main
-
     paths:
       - '**.php'
+      - 'composer.lock'
 
 jobs:
   server-linting:
