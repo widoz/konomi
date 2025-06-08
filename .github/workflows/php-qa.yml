@@ -9,9 +9,9 @@ on:
       - '**.php'
 
 jobs:
-  build:
+  server-linting:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '--skip ci') && !github.event.pull_request.draft"
+    if: ${{ !contains(github.event.head_commit.message, '--skip ci') && !github.event.pull_request.draft }}
     strategy:
       matrix:
         php-versions: [ '8.1', '8.2', '8.3' ]
