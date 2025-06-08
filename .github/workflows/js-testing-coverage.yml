@@ -1,4 +1,4 @@
-name: JS QA
+name: JS Testing Coverage
 
 on:
     pull_request:
@@ -28,12 +28,10 @@ jobs:
                   node-version: 20
 
             - name: Install
-              run: yarn install
+              run: yarn install --frozen-lockfile
 
-            - name: QA
-              uses: borales/actions-yarn@v3.0.0
-              with:
-                  cmd: yarn qa
+            - name: Coverage
+              run: yarn test:coverage
 
             - name: Upload coverage reports to Codecov
               uses: codecov/codecov-action@v5
