@@ -2,9 +2,9 @@
 
 > A WordPress plugin to save posts as favorite using the new Interactive API
 
-[![JS Artifacts](https://github.com/widoz/konomi/actions/workflows/artifacts.yml/badge.svg)](https://github.com/widoz/konomi/actions/workflows/artifacts.yml)
-[![JS QA](https://github.com/widoz/konomi/actions/workflows/client-linting.yml/badge.svg)](https://github.com/widoz/konomi/actions/workflows/client-linting.yml)
-[![PHP QA](https://github.com/widoz/konomi/actions/workflows/server-linting.yml/badge.svg)](https://github.com/widoz/konomi/actions/workflows/server-linting.yml)
+[![Artifacts](https://github.com/widoz/konomi/actions/workflows/artifacts.yml/badge.svg)](https://github.com/widoz/konomi/actions/workflows/artifacts.yml)
+[![Client Linting](https://github.com/widoz/konomi/actions/workflows/client-linting.yml/badge.svg)](https://github.com/widoz/konomi/actions/workflows/client-linting.yml)
+[![Server Linting](https://github.com/widoz/konomi/actions/workflows/server-linting.yml/badge.svg)](https://github.com/widoz/konomi/actions/workflows/server-linting.yml)
 [![codecov](https://codecov.io/github/widoz/konomi/graph/badge.svg?token=L4XE77C0JL)](https://codecov.io/github/widoz/konomi)
 
 ## License

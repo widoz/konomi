@@ -1,4 +1,4 @@
-name: JS Testing Coverage
+name: Testing Coverage
 
 on:
     pull_request:
@@ -7,7 +7,8 @@ on:
         branches:
             - 'main'
         paths:
-            - '**/workflows/js-qa.yml'
+            - '**/workflows/testing-coverage.yml'
+            - 'sources/**.php'
             - 'sources/**.ts'
             - 'sources/**.tsx'
             - 'sources/**.scss'
@@ -28,14 +29,32 @@ jobs:
               with:
                   node-version: 20
 
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                php-version: 8.1
+                coverage: xdebug
+                tools: composer:v2
+
             - name: Install
               run: yarn install --frozen-lockfile
 
-            - name: Coverage
+            - name: Install PHP dependencies
+              run: composer install --prefer-dist --no-progress --no-interaction
+
+            - name: Php Coverage
+              run: composer run test:coverage
+
+            - name: JavaScript Coverage
               run: yarn test:coverage
 
             - name: Upload coverage reports to Codecov
               uses: codecov/codecov-action@v5
               with:
+                files: ./coverage.xml,./coverage/lcov.info
+                flags: php,javascript
+                name: codecov-umbrella
+                fail_ci_if_error: false
+                verbose: true
                 token: ${{ secrets.CODECOV_TOKEN }}
                 slug: ${{ github.repository }}
