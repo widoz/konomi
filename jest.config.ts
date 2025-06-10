@@ -8,7 +8,7 @@ module.exports = {
 	clearMocks: true,
 	coverageDirectory: 'coverage',
 	coverageProvider: 'babel',
-	coverageReporters: [ 'json', 'text', 'text-summary' ],
+	coverageReporters: [ 'json', 'lcov', 'text', 'text-summary', 'clover' ],
 	// TODO Configure it once we have a decent amount of tests.
 	// coverageThreshold: {},
 	// TODO Maybe remove it once we have completed the tests implementation.
@@ -18,7 +18,10 @@ module.exports = {
 	maxConcurrency: 8,
 	maxWorkers: '50%',
 	moduleFileExtensions: [ 'js', 'ts', 'tsx' ],
-	modulePathIgnorePatterns: [ '<rootDir>/.*/dist', '<rootDir>/.*/build-modules' ],
+	modulePathIgnorePatterns: [
+		'<rootDir>/.*/dist',
+		'<rootDir>/.*/build-modules',
+	],
 	modulePaths: [ '<rootDir>/sources' ],
 	notifyMode: 'failure',
 	resetMocks: true,
@@ -28,6 +31,6 @@ module.exports = {
 	roots: [ '<rootDir>/sources', '<rootDir>/tests' ],
 	testEnvironment: 'jsdom',
 	testMatch: [ '<rootDir>/tests/unit/js/**/?(*.)+(spec).ts?(x)' ],
-	moduleNameMapper: mapModulesFromTsConfig(tsConfig),
+	moduleNameMapper: mapModulesFromTsConfig( tsConfig ),
 	setupFiles: [ '<rootDir>/tests/setup.ts' ],
 } as Config;

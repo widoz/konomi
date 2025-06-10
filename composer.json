@@ -71,6 +71,7 @@
 		"test:unit": "@php ./vendor/bin/pest --testsuite=unit",
 		"test:integration": "@php ./vendor/bin/pest --testsuite=integration",
 		"test:functional": "@php ./vendor/bin/pest --testsuite=functional",
+		"test:coverage": "@php ./vendor/bin/pest --testsuite=unit --coverage --coverage-clover=coverage.xml",
 		"tests": [
 			"@test:unit",
 			"@test:integration",
