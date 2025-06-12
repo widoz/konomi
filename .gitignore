@@ -4,6 +4,8 @@
 /sources/**/build-*/
 /coverage
 /coverage.xml
+/coverage-integration.xml
+/coverage-functional.xml
 /vendor/
 /node_modules/
 /php-metrics

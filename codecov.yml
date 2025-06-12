@@ -4,3 +4,41 @@ coverage:
             default:
                 target: 100%
                 threshold: 5%
+            unit:
+                target: 100%
+                threshold: 5%
+                flags:
+                    - unit
+            integration:
+                target: 100%
+                threshold: 5%
+                flags:
+                    - integration
+            functional:
+                target: 100%
+                threshold: 5%
+                flags:
+                    - functional
+            javascript:
+                target: 100%
+                threshold: 5%
+                flags:
+                    - javascript
+
+    flags:
+    unit:
+        paths:
+            - sources/
+        carryforward: true
+    integration:
+        paths:
+            - sources/
+        carryforward: true
+    functional:
+        paths:
+            - sources/
+        carryforward: true
+    javascript:
+        paths:
+            - resources/
+        carryforward: true

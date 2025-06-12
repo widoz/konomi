@@ -71,7 +71,9 @@
 		"test:unit": "@php ./vendor/bin/pest --testsuite=unit",
 		"test:integration": "@php ./vendor/bin/pest --testsuite=integration",
 		"test:functional": "@php ./vendor/bin/pest --testsuite=functional",
-		"test:coverage": "@php ./vendor/bin/pest --testsuite=unit --coverage --coverage-clover=coverage.xml",
+		"test:unit:coverage": "@php ./vendor/bin/pest --testsuite=unit --coverage --coverage-clover=coverage.xml",
+		"test:integration:coverage": "@php ./vendor/bin/pest --testsuite=integration --coverage --coverage-clover=coverage-integration.xml",
+		"test:functional:coverage": "@php ./vendor/bin/pest --testsuite=functional --coverage --coverage-clover=coverage-functional.xml",
 		"tests": [
 			"@test:unit",
 			"@test:integration",

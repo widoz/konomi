@@ -42,8 +42,14 @@ jobs:
             - name: Install PHP dependencies
               run: composer install --prefer-dist --no-progress --no-interaction
 
-            - name: Php Coverage
-              run: composer run test:coverage
+            - name: Php Coverage Unit
+              run: composer run test:unit:coverage
+
+            - name: Php Coverage Integration
+              run: composer run test:integration:coverage
+
+            - name: Php Coverage Functional
+              run: composer run test:functional:coverage
 
             - name: JavaScript Coverage
               run: yarn test:coverage
@@ -51,8 +57,8 @@ jobs:
             - name: Upload coverage reports to Codecov
               uses: codecov/codecov-action@v5
               with:
-                files: ./coverage.xml,./coverage/lcov.info
-                flags: php,javascript
+                files: ./coverage-unit.xml,./coverage-integration.xml,./coverage-functional.xml,./coverage/lcov.info
+                flags: php-unit,php-integration,php-functional,js-unit
                 name: codecov-umbrella
                 fail_ci_if_error: false
                 verbose: true
