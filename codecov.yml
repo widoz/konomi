@@ -4,3 +4,41 @@ coverage:
             default:
                 target: 100%
                 threshold: 5%
+            php-unit:
+                target: 100%
+                threshold: 5%
+                flags:
+                    - php-unit
+            php-integration:
+                target: 100%
+                threshold: 5%
+                flags:
+                    - php-integration
+            php-functional:
+                target: 100%
+                threshold: 5%
+                flags:
+                    - php-functional
+            js-unit:
+                target: 100%
+                threshold: 5%
+                flags:
+                    - js-unit
+
+    flags:
+    php-unit:
+        paths:
+            - sources/
+        carryforward: true
+    php-integration:
+        paths:
+            - sources/
+        carryforward: true
+    php-functional:
+        paths:
+            - sources/
+        carryforward: true
+    js-unit:
+        paths:
+            - resources/
+        carryforward: true

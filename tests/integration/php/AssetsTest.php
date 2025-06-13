@@ -96,5 +96,5 @@ describe('Assets', function (): void {
                 $callback();
             }
         }
-    )->skip('We do not compile the assets in the test environment');
+    );
 });
