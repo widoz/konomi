@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Integration\Rest;
+namespace SpaghettiDojo\Konomi\Tests\Integration\Rest;
 
 use Brain\Monkey\Functions;
-use Widoz\Wp\Konomi\Rest;
+use SpaghettiDojo\Konomi\Rest;
 
 beforeAll(function (): void {
     setUpWpRest();

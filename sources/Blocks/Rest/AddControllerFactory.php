@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Rest;
+namespace SpaghettiDojo\Konomi\Blocks\Rest;
 
-use Widoz\Wp\Konomi\Rest\Controller;
-use Widoz\Wp\Konomi\User;
+use SpaghettiDojo\Konomi\Rest\Controller;
+use SpaghettiDojo\Konomi\User;
 
 /**
  * @internal

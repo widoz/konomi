@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\User;
+namespace SpaghettiDojo\Konomi\Tests\Unit\User;
 
 use Brain\Monkey\Functions;
-use Widoz\Wp\Konomi\User\StorageKey;
-use Widoz\Wp\Konomi\User\ItemGroup;
+use SpaghettiDojo\Konomi\User\StorageKey;
+use SpaghettiDojo\Konomi\User\ItemGroup;
 
 describe('new', function (): void {
     it('creates a new instance with a valid base key', function (): void {

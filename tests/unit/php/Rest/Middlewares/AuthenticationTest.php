@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Rest\Middlewares;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Rest\Middlewares;
 
-use Widoz\Wp\Konomi\Rest\Middlewares\Authentication;
-use Widoz\Wp\Konomi\User\User;
+use SpaghettiDojo\Konomi\Rest\Middlewares\Authentication;
+use SpaghettiDojo\Konomi\User\User;
 
 beforeAll(function (): void {
     setUpWpRest();

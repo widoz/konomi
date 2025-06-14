@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Post;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Post;
 
-use Widoz\Wp\Konomi\Post\RawDataAssert;
+use SpaghettiDojo\Konomi\Post\RawDataAssert;
 
 beforeEach(function (): void {
     $this->rawDataAsserter = RawDataAssert::new();

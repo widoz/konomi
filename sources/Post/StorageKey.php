@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Post;
+namespace SpaghettiDojo\Konomi\Post;
 
-use Widoz\Wp\Konomi\User;
+use SpaghettiDojo\Konomi\User;
 
 class StorageKey
 {

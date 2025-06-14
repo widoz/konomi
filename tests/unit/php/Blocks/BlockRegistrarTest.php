@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Blocks;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Blocks;
 
 use Brain\Monkey\Functions;
-use Widoz\Wp\Konomi\Blocks\BlockRegistrar;
+use SpaghettiDojo\Konomi\Blocks\BlockRegistrar;
 
 describe('registerBlockTypes', function (): void {
     it('register all blocks in the blocks directory', function (): void {

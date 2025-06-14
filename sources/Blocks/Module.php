@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks;
+namespace SpaghettiDojo\Konomi\Blocks;
 
 use Psr\Container\ContainerInterface;
 use Inpsyde\Modularity\{
@@ -11,14 +11,14 @@ use Inpsyde\Modularity\{
     Module\ServiceModule,
     Properties\Properties
 };
-use Widoz\Wp\Konomi\Blocks\{
+use SpaghettiDojo\Konomi\Blocks\{
     Rest\AddControllerFactory,
     Rest\AddSchemaFactory,
     Rest\AddResponse
 };
-use Widoz\Wp\Konomi\Rest;
-use Widoz\Wp\Konomi\User;
-use Widoz\Wp\Konomi\Post;
+use SpaghettiDojo\Konomi\Rest;
+use SpaghettiDojo\Konomi\User;
+use SpaghettiDojo\Konomi\Post;
 
 class Module implements ServiceModule, ExecutableModule
 {

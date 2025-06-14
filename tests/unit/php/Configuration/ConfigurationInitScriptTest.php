@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Configuration;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Configuration;
 
 use Brain\Monkey\Functions;
-use Widoz\Wp\Konomi\Configuration;
+use SpaghettiDojo\Konomi\Configuration;
 
 describe('printModuleConfigurationInitializer', function (): void {
     it('render a js module calling the client initConfiguration function', function (): void {

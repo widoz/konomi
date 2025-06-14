@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi;
+namespace SpaghettiDojo\Konomi;
 
 use Inpsyde\Modularity;
 

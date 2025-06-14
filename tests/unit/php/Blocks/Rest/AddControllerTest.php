@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Blocks\Rest;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Blocks\Rest;
 
 use Mockery;
-use Widoz\Wp\Konomi\Blocks;
-use Widoz\Wp\Konomi\User;
+use SpaghettiDojo\Konomi\Blocks;
+use SpaghettiDojo\Konomi\User;
 
 beforeAll(function (): void {
     setUpWpRest();

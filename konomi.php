@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi;
+namespace SpaghettiDojo\Konomi;
 
 add_action(
     'plugins_loaded',

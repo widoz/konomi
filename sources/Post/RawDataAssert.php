@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Post;
+namespace SpaghettiDojo\Konomi\Post;
 
 /**
  * @internal

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Integration\Functions;
+namespace SpaghettiDojo\Konomi\Tests\Integration\Functions;
 
-use function Widoz\Wp\Konomi\Functions\add_single_conditional_filter;
-use function Widoz\Wp\Konomi\Functions\add_action_on_module_import;
+use function SpaghettiDojo\Konomi\Functions\add_single_conditional_filter;
+use function SpaghettiDojo\Konomi\Functions\add_action_on_module_import;
 
 beforeAll(function (): void {
     setUpHooks();

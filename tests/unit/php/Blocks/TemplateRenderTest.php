@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Blocks;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Blocks;
 
 use Brain\Monkey\Functions;
 use Brain\Monkey\Filters;
-use Widoz\Wp\Konomi\Blocks\TemplateRender;
+use SpaghettiDojo\Konomi\Blocks\TemplateRender;
 
 describe('render', function (): void {
     it('render a template with given arguments', function (): void {

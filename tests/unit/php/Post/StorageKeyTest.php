@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Post;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Post;
 
-use Widoz\Wp\Konomi\Post\StorageKey;
-use Widoz\Wp\Konomi\User\ItemGroup;
+use SpaghettiDojo\Konomi\Post\StorageKey;
+use SpaghettiDojo\Konomi\User\ItemGroup;
 
 describe('new', function (): void {
     it('creates a new instance with a valid base key', function (): void {

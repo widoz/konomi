@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Rest\Middlewares;
+namespace SpaghettiDojo\Konomi\Rest\Middlewares;
 
-use Widoz\Wp\Konomi\Rest\Middleware;
+use SpaghettiDojo\Konomi\Rest\Middleware;
 
 class ErrorCatch implements Middleware
 {

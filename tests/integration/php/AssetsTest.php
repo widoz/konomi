@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Integration\ApiFetch;
+namespace SpaghettiDojo\Konomi\Tests\Integration\ApiFetch;
 
-use Widoz\Wp\Konomi\ApiFetch;
-use Widoz\Wp\Konomi\Configuration;
-use Widoz\Wp\Konomi\Icons;
+use SpaghettiDojo\Konomi\ApiFetch;
+use SpaghettiDojo\Konomi\Configuration;
+use SpaghettiDojo\Konomi\Icons;
 
 beforeEach(function (): void {
     setupWpConstants();
