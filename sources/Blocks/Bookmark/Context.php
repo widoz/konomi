@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Bookmark;
+namespace SpaghettiDojo\Konomi\Blocks\Bookmark;
 
-use Widoz\Wp\Konomi\User;
-use Widoz\Wp\Konomi\Blocks;
+use SpaghettiDojo\Konomi\User;
+use SpaghettiDojo\Konomi\Blocks;
 
 /**
  * @internal

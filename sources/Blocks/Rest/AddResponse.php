@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Rest;
+namespace SpaghettiDojo\Konomi\Blocks\Rest;
 
-use Widoz\Wp\Konomi\User;
+use SpaghettiDojo\Konomi\User;
 
 class AddResponse
 {

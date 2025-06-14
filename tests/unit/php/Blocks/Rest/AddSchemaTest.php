@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Blocks\Rest;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Blocks\Rest;
 
-use Widoz\Wp\Konomi\Blocks;
+use SpaghettiDojo\Konomi\Blocks;
 
 describe('toArray', function (): void {
     it('should return the correct schema', function (): void {

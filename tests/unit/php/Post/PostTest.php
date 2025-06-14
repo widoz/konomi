@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Post;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Post;
 
-use Widoz\Wp\Konomi\Post\{
+use SpaghettiDojo\Konomi\Post\{
     Post,
     Repository
 };
-use Widoz\Wp\Konomi\User\{Item, ItemGroup};
+use SpaghettiDojo\Konomi\User\{Item, ItemGroup};
 use Mockery;
 
 beforeEach(function (): void {

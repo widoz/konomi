@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\User;
+namespace SpaghettiDojo\Konomi\Tests\Unit\User;
 
 use Mockery;
-use Widoz\Wp\Konomi\User\{
+use SpaghettiDojo\Konomi\User\{
     ItemGroup,
     ItemRegistryKey,
     User

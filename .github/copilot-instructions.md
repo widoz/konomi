@@ -9,7 +9,7 @@
 
 ### Structure and Namespaces
 - Follow PSR-4 autoloading standard
-- Use namespace `Widoz\Wp\Konomi` for all PHP code
+- Use namespace `SpaghettiDojo\Konomi` for all PHP code
 - Place PHP files in the `sources/` directory
 - Organize code by feature (module-based architecture)
 
@@ -98,10 +98,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Module;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Module;
 
 use Brain\Monkey\Functions;
-use Widoz\Wp\Konomi\Module;
+use SpaghettiDojo\Konomi\Module;
 
 describe('ModuleName', function (): void {
     describe('methodName', function (): void {

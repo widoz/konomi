@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Integration;
+namespace SpaghettiDojo\Konomi\Tests\Integration;
 
 use Brain\Monkey\Actions;
 use Brain\Monkey\Functions;
-use Widoz\Wp\Konomi\User;
+use SpaghettiDojo\Konomi\User;
 
 beforeAll(function (): void {
     $wpUser = \Mockery::mock(\WP_User::class);

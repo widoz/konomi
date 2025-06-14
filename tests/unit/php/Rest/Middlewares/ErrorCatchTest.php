@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Rest\Middlewares;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Rest\Middlewares;
 
-use Widoz\Wp\Konomi\Rest\Middlewares\ErrorCatch;
+use SpaghettiDojo\Konomi\Rest\Middlewares\ErrorCatch;
 
 beforeAll(function (): void {
     setUpWpRest();

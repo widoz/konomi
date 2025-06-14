@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Post;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Post;
 
 use Brain\Monkey\Functions;
-use Widoz\Wp\Konomi\Post\Storage;
+use SpaghettiDojo\Konomi\Post\Storage;
 
 describe('Storage', function (): void {
     it('read data from the storage', function (): void {

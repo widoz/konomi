@@ -1,5 +1,5 @@
 {
-	"name": "widoz/konomi",
+	"name": "spaghetti-dojo/konomi",
 	"description": "A WordPress plugin to save posts as favorite using the new Interactive API",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
@@ -28,7 +28,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Widoz\\Wp\\Konomi\\": "sources/"
+			"SpaghettiDojo\\Konomi\\": "sources/"
 		},
 		"files": [
 			"sources/Functions/filters.php",
@@ -39,10 +39,10 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Widoz\\Wp\\Konomi\\Tests\\": "tests/",
-			"Widoz\\Wp\\Konomi\\Tests\\Unit\\": "tests/unit/php",
-			"Widoz\\Wp\\Konomi\\Tests\\Integration\\": "tests/integration/php",
-			"Widoz\\Wp\\Konomi\\Tests\\Functional\\": "tests/functional/php"
+			"SpaghettiDojo\\Konomi\\Tests\\": "tests/",
+			"SpaghettiDojo\\Konomi\\Tests\\Unit\\": "tests/unit/php",
+			"SpaghettiDojo\\Konomi\\Tests\\Integration\\": "tests/integration/php",
+			"SpaghettiDojo\\Konomi\\Tests\\Functional\\": "tests/functional/php"
 		}
 	},
 	"config": {

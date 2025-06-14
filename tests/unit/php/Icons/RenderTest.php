@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Widoz\Wp\Konomi\Configuration;
-use Widoz\Wp\Konomi\Icons;
+use SpaghettiDojo\Konomi\Configuration;
+use SpaghettiDojo\Konomi\Icons;
 use org\bovigo\vfs\vfsStream;
 use Brain\Monkey\Functions;
 

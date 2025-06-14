@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks;
+namespace SpaghettiDojo\Konomi\Blocks;
 
-use function Widoz\Wp\Konomi\package;
+use function SpaghettiDojo\Konomi\package;
 
 function context(string $contextName): Context
 {

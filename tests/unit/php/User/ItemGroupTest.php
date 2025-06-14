@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\User;
+namespace SpaghettiDojo\Konomi\Tests\Unit\User;
 
 use Brain\Monkey\Functions;
-use Widoz\Wp\Konomi\User\ItemGroup;
+use SpaghettiDojo\Konomi\User\ItemGroup;
 
 beforeEach(function (): void {
     Functions\when('esc_html')->returnArg();
@@ -31,6 +31,6 @@ describe('fromValue', function (): void {
 
     it('throws ValueError when given an invalid value', function (): void {
         expect(fn () => ItemGroup::fromValue('invalid'))
-            ->toThrow(\ValueError::class, 'invalid is not a valid backing value for enum Widoz\Wp\Konomi\User\ItemGroup');
+            ->toThrow(\ValueError::class, 'invalid is not a valid backing value for enum SpaghettiDojo\Konomi\User\ItemGroup');
     });
 });

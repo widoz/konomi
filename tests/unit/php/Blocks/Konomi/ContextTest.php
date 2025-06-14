@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Blocks;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Blocks;
 
 use Brain\Monkey\Functions;
-use Widoz\Wp\Konomi\Blocks;
-use Widoz\Wp\Konomi\User;
-use Widoz\Wp\Konomi\Blocks\Konomi\Context;
+use SpaghettiDojo\Konomi\Blocks;
+use SpaghettiDojo\Konomi\User;
+use SpaghettiDojo\Konomi\Blocks\Konomi\Context;
 
 describe('toArray', function (): void {
     it('ensure valid serialization', function (): void {

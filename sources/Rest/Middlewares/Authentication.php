@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Rest\Middlewares;
+namespace SpaghettiDojo\Konomi\Rest\Middlewares;
 
-use Widoz\Wp\Konomi\Rest;
-use Widoz\Wp\Konomi\User;
+use SpaghettiDojo\Konomi\Rest;
+use SpaghettiDojo\Konomi\User;
 
 class Authentication implements Rest\Middleware
 {

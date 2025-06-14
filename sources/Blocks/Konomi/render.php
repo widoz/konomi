@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Konomi;
+namespace SpaghettiDojo\Konomi\Blocks\Konomi;
 
-use Widoz\Wp\Konomi\Blocks;
+use SpaghettiDojo\Konomi\Blocks;
 
 $content = (string) ($content ?? null);
 

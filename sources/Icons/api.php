@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Icons;
+namespace SpaghettiDojo\Konomi\Icons;
 
-use function Widoz\Wp\Konomi\package;
+use function SpaghettiDojo\Konomi\package;
 
 function icon(): Render
 {

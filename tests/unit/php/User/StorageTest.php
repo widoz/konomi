@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\User;
+namespace SpaghettiDojo\Konomi\Tests\Unit\User;
 
 use Brain\Monkey\Functions;
-use Widoz\Wp\Konomi\User;
+use SpaghettiDojo\Konomi\User;
 
 beforeEach(function (): void {
     $this->storage = User\Storage::new();

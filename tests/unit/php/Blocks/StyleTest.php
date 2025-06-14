@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Blocks;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Blocks;
 
-use Widoz\Wp\Konomi\Blocks\Style;
-use Widoz\Wp\Konomi\Blocks\CustomProperty;
+use SpaghettiDojo\Konomi\Blocks\Style;
+use SpaghettiDojo\Konomi\Blocks\CustomProperty;
 
 describe('__toString', function (): void {
     it('reduce given properties to css string', function (): void {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Icons;
+namespace SpaghettiDojo\Konomi\Icons;
 
-use Widoz\Wp\Konomi\Configuration;
+use SpaghettiDojo\Konomi\Configuration;
 
 /**
  * @api

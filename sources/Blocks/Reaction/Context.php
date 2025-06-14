@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks\Reaction;
+namespace SpaghettiDojo\Konomi\Blocks\Reaction;
 
-use Widoz\Wp\Konomi\Post;
-use Widoz\Wp\Konomi\User;
-use Widoz\Wp\Konomi\Blocks;
+use SpaghettiDojo\Konomi\Post;
+use SpaghettiDojo\Konomi\User;
+use SpaghettiDojo\Konomi\Blocks;
 
 /**
  * @internal

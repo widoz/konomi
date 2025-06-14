@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Icons;
+namespace SpaghettiDojo\Konomi\Icons;
 
 use Psr\Container\ContainerInterface;
 use Inpsyde\Modularity\{
@@ -11,7 +11,7 @@ use Inpsyde\Modularity\{
     Module\ModuleClassNameIdTrait,
     Properties\Properties
 };
-use Widoz\Wp\Konomi\Configuration;
+use SpaghettiDojo\Konomi\Configuration;
 
 class Module implements ServiceModule, ExecutableModule
 {

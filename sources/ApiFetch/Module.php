@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\ApiFetch;
+namespace SpaghettiDojo\Konomi\ApiFetch;
 
 use Psr\Container\ContainerInterface;
 use Inpsyde\Modularity\{
@@ -12,7 +12,7 @@ use Inpsyde\Modularity\{
     Properties\Properties
 };
 
-use function Widoz\Wp\Konomi\Functions\add_action_on_module_import;
+use function SpaghettiDojo\Konomi\Functions\add_action_on_module_import;
 
 class Module implements ServiceModule, ExecutableModule
 {

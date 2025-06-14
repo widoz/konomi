@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Rest;
+namespace SpaghettiDojo\Konomi\Rest;
 
 use Psr\Container\ContainerInterface;
 use Inpsyde\Modularity\{
     Module\ServiceModule,
     Module\ModuleClassNameIdTrait
 };
-use Widoz\Wp\Konomi\User;
+use SpaghettiDojo\Konomi\User;
 
 class Module implements ServiceModule
 {

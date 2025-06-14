@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Rest;
+namespace SpaghettiDojo\Konomi\Rest;
 
 /**
  * @phpstan-type MiddlewareCallable = callable(\WP_REST_Request): (\WP_REST_Response|\WP_Error)

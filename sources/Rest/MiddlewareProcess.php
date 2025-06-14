@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Rest;
+namespace SpaghettiDojo\Konomi\Rest;
 
 /**
  * @internal

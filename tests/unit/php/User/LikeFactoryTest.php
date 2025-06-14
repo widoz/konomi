@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\User;
+namespace SpaghettiDojo\Konomi\Tests\Unit\User;
 
-use Widoz\Wp\Konomi\User\{ItemFactory, Item, ItemGroup};
+use SpaghettiDojo\Konomi\User\{ItemFactory, Item, ItemGroup};
 
 describe('ItemFactory', function (): void {
     it('should create a new Item instance', function (): void {

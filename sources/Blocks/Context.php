@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Blocks;
+namespace SpaghettiDojo\Konomi\Blocks;
 
 interface Context
 {

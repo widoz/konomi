@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Post;
+namespace SpaghettiDojo\Konomi\Post;
 
 use Psr\Container\ContainerInterface;
 use Inpsyde\Modularity\{
@@ -10,7 +10,7 @@ use Inpsyde\Modularity\{
     Module\ExecutableModule,
     Module\ModuleClassNameIdTrait
 };
-use Widoz\Wp\Konomi\User;
+use SpaghettiDojo\Konomi\User;
 
 class Module implements ServiceModule, ExecutableModule
 {

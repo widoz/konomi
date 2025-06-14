@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Configuration;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Configuration;
 
 describe('serialize', function (): void {
     it('Serialize the given configuration', function (): void {
@@ -13,7 +13,7 @@ describe('serialize', function (): void {
         $properties->shouldReceive('isDebug')->andReturn(true);
 
         $expected = '{"iconsUrl":"http:\/\/example.com\/\/path\/to\/icons","iconsPath":"\/var\/www\/html\/\/path\/to\/icons","isDebugMode":true}';
-        $configuration = \Widoz\Wp\Konomi\Configuration\Configuration::new($properties, '/path/to/icons');
+        $configuration = \SpaghettiDojo\Konomi\Configuration\Configuration::new($properties, '/path/to/icons');
         expect($configuration->serialize())->toBe($expected);
     });
 });

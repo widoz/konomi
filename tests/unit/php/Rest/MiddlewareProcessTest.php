@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Widoz\Wp\Konomi\Tests\Unit\Rest;
+namespace SpaghettiDojo\Konomi\Tests\Unit\Rest;
 
-use Widoz\Wp\Konomi\Rest\MiddlewareProcess;
-use Widoz\Wp\Konomi\Rest\Middleware;
+use SpaghettiDojo\Konomi\Rest\MiddlewareProcess;
+use SpaghettiDojo\Konomi\Rest\Middleware;
 
 beforeAll(function (): void {
     setUpWpRest();
